@@ -1,13 +1,14 @@
-#include "main.h"
+#include "program.h"
 
-Main program = Main();
+Program program = Program();
 
 void setup() 
 {
-  Serial.begin(9600);
+	//Date rate in bits per seconds for serial data transmission
+	Serial.begin(9600);
 }
 
 void loop() 
 {
-  program.fixedUpdate();
+	program.step();
 }

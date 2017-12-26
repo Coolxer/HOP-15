@@ -1,5 +1,5 @@
-#ifndef main_h
-#define main_h
+#ifndef program_h
+#define program_h
 
 #include <Arduino.h>
 
@@ -8,17 +8,15 @@
 #include "motor.h"
 #include "sevSegms.h"
 
-class Main
+class Program
 {
   private:
     KeysController keysController = KeysController();
     Lcd lcd = Lcd();
   public:
-
-    enum state{MAIN_MENU, TEETH_SELECTING, CYCLES_SELECTING, AFK};
   
     void init();
-    void fixedUpdate();
+    void step();
 };
 
 #endif

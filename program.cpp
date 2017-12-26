@@ -1,11 +1,11 @@
-#include "main.h"
+#include "program.h"
 
-void Main::init()
+void Program::init()
 {
  
 }
 
-void Main::fixedUpdate()
+void Program::step()
 {
    Serial.println(keysController.getPushedKey());
 }
