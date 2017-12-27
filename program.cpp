@@ -1,5 +1,15 @@
 #include "program.h"
 
+Program::Program()
+{
+
+}
+
+Program::~Program()
+{
+
+}
+
 void Program::init()
 {
  
@@ -7,6 +17,7 @@ void Program::init()
 
 void Program::step()
 {
-   Serial.println(keysController.getPushedKey());
+	elementManager.react(input);
+	output.display(elementManager.getCurrent());
 }
 

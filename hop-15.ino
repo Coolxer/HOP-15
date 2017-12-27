@@ -1,3 +1,7 @@
+#include "ElementManager.h"
+#include "Element.h"
+#include "input.h"
+#include "output.h"
 #include "program.h"
 
 Program program = Program();

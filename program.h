@@ -1,19 +1,20 @@
 #ifndef program_h
 #define program_h
 
-#include <Arduino.h>
-
-#include "keyPad.h"
-#include "lcd.h"
-#include "motor.h"
-#include "sevSegms.h"
+#include "input.h"
+#include "output.h"
 
 class Program
 {
-  private:
-    KeysController keysController = KeysController();
-    Lcd lcd = Lcd();
-  public:
+private:
+	Output* output;
+	Input* input;
+
+	ElementManager elementManager;
+
+public:
+	Program();
+	~Program();
   
     void init();
     void step();

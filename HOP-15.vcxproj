@@ -80,12 +80,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Element.h" />
+    <ClInclude Include="ElementManager.h" />
+    <ClInclude Include="input.h" />
     <ClInclude Include="keyPad.h">
       <FileType>CppCode</FileType>
     </ClInclude>
     <ClInclude Include="lcd.h">
       <FileType>CppCode</FileType>
     </ClInclude>
+    <ClInclude Include="output.h" />
     <ClInclude Include="program.h">
       <FileType>CppCode</FileType>
     </ClInclude>
@@ -98,8 +102,12 @@
     <ClInclude Include="__vm\.HOP-15.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Element.cpp" />
+    <ClCompile Include="ElementManager.cpp" />
+    <ClCompile Include="input.cpp" />
     <ClCompile Include="keyPad.cpp" />
     <ClCompile Include="lcd.cpp" />
+    <ClCompile Include="output.cpp" />
     <ClCompile Include="program.cpp" />
     <ClCompile Include="motor.cpp" />
     <ClCompile Include="sevSegms.cpp" />
