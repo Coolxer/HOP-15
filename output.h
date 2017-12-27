@@ -3,7 +3,8 @@
 
 class Output
 {
-
+public:
+	virtual void display(Element* element) = 0;
 };
 
 #endif

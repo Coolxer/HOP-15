@@ -17,7 +17,7 @@ void Program::init()
 
 void Program::step()
 {
-	elementManager.react(input);
+	elementManager.getCurrent()->react(input);
 	output.display(elementManager.getCurrent());
 }
 

@@ -3,6 +3,8 @@
 ElementManager::ElementManager()
 {
 	count = 0;
+	//Selected equal -1 means no element currently selected
+	selected = -1;
 	elements = nullptr;
 }
 
@@ -24,4 +26,19 @@ void ElementManager::add(Element element)
 {
 	resize(count + 1);
 	elements[count - 1] = element;
+}
+
+Element* ElementManager::getCurrent()
+{
+	//If not elements in manager
+	if (selected == -1)
+		return nullptr;
+	else
+	{
+		//If right index is selected
+		if (selected < count)
+			return &elements[selected];
+		else
+			return nullptr;
+	}
 }
