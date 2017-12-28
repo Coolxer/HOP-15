@@ -1,13 +1,21 @@
-#include "main.h"
+#include "TestElement.h"
+#include "ElementManager.h"
+#include "Element.h"
+#include "input.h"
+#include "output.h"
+#include "program.h"
 
-Main program = Main();
+Program program = Program();
 
 void setup() 
 {
+	//Date rate in bits per seconds for serial data transmission
 	Serial.begin(9600);
+
+	program.init();
 }
 
 void loop() 
 {
-	program.fixedUpdate();
+	program.step();
 }

@@ -1,10 +1,13 @@
-#ifndef keyPad_h
-#define keyPad_h
+#ifndef simpleKeypad_h
+#define simpleKeypad_h
 
 #include <Arduino.h>
 #include <Keypad.h>
 
-class KeysController
+#include "Config.h"
+#include "input.h"
+
+class SimpleKeypad : public Input
 {
   private:
     byte rowPins[4] = {22, 24, 26, 28};
@@ -17,11 +20,11 @@ class KeysController
       {'*','0','#','D'}
     };
 
-	Keypad m_keyPad = Keypad(makeKeymap(keys), rowPins, colPins, 4, 4);
+	  Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, 4, 4);
     
   public:
-    KeysController();
-    char getPushedKey();
+	  SimpleKeypad();
+    Keys getPressedKey();
 };
 
 #endif

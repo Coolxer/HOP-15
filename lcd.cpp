@@ -2,11 +2,12 @@
 
 Lcd::Lcd()
 {
-  m_lcd.begin(20,4);
+  lcd.begin(20,4);
 }
 
-void Lcd::draw()
+void Lcd::display(TestElement* element)
 {
-  
+	lcd.clear();
+	lcd.print(element->getMessage());
 }
 
