@@ -20,11 +20,11 @@ class SimpleKeypad : public Input
       {'*','0','#','D'}
     };
 
-	Keypad keypad;
+	  Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, 4, 4);
     
   public:
-	SimpleKeypad();
-    Key getPressedKey();
+	  SimpleKeypad();
+    Keys getPressedKey();
 };
 
 #endif

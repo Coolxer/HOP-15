@@ -5,7 +5,8 @@
 
 class Input
 {
-	virtual Key getPressedKey() = 0;
+public:
+	virtual Keys getPressedKey() = 0;
 };
 
 #endif

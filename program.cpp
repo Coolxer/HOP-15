@@ -12,12 +12,20 @@ Program::~Program()
 
 void Program::init()
 {
- 
+	Element* testElement = new TestElement("Test");
+
+	elementManager.add(testElement);
+	elementManager.changeElement("Test");
 }
 
 void Program::step()
 {
-	elementManager.getCurrent()->react(input);
-	output->display(elementManager.getCurrent());
+	Element* element = elementManager.getCurrent();
+
+	if (element != nullptr)
+	{
+		element->react(input);
+		output->display(element);
+	}
 }
 

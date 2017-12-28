@@ -1,6 +1,8 @@
 #ifndef _output_h
 #define _output_h
 
+#include "TestElement.h"
+
 class Output
 {
 public:

@@ -57,7 +57,7 @@ Element* ElementManager::getCurrent()
 	else
 	{
 		//If right index is selected
-		if (selected < count)
+		if (selected < (int)count)
 			return elements[selected];
 		else
 			return nullptr;

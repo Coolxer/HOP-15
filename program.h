@@ -4,6 +4,9 @@
 #include "input.h"
 #include "output.h"
 
+#include "ElementManager.h"
+#include "TestElement.h"
+
 class Program
 {
 private:

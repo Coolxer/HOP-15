@@ -3,6 +3,8 @@
 
 #include "Element.h"
 
+typedef unsigned int size_t;
+
 class ElementManager
 {
 private:

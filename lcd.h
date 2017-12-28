@@ -13,7 +13,7 @@ class Lcd : public Output
 public:
     Lcd();
 
-    void display();
+    void display(TestElement* element);
 };
 
 #endif

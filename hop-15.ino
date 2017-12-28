@@ -1,3 +1,4 @@
+#include "TestElement.h"
 #include "ElementManager.h"
 #include "Element.h"
 #include "input.h"
@@ -10,6 +11,8 @@ void setup()
 {
 	//Date rate in bits per seconds for serial data transmission
 	Serial.begin(9600);
+
+	program.init();
 }
 
 void loop() 

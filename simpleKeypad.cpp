@@ -2,10 +2,10 @@
 
 SimpleKeypad::SimpleKeypad()
 {
-	keypad = Keypad(makeKeymap(keys), rowPins, colPins, 4, 4);
+  
 }
 
-Key SimpleKeypad::getPressedKey()
+Keys SimpleKeypad::getPressedKey()
 {
 	char key = keypad.getKey();
 
