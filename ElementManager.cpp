@@ -8,21 +8,29 @@ ElementManager::ElementManager()
 	elements = nullptr;
 }
 
+ElementManager::~ElementManager()
+{
+	for (size_t i = 0; i < count; i++)
+		delete elements[i];
+
+	delete[] elements;
+}
+
 void ElementManager::resize(size_t size)
 {
 	if (elements != nullptr)
 	{
-		Element* resizedElements = new Element[size];
+		Element** resizedElements = new Element*[size];
 
 		memcpy(resizedElements, elements, count * sizeof(Element));
 	}
 	else
-		elements = new Element[size];
+		elements = new Element*[size];
 
 	count += size - count;
 }
 
-void ElementManager::add(Element element)
+void ElementManager::add(Element* element)
 {
 	resize(count + 1);
 	elements[count - 1] = element;
@@ -37,7 +45,7 @@ Element* ElementManager::getCurrent()
 	{
 		//If right index is selected
 		if (selected < count)
-			return &elements[selected];
+			return elements[selected];
 		else
 			return nullptr;
 	}

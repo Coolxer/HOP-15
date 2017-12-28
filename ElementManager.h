@@ -10,14 +10,15 @@ private:
 	size_t count;
 	//Current selected element index
 	int selected;
-	Element* elements;
+	Element** elements;
 
 	void resize(size_t size);
 
 public:
 	ElementManager();
+	~ElementManager();
 
-	void add(Element element);
+	void add(Element* element);
 	Element* getCurrent();
 };
 
