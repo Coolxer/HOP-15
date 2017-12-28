@@ -13,6 +13,7 @@ private:
 	Element** elements;
 
 	void resize(size_t size);
+	int getIndexOfElement(char* name);
 
 public:
 	ElementManager();
@@ -20,6 +21,7 @@ public:
 
 	void add(Element* element);
 	Element* getCurrent();
+	bool changeElement(char* name);
 };
 
 #endif

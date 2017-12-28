@@ -30,6 +30,19 @@ void ElementManager::resize(size_t size)
 	count += size - count;
 }
 
+int ElementManager::getIndexOfElement(char* name)
+{
+	for (size_t i = 0; i < count; i++)
+	{
+		if (elements[i]->getName() == name)
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}
+
 void ElementManager::add(Element* element)
 {
 	resize(count + 1);
@@ -49,4 +62,17 @@ Element* ElementManager::getCurrent()
 		else
 			return nullptr;
 	}
+}
+
+bool ElementManager::changeElement(char* name)
+{
+	int index = getIndexOfElement(name);
+
+	if (index != -1)
+	{
+		selected = index;
+		return true;
+	}
+
+	return false;
 }
