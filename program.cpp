@@ -18,6 +18,6 @@ void Program::init()
 void Program::step()
 {
 	elementManager.getCurrent()->react(input);
-	output.display(elementManager.getCurrent());
+	output->display(elementManager.getCurrent());
 }
 
