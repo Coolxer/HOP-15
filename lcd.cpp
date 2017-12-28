@@ -2,7 +2,7 @@
 
 Lcd::Lcd()
 {
-  m_lcd.begin(20,4);
+  lcd.begin(20,4);
 }
 
 void Lcd::draw()

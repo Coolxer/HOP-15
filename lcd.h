@@ -2,13 +2,18 @@
 #define lcd_h
 
 #include <LiquidCrystal.h>
-class Lcd
+
+#include "output.h"
+
+class Lcd : public Output
 {
   private:
-    LiquidCrystal m_lcd = LiquidCrystal(12, 11, 5, 4, 3, 2);
-  public:
+    LiquidCrystal lcd = LiquidCrystal(12, 11, 5, 4, 3, 2);
+  
+public:
     Lcd();
-    void draw();
+
+    void display();
 };
 
 #endif
