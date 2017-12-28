@@ -16,10 +16,11 @@ class KeysController
       {'7','8','9','C'},
       {'*','0','#','D'}
     };
+
+	Keypad m_keyPad = Keypad(makeKeymap(keys), rowPins, colPins, 4, 4);
     
   public:
     KeysController();
-    Keypad m_keyPad = Keypad(makeKeymap(keys), rowPins, colPins, 4, 4);
     char getPushedKey();
 };
 

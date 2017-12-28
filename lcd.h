@@ -2,6 +2,7 @@
 #define lcd_h
 
 #include <LiquidCrystal.h>
+
 class Lcd
 {
   private:

@@ -13,6 +13,7 @@ class Main
   private:
     KeysController keysController = KeysController();
     Lcd lcd = Lcd();
+	Motor motor = Motor();
   public:
 
     enum state{MAIN_MENU, TEETH_SELECTING, CYCLES_SELECTING, AFK};

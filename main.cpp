@@ -7,6 +7,7 @@ void Main::init()
 
 void Main::fixedUpdate()
 {
-   Serial.println(keysController.getPushedKey());
+   //Serial.println(keysController.getPushedKey());
+	motor.move();
 }
 
