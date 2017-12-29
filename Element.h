@@ -14,7 +14,7 @@ public:
 	Element(char* name) { this->name = name; };
   virtual ~Element() {};
 
-	virtual void react(Input* input) = 0;
+	virtual bool react(Input* input) = 0;
 
 	void setName(char* name) { this->name = name; };
 	char* getName() { return name; };

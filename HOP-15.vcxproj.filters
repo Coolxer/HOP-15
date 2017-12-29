@@ -21,9 +21,6 @@
     <ClInclude Include="__vm\.HOP-15.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="keyPad.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="lcd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -48,11 +45,17 @@
     <ClInclude Include="ElementManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="simpleKeypad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestElement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="keyPad.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="lcd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,6 +78,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ElementManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="simpleKeypad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

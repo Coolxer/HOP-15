@@ -48,7 +48,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\HOP-15;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\libraries;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\hardware\arduino\avr\libraries;$(ProjectDir)..\libraries;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\hardware\arduino\avr\cores\arduino;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\hardware\arduino\avr\variants\mega;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\hardware\tools\avr\avr\include\;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\hardware\tools\avr\avr\include\avr\;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\hardware\tools\avr\lib\gcc\avr\4.8.1\include;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\hardware\tools\avr\lib\gcc\avr\4.9.2\include;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\HOP-15;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\libraries\LiquidCrystal\src;$(ProjectDir)..\libraries\Keypad\src;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\libraries;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\hardware\arduino\avr\libraries;$(ProjectDir)..\libraries;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\hardware\arduino\avr\cores\arduino;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\hardware\arduino\avr\variants\mega;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\hardware\tools\avr\avr\include\;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\hardware\tools\avr\avr\include\avr\;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\hardware\tools\avr\lib\gcc\avr\4.8.1\include;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\hardware\tools\avr\lib\gcc\avr\4.9.2\include;$(ProjectDir)..\..\..\..\Programs\arduino-1.8.5\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ProjectDir)__vm\.HOP-15.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
       <PreprocessorDefinitions>__AVR_ATmega1280__;F_CPU=16000000L;ARDUINO=10805;ARDUINO_AVR_MEGA;ARDUINO_ARCH_AVR;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -80,10 +80,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Config.h" />
     <ClInclude Include="Element.h" />
     <ClInclude Include="ElementManager.h" />
     <ClInclude Include="input.h" />
-    <ClInclude Include="keyPad.h">
+    <ClInclude Include="simpleKeypad.h">
       <FileType>CppCode</FileType>
     </ClInclude>
     <ClInclude Include="lcd.h">
@@ -99,18 +100,20 @@
     <ClInclude Include="sevSegms.h">
       <FileType>CppCode</FileType>
     </ClInclude>
+    <ClInclude Include="TestElement.h" />
     <ClInclude Include="__vm\.HOP-15.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="ElementManager.cpp" />
     <ClCompile Include="input.cpp" />
-    <ClCompile Include="keyPad.cpp" />
+    <ClCompile Include="simpleKeypad.cpp" />
     <ClCompile Include="lcd.cpp" />
     <ClCompile Include="output.cpp" />
     <ClCompile Include="program.cpp" />
     <ClCompile Include="motor.cpp" />
     <ClCompile Include="sevSegms.cpp" />
+    <ClCompile Include="TestElement.cpp" />
   </ItemGroup>
   <PropertyGroup>
     <DebuggerFlavor>VisualMicroDebugger</DebuggerFlavor>
