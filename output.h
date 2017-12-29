@@ -6,7 +6,7 @@
 class Output
 {
 public:
-	virtual void display(Element* element) = 0;
+	virtual void display(TestElement* element) = 0;
 };
 
 #endif

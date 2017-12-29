@@ -20,7 +20,7 @@ void Motor::move()
 
 void Motor::enable(bool e)
 {
-	if(e)
+	if (e)
 		digitalWrite(ENABLE, LOW);
 	else
 		digitalWrite(ENABLE, HIGH);

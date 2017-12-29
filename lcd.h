@@ -7,13 +7,13 @@
 
 class Lcd : public Output
 {
-  private:
-    LiquidCrystal lcd = LiquidCrystal(12, 11, 5, 4, 3, 2);
-  
-public:
-    Lcd();
+private:
+	LiquidCrystal lcd = LiquidCrystal(40, 42, 44, 46, 48, 50);
 
-    void display(TestElement* element);
+public:
+	Lcd();
+
+	void display(TestElement* element);
 };
 
 #endif

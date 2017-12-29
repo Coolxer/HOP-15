@@ -10,7 +10,7 @@ private:
 
 public:
 	TestElement(char* name) : Element(name) {};
-  ~TestElement() {};
+    ~TestElement() {};
 
 	virtual void react(Input* input);
 	char* getMessage() { return message; };
