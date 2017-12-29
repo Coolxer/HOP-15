@@ -3,7 +3,6 @@
 Motor::Motor()
 {
 	pinMode(enablePin, OUTPUT);
-	//digitalWrite(ENABLE, LOW);
 	enable(true);
 	stepper.begin(rpm, microsteps);
 }
@@ -11,9 +10,7 @@ Motor::Motor()
 void Motor::move()
 {
 	stepper.rotate(360);
-
 	//stepper.move(-MOTOR_STEPS * MICROSTEPS);
-
 	delay(2000);
 }
 
