@@ -64,7 +64,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\hop-15;C:\Users\lukas\Documents\Arduino\libraries\Keypad;C:\Users\lukas\Documents\Arduino\libraries\LiquidCrystal\src;C:\Users\lukas\Documents\Arduino\libraries\StepperDriver-master\src;C:\Users\lukas\Documents\Arduino\libraries\Keypad\utility;$(ProjectDir)..\..\..\3D Printer\arduino\libraries;$(ProjectDir)..\..\..\3D Printer\arduino\hardware\arduino\avr\libraries;C:\Users\lukas\Documents\Arduino\libraries;$(ProjectDir)..\..\..\3D Printer\arduino\hardware\arduino\avr\cores\arduino;$(ProjectDir)..\..\..\3D Printer\arduino\hardware\arduino\avr\variants\mega;C:\Users\lukas\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\avr\include\;C:\Users\lukas\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\avr\include\avr\;C:\Users\lukas\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\lib\gcc\avr\4.8.1\include;C:\Users\lukas\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\lib\gcc\avr\4.9.2\include;C:\Users\lukas\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\hop-15;C:\Users\lukas\Documents\Arduino\libraries\Keypad;C:\Users\lukas\Documents\Arduino\libraries\LiquidCrystal\src;C:\Users\lukas\Documents\Arduino\libraries\StepperDriver-master\src;$(ProjectDir)..\..\..\3D Printer\arduino\libraries;$(ProjectDir)..\..\..\3D Printer\arduino\hardware\arduino\avr\libraries;C:\Users\lukas\Documents\Arduino\libraries;$(ProjectDir)..\..\..\3D Printer\arduino\hardware\arduino\avr\cores\arduino;$(ProjectDir)..\..\..\3D Printer\arduino\hardware\arduino\avr\variants\mega;C:\Users\lukas\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\avr\include\;C:\Users\lukas\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\avr\include\avr\;C:\Users\lukas\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\lib\gcc\avr\4.8.1\include;C:\Users\lukas\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\lib\gcc\avr\4.9.2\include;C:\Users\lukas\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.4-arduino2\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ProjectDir)__vm\.hop-15.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <PreprocessorDefinitions>__AVR_ATmega2560__;F_CPU=16000000L;ARDUINO=10805;ARDUINO_AVR_MEGA2560;ARDUINO_ARCH_AVR;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -84,6 +84,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="buzzer.h" />
     <ClInclude Include="Config.h">
       <FileType>CppCode</FileType>
     </ClInclude>
@@ -120,6 +121,7 @@
     <ClInclude Include="__vm\.hop-15.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="buzzer.cpp" />
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="ElementManager.cpp" />
     <ClCompile Include="input.cpp" />

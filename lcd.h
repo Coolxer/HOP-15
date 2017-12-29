@@ -2,7 +2,6 @@
 #define lcd_h
 
 #include <LiquidCrystal.h>
-
 #include "output.h"
 
 class Lcd : public Output

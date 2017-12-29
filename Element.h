@@ -12,7 +12,7 @@ private:
 
 public:
 	Element(char* name) { this->name = name; };
-  virtual ~Element() {};
+	virtual ~Element() {};
 
 	virtual void react(Input* input) = 0;
 

@@ -10,13 +10,13 @@ ElementManager::ElementManager()
 
 ElementManager::~ElementManager()
 {
-	for (size_t i = 0; i < count; i++)
+	for (byte i = 0; i < count; i++)
 		delete elements[i];
 
 	delete[] elements;
 }
 
-void ElementManager::resize(size_t size)
+void ElementManager::resize(byte size)
 {
 	if (elements != nullptr)
 	{
@@ -32,7 +32,7 @@ void ElementManager::resize(size_t size)
 
 int ElementManager::getIndexOfElement(char* name)
 {
-	for (size_t i = 0; i < count; i++)
+	for (byte i = 0; i < count; i++)
 	{
 		if (elements[i]->getName() == name)
 		{

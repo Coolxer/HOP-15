@@ -1,3 +1,4 @@
+#include "buzzer.h"
 #include "TestElement.h"
 #include "ElementManager.h"
 #include "Element.h"
@@ -7,7 +8,7 @@
 
 Program program = Program();
 
-void setup() 
+void setup()
 {
 	//Date rate in bits per seconds for serial data transmission
 	Serial.begin(9600);
@@ -15,7 +16,7 @@ void setup()
 	program.init();
 }
 
-void loop() 
+void loop()
 {
 	program.step();
 }

@@ -54,6 +54,9 @@
     <ClInclude Include="TestElement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="buzzer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lcd.cpp">
@@ -84,6 +87,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TestElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="buzzer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -11,6 +11,7 @@ C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Release\hop-15
  E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/USBAPI.h \
  E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
  E:\3D\ Printer\arduino\hardware\arduino\avr\variants\mega/pins_arduino.h \
+ C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Release\buzzer.h \
  C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Release\TestElement.h \
  C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Release\Element.h \
  C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Release\input.h \

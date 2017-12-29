@@ -1,6 +1,6 @@
-C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Release\ElementManager.cpp.o: \
- C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Release\ElementManager.cpp \
- C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Release\ElementManager.h \
+C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Release\buzzer.cpp.o: \
+ C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Release\buzzer.cpp \
+ C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Release\buzzer.h \
  E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
  E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/binary.h \
  E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/WCharacter.h \
@@ -11,7 +11,4 @@ C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Release\Elemen
  E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/Printable.h \
  E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/USBAPI.h \
  E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
- E:\3D\ Printer\arduino\hardware\arduino\avr\variants\mega/pins_arduino.h \
- C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Release\Element.h \
- C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Release\input.h \
- C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Release\Config.h
+ E:\3D\ Printer\arduino\hardware\arduino\avr\variants\mega/pins_arduino.h
