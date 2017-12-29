@@ -7,6 +7,9 @@
 #include "ElementManager.h"
 #include "TestElement.h"
 
+#include "simpleKeypad.h"
+#include "lcd.h"
+
 class Program
 {
 private:

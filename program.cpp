@@ -2,12 +2,14 @@
 
 Program::Program()
 {
-
+	input = new SimpleKeypad();
+	output = new Lcd();
 }
 
 Program::~Program()
 {
-
+	delete input;
+	delete output;
 }
 
 void Program::init()
