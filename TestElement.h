@@ -12,7 +12,7 @@ public:
 	TestElement(char* name) : Element(name) {};
     ~TestElement() {};
 
-	virtual void react(Input* input);
+	virtual bool react(Input* input);
 	char* getMessage() { return message; };
 };
 

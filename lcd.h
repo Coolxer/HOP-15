@@ -12,7 +12,7 @@ private:
 public:
 	Lcd();
 
-	void display(TestElement* element);
+	void emit(TestElement* element);
 };
 
 #endif
