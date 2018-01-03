@@ -1,20 +1,20 @@
 #ifndef _ELEMENTMANAGER_h
 #define _ELEMENTMANAGER_h
 
+#include <Arduino.h>
 #include "Element.h"
 
-typedef unsigned int size_t;
 
 class ElementManager
 {
 private:
 	//Count of elements in dynamic array
-	size_t count;
+	byte count;
 	//Current selected element index
 	int selected;
 	Element** elements;
 
-	void resize(size_t size);
+	void resize(byte size);
 	int getIndexOfElement(char* name);
 
 public:

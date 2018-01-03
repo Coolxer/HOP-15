@@ -5,9 +5,9 @@ Lcd::Lcd()
 	lcd.begin(20, 4);
 }
 
-void Lcd::display(TestElement* element)
+void Lcd::emit(TestElement* element)
 {
-	//lcd.clear();
+	lcd.clear();
 	lcd.print(element->getMessage());
 }
 

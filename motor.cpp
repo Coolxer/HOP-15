@@ -2,18 +2,15 @@
 
 Motor::Motor()
 {
-	pinMode(ENABLE, OUTPUT);
-	//digitalWrite(ENABLE, LOW);
+	pinMode(enablePin, OUTPUT);
 	enable(true);
-	stepper.begin(RPM, MICROSTEPS);
+	stepper.begin(rpm, microsteps);
 }
 
 void Motor::move()
 {
 	stepper.rotate(360);
-
 	//stepper.move(-MOTOR_STEPS * MICROSTEPS);
-
 	delay(2000);
 }
 
@@ -21,9 +18,9 @@ void Motor::move()
 void Motor::enable(bool e)
 {
 	if (e)
-		digitalWrite(ENABLE, LOW);
+		digitalWrite(enablePin, LOW);
 	else
-		digitalWrite(ENABLE, HIGH);
+		digitalWrite(enablePin, HIGH);
 
 	isEnable = e;
 }

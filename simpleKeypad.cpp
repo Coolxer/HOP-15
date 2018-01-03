@@ -2,7 +2,7 @@
 
 SimpleKeypad::SimpleKeypad()
 {
-  
+
 }
 
 Keys SimpleKeypad::getPressedKey()

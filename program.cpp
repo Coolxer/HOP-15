@@ -27,7 +27,7 @@ void Program::step()
 	if (element != nullptr)
 	{
 		if(element->react(input))
-			output->display(element);
+			output->emit(element);
 	}
 }
 

@@ -3,10 +3,8 @@
 
 #include "input.h"
 #include "output.h"
-
 #include "ElementManager.h"
 #include "TestElement.h"
-
 #include "simpleKeypad.h"
 #include "lcd.h"
 
@@ -21,9 +19,9 @@ private:
 public:
 	Program();
 	~Program();
-  
-    void init();
-    void step();
+
+	void init();
+	void step();
 };
 
 #endif
