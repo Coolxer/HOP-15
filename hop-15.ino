@@ -1,3 +1,4 @@
+#include "SetValueElement.h"
 #include "buzzer.h"
 #include "TestElement.h"
 #include "ElementManager.h"

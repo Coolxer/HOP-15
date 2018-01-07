@@ -7,12 +7,16 @@
 #include "TestElement.h"
 #include "simpleKeypad.h"
 #include "lcd.h"
+#include "buzzer.h"
+#include "motor.h"
 
 class Program
 {
 private:
-	Output* output;
-	Input* input;
+	Lcd lcd;
+	SimpleKeypad simpleKeypad;
+	Buzzer buzzer;
+	Motor motor;
 
 	ElementManager elementManager;
 

@@ -7,17 +7,18 @@
 
 class Element
 {
-private:
-	char* name;
+protected:
+	char* _name;
+	bool _inited = false;
 
 public:
-	Element(char* name) { this->name = name; };
+	Element(char* name) { _name = name; };
 	virtual ~Element() {};
 
-	virtual bool react(Input* input) = 0;
+	virtual void react() = 0;
 
-	void setName(char* name) { this->name = name; };
-	char* getName() { return name; };
+	void setName(char* name) { _name = name; };
+	char* getName() { return _name; };
 };
 
 #endif

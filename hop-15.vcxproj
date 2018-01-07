@@ -109,6 +109,7 @@
     <ClInclude Include="program.h">
       <FileType>CppCode</FileType>
     </ClInclude>
+    <ClInclude Include="SetValueElement.h" />
     <ClInclude Include="sevSegms.h">
       <FileType>CppCode</FileType>
     </ClInclude>
@@ -129,6 +130,7 @@
     <ClCompile Include="motor.cpp" />
     <ClCompile Include="output.cpp" />
     <ClCompile Include="program.cpp" />
+    <ClCompile Include="SetValueElement.cpp" />
     <ClCompile Include="sevSegms.cpp" />
     <ClCompile Include="simpleKeypad.cpp" />
     <ClCompile Include="TestElement.cpp" />

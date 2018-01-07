@@ -2,14 +2,12 @@
 
 Program::Program()
 {
-	input = new SimpleKeypad();
-	output = new Lcd();
+
 }
 
 Program::~Program()
 {
-	delete input;
-	delete output;
+
 }
 
 void Program::init()
@@ -22,12 +20,6 @@ void Program::init()
 
 void Program::step()
 {
-	Element* element = elementManager.getCurrent();
-
-	if (element != nullptr)
-	{
-		if(element->react(input))
-			output->emit(element);
-	}
+	elementManager.getCurrent()->react();
 }
 

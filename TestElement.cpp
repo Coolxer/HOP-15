@@ -1,6 +1,6 @@
 #include "TestElement.h"
 
-bool TestElement::react(Input* input)
+void TestElement::react()
 {
 	char key = input->getPressedKey();
 
