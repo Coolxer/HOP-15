@@ -100,6 +100,7 @@
     <ClInclude Include="lcd.h">
       <FileType>CppCode</FileType>
     </ClInclude>
+    <ClInclude Include="MenuElement.h" />
     <ClInclude Include="motor.h">
       <FileType>CppCode</FileType>
     </ClInclude>
@@ -127,6 +128,7 @@
     <ClCompile Include="ElementManager.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="lcd.cpp" />
+    <ClCompile Include="MenuElement.cpp" />
     <ClCompile Include="motor.cpp" />
     <ClCompile Include="output.cpp" />
     <ClCompile Include="program.cpp" />

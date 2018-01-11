@@ -15,7 +15,8 @@ public:
 	Element(char* name) { _name = name; };
 	virtual ~Element() {};
 
-	virtual void react() = 0;
+	virtual bool input() = 0;
+	virtual void draw() = 0;
 
 	void setName(char* name) { _name = name; };
 	char* getName() { return _name; };

@@ -14,6 +14,7 @@ private:
 	Element** _items;
 	byte _itemsCount;
 	byte _selectedIndex = 1;
+	bool _isFocused = false;
 
 public:
 	MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, byte itemsCount);
@@ -21,7 +22,8 @@ public:
 
 	bool setElement(byte index, Element* element);
 
-	virtual void react();
+	virtual bool input();
+	virtual void draw();
 };
 
 #endif

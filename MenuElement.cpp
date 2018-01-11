@@ -26,14 +26,48 @@ bool MenuElement::setElement(byte index, Element* element)
 	return false;
 }
 
-void MenuElement::react()
+bool MenuElement::input()
 {
+	if (_simpleKeypad->getPressedKey() == KEY_RETURN)
+	{
+		_isFocused = false;
+		return true;
+	}
+
+	if (_isFocused == true)
+	{
+		if(_items[_selectedIndex] != nullptr)
+			return _items[_selectedIndex]->input();
+	}
+
 	if (_simpleKeypad->getPressedKey() == KEY_UP)
 	{
+		_selectedIndex++;
 
+		if (_selectedIndex < 0)
+			_selectedIndex = _itemsCount - 1;
+
+		return true;
 	}
 	else if (_simpleKeypad->getPressedKey() == KEY_DOWN)
 	{
+		_selectedIndex--;
 
+		if (_selectedIndex > _itemsCount - 1)
+			_selectedIndex = 0;
+
+		return true;
 	}
+	else if (_simpleKeypad->getPressedKey() == KEY_ENTER)
+	{
+		_isFocused = true;
+
+		return true;
+	}
+}
+
+void MenuElement::draw()
+{
+	_lcd->clearLine(3);
+	_lcd->writeLine(3, "(*)POTWIERDZ|(#)WROC");
 }
