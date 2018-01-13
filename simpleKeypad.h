@@ -23,8 +23,10 @@ private:
 	Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, 4, 4);
 
 public:
-	SimpleKeypad();
+	SimpleKeypad() {};
 	Keys getPressedKey();
+
+	void manage(MenuElement* menuElement);
 };
 
 #endif

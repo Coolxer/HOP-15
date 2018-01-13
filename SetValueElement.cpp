@@ -2,12 +2,11 @@
 
 SetValueElement::SetValueElement(char* name,
 								 Lcd* lcd, SimpleKeypad* simpleKeypad,
-								 char* valueName, byte minValue, byte maxValue, byte currentValue, byte stepValue)
+								 byte minValue, byte maxValue, byte currentValue, byte stepValue)
 {
 	_lcd = lcd;
 	_simpleKeypad = simpleKeypad;
 
-	_valueName = valueName;
 	_minValue = minValue;
 	_maxValue = maxValue;
 	_currentValue = currentValue;
@@ -18,24 +17,28 @@ void SetValueElement::react()
 {
 	if (_lcd != nullptr && _simpleKeypad != nullptr)
 	{
-		if (!_inited)
-		{
+		_simpleKeypad->manage(this);
 
-		}
-		else if (_simpleKeypad->getPressedKey() == KEY_UP)
+		if (_needRedraw)
 		{
-			_currentValue += _stepValue;
-
-			if (_currentValue > _maxValue)
-				_currentValue = _maxValue;
-		}
-		else if (_simpleKeypad->getPressedKey() == KEY_DOWN)
-		{
-			_currentValue -= _stepValue;
-
-			if (_currentValue < _minValue)
-				_currentValue = _minValue;
+			_lcd->manage(this);
+			_needRedraw = false;
 		}
 	}
 }
 
+void SetValueElement::increase()
+{
+	_currentValue += _stepValue;
+
+	if (_currentValue > _maxValue)
+		_currentValue = _maxValue;
+}
+
+void SetValueElement::decrease()
+{
+	_currentValue -= _stepValue;
+
+	if (_currentValue < _minValue)
+		_currentValue = _minValue;
+}

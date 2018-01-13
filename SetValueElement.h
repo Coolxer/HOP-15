@@ -7,8 +7,6 @@ private:
 	Lcd* _lcd;
 	SimpleKeypad* _simpleKeypad;
 
-	char* _valueName;
-
 	byte _minValue;
 	byte _maxValue;
 	byte _currentValue;
@@ -17,10 +15,16 @@ private:
 public:
 	SetValueElement(char* name,
 					Lcd* lcd, SimpleKeypad* simpleKeypad,
-					char* valueName, byte minValue, byte maxValue, byte currentValue, byte stepValue) : Element(name);
+					byte minValue, byte maxValue, byte currentValue, byte stepValue) : Element(name);
 	~SetValueElement() {};
 
 	virtual void react();
+
+	void increase();
+	void decrease();
+
+	byte getValue() { return _currentValue; };
+	String getValueStr() { return String(_currentValue); };
 	
 };
 

@@ -51,9 +51,6 @@
     <ClInclude Include="simpleKeypad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TestElement.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="buzzer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -74,25 +71,13 @@
     <ClCompile Include="sevSegms.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Element.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ElementManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="output.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="program.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="simpleKeypad.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="buzzer.cpp">

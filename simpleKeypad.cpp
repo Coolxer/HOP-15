@@ -1,10 +1,5 @@
 #include "simpleKeypad.h"
 
-SimpleKeypad::SimpleKeypad()
-{
-
-}
-
 Keys SimpleKeypad::getPressedKey()
 {
 	char key = keypad.getKey();
@@ -39,5 +34,19 @@ Keys SimpleKeypad::getPressedKey()
 		return KEY_9;
 	else
 		return KEY_NONE;
+}
+
+void SimpleKeypad::manage(MenuElement* menuElement)
+{
+	char key = getPressedKey();
+
+	if (key == KEY_UP)
+		menuElement->up();
+	else if (key == KEY_DOWN)
+		menuElement->down();
+	else if (key == KEY_ENTER)
+		menuElement->enter();
+	else if (key == KEY_RETURN)
+		menuElement->back();
 }
 

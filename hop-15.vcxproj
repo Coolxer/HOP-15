@@ -117,25 +117,18 @@
     <ClInclude Include="simpleKeypad.h">
       <FileType>CppCode</FileType>
     </ClInclude>
-    <ClInclude Include="TestElement.h">
-      <FileType>CppCode</FileType>
-    </ClInclude>
     <ClInclude Include="__vm\.hop-15.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="buzzer.cpp" />
-    <ClCompile Include="Element.cpp" />
     <ClCompile Include="ElementManager.cpp" />
-    <ClCompile Include="input.cpp" />
     <ClCompile Include="lcd.cpp" />
     <ClCompile Include="MenuElement.cpp" />
     <ClCompile Include="motor.cpp" />
-    <ClCompile Include="output.cpp" />
     <ClCompile Include="program.cpp" />
     <ClCompile Include="SetValueElement.cpp" />
     <ClCompile Include="sevSegms.cpp" />
     <ClCompile Include="simpleKeypad.cpp" />
-    <ClCompile Include="TestElement.cpp" />
   </ItemGroup>
   <PropertyGroup>
     <DebuggerFlavor>VisualMicroDebugger</DebuggerFlavor>

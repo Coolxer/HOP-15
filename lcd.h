@@ -40,6 +40,8 @@ public:
 	void writeLine(byte lineNumber, char* text);
 	void writeNewLine(byte lineNumber, char* text);
 
+	void manage(MenuElement* menuElement);
+
 };
 
 #endif

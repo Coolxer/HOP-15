@@ -9,14 +9,13 @@ class Element
 {
 protected:
 	char* _name;
-	bool _inited = false;
+	bool _needRedraw = false;
 
 public:
 	Element(char* name) { _name = name; };
 	virtual ~Element() {};
 
-	virtual bool input() = 0;
-	virtual void draw() = 0;
+	virtual void react() = 0;
 
 	void setName(char* name) { _name = name; };
 	char* getName() { return _name; };

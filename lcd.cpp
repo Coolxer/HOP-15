@@ -1,5 +1,7 @@
 #include "lcd.h"
 
+#include "MenuElement.h"
+
 Lcd::Lcd()
 {
 	_lcd.begin(20, 4);
@@ -51,4 +53,16 @@ void Lcd::writeNewLine(byte lineNumber, char* text)
 {
 	clearLine(lineNumber);
 	writeLine(lineNumber, text);
+}
+
+void Lcd::manage(MenuElement* menuElement)
+{
+	//Line 1
+	if(menuElement->getIndexValue() )
+	writeLine(0, );
+	//Line 2
+	writeNewLine(1, menuElement->);
+	//Line 3
+	//Line 4
+	writeNewLine(3, menuElement->getTip());
 }
