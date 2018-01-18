@@ -1,37 +1,30 @@
 #include "MenuElement.h"
 
-MenuElement::MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, byte itemsCount, char* firstOptionName, char* lastOptionName) : Element(name)
+MenuElement::MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, byte itemsCount) : Element(name)
 {
 	if (itemsCount < 1)
 		_itemsCount = 1;
 	else
 		_itemsCount = itemsCount;
 
-	_items = new SetValueElement*[_itemsCount];
-
-	_firstOptionName = firstOptionName;
-	_lastOptionName = lastOptionName;
-
-	if (_firstOptionName != "")
-		_firstIndex = -1;
-	else
-		_firstIndex = 0;
-
-	if (_lastOptionName != "")
-		_lastIndex = _itemsCount;
-	else
-		_lastIndex = _itemsCount - 1;
+	_itemNames = new char*[_itemsCount];
+	_itemBinds = new ItemBind[_itemsCount];
 }
 
 MenuElement::~MenuElement()
 {
-	delete[] _items;
+	delete[] _itemNames;
+	delete[] _itemBinds;
 }
 
-bool MenuElement::isIndexPointItem()
+bool MenuElement::setElement(byte index, char* description)
 {
-	if (_selectedIndex >= 0 && _selectedIndex < _itemsCount)
+	if (index >= 0 && index < _itemsCount)
+	{
+		_itemNames[index] = description;
 		return true;
+	}
+
 	return false;
 }
 
@@ -39,7 +32,12 @@ bool MenuElement::setElement(byte index, SetValueElement* element)
 {
 	if (index >= 0 && index < _itemsCount)
 	{
-		_items[index] = element;
+		ItemBind tmpItemBind;
+
+		tmpItemBind.index = index;
+		tmpItemBind.item = element;
+
+		_itemBinds[index] = tmpItemBind;
 		return true;
 	}
 
@@ -64,14 +62,15 @@ void MenuElement::up()
 {
 	if (!_isFocused)
 	{
-		if (_selectedIndex == _firstIndex)
-			_selectedIndex = _lastIndex;
+		if (_selectedIndex == 0)
+			_selectedIndex = _itemsCount - 1;
 		else
 			_selectedIndex--;
 	}
 	else
 	{
-		_items[_selectedIndex]->increase();
+		if(_itemBinds[_selectedIndex].item != nullptr)
+			_itemBinds[_selectedIndex].item->increase();
 	}
 	
 }
@@ -80,24 +79,111 @@ void MenuElement::down()
 {
 	if (!_isFocused)
 	{
-		if (_selectedIndex == _lastIndex)
-			_selectedIndex = _firstIndex;
+		if (_selectedIndex == _itemsCount - 1)
+			_selectedIndex = 0;
 		else
 			_selectedIndex++;
 	}
 	else
 	{
-		_items[_selectedIndex]->decrease();
+		if (_itemBinds[_selectedIndex].item != nullptr)
+			_itemBinds[_selectedIndex].item->decrease();
 	}
 }
 
 void MenuElement::enter()
 {
-	if (isIndexPointItem())
+	if (_itemBinds[_selectedIndex].item != nullptr)
 		_isFocused = !_isFocused;
 }
 
-void MenuElement::back()
+char* MenuElement::getNext()
 {
+	byte index;
 
+	if (_selectedIndex == _itemsCount - 1)
+		index = 0;
+	else
+		index = _selectedIndex + 1;
+
+	return _itemNames[index];
+}
+
+char* MenuElement::getCurrent()
+{
+	return _itemNames[_selectedIndex];
+}
+
+char* MenuElement::getPrev()
+{
+	byte index;
+
+	if (_selectedIndex == 0)
+		index = _itemsCount - 1;
+	else
+		index = _selectedIndex - 1;
+
+	return _itemNames[index];
+}
+
+char* MenuElement::getNextValue()
+{
+	byte index;
+
+	if (_selectedIndex == _itemsCount - 1)
+		index = 0;
+	else
+		index = _selectedIndex + 1;
+
+	if (_itemBinds[index].item != nullptr)
+	{
+		String valueStr = _itemBinds[index].item->getValueStr();
+		char valueBuf[6] = { 0 };
+
+		valueStr.toCharArray(valueBuf, 6);
+
+		return valueBuf;
+	}
+
+	return "";
+}
+
+char* MenuElement::getCurrentValue()
+{
+	if (_itemBinds[_selectedIndex].item != nullptr)
+	{
+		String valueStr = _itemBinds[_selectedIndex].item->getValueStr();
+		char valueBuf[6] = {0};
+
+		valueStr.toCharArray(valueBuf, 6);
+
+		return valueBuf;
+	}
+
+	return "";
+}
+
+char* MenuElement::getPrevValue()
+{
+	byte index;
+
+	if (_selectedIndex == 0)
+		index = _itemsCount - 1;
+	else
+		index = _selectedIndex - 1;
+
+	if (_itemBinds[index].item != nullptr)
+	{
+		String valueStr = _itemBinds[index].item->getValueStr();
+		char valueBuf[6] = { 0 };
+
+		valueStr.toCharArray(valueBuf, 6);
+
+		return valueBuf;
+	}
+}
+
+char* MenuElement::getTip()
+{
+	return "Tip message to edit";
 }

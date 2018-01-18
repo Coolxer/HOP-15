@@ -5,29 +5,30 @@
 #include "lcd.h"
 #include "simpleKeypad.h"
 
+struct ItemBind
+{
+	byte index = 0;
+	SetValueElement* item = nullptr;
+};
+
 class MenuElement : public Element
 {
 private:
 	Lcd* _lcd;
 	SimpleKeypad* _simpleKeypad;
 
-	SetValueElement** _items;
+	char** _itemNames;
+	ItemBind* _itemBinds;
+
 	byte _itemsCount;
 	byte _selectedIndex = 1;
 	bool _isFocused = false;
 
-	char* _firstOptionName;
-	char* _lastOptionName;
-
-	byte _firstIndex;
-	byte _lastIndex;
-
-	bool isIndexPointItem();
-
 public:
-	MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, byte itemsCount, char* firstOptionName, char* lastOptionName);
+	MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, byte itemsCount);
 	~MenuElement();
 
+	bool setElement(byte index, char* description);
 	bool setElement(byte index, SetValueElement* element);
 
 	virtual void react();
@@ -35,14 +36,17 @@ public:
 	void up();
 	void down();
 	void enter();
-	void back();
 
-	byte getIndexValue() { return _selectedIndex; };
+	char* getNext();
+	char* getCurrent();
+	char* getPrev();
 
-	bool isFirstOption() { _selectedIndex == -1 ? true : false; };
-	char* getFirstOptionName() { return _firstOptionName; };
-	bool isLastOption() { _selectedIndex == _itemsCount ? true : false; };
-	char* getLastOptionName() { return _lastOptionName; };
+	char* getNextValue();
+	char* getCurrentValue();
+	char* getPrevValue();
+
+	char* getTip();
+
 };
 
 #endif

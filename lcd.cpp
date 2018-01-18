@@ -58,11 +58,62 @@ void Lcd::writeNewLine(byte lineNumber, char* text)
 void Lcd::manage(MenuElement* menuElement)
 {
 	//Line 1
-	if(menuElement->getIndexValue() )
-	writeLine(0, );
+	char* prevName = menuElement->getPrev();
+	if (prevName != "")
+	{
+		writeNewLine(0, "- ");
+		writeLine(0, prevName);
+		changeLeftOrientation(false);
+
+		char* prevNameValue = menuElement->getPrevValue();
+		if (prevNameValue != "")
+		{
+			writeLine(0, prevNameValue);
+			writeLine(0, " /\\");
+		}
+		else
+			writeLine(0, " /\\");
+	}
+	changeLeftOrientation(true);
+
 	//Line 2
-	writeNewLine(1, menuElement->);
+	char* currentName = menuElement->getCurrent();
+	if (currentName != "")
+	{
+		writeNewLine(0, "* ");
+		writeLine(0, currentName);
+		changeLeftOrientation(false);
+
+		char* currentNameValue = menuElement->getPrevValue();
+		if (currentNameValue != "")
+		{
+			writeLine(0, currentNameValue);
+			writeLine(0, " |");
+		}
+		else
+			writeLine(0, " |");
+	}
+	changeLeftOrientation(true);
+	
 	//Line 3
+	char* nextName = menuElement->getCurrent();
+	if (nextName != "")
+	{
+		writeNewLine(0, "- ");
+		writeLine(0, nextName);
+		changeLeftOrientation(false);
+
+		char* nextNameValue = menuElement->getPrevValue();
+		if (nextNameValue != "")
+		{
+			writeLine(0, nextNameValue);
+			writeLine(0, " \\/");
+		}
+		else
+			writeLine(0, " \\/");
+	}
+	changeLeftOrientation(true);
+
 	//Line 4
 	writeNewLine(3, menuElement->getTip());
 }
