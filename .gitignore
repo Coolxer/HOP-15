@@ -322,5 +322,7 @@ ASALocalRun/
 *.binlog
 
 /Debug
+
 *.xml
+
 /.vs
