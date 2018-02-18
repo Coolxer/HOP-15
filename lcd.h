@@ -1,8 +1,13 @@
 #ifndef lcd_h
 #define lcd_h
 
+#include "Arduino.h"
 #include <LiquidCrystal.h>
 #include "output.h"
+#include "MenuElement.h"
+#include "ProgramElement.h"
+
+class IntroductionElement;
 
 struct LinePointerPair
 {
@@ -10,10 +15,10 @@ struct LinePointerPair
 	byte rightPointer;
 };
 
-class Lcd : public Output
+class Lcd
 {
 private:
-	LiquidCrystal _lcd = LiquidCrystal(40, 42, 44, 46, 48, 50);
+	LiquidCrystal _lcd = LiquidCrystal(22, 24, 26, 28, 30, 32);
 
 	byte _cols = 20;
 	byte _rows = 4;
@@ -41,6 +46,8 @@ public:
 	void writeNewLine(byte lineNumber, char* text);
 
 	void manage(MenuElement* menuElement);
+	void manage(IntroductionElement* introductionElement);
+	void manage(ProgramElement* programElement);
 
 };
 

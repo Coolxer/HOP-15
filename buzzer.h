@@ -7,12 +7,12 @@
 class Buzzer: public Output
 {
 private:
-	byte buzzerPin = 52;
+	byte _buzzerPin = 52;
 
 public:
 	Buzzer();
 
-	void emit(TestElement* element);
+	void emit();
 
 	void playOnClicked();
 	void playOnFinish();

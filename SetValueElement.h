@@ -1,6 +1,11 @@
 #ifndef _SETVALUEELEMENT_h
 #define _SETVALUEELEMENT_h
 
+#include "Element.h"
+
+class Lcd;
+class SimpleKeypad;
+
 class SetValueElement: public Element
 {
 private:
@@ -15,7 +20,7 @@ private:
 public:
 	SetValueElement(char* name,
 					Lcd* lcd, SimpleKeypad* simpleKeypad,
-					byte minValue, byte maxValue, byte currentValue, byte stepValue) : Element(name);
+					byte minValue, byte maxValue, byte currentValue, byte stepValue);
 	~SetValueElement() {};
 
 	virtual void react();

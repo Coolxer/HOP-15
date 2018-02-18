@@ -1,6 +1,8 @@
+#include "ProgramElement.h"
+#include "IntroductionElement.h"
 #include "program.h"
 
-Program program = Program();
+Program program;
 
 void setup()
 {

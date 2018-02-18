@@ -2,28 +2,42 @@
 #define motor_h
 
 #include <Arduino.h>
-#include <BasicStepperDriver.h>
-#include <A4988.h>
+#include <Stepper.h>
+#include "ProgramElement.h"
 
 class Motor
 {
 private:
-	byte motorSteps = 200;
-	byte rpm = 120;
-	byte microsteps = 1;
+	byte _motorSteps = 200;
+	byte _speed = 120;
+	byte _microSteps = 1;
 
-	byte dirPin = 6;
-	byte stepPin = 3;
-	byte enablePin = 8;
+	byte _dirPin; //6
+	byte _stepPin; //3
+	byte _enablePin; //8
 
-	BasicStepperDriver stepper = BasicStepperDriver(motorSteps, dirPin, stepPin);
+	float _stepsLeft;
 
-	bool isEnable;
+	Stepper* _stepper;
+
+	bool _isEnable;
 
 public:
-	Motor();
-	void move();
+	Motor(byte dirPin, byte stepPin, byte enablePin);
+	~Motor();
+
+	void setMotorSteps(byte motorSteps);
+	void setMotorSpeed(byte speed);
+	void setMicroSteps(byte microSteps);
+
 	void enable(bool e);
+	
+	void home();
+	void rotate(int angle);
+
+	void manage(ProgramElement* programElement);
+	bool isMoving();
+
 };
 
 #endif

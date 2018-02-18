@@ -1,8 +1,11 @@
 #include "SetValueElement.h"
 
+#include "lcd.h"
+#include "simpleKeypad.h"
+
 SetValueElement::SetValueElement(char* name,
 								 Lcd* lcd, SimpleKeypad* simpleKeypad,
-								 byte minValue, byte maxValue, byte currentValue, byte stepValue)
+								 byte minValue, byte maxValue, byte currentValue, byte stepValue):Element(name)
 {
 	_lcd = lcd;
 	_simpleKeypad = simpleKeypad;
@@ -15,7 +18,7 @@ SetValueElement::SetValueElement(char* name,
 
 void SetValueElement::react()
 {
-	if (_lcd != nullptr && _simpleKeypad != nullptr)
+	/*if (_lcd != nullptr && _simpleKeypad != nullptr)
 	{
 		_simpleKeypad->manage(this);
 
@@ -24,7 +27,7 @@ void SetValueElement::react()
 			_lcd->manage(this);
 			_needRedraw = false;
 		}
-	}
+	}*/
 }
 
 void SetValueElement::increase()

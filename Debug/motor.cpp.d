@@ -1,6 +1,6 @@
-C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega1280\Debug\motor.cpp.o: \
- C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega1280\Debug\motor.cpp \
- C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega1280\Debug\motor.h \
+C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\motor.cpp.o: \
+ C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\motor.cpp \
+ C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\motor.h \
  E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
  E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/binary.h \
  E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/WCharacter.h \
@@ -12,6 +12,9 @@ C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega1280\Debug\motor.cp
  E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/USBAPI.h \
  E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
  E:\3D\ Printer\arduino\hardware\arduino\avr\variants\mega/pins_arduino.h \
- C:\Users\lukas\Documents\Arduino\libraries\StepperDriver-master\src/BasicStepperDriver.h \
- C:\Users\lukas\Documents\Arduino\libraries\StepperDriver-master\src/A4988.h \
- C:\Users\lukas\Documents\Arduino\libraries\StepperDriver-master\src/BasicStepperDriver.h
+ E:\3D\ Printer\arduino\libraries\Stepper\src/Stepper.h \
+ C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\ProgramElement.h \
+ C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\Element.h \
+ C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\input.h \
+ C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\Config.h \
+ C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\ElementManager.h

@@ -1,27 +1,51 @@
 #include "MenuElement.h"
 
-MenuElement::MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, byte itemsCount) : Element(name)
+#include "lcd.h"
+#include "simpleKeypad.h"
+
+MenuElement::MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, SevSegms* sevSegms, Motor* motor, Endstop* endstop, byte itemsCount) : Element(name)
 {
+	_lcd = lcd;
+	_simpleKeypad = simpleKeypad;
+	_sevSegms = sevSegms;
+	_motor = motor;
+	_endstop = endstop;
+
 	if (itemsCount < 1)
 		_itemsCount = 1;
 	else
 		_itemsCount = itemsCount;
 
-	_itemNames = new char*[_itemsCount];
-	_itemBinds = new ItemBind[_itemsCount];
+	_itemNames = new String[_itemsCount];
+	_itemBinds = new ItemBind*[_itemsCount];
+	_itemCalbacks = new (void(*[3])(MenuElement*));
+
+	for (byte i = 0; i < _itemsCount; i++)
+	{
+		_itemBinds[i] = nullptr;
+		_itemCalbacks[i] = nullptr;
+	}
 }
 
 MenuElement::~MenuElement()
 {
 	delete[] _itemNames;
+
+	for (byte i = 0; i < _itemsCount; i++)
+	{
+		delete _itemBinds[i];
+	}
+
 	delete[] _itemBinds;
+	delete[] _itemCalbacks;
 }
 
-bool MenuElement::setElement(byte index, char* description)
+bool MenuElement::setElement(byte index, char* description, void(*callback)(MenuElement*))
 {
 	if (index >= 0 && index < _itemsCount)
 	{
 		_itemNames[index] = description;
+		_itemCalbacks[index] = callback;
 		return true;
 	}
 
@@ -32,12 +56,15 @@ bool MenuElement::setElement(byte index, SetValueElement* element)
 {
 	if (index >= 0 && index < _itemsCount)
 	{
-		ItemBind tmpItemBind;
+		//TODO check if already exist if yes delete
+		ItemBind* tmpItemBind = new ItemBind();
 
-		tmpItemBind.index = index;
-		tmpItemBind.item = element;
+		tmpItemBind->index = index;
+		tmpItemBind->item = element;
 
+		_itemNames[index] = element->getName();
 		_itemBinds[index] = tmpItemBind;
+
 		return true;
 	}
 
@@ -69,10 +96,11 @@ void MenuElement::up()
 	}
 	else
 	{
-		if(_itemBinds[_selectedIndex].item != nullptr)
-			_itemBinds[_selectedIndex].item->increase();
+		if(_itemBinds[_selectedIndex]->item != nullptr)
+			_itemBinds[_selectedIndex]->item->increase();
 	}
-	
+
+	_needRedraw = true;
 }
 
 void MenuElement::down()
@@ -86,18 +114,25 @@ void MenuElement::down()
 	}
 	else
 	{
-		if (_itemBinds[_selectedIndex].item != nullptr)
-			_itemBinds[_selectedIndex].item->decrease();
+		if (_itemBinds[_selectedIndex]->item != nullptr)
+			_itemBinds[_selectedIndex]->item->decrease();
 	}
+
+	_needRedraw = true;
 }
 
 void MenuElement::enter()
 {
-	if (_itemBinds[_selectedIndex].item != nullptr)
+	if (_itemBinds[_selectedIndex]->item != nullptr)
 		_isFocused = !_isFocused;
+
+	if (_itemCalbacks[_selectedIndex] != nullptr)
+		_itemCalbacks[_selectedIndex](this);
+
+	_needRedraw = true;
 }
 
-char* MenuElement::getNext()
+const char* MenuElement::getNext()
 {
 	byte index;
 
@@ -106,15 +141,18 @@ char* MenuElement::getNext()
 	else
 		index = _selectedIndex + 1;
 
-	return _itemNames[index];
+	return _itemNames[index].c_str();
 }
 
-char* MenuElement::getCurrent()
+const char* MenuElement::getCurrent()
 {
-	return _itemNames[_selectedIndex];
+	char valueBuf[20] = { 0 };
+	_itemNames[_selectedIndex].toCharArray(valueBuf, 20);
+
+	return _itemNames[_selectedIndex].c_str();
 }
 
-char* MenuElement::getPrev()
+const char* MenuElement::getPrev()
 {
 	byte index;
 
@@ -123,10 +161,12 @@ char* MenuElement::getPrev()
 	else
 		index = _selectedIndex - 1;
 
-	return _itemNames[index];
+	Serial.println(_itemNames[index]);
+
+	return _itemNames[index].c_str();
 }
 
-char* MenuElement::getNextValue()
+const char* MenuElement::getNextValue()
 {
 	byte index;
 
@@ -135,35 +175,33 @@ char* MenuElement::getNextValue()
 	else
 		index = _selectedIndex + 1;
 
-	if (_itemBinds[index].item != nullptr)
+	if (_itemBinds[index] != nullptr)
 	{
-		String valueStr = _itemBinds[index].item->getValueStr();
-		char valueBuf[6] = { 0 };
-
-		valueStr.toCharArray(valueBuf, 6);
-
-		return valueBuf;
+		byte value = _itemBinds[index]->item->getValue();
+		char valueStr[6] = { 0 };
+		sprintf(valueStr, "%d", value);
+		return valueStr;
 	}
+		//return _itemBinds[index]->item->getValueStr().c_str();
 
 	return "";
 }
 
-char* MenuElement::getCurrentValue()
+const char* MenuElement::getCurrentValue()
 {
-	if (_itemBinds[_selectedIndex].item != nullptr)
+	if (_itemBinds[_selectedIndex] != nullptr)
 	{
-		String valueStr = _itemBinds[_selectedIndex].item->getValueStr();
-		char valueBuf[6] = {0};
-
-		valueStr.toCharArray(valueBuf, 6);
-
-		return valueBuf;
+		byte value = _itemBinds[_selectedIndex]->item->getValue();
+		char valueStr[6] = { 0 };
+		sprintf(valueStr, "%d", value);
+		return valueStr;
 	}
+		//return _itemBinds[_selectedIndex]->item->getValueStr().c_str();
 
 	return "";
 }
 
-char* MenuElement::getPrevValue()
+const char* MenuElement::getPrevValue()
 {
 	byte index;
 
@@ -172,15 +210,16 @@ char* MenuElement::getPrevValue()
 	else
 		index = _selectedIndex - 1;
 
-	if (_itemBinds[index].item != nullptr)
+	if (_itemBinds[index] != nullptr)
 	{
-		String valueStr = _itemBinds[index].item->getValueStr();
-		char valueBuf[6] = { 0 };
-
-		valueStr.toCharArray(valueBuf, 6);
-
-		return valueBuf;
+		byte value = _itemBinds[index]->item->getValue();
+		char valueStr[6] = { 0 };
+		sprintf(valueStr, "%d", value);
+		return valueStr;
 	}
+		//return _itemBinds[index]->item->getValueStr().c_str();
+
+	return "";
 }
 
 char* MenuElement::getTip()

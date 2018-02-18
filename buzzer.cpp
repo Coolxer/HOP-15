@@ -2,19 +2,20 @@
 
 Buzzer::Buzzer()
 {
-	pinMode(buzzerPin, OUTPUT);
+	pinMode(_buzzerPin, OUTPUT);
 }
 
-void Buzzer::emit(TestElement* element)
+void Buzzer::emit()
 {
 
 }
 
 void Buzzer::playOnClicked()
 {
-	tone(buzzerPin, 4000);
+	tone(_buzzerPin, 4000);
 	delay(80);
-	noTone(buzzerPin);
+	noTone(_buzzerPin);
+	delay(80);
 }
 
 void Buzzer::playOnFinish()

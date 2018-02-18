@@ -2,8 +2,8 @@
 #define _ELEMENTMANAGER_h
 
 #include <Arduino.h>
-#include "Element.h"
 
+class Element;
 
 class ElementManager
 {
@@ -24,6 +24,7 @@ public:
 	void add(Element* element);
 	Element* getCurrent();
 	bool changeElement(char* name);
+	void next() { selected++; };
 };
 
 #endif

@@ -2,8 +2,13 @@
 #define _MENUELEMENT_h
 
 #include "SetValueElement.h"
-#include "lcd.h"
-#include "simpleKeypad.h"
+#include "Element.h"
+
+class Lcd;
+class SimpleKeypad;
+class SevSegms;
+class Motor;
+class Endstop;
 
 struct ItemBind
 {
@@ -14,21 +19,25 @@ struct ItemBind
 class MenuElement : public Element
 {
 private:
-	Lcd* _lcd;
-	SimpleKeypad* _simpleKeypad;
-
-	char** _itemNames;
-	ItemBind* _itemBinds;
+	String* _itemNames;
+	ItemBind** _itemBinds;
+	void(**_itemCalbacks)(MenuElement*);
 
 	byte _itemsCount;
 	byte _selectedIndex = 1;
 	bool _isFocused = false;
 
 public:
-	MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, byte itemsCount);
+	Lcd* _lcd;
+	SimpleKeypad* _simpleKeypad;
+	SevSegms* _sevSegms;
+	Motor* _motor;
+	Endstop* _endstop;
+
+	MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, SevSegms* sevSegms, Motor* motor, Endstop* endstop, byte itemsCount);
 	~MenuElement();
 
-	bool setElement(byte index, char* description);
+	bool setElement(byte index, char* description, void(*callback)(MenuElement*));
 	bool setElement(byte index, SetValueElement* element);
 
 	virtual void react();
@@ -37,13 +46,13 @@ public:
 	void down();
 	void enter();
 
-	char* getNext();
-	char* getCurrent();
-	char* getPrev();
+	const char* getNext();
+	const char* getCurrent();
+	const char* getPrev();
 
-	char* getNextValue();
-	char* getCurrentValue();
-	char* getPrevValue();
+	const char* getNextValue();
+	const char* getCurrentValue();
+	const char* getPrevValue();
 
 	char* getTip();
 

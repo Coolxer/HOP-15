@@ -1,5 +1,7 @@
 #include "ElementManager.h"
 
+#include "Element.h"
+
 ElementManager::ElementManager()
 {
 	count = 0;
@@ -47,6 +49,7 @@ void ElementManager::add(Element* element)
 {
 	resize(count + 1);
 	elements[count - 1] = element;
+	element->setElementManager(this);
 }
 
 Element* ElementManager::getCurrent()

@@ -1,8 +1,12 @@
 #include "simpleKeypad.h"
 
+#include "MenuElement.h"
+#include "IntroductionElement.h"
+#include "ProgramElement.h"
+
 Keys SimpleKeypad::getPressedKey()
 {
-	char key = keypad.getKey();
+	char key = _keypad.getKey();
 
 	if (key == '*')
 		return KEY_ENTER;
@@ -40,13 +44,31 @@ void SimpleKeypad::manage(MenuElement* menuElement)
 {
 	char key = getPressedKey();
 
+	if (key != KEY_NONE)
+		_buzzer.playOnClicked();
+
 	if (key == KEY_UP)
 		menuElement->up();
 	else if (key == KEY_DOWN)
 		menuElement->down();
 	else if (key == KEY_ENTER)
 		menuElement->enter();
-	else if (key == KEY_RETURN)
-		menuElement->back();
+	//else if (key == KEY_RETURN)
+	//	menuElement->back();
 }
 
+void SimpleKeypad::manage(IntroductionElement* introductionElement)
+{
+	char key = getPressedKey();
+
+	if (key != KEY_NONE)
+		introductionElement->getElementManager()->next();
+
+}
+
+void SimpleKeypad::manage(ProgramElement* programElement)
+{
+	char key = getPressedKey();
+
+
+}
