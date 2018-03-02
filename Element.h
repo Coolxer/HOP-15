@@ -25,6 +25,8 @@ public:
 
 	void setElementManager(ElementManager* elementManager) { _elementManager = elementManager; };
 	ElementManager* getElementManager() { return _elementManager; };
+
+	void needRedraw() { _needRedraw = true; };
 };
 
 #endif

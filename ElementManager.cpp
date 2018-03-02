@@ -13,7 +13,10 @@ ElementManager::ElementManager()
 ElementManager::~ElementManager()
 {
 	for (byte i = 0; i < count; i++)
-		delete elements[i];
+	{
+		if (elements[i] != nullptr)
+			delete elements[i];
+	}
 
 	delete[] elements;
 }
@@ -47,6 +50,15 @@ int ElementManager::getIndexOfElement(char* name)
 
 void ElementManager::add(Element* element)
 {
+	for (byte i = 0; i < count; i++)
+	{
+		if (elements[i] == nullptr)
+		{
+			elements[i] = element;
+			return;
+		}
+	}
+
 	resize(count + 1);
 	elements[count - 1] = element;
 	element->setElementManager(this);
@@ -78,4 +90,14 @@ bool ElementManager::changeElement(char* name)
 	}
 
 	return false;
+}
+
+void ElementManager::popBackFromSelected()
+{
+	if (selected > 0)
+	{
+		delete elements[selected];
+		selected--;
+		elements[selected]->needRedraw();
+	}
 }

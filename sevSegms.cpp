@@ -15,9 +15,16 @@ void SevSegms::clear()
 	_led->clearDisplay();
 }
 
-void SevSegms::show(char* feathers, char* cycles)
+void SevSegms::show(int feathers, int cycles)
 {						  
-	_led->displayNumber(0, 0);
+	int result = feathers * cycles;
+
+	int unitNumber = result % 10;
+	result /= 10;
+	int tensNumber = result % 10;
+
+	
+	_led->displayNumber(tensNumber, unitNumber);
 	//delay(2);
 }
 

@@ -3,13 +3,15 @@
 #include "lcd.h"
 #include "simpleKeypad.h"
 
-MenuElement::MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, SevSegms* sevSegms, Motor* motor, Endstop* endstop, byte itemsCount) : Element(name)
+MenuElement::MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, SevSegms* sevSegms, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte itemsCount) : Element(name)
 {
 	_lcd = lcd;
 	_simpleKeypad = simpleKeypad;
 	_sevSegms = sevSegms;
-	_motor = motor;
-	_endstop = endstop;
+	_dividerMotor = dividerMotor;
+	_tableMotor = tableMotor;
+	_dividerEndstop = dividerEndstop;
+	_tableEndstop = tableEndstop;
 
 	if (itemsCount < 1)
 		_itemsCount = 1;
@@ -224,5 +226,15 @@ const char* MenuElement::getPrevValue()
 
 char* MenuElement::getTip()
 {
-	return "Tip message to edit";
+	return "A-Gora D-Dol *-Enter";
+}
+
+byte MenuElement::getValueAtIndex(byte index)
+{
+	if (_itemBinds[index] != nullptr)
+	{
+		return _itemBinds[index]->item->getValue();
+	}
+	else
+		return NULL;
 }

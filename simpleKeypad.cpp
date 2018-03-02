@@ -70,5 +70,9 @@ void SimpleKeypad::manage(ProgramElement* programElement)
 {
 	char key = getPressedKey();
 
-
+	if (programElement->isFinished())
+	{
+		if (key == KEY_ENTER)
+			programElement->getElementManager()->popBackFromSelected();
+	}
 }

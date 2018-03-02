@@ -17,7 +17,7 @@ public:
 	~SevSegms();
 
 	void clear();
-	void show(char* feathers, char* cycles);
+	void show(int feathers, int cycles);
 	
 
 	

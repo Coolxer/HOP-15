@@ -1,10 +1,28 @@
 #include "motor.h"
+#include "endstop.h"
 
 Motor::Motor(byte dirPin, byte stepPin, byte enablePin)
 {
 	_dirPin = dirPin;
 	_stepPin = stepPin;
 	_enablePin = enablePin;
+
+	_defaultEndstop = nullptr;
+
+	_stepper = new Stepper(_motorSteps, _dirPin, _stepPin);
+	_stepper->setSpeed(_speed);
+
+	pinMode(_enablePin, OUTPUT);
+	enable(true);
+}
+
+Motor::Motor(byte dirPin, byte stepPin, byte enablePin, Endstop* defaultEndstop)
+{
+	_dirPin = dirPin;
+	_stepPin = stepPin;
+	_enablePin = enablePin;
+
+	_defaultEndstop = defaultEndstop;
 
 	_stepper = new Stepper(_motorSteps, _dirPin, _stepPin);
 	_stepper->setSpeed(_speed);
@@ -46,7 +64,11 @@ void Motor::enable(bool e)
 
 void Motor::home()
 {
-
+	if (_defaultEndstop != nullptr)
+	{
+		while (!_defaultEndstop->isClicked())
+			rotate(-5);
+	}
 }
 
 void Motor::rotate(int angle)
@@ -72,9 +94,9 @@ void Motor::manage(ProgramElement* programElement)
 		programElement->setRotatedInCycle(true);
 
 		byte feather = programElement->getCurrentFeather();
-		byte feathers = programElement->getFeathers();
+		byte feathers = programElement->getFeathersCount();
 		byte cycle = programElement->getCurrentCycle();
-		byte cycles = programElement->getCycles();
+		byte cycles = programElement->getCyclesCount();
 		int rotateAngle = programElement->getRotateAngle();
 
 		//delay(1000);

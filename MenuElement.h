@@ -31,10 +31,12 @@ public:
 	Lcd* _lcd;
 	SimpleKeypad* _simpleKeypad;
 	SevSegms* _sevSegms;
-	Motor* _motor;
-	Endstop* _endstop;
+	Motor* _dividerMotor;
+	Motor* _tableMotor;
+	Endstop* _dividerEndstop;
+	Endstop* _tableEndstop;
 
-	MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, SevSegms* sevSegms, Motor* motor, Endstop* endstop, byte itemsCount);
+	MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, SevSegms* sevSegms, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte itemsCount);
 	~MenuElement();
 
 	bool setElement(byte index, char* description, void(*callback)(MenuElement*));
@@ -55,6 +57,8 @@ public:
 	const char* getPrevValue();
 
 	char* getTip();
+
+	byte getValueAtIndex(byte index);
 
 };
 

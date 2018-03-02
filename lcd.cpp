@@ -130,22 +130,30 @@ void Lcd::manage(IntroductionElement* introductionElement)
 
 void Lcd::manage(ProgramElement* programElement)
 {
-	if(programElement->isFinished())
-		writeNewLine(0, "Zakoñczono");
+	if (programElement->isFinished())
+	{
+		clearScreen();
+		writeNewLine(0, "Zakonczono");
+		writeNewLine(3, "* by wrocic do menu");
+	}
 	else
-		writeNewLine(0, "Przetwarzanie ...");
+	{
+		writeNewLine(0, "Przetwarzanie w toku");
 
-	byte feather = programElement->getCurrentFeather();
-	byte feathers = programElement->getFeathers();
-	byte cycle = programElement->getCurrentCycle();
-	byte cycles = programElement->getCycles();
+		byte feather = programElement->getCurrentFeather();
+		byte feathers = programElement->getFeathersCount();
+		byte cycle = programElement->getCurrentCycle();
+		byte cycles = programElement->getCyclesCount();
 
-	char featherLine[20] = { 0 };
-	char cycleLine[20] = { 0 };
+		char featherLine[20] = { 0 };
+		char cycleLine[20] = { 0 };
 
-	sprintf(featherLine, "Pioro nr %d z %d", feather, feathers);
-	sprintf(cycleLine, "Cykl nr %d z %d", cycle, cycles);
+		sprintf(featherLine, "Pioro nr %d z %d", feather, feathers);
+		sprintf(cycleLine, "Cykl nr %d z %d", cycle, cycles);
 
-	writeNewLine(1, featherLine);
-	writeNewLine(2, cycleLine);
+		writeNewLine(1, featherLine);
+		writeNewLine(2, cycleLine);
+
+		writeNewLine(3, "");
+	}
 }

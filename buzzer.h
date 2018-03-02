@@ -9,10 +9,11 @@ class Buzzer: public Output
 private:
 	byte _buzzerPin = 52;
 
+	void playTone(int tone, int duration);
+	void playNote(char note, int duration);
+
 public:
 	Buzzer();
-
-	void emit();
 
 	void playOnClicked();
 	void playOnFinish();

@@ -25,6 +25,7 @@ public:
 	Element* getCurrent();
 	bool changeElement(char* name);
 	void next() { selected++; };
+	void popBackFromSelected();
 };
 
 #endif

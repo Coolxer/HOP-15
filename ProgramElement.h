@@ -15,44 +15,53 @@ private:
 	Lcd* _lcd;
 	SevSegms* _sevSegms;
 	SimpleKeypad* _simpleKeypad;
+
 	Motor* _dividerMotor;
 	Endstop* _dividerEndstop;
 	Motor* _tableMotor;
 	Endstop* _tableEndstop;
 
-	byte _feathers;
+	byte _feathersCount;
 	byte _currentFeather;
-	byte _cycles;
+
+	byte _cyclesCount;
 	byte _currentCycle;
+
+	//360 divided by feather count
 	int _rotateAngle;
 
-	bool _rotatedInCycle = true;
-	bool _inRotationArea = false;
+	bool _rotatedInPeriod = true;
+	bool _isEndstopClickExecuted = false;
+	bool _isMotorMoveForward = true;
+	int _motorAngleRotateSpeed = 5;
 
 	bool _dividerMotorHomed = false;
 	bool _tableMotorHomed = false;
 
+	//If all two motors are homed initiation is finished and set to true
+	bool _inited = false;
+	//If all cycles and feathers in cycle was processed this flag is set to true
 	bool _finished = false;
 
 public:
-	ProgramElement(char* name, Lcd* lcd, SevSegms* sevSegms, SimpleKeypad* simpleKeypad, Motor* dividerMotor, Endstop* tableEndstop, byte feathers, byte cycles);
+	ProgramElement(char* name, Lcd* lcd, SevSegms* sevSegms, SimpleKeypad* simpleKeypad, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte feathers, byte cycles);
 
 	byte getCurrentFeather() { return _currentFeather; };
 	void setCurrentFeather(byte currentFeather) { _currentFeather = currentFeather; };
-	byte getFeathers() { return _feathers; };
+	byte getFeathersCount() { return _feathersCount; };
 
 	byte getCurrentCycle() { return _currentCycle; };
 	void setCurrentCycle(byte currentCycle) { _currentCycle = currentCycle; };
-	byte getCycles() { return _cycles; };
+	byte getCyclesCount() { return _cyclesCount; };
 	
 	int getRotateAngle() { return _rotateAngle; };
 	bool isFinished() { return _finished; };
 	void finish() { _finished = true; };
 	
 	bool canChangeFeather();
-	bool getInRotationArea() { return _inRotationArea; };
-	void setInRotationArea(bool inRotationArea) { _inRotationArea = inRotationArea; };
-	void setRotatedInCycle(bool rotatedInCycle) { _rotatedInCycle = rotatedInCycle; };
+	bool getInRotationArea() { return _isEndstopClickExecuted; };
+	void setInRotationArea(bool inRotationArea) { _isEndstopClickExecuted = inRotationArea; };
+	void setRotatedInCycle(bool rotatedInCycle) { _rotatedInPeriod = rotatedInCycle; };
 
 	void homeDividerMotor();
 	void homeTableMotor();

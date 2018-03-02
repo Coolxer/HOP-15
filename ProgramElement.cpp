@@ -5,21 +5,23 @@
 #include "motor.h"
 #include "endstop.h"
 
-ProgramElement::ProgramElement(char* name, Lcd* lcd, SevSegms* sevSegms, SimpleKeypad* simpleKeypad, Motor* dividerMotor, Endstop* tableEndstop, byte feathers, byte cycles) : Element(name)
+ProgramElement::ProgramElement(char* name, Lcd* lcd, SevSegms* sevSegms, SimpleKeypad* simpleKeypad, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte feathersCount, byte cyclesCount) : Element(name)
 {
 	_lcd = lcd;
 	_sevSegms = sevSegms;
 	_simpleKeypad = simpleKeypad;
 	_dividerMotor = dividerMotor;
+	_tableMotor = tableMotor;
+	_dividerEndstop = dividerEndstop;
 	_tableEndstop = tableEndstop;
 
-	_feathers = feathers;
-	_cycles = cycles;
+	_feathersCount = feathersCount;
+	_cyclesCount = cyclesCount;
 
 	_currentFeather = 1;
 	_currentCycle = 1;
 
-	_rotateAngle = 360.0 / _feathers;
+	_rotateAngle = 360.0 / _feathersCount;
 }
 
 void ProgramElement::react()
@@ -28,27 +30,72 @@ void ProgramElement::react()
 	{
 		_simpleKeypad->manage(this);
 
-		if (!_dividerMotorHomed)
-			homeDividerMotor();
-		if (!_tableMotorHomed)
-			homeTableMotor();
-
-		_tableEndstop->manage(this);
-
 		if (_needRedraw)
 		{
 			_lcd->manage(this);
 			_needRedraw = false;
 		}
 
-		if (!_finished)
-			_dividerMotor->manage(this);
+		if (!_inited)
+		{
+			_dividerMotor->home();
+			_tableMotor->home();
+
+			_rotatedInPeriod = true;
+			_isEndstopClickExecuted = true;
+
+			_inited = true;
+		}
+		else
+		{
+			if (!_finished)
+			{
+				//Table and divider motor
+				if (_tableEndstop->isClicked())
+				{
+					if (!_isEndstopClickExecuted)
+					{
+						_isMotorMoveForward = !_isMotorMoveForward;
+						_motorAngleRotateSpeed *= -1;
+
+						if (_isMotorMoveForward)
+						{
+							_currentFeather++;
+							if (_currentFeather > _feathersCount)
+							{
+								_currentFeather = 1;
+								_currentCycle++;
+
+								if (_currentCycle > _cyclesCount)
+									finish();
+							}
+
+							if(!_finished)
+								_dividerMotor->rotate(_rotateAngle);
+
+							_needRedraw = true;
+						}
+
+						_isEndstopClickExecuted = true;
+					}
+					else
+						_tableMotor->rotate(_motorAngleRotateSpeed);
+				}
+				else
+				{
+					_tableMotor->rotate(_motorAngleRotateSpeed);
+
+					if (_isEndstopClickExecuted)
+						_isEndstopClickExecuted = false;
+				}
+			}
+		}
 	}
 }
 
 bool ProgramElement::canChangeFeather()
 {
-	if (_inRotationArea && !_rotatedInCycle)
+	if (_isEndstopClickExecuted && !_rotatedInPeriod)
 		return true;
 	return false;
 }
