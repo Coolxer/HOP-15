@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include "output.h"
 
-class Buzzer: public Output
+class Buzzer
 {
 private:
 	byte _buzzerPin = 52;

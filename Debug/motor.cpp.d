@@ -1,21 +1,21 @@
-C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\motor.cpp.o: \
- C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\motor.cpp \
- C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\motor.h \
- E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
- E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/binary.h \
- E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/WCharacter.h \
- E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/WString.h \
- E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/HardwareSerial.h \
- E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/Stream.h \
- E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/Print.h \
- E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/Printable.h \
- E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/USBAPI.h \
- E:\3D\ Printer\arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
- E:\3D\ Printer\arduino\hardware\arduino\avr\variants\mega/pins_arduino.h \
- E:\3D\ Printer\arduino\libraries\Stepper\src/Stepper.h \
- C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\ProgramElement.h \
- C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\Element.h \
- C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\input.h \
- C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\Config.h \
- C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\ElementManager.h \
- C:\Users\lukas\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\endstop.h
+C:\Users\lukasz\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\motor.cpp.o: \
+ C:\Users\lukasz\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\motor.cpp \
+ C:\Users\lukasz\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\motor.h \
+ D:\basic_programs\Arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
+ D:\basic_programs\Arduino\hardware\arduino\avr\cores\arduino/binary.h \
+ D:\basic_programs\Arduino\hardware\arduino\avr\cores\arduino/WCharacter.h \
+ D:\basic_programs\Arduino\hardware\arduino\avr\cores\arduino/WString.h \
+ D:\basic_programs\Arduino\hardware\arduino\avr\cores\arduino/HardwareSerial.h \
+ D:\basic_programs\Arduino\hardware\arduino\avr\cores\arduino/Stream.h \
+ D:\basic_programs\Arduino\hardware\arduino\avr\cores\arduino/Print.h \
+ D:\basic_programs\Arduino\hardware\arduino\avr\cores\arduino/Printable.h \
+ D:\basic_programs\Arduino\hardware\arduino\avr\cores\arduino/USBAPI.h \
+ D:\basic_programs\Arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
+ D:\basic_programs\Arduino\hardware\arduino\avr\variants\mega/pins_arduino.h \
+ D:\basic_programs\Arduino\libraries\Stepper\src/Stepper.h \
+ C:\Users\lukasz\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\ProgramElement.h \
+ C:\Users\lukasz\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\Element.h \
+ C:\Users\lukasz\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\input.h \
+ C:\Users\lukasz\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\Config.h \
+ C:\Users\lukasz\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\ElementManager.h \
+ C:\Users\lukasz\AppData\Local\Temp\VMBuilds\hop-15\mega_atmega2560\Debug\endstop.h
