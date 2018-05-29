@@ -1,15 +1,17 @@
 #include "ProgramElement.h"
 
 #include "lcd.h"
+#include "buzzer.h"
 #include "simpleKeypad.h"
 #include "motor.h"
 #include "endstop.h"
 
-ProgramElement::ProgramElement(char* name, Lcd* lcd, SevSegms* sevSegms, SimpleKeypad* simpleKeypad, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte feathersCount, byte cyclesCount) : Element(name)
+ProgramElement::ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte feathersCount, byte cyclesCount) : Element(name)
 {
 	_lcd = lcd;
-	_sevSegms = sevSegms;
 	_simpleKeypad = simpleKeypad;
+	_buzzer = buzzer;
+	_sevSegms = sevSegms;
 	_dividerMotor = dividerMotor;
 	_tableMotor = tableMotor;
 	_dividerEndstop = dividerEndstop;
@@ -26,9 +28,12 @@ ProgramElement::ProgramElement(char* name, Lcd* lcd, SevSegms* sevSegms, SimpleK
 
 void ProgramElement::react()
 {
-	if (_lcd != nullptr && _sevSegms != nullptr && _simpleKeypad != nullptr && _dividerMotor != nullptr)
+	if (_lcd != nullptr && _simpleKeypad != nullptr && _dividerMotor != nullptr && _tableMotor != nullptr && _dividerEndstop != nullptr && _tableEndstop)
 	{
 		_simpleKeypad->manage(this);
+
+		if (_simpleKeypad->getPressedKey() != KEY_NONE)
+			_buzzer->playOnPress();
 
 		if (_needRedraw)
 		{

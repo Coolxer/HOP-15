@@ -4,8 +4,9 @@
 #include "Element.h"
 
 class Lcd;
-class SevSegms;
 class SimpleKeypad;
+class Buzzer;
+class SevSegms;
 class Motor;
 class Endstop;
 
@@ -13,8 +14,10 @@ class ProgramElement : public Element
 {
 private:
 	Lcd* _lcd;
-	SevSegms* _sevSegms;
 	SimpleKeypad* _simpleKeypad;
+	SevSegms* _sevSegms;
+
+	Buzzer* _buzzer;
 
 	Motor* _dividerMotor;
 	Endstop* _dividerEndstop;
@@ -44,7 +47,7 @@ private:
 	bool _finished = false;
 
 public:
-	ProgramElement(char* name, Lcd* lcd, SevSegms* sevSegms, SimpleKeypad* simpleKeypad, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte feathers, byte cycles);
+	ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte feathers, byte cycles);
 
 	byte getCurrentFeather() { return _currentFeather; };
 	void setCurrentFeather(byte currentFeather) { _currentFeather = currentFeather; };

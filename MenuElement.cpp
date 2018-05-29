@@ -2,11 +2,13 @@
 
 #include "lcd.h"
 #include "simpleKeypad.h"
+#include "buzzer.h"
 
-MenuElement::MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, SevSegms* sevSegms, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte itemsCount) : Element(name)
+MenuElement::MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte itemsCount) : Element(name)
 {
 	_lcd = lcd;
 	_simpleKeypad = simpleKeypad;
+	_buzzer = buzzer;
 	_sevSegms = sevSegms;
 	_dividerMotor = dividerMotor;
 	_tableMotor = tableMotor;
@@ -78,6 +80,9 @@ void MenuElement::react()
 	if (_lcd != nullptr && _simpleKeypad != nullptr)
 	{
 		_simpleKeypad->manage(this);
+
+		if (_simpleKeypad->getPressedKey() != KEY_NONE)
+			_buzzer->playOnPress();
 
 		if (_needRedraw)
 		{

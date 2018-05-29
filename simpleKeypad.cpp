@@ -44,9 +44,6 @@ void SimpleKeypad::manage(MenuElement* menuElement)
 {
 	char key = getPressedKey();
 
-	if (key != KEY_NONE)
-		_buzzer.playOnClicked();
-
 	if (key == KEY_UP)
 		menuElement->up();
 	else if (key == KEY_DOWN)
@@ -63,7 +60,6 @@ void SimpleKeypad::manage(IntroductionElement* introductionElement)
 
 	if (key != KEY_NONE)
 		introductionElement->getElementManager()->next();
-
 }
 
 void SimpleKeypad::manage(ProgramElement* programElement)

@@ -6,6 +6,7 @@
 
 class Lcd;
 class SimpleKeypad;
+class Buzzer;
 class SevSegms;
 class Motor;
 class Endstop;
@@ -30,13 +31,14 @@ private:
 public:
 	Lcd* _lcd;
 	SimpleKeypad* _simpleKeypad;
+	Buzzer* _buzzer;
 	SevSegms* _sevSegms;
 	Motor* _dividerMotor;
 	Motor* _tableMotor;
 	Endstop* _dividerEndstop;
 	Endstop* _tableEndstop;
 
-	MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, SevSegms* sevSegms, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte itemsCount);
+	MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte itemsCount);
 	~MenuElement();
 
 	bool setElement(byte index, char* description, void(*callback)(MenuElement*));

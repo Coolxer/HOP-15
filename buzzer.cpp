@@ -5,7 +5,7 @@ Buzzer::Buzzer()
 	pinMode(_buzzerPin, OUTPUT);
 }
 
-void Buzzer::playOnClicked()
+void Buzzer::playOnPress()
 {
 	tone(_buzzerPin, 4000);
 	delay(80);

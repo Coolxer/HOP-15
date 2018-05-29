@@ -15,7 +15,7 @@ private:
 public:
 	Buzzer();
 
-	void playOnClicked();
+	void playOnPress();
 	void playOnFinish();
 };
 

@@ -5,7 +5,6 @@
 #include <Keypad.h>
 #include "Config.h"
 #include "input.h"
-#include "buzzer.h"
 
 class MenuElement;
 class IntroductionElement;
@@ -25,8 +24,6 @@ private:
 	};
 
 	Keypad _keypad = Keypad(makeKeymap(_keys), _rowPins, _colPins, 4, 4);
-
-	Buzzer _buzzer;
 
 public:
 	SimpleKeypad() {};
