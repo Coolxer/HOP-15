@@ -15,7 +15,7 @@ private:
 	Element** elements;
 
 	void resize(byte size);
-	int getIndexOfElement(char* name);
+	byte getIndexOfElement(char* name);
 
 public:
 	ElementManager();

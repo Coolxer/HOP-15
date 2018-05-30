@@ -15,10 +15,10 @@ void Buzzer::playOnPress()
 
 void Buzzer::playOnFinish()
 {
-	int length = 15; // the number of notes
+	byte length = 15; // the number of notes
 	char notes[] = "ccggaag ffeeddc ggffeed ggffeed ccggaag ffeeddc "; // a space represents a rest
-	int beats[] = { 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 4 };
-	int tempo = 200;
+	byte beats[] = { 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 4 };
+	byte tempo = 200;
 
 	for (int i = 0; i < length; i++) 
 	{

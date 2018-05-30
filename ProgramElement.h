@@ -31,12 +31,12 @@ private:
 	byte _currentCycle;
 
 	//360 divided by feather count
-	int _rotateAngle;
+	byte _rotateAngle;
 
 	bool _rotatedInPeriod = true;
 	bool _isEndstopClickExecuted = false;
 	bool _isMotorMoveForward = true;
-	int _motorAngleRotateSpeed = 5;
+	byte _motorAngleRotateSpeed = 5;
 
 	bool _dividerMotorHomed = false;
 	bool _tableMotorHomed = false;

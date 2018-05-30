@@ -35,7 +35,7 @@ void ElementManager::resize(byte size)
 	count += size - count;
 }
 
-int ElementManager::getIndexOfElement(char* name)
+byte ElementManager::getIndexOfElement(char* name)
 {
 	for (byte i = 0; i < count; i++)
 	{
