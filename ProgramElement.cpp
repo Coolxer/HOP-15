@@ -2,6 +2,7 @@
 
 #include "lcd.h"
 #include "buzzer.h"
+#include "sevSegms.h"
 #include "simpleKeypad.h"
 #include "motor.h"
 #include "endstop.h"
@@ -38,9 +39,13 @@ void ProgramElement::react()
 		if (_needRedraw)
 		{
 			_lcd->manage(this);
+			_sevSegms->manage(this);
 			_needRedraw = false;
 		}
 
+		if (_finished)
+			_buzzer->playOnFinish();
+			
 		if (!_inited)
 		{
 			_dividerMotor->home();
@@ -120,10 +125,4 @@ void ProgramElement::homeTableMotor()
 		_tableMotor->rotate(-1);
 	else
 		_tableMotorHomed = true;
-}
-
-void ProgramElement::finish()
-{
-	_finished = true;
-	_buzzer->playOnFinish();
 }

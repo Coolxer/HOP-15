@@ -2,30 +2,28 @@
 
 SevSegms::SevSegms()
 {
-	_led = new LEDDisplay(2, _digitFlagPins, _segmentPins, _decimalPointPin);
+	_sevSeg = new SevSeg();
+	_sevSeg->begin(COMMON_ANODE, _numDigits, _digitPins, _segmentPins);
 }
 
 SevSegms::~SevSegms()
 {
-	delete _led;
+	delete _sevSeg;
 }
 
-void SevSegms::clear()
+void SevSegms::manage(ProgramElement* programElement)
 {
-	_led->clearDisplay();
-}
+	byte feather = programElement->getCurrentFeather();
+	byte feathers = programElement->getFeathersCount();
+	byte cycle = programElement->getCurrentCycle();
+	byte cycles = programElement->getCyclesCount();
 
-void SevSegms::show(byte feathers, byte cycles)
-{						  
-	byte result = feathers * cycles;
+	_number = (feathers * cycles) - (feather * cycle);
 
-	byte unitNumber = result % 10;
-	result /= 10;
-	byte tensNumber = result % 10;
+	_sevSeg->setNumber(_number, 0);
+	_sevSeg->refreshDisplay();
 
-	
-	_led->displayNumber(tensNumber, unitNumber);
-	//delay(2);
+	Serial.println(_number);
 }
 
 

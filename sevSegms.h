@@ -2,24 +2,26 @@
 #define SEVSEGMS_h
 
 #include <Arduino.h>
-#include <LEDDisplay.h>
+#include <SevSeg.h>
+#include "ProgramElement.h"
 
 class SevSegms
 {
 private:
-	LEDDisplay* _led;
-	int _digitFlagPins[2] = { 35, 37 };
-	int _segmentPins[8] = { 41, 39, 23, 29, 27, 33, 31, 25 };
-	int _decimalPointPin = 9;
+
+	SevSeg* _sevSeg;
+	
+	byte _numDigits = 2;
+	byte _digitPins[2] = { 35, 37 };
+	byte _segmentPins[8] = { 41, 39, 23, 29, 27, 33, 31, 25 };
+
+	byte _number;
 
 public:
 	SevSegms();
 	~SevSegms();
 
-	void clear();
-	void show(byte feathers, byte cycles);
-	
-
+	void manage(ProgramElement* programElement);
 	
 };
 

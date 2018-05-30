@@ -32,7 +32,7 @@ public:
 	Lcd* _lcd;
 	SimpleKeypad* _simpleKeypad;
 	Buzzer* _buzzer;
-	SevSegms* _sevSegms;
+	SevSegms *_sevSegms;
 	Motor* _dividerMotor;
 	Motor* _tableMotor;
 	Endstop* _dividerEndstop;

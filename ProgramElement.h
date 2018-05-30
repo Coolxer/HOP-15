@@ -15,9 +15,8 @@ class ProgramElement : public Element
 private:
 	Lcd* _lcd;
 	SimpleKeypad* _simpleKeypad;
-	SevSegms* _sevSegms;
-
 	Buzzer* _buzzer;
+	SevSegms* _sevSegms;
 
 	Motor* _dividerMotor;
 	Endstop* _dividerEndstop;
@@ -59,7 +58,7 @@ public:
 	
 	int getRotateAngle() { return _rotateAngle; };
 	bool isFinished() { return _finished; };
-	void finish();
+	void finish() { _finished = true; };
 	
 	bool canChangeFeather();
 	bool getInRotationArea() { return _isEndstopClickExecuted; };
