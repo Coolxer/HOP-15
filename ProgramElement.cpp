@@ -32,8 +32,8 @@ void ProgramElement::react()
 	{
 		_simpleKeypad->manage(this);
 
-		if (_simpleKeypad->getPressedKey() != KEY_NONE)
-			_buzzer->playOnPress();
+		//if (_simpleKeypad->getKey() != KEY_NONE)
+		//	_buzzer->playOnPress();
 
 		if (_needRedraw)
 		{
@@ -120,4 +120,10 @@ void ProgramElement::homeTableMotor()
 		_tableMotor->rotate(-1);
 	else
 		_tableMotorHomed = true;
+}
+
+void ProgramElement::finish()
+{
+	_finished = true;
+	_buzzer->playOnFinish();
 }

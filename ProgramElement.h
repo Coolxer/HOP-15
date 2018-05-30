@@ -59,7 +59,7 @@ public:
 	
 	int getRotateAngle() { return _rotateAngle; };
 	bool isFinished() { return _finished; };
-	void finish() { _finished = true; };
+	void finish();
 	
 	bool canChangeFeather();
 	bool getInRotationArea() { return _isEndstopClickExecuted; };

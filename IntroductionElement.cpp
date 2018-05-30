@@ -13,7 +13,7 @@ void IntroductionElement::react()
 	{
 		_simpleKeypad->manage(this);
 
-		if (_simpleKeypad->getPressedKey() != KEY_NONE)
+		if (_simpleKeypad->getKey() != KEY_NONE)
 			_buzzer->playOnPress();
 
 		if (_needRedraw)
