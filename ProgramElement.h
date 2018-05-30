@@ -45,6 +45,9 @@ private:
 	//If all cycles and feathers in cycle was processed this flag is set to true
 	bool _finished = false;
 
+	//If the process is ended but before buzzer's melody 
+	bool _finilized = false;
+
 public:
 	ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte feathers, byte cycles);
 

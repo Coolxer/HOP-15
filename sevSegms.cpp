@@ -18,7 +18,7 @@ void SevSegms::manage(ProgramElement* programElement)
 	byte cycle = programElement->getCurrentCycle();
 	byte cycles = programElement->getCyclesCount();
 
-	_number = (feathers * cycles) - (feather * cycle);
+	_number = (feathers * cycles) - (feather * cycle) + 1;
 
 	_sevSeg->setNumber(_number, 0);
 	_sevSeg->refreshDisplay();

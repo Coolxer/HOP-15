@@ -33,8 +33,8 @@ void ProgramElement::react()
 	{
 		_simpleKeypad->manage(this);
 
-		//if (_simpleKeypad->getKey() != KEY_NONE)
-		//	_buzzer->playOnPress();
+		if (_simpleKeypad->getKey() != KEY_NONE)
+			_buzzer->playOnPress();
 
 		if (_needRedraw)
 		{
@@ -43,9 +43,6 @@ void ProgramElement::react()
 			_needRedraw = false;
 		}
 
-		if (_finished)
-			_buzzer->playOnFinish();
-			
 		if (!_inited)
 		{
 			_dividerMotor->home();
@@ -99,6 +96,15 @@ void ProgramElement::react()
 						_isEndstopClickExecuted = false;
 				}
 			}
+			else
+			{
+				if (!_finilized)
+				{
+					_buzzer->playOnFinish();
+					_finilized = true;
+				}
+			}
+				
 		}
 	}
 }
