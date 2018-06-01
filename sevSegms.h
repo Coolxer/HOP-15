@@ -9,17 +9,16 @@ class SevSegms
 {
 private:
 
-	SevSeg* _sevSeg;
+	SevSeg _sevSeg;
 	
 	byte _numDigits = 2;
-	byte _digitPins[2] = { 35, 37 };
+	byte _digitPins[2] = { 37, 35 };
 	byte _segmentPins[8] = { 41, 39, 23, 29, 27, 33, 31, 25 };
 
 	byte _number;
 
 public:
 	SevSegms();
-	~SevSegms();
 
 	void manage(ProgramElement* programElement);
 	

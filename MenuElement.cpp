@@ -168,7 +168,7 @@ const char* MenuElement::getPrev()
 	else
 		index = _selectedIndex - 1;
 
-	Serial.println(_itemNames[index]);
+	//Serial.println(_itemNames[index]);
 
 	return _itemNames[index].c_str();
 }

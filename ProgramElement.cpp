@@ -31,17 +31,22 @@ void ProgramElement::react()
 {
 	if (_lcd != nullptr && _simpleKeypad != nullptr && _dividerMotor != nullptr && _tableMotor != nullptr && _dividerEndstop != nullptr && _tableEndstop)
 	{
+		if (_needRedraw)
+		{
+			_lcd->manage(this);
+			_needRedraw = false;
+		}
+
+		if (x)
+		{
+			_sevSegms->manage(this);
+			x = false;
+		}
+
 		_simpleKeypad->manage(this);
 
 		if (_simpleKeypad->getKey() != KEY_NONE)
 			_buzzer->playOnPress();
-
-		if (_needRedraw)
-		{
-			_lcd->manage(this);
-			_sevSegms->manage(this);
-			_needRedraw = false;
-		}
 
 		if (!_inited)
 		{
@@ -81,6 +86,7 @@ void ProgramElement::react()
 								_dividerMotor->rotate(_rotateAngle);
 
 							_needRedraw = true;
+							x = true;
 						}
 
 						_isEndstopClickExecuted = true;

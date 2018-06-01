@@ -2,13 +2,8 @@
 
 SevSegms::SevSegms()
 {
-	_sevSeg = new SevSeg();
-	_sevSeg->begin(COMMON_ANODE, _numDigits, _digitPins, _segmentPins);
-}
-
-SevSegms::~SevSegms()
-{
-	delete _sevSeg;
+	_sevSeg.begin(COMMON_ANODE, _numDigits, _digitPins, _segmentPins);
+	_sevSeg.setBrightness(50);
 }
 
 void SevSegms::manage(ProgramElement* programElement)
@@ -20,10 +15,8 @@ void SevSegms::manage(ProgramElement* programElement)
 
 	_number = (feathers * cycles) - (feather * cycle) + 1;
 
-	_sevSeg->setNumber(_number, 0);
-	_sevSeg->refreshDisplay();
-
-	Serial.println(_number);
+	_sevSeg.setNumber(_number, 0);
+	_sevSeg.refreshDisplay();
 }
 
 
