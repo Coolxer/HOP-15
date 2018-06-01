@@ -1,11 +1,11 @@
 #include "ProgramElement.h"
 
-#include "lcd.h"
-#include "buzzer.h"
-#include "sevSegms.h"
-#include "simpleKeypad.h"
-#include "motor.h"
-#include "endstop.h"
+#include "Lcd.h"
+#include "Buzzer.h"
+#include "SevSegms.h"
+#include "SimpleKeypad.h"
+#include "StepperMotor.h"
+#include "Endstop.h"
 
 ProgramElement::ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte feathersCount, byte cyclesCount) : Element(name)
 {

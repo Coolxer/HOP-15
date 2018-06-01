@@ -1,7 +1,7 @@
 #include "SetValueElement.h"
 
-#include "lcd.h"
-#include "simpleKeypad.h"
+#include "Lcd.h"
+#include "SimpleKeypad.h"
 
 SetValueElement::SetValueElement(char* name,
 								 Lcd* lcd, SimpleKeypad* simpleKeypad,

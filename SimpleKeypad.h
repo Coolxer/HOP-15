@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include <Keypad.h>
 #include "Config.h"
-#include "input.h"
+#include "Input.h"
 
 class MenuElement;
 class IntroductionElement;

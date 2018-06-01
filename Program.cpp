@@ -1,4 +1,4 @@
-#include "program.h"
+#include "Program.h"
 
 Program::Program()
 {

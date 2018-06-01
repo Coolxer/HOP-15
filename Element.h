@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#include "input.h"
+#include "Input.h"
 #include "ElementManager.h"
 
 class Element

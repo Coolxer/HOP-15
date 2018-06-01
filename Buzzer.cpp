@@ -1,4 +1,4 @@
-#include "buzzer.h"
+#include "Buzzer.h"
 
 Buzzer::Buzzer()
 {

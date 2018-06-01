@@ -1,18 +1,18 @@
 #ifndef program_h
 #define program_h
 
-#include "input.h"
-#include "output.h"
+#include "Input.h"
+#include "Output.h"
 #include "ElementManager.h"
-#include "simpleKeypad.h"
-#include "lcd.h"
-#include "sevSegms.h"
-#include "buzzer.h"
-#include "motor.h"
+#include "SimpleKeypad.h"
+#include "Lcd.h"
+#include "SevSegms.h"
+#include "Buzzer.h"
+#include "StepperMotor.h"
 #include "MenuElement.h"
 #include "IntroductionElement.h"
 #include "ProgramElement.h"
-#include "endstop.h"
+#include "Endstop.h"
 
 #include <Stepper.h>
 

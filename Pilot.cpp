@@ -1,4 +1,4 @@
-#include "pilot.h"
+#include "Pilot.h"
 
 Pilot::Pilot()
 {

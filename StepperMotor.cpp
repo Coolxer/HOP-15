@@ -1,5 +1,5 @@
-#include "motor.h"
-#include "endstop.h"
+#include "StepperMotor.h"
+#include "Endstop.h"
 
 Motor::Motor(byte dirPin, byte stepPin, byte enablePin)
 {

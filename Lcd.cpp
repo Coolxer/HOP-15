@@ -1,4 +1,4 @@
-#include "lcd.h"
+#include "Lcd.h"
 
 #include "MenuElement.h"
 #include "IntroductionElement.h"

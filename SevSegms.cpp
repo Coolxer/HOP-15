@@ -1,4 +1,4 @@
-#include "sevSegms.h"
+#include "SevSegms.h"
 
 SevSegms::SevSegms()
 {

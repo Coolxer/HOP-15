@@ -2,7 +2,7 @@
 #define _BUZZER_h
 
 #include <Arduino.h>
-#include "output.h"
+#include "Output.h"
 
 class Buzzer
 {

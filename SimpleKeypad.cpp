@@ -1,10 +1,10 @@
-#include "simpleKeypad.h"
+#include "SimpleKeypad.h"
 
 #include "MenuElement.h"
 #include "IntroductionElement.h"
 #include "ProgramElement.h"
 
-#include "buzzer.h"
+#include "Buzzer.h"
 
 Keys SimpleKeypad::getPressedKey()
 {

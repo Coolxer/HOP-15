@@ -1,8 +1,8 @@
 #include "MenuElement.h"
 
-#include "lcd.h"
-#include "simpleKeypad.h"
-#include "buzzer.h"
+#include "Lcd.h"
+#include "SimpleKeypad.h"
+#include "Buzzer.h"
 
 MenuElement::MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte itemsCount) : Element(name)
 {

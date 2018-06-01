@@ -2,9 +2,9 @@
 #define _INTRODUCTIONELEMENT_h
 
 #include "Element.h"
-#include "lcd.h"
-#include "simpleKeypad.h"
-#include "buzzer.h"
+#include "Lcd.h"
+#include "SimpleKeypad.h"
+#include "Buzzer.h"
 
 class IntroductionElement : public Element
 {
