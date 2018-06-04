@@ -30,17 +30,12 @@ ProgramElement::ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad,
 void ProgramElement::react()
 {
 	if (_lcd != nullptr && _simpleKeypad != nullptr && _dividerMotor != nullptr && _tableMotor != nullptr && _dividerEndstop != nullptr && _tableEndstop)
-	{
+	{	
 		if (_needRedraw)
 		{
 			_lcd->manage(this);
-			_needRedraw = false;
-		}
-
-		if (x)
-		{
 			_sevSegms->manage(this);
-			x = false;
+			_needRedraw = false;
 		}
 
 		_simpleKeypad->manage(this);
@@ -86,7 +81,6 @@ void ProgramElement::react()
 								_dividerMotor->rotate(_rotateAngle);
 
 							_needRedraw = true;
-							x = true;
 						}
 
 						_isEndstopClickExecuted = true;

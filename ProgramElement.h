@@ -48,8 +48,6 @@ private:
 	//If the process is ended but before buzzer's melody 
 	bool _finilized = false;
 
-	bool x = true;
-
 public:
 	ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte feathers, byte cycles);
 
