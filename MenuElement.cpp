@@ -4,7 +4,7 @@
 #include "SimpleKeypad.h"
 #include "Buzzer.h"
 
-MenuElement::MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte itemsCount) : Element(name)
+MenuElement::MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, StepperMotor* dividerMotor, StepperMotor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte itemsCount) : Element(name)
 {
 	_lcd = lcd;
 	_simpleKeypad = simpleKeypad;

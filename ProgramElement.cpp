@@ -7,7 +7,7 @@
 #include "StepperMotor.h"
 #include "Endstop.h"
 
-ProgramElement::ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte feathersCount, byte cyclesCount) : Element(name)
+ProgramElement::ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, StepperMotor* dividerMotor, StepperMotor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte feathersCount, byte cyclesCount) : Element(name)
 {
 	_lcd = lcd;
 	_simpleKeypad = simpleKeypad;
@@ -77,8 +77,11 @@ void ProgramElement::react()
 									finish();
 							}
 
-							if(!_finished)
+							if (!_finished)
+							{
+
 								_dividerMotor->rotate(_rotateAngle);
+							}
 
 							_needRedraw = true;
 						}
@@ -98,10 +101,10 @@ void ProgramElement::react()
 			}
 			else
 			{
-				if (!_finilized)
+				if (!_finalized)
 				{
 					_buzzer->playOnFinish();
-					_finilized = true;
+					_finalized = true;
 				}
 			}
 				

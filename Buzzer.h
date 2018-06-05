@@ -7,7 +7,7 @@
 class Buzzer
 {
 private:
-	byte _buzzerPin = 52;
+	byte _pin = 52;
 
 	void playTone(int tone, int duration);
 	void playNote(char note, int duration);

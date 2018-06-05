@@ -22,14 +22,12 @@ void DcMotor::moveLeft()
 {
 	digitalWrite(_dirPinA, HIGH);
 	digitalWrite(_dirPinB, LOW);
-	//delay(3000);
 }
 
 void DcMotor::moveRight()
 {
-	digitalWrite(_dirPinB, HIGH);
 	digitalWrite(_dirPinA, LOW);
-	//delay(3000);
+	digitalWrite(_dirPinB, HIGH);
 }
 
 void DcMotor::manage(ProgramElement* programElement)

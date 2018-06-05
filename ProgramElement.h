@@ -7,7 +7,7 @@ class Lcd;
 class SimpleKeypad;
 class Buzzer;
 class SevSegms;
-class Motor;
+class StepperMotor;
 class Endstop;
 
 class ProgramElement : public Element
@@ -18,9 +18,9 @@ private:
 	Buzzer* _buzzer;
 	SevSegms* _sevSegms;
 
-	Motor* _dividerMotor;
+	StepperMotor* _dividerMotor;
 	Endstop* _dividerEndstop;
-	Motor* _tableMotor;
+	StepperMotor* _tableMotor;
 	Endstop* _tableEndstop;
 
 	byte _feathersCount;
@@ -46,10 +46,10 @@ private:
 	bool _finished = false;
 
 	//If the process is ended but before buzzer's melody 
-	bool _finilized = false;
+	bool _finalized = false;
 
 public:
-	ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, Motor* dividerMotor, Motor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte feathers, byte cycles);
+	ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, StepperMotor* dividerMotor, StepperMotor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte feathers, byte cycles);
 
 	byte getCurrentFeather() { return _currentFeather; };
 	void setCurrentFeather(byte currentFeather) { _currentFeather = currentFeather; };

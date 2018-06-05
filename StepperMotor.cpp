@@ -1,7 +1,7 @@
 #include "StepperMotor.h"
 #include "Endstop.h"
 
-Motor::Motor(byte dirPin, byte stepPin, byte enablePin)
+StepperMotor::StepperMotor(byte dirPin, byte stepPin, byte enablePin)
 {
 	_dirPin = dirPin;
 	_stepPin = stepPin;
@@ -16,7 +16,7 @@ Motor::Motor(byte dirPin, byte stepPin, byte enablePin)
 	enable(true);
 }
 
-Motor::Motor(byte dirPin, byte stepPin, byte enablePin, Endstop* defaultEndstop)
+StepperMotor::StepperMotor(byte dirPin, byte stepPin, byte enablePin, Endstop* defaultEndstop)
 {
 	_dirPin = dirPin;
 	_stepPin = stepPin;
@@ -31,28 +31,28 @@ Motor::Motor(byte dirPin, byte stepPin, byte enablePin, Endstop* defaultEndstop)
 	enable(true);
 }
 
-Motor::~Motor()
+StepperMotor::~StepperMotor()
 {
 	delete _stepper;
 }
 
-void Motor::setMotorSteps(byte motorSteps)
+void StepperMotor::setMotorSteps(byte motorSteps)
 {
 	_motorSteps = motorSteps;
 }
 
-void Motor::setMotorSpeed(byte speed)
+void StepperMotor::setMotorSpeed(byte speed)
 {
 	_speed = speed;
 	_stepper->setSpeed(_speed);
 }
 
-void Motor::setMicroSteps(byte microSteps)
+void StepperMotor::setMicroSteps(byte microSteps)
 {
 	_microSteps = microSteps;
 }
 
-void Motor::enable(bool e)
+void StepperMotor::enable(bool e)
 {
 	if (e)
 		digitalWrite(_enablePin, LOW);
@@ -62,7 +62,7 @@ void Motor::enable(bool e)
 	_isEnable = e;
 }
 
-void Motor::home()
+void StepperMotor::home()
 {
 	if (_defaultEndstop != nullptr)
 	{
@@ -71,7 +71,7 @@ void Motor::home()
 	}
 }
 
-void Motor::rotate(int angle)
+void StepperMotor::rotate(int angle)
 {
 	float stepsToRotate = angle * _motorSteps * _microSteps / 360;
 	_stepsLeft = abs(stepsToRotate);
@@ -79,7 +79,7 @@ void Motor::rotate(int angle)
 	_stepper->step(stepsToRotate);
 }
 
-bool Motor::isMoving()
+bool StepperMotor::isMoving()
 {
 	if (_stepsLeft > 0)
 		return true;
@@ -87,7 +87,7 @@ bool Motor::isMoving()
 		return false;
 }
 
-void Motor::manage(ProgramElement* programElement)
+void StepperMotor::manage(ProgramElement* programElement)
 {
 	if(programElement->canChangeFeather())
 	{

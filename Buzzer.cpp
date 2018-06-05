@@ -2,14 +2,14 @@
 
 Buzzer::Buzzer()
 {
-	pinMode(_buzzerPin, OUTPUT);
+	pinMode(_pin, OUTPUT);
 }
 
 void Buzzer::playOnPress()
 {
-	tone(_buzzerPin, 4000);
+	tone(_pin, 4000);
 	delay(80);
-	noTone(_buzzerPin);
+	noTone(_pin);
 	delay(80);
 }
 
@@ -38,9 +38,9 @@ void Buzzer::playTone(int tone, int duration)
 {
 	for (long i = 0; i < duration * 1000L; i += tone * 2) 
 	{
-		digitalWrite(_buzzerPin, HIGH);
+		digitalWrite(_pin, HIGH);
 		delayMicroseconds(tone);
-		digitalWrite(_buzzerPin, LOW);
+		digitalWrite(_pin, LOW);
 		delayMicroseconds(tone);
 	}
 }

@@ -5,8 +5,8 @@ Program::Program()
 	_dividerEndstop = new Endstop(10);
 	_tableEndstop = new Endstop(9);
 
-	_dividerMotor = new Motor(6, 3, 8, _dividerEndstop);
-	_tableMotor = new Motor(5, 2, 8, _tableEndstop);
+	_dividerMotor = new StepperMotor(6, 3, 8, _dividerEndstop);
+	_tableMotor = new StepperMotor(5, 2, 8, _tableEndstop);
 }
 
 Program::~Program()

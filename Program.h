@@ -4,17 +4,18 @@
 #include "Input.h"
 #include "Output.h"
 #include "ElementManager.h"
+#include "MenuElement.h"
+#include "IntroductionElement.h"
+#include "ProgramElement.h"
+
 #include "SimpleKeypad.h"
 #include "Lcd.h"
 #include "SevSegms.h"
 #include "Buzzer.h"
 #include "StepperMotor.h"
-#include "MenuElement.h"
-#include "IntroductionElement.h"
-#include "ProgramElement.h"
 #include "Endstop.h"
 
-#include <Stepper.h>
+//#include <Stepper.h>
 
 class Program
 {
@@ -23,8 +24,8 @@ private:
 	SimpleKeypad _simpleKeypad;
 	Buzzer _buzzer;
 	SevSegms _sevSegms;
-	Motor* _dividerMotor;
-	Motor* _tableMotor;
+	StepperMotor* _dividerMotor;
+	StepperMotor* _tableMotor;
 	Endstop* _dividerEndstop;
 	Endstop* _tableEndstop;
 

@@ -7,11 +7,11 @@
 
 class Endstop;
 
-class Motor
+class StepperMotor
 {
 private:
-	byte _motorSteps = 200;
-	byte _speed = 120;
+	byte _motorSteps = 800;
+	byte _speed = 100;
 	byte _microSteps = 1;
 
 	byte _dirPin;
@@ -26,9 +26,9 @@ private:
 	bool _isEnable;
 
 public:
-	Motor(byte dirPin, byte stepPin, byte enablePin);
-	Motor(byte dirPin, byte stepPin, byte enablePin, Endstop* defaultEndstop);
-	~Motor();
+	StepperMotor(byte dirPin, byte stepPin, byte enablePin);
+	StepperMotor(byte dirPin, byte stepPin, byte enablePin, Endstop* defaultEndstop);
+	~StepperMotor();
 
 	void setMotorSteps(byte motorSteps);
 	void setMotorSpeed(byte speed);
