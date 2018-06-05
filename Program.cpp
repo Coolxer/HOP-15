@@ -7,6 +7,8 @@ Program::Program()
 
 	_dividerMotor = new StepperMotor(6, 3, 8, _dividerEndstop);
 	_tableMotor = new StepperMotor(5, 2, 8, _tableEndstop);
+
+	_relay = new Relay();
 }
 
 Program::~Program()
@@ -15,11 +17,12 @@ Program::~Program()
 	delete _tableMotor;
 	delete _dividerEndstop;
 	delete _tableEndstop;
+	delete _relay;
 }
 
 void onProgramStart(MenuElement* menuElement)
 {
-	ProgramElement* programElement = new ProgramElement("Program", menuElement->_lcd, menuElement->_simpleKeypad, menuElement->_buzzer, menuElement->_sevSegms,  menuElement->_dividerMotor, menuElement->_tableMotor, menuElement->_dividerEndstop, menuElement->_tableEndstop, menuElement->getValueAtIndex(0), menuElement->getValueAtIndex(1));
+	ProgramElement* programElement = new ProgramElement("Program", menuElement->_lcd, menuElement->_simpleKeypad, menuElement->_buzzer, menuElement->_sevSegms,  menuElement->_dividerMotor, menuElement->_tableMotor, menuElement->_dividerEndstop, menuElement->_tableEndstop, menuElement->_relay, menuElement->getValueAtIndex(0), menuElement->getValueAtIndex(1));
 	menuElement->getElementManager()->add(programElement);
 	menuElement->getElementManager()->changeElement("Program");
 }
@@ -31,7 +34,7 @@ void Program::init()
 	SetValueElement* featherAmount = new SetValueElement("Piora", &_lcd, &_simpleKeypad, 2, 32, 4, 2);
 	SetValueElement* cycleAmount = new SetValueElement("Cykle", &_lcd, &_simpleKeypad, 1, 16, 1, 1);
 
-	MenuElement* menuElement = new MenuElement("mainMenu", &_lcd, &_simpleKeypad, &_buzzer, &_sevSegms, _dividerMotor, _tableMotor, _dividerEndstop, _tableEndstop, 3);
+	MenuElement* menuElement = new MenuElement("mainMenu", &_lcd, &_simpleKeypad, &_buzzer, &_sevSegms, _dividerMotor, _tableMotor, _dividerEndstop, _tableEndstop, _relay, 3);
 
 	menuElement->setElement(0, featherAmount);
 	menuElement->setElement(1, cycleAmount);

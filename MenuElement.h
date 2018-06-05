@@ -10,6 +10,7 @@ class Buzzer;
 class SevSegms;
 class StepperMotor;
 class Endstop;
+class Relay;
 
 struct ItemBind
 {
@@ -37,8 +38,9 @@ public:
 	StepperMotor* _tableMotor;
 	Endstop* _dividerEndstop;
 	Endstop* _tableEndstop;
+	Relay* _relay;
 
-	MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, StepperMotor* dividerMotor, StepperMotor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte itemsCount);
+	MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, StepperMotor* dividerMotor, StepperMotor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, Relay* relay, byte itemsCount);
 	~MenuElement();
 
 	bool setElement(byte index, char* description, void(*callback)(MenuElement*));

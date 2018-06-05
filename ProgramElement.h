@@ -9,6 +9,7 @@ class Buzzer;
 class SevSegms;
 class StepperMotor;
 class Endstop;
+class Relay;
 
 class ProgramElement : public Element
 {
@@ -22,6 +23,7 @@ private:
 	Endstop* _dividerEndstop;
 	StepperMotor* _tableMotor;
 	Endstop* _tableEndstop;
+	Relay* _relay;
 
 	byte _feathersCount;
 	byte _currentFeather;
@@ -49,7 +51,7 @@ private:
 	bool _finalized = false;
 
 public:
-	ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, StepperMotor* dividerMotor, StepperMotor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte feathers, byte cycles);
+	ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, StepperMotor* dividerMotor, StepperMotor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, Relay* relay, byte feathers, byte cycles);
 
 	byte getCurrentFeather() { return _currentFeather; };
 	void setCurrentFeather(byte currentFeather) { _currentFeather = currentFeather; };

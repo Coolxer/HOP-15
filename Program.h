@@ -14,6 +14,7 @@
 #include "Buzzer.h"
 #include "StepperMotor.h"
 #include "Endstop.h"
+#include "Relay.h"
 
 //#include <Stepper.h>
 
@@ -28,6 +29,7 @@ private:
 	StepperMotor* _tableMotor;
 	Endstop* _dividerEndstop;
 	Endstop* _tableEndstop;
+	Relay* _relay;
 
 	ElementManager _elementManager;
 

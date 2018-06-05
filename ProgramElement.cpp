@@ -6,8 +6,9 @@
 #include "SimpleKeypad.h"
 #include "StepperMotor.h"
 #include "Endstop.h"
+#include "Relay.h"
 
-ProgramElement::ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, StepperMotor* dividerMotor, StepperMotor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, byte feathersCount, byte cyclesCount) : Element(name)
+ProgramElement::ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, StepperMotor* dividerMotor, StepperMotor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, Relay* relay, byte feathersCount, byte cyclesCount) : Element(name)
 {
 	_lcd = lcd;
 	_simpleKeypad = simpleKeypad;
@@ -17,6 +18,7 @@ ProgramElement::ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad,
 	_tableMotor = tableMotor;
 	_dividerEndstop = dividerEndstop;
 	_tableEndstop = tableEndstop;
+	_relay = relay;
 
 	_feathersCount = feathersCount;
 	_cyclesCount = cyclesCount;
@@ -29,7 +31,7 @@ ProgramElement::ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad,
 
 void ProgramElement::react()
 {
-	if (_lcd != nullptr && _simpleKeypad != nullptr && _dividerMotor != nullptr && _tableMotor != nullptr && _dividerEndstop != nullptr && _tableEndstop)
+	if (_simpleKeypad != nullptr && _dividerMotor != nullptr && _tableMotor != nullptr && _dividerEndstop != nullptr && _tableEndstop != nullptr && _relay != nullptr)
 	{	
 		if (_needRedraw)
 		{
@@ -79,8 +81,9 @@ void ProgramElement::react()
 
 							if (!_finished)
 							{
-
+								_relay->setHighState(true);
 								_dividerMotor->rotate(_rotateAngle);
+								_relay->setHighState(false);
 							}
 
 							_needRedraw = true;
