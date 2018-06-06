@@ -1,7 +1,10 @@
 #include "DcMotor.h"
+#include "Endstop.h"
 
-DcMotor::DcMotor()
+DcMotor::DcMotor(Endstop* endstop)
 {
+	_endstop = endstop;
+	
 	pinMode(_pwmPin, OUTPUT);
 	pinMode(_dirPinA, OUTPUT);
 	pinMode(_dirPinB, OUTPUT);
@@ -9,13 +12,22 @@ DcMotor::DcMotor()
 
 DcMotor::~DcMotor()
 {
-
+	delete _endstop;
 }
 
 void DcMotor::setSpeed(byte speed)
 {
 	analogWrite(_pwmPin, speed);
 	_speed = speed;
+}
+
+void DcMotor::home()
+{
+	if (_endstop != nullptr)
+	{
+		while (!_endstop->isClicked())
+			moveLeft();
+	}
 }
 
 void DcMotor::moveLeft()

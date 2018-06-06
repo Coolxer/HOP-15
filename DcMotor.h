@@ -12,13 +12,16 @@ private:
 
 	byte _speed = 100; //max speed 255
 
+	Endstop* _endstop;
+
 public:
-	DcMotor();
+	DcMotor(Endstop* endstop);
 	~DcMotor();
 
 	void setSpeed(byte speed);
 	byte getSpeed() { return _speed; };
 
+	void home();
 	void moveLeft();
 	void moveRight();
 

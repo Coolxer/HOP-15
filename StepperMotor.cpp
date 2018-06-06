@@ -1,28 +1,13 @@
 #include "StepperMotor.h"
 #include "Endstop.h"
 
-StepperMotor::StepperMotor(byte dirPin, byte stepPin, byte enablePin)
+StepperMotor::StepperMotor(byte dirPin, byte stepPin, byte enablePin, Endstop* endstop)
 {
 	_dirPin = dirPin;
 	_stepPin = stepPin;
 	_enablePin = enablePin;
 
-	_defaultEndstop = nullptr;
-
-	_stepper = new Stepper(_motorSteps, _dirPin, _stepPin);
-	_stepper->setSpeed(_speed);
-
-	pinMode(_enablePin, OUTPUT);
-	enable(true);
-}
-
-StepperMotor::StepperMotor(byte dirPin, byte stepPin, byte enablePin, Endstop* defaultEndstop)
-{
-	_dirPin = dirPin;
-	_stepPin = stepPin;
-	_enablePin = enablePin;
-
-	_defaultEndstop = defaultEndstop;
+	_endstop = endstop;
 
 	_stepper = new Stepper(_motorSteps, _dirPin, _stepPin);
 	_stepper->setSpeed(_speed);
@@ -34,6 +19,7 @@ StepperMotor::StepperMotor(byte dirPin, byte stepPin, byte enablePin, Endstop* d
 StepperMotor::~StepperMotor()
 {
 	delete _stepper;
+	delete _endstop;
 }
 
 void StepperMotor::setMotorSteps(byte motorSteps)
@@ -64,9 +50,9 @@ void StepperMotor::enable(bool e)
 
 void StepperMotor::home()
 {
-	if (_defaultEndstop != nullptr)
+	if (_endstop != nullptr)
 	{
-		while (!_defaultEndstop->isClicked())
+		while (!_endstop->isClicked())
 			rotate(-5);
 	}
 }
@@ -74,17 +60,8 @@ void StepperMotor::home()
 void StepperMotor::rotate(int angle)
 {
 	float stepsToRotate = angle * _motorSteps * _microSteps / 360;
-	_stepsLeft = abs(stepsToRotate);
 
 	_stepper->step(stepsToRotate);
-}
-
-bool StepperMotor::isMoving()
-{
-	if (_stepsLeft > 0)
-		return true;
-	else
-		return false;
 }
 
 void StepperMotor::manage(ProgramElement* programElement)

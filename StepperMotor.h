@@ -18,16 +18,13 @@ private:
 	byte _stepPin;
 	byte _enablePin;
 
-	float _stepsLeft;
-
 	Stepper* _stepper;
-	Endstop* _defaultEndstop;
+	Endstop* _endstop;
 
 	bool _isEnable;
 
 public:
-	StepperMotor(byte dirPin, byte stepPin, byte enablePin);
-	StepperMotor(byte dirPin, byte stepPin, byte enablePin, Endstop* defaultEndstop);
+	StepperMotor(byte dirPin, byte stepPin, byte enablePin, Endstop* endstop);
 	~StepperMotor();
 
 	void setMotorSteps(byte motorSteps);
@@ -40,8 +37,6 @@ public:
 	void rotate(int angle);
 
 	void manage(ProgramElement* programElement);
-	bool isMoving();
-
 };
 
 #endif
