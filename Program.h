@@ -13,10 +13,9 @@
 #include "SevSegms.h"
 #include "Buzzer.h"
 #include "StepperMotor.h"
+#include "DcMotor.h"
 #include "Endstop.h"
 #include "Relay.h"
-
-//#include <Stepper.h>
 
 class Program
 {
@@ -26,7 +25,7 @@ private:
 	Buzzer _buzzer;
 	SevSegms _sevSegms;
 	StepperMotor* _dividerMotor;
-	StepperMotor* _tableMotor;
+	DcMotor* _tableMotor;
 	Endstop* _dividerEndstop;
 	Endstop* _tableEndstop;
 	Relay* _relay;

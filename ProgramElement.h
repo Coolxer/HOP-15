@@ -8,6 +8,7 @@ class SimpleKeypad;
 class Buzzer;
 class SevSegms;
 class StepperMotor;
+class DcMotor;
 class Endstop;
 class Relay;
 
@@ -21,7 +22,7 @@ private:
 
 	StepperMotor* _dividerMotor;
 	Endstop* _dividerEndstop;
-	StepperMotor* _tableMotor;
+	DcMotor* _tableMotor;
 	Endstop* _tableEndstop;
 	Relay* _relay;
 
@@ -51,7 +52,7 @@ private:
 	bool _finalized = false;
 
 public:
-	ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, StepperMotor* dividerMotor, StepperMotor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, Relay* relay, byte feathers, byte cycles);
+	ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, StepperMotor* dividerMotor, DcMotor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, Relay* relay, byte feathers, byte cycles);
 
 	byte getCurrentFeather() { return _currentFeather; };
 	void setCurrentFeather(byte currentFeather) { _currentFeather = currentFeather; };
@@ -69,9 +70,6 @@ public:
 	bool getInRotationArea() { return _isEndstopClickExecuted; };
 	void setInRotationArea(bool inRotationArea) { _isEndstopClickExecuted = inRotationArea; };
 	void setRotatedInCycle(bool rotatedInCycle) { _rotatedInPeriod = rotatedInCycle; };
-
-	void homeDividerMotor();
-	void homeTableMotor();
 
 	virtual void react();
 };

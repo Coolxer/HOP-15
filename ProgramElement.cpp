@@ -5,10 +5,11 @@
 #include "SevSegms.h"
 #include "SimpleKeypad.h"
 #include "StepperMotor.h"
+#include "DcMotor.h"
 #include "Endstop.h"
 #include "Relay.h"
 
-ProgramElement::ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, StepperMotor* dividerMotor, StepperMotor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, Relay* relay, byte feathersCount, byte cyclesCount) : Element(name)
+ProgramElement::ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, StepperMotor* dividerMotor, DcMotor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, Relay* relay, byte feathersCount, byte cyclesCount) : Element(name)
 {
 	_lcd = lcd;
 	_simpleKeypad = simpleKeypad;
@@ -91,12 +92,12 @@ void ProgramElement::react()
 
 						_isEndstopClickExecuted = true;
 					}
-					else
-						_tableMotor->rotate(_motorAngleRotateSpeed);
+					//else
+						//_tableMotor->rotate(_motorAngleRotateSpeed);
 				}
 				else
 				{
-					_tableMotor->rotate(_motorAngleRotateSpeed);
+					//_tableMotor->rotate(_motorAngleRotateSpeed);
 
 					if (_isEndstopClickExecuted)
 						_isEndstopClickExecuted = false;
@@ -120,21 +121,4 @@ bool ProgramElement::canChangeFeather()
 	if (_isEndstopClickExecuted && !_rotatedInPeriod)
 		return true;
 	return false;
-}
-
-void ProgramElement::homeDividerMotor()
-{
-	if (!_dividerEndstop->isClicked())
-		_dividerMotor->rotate(-1);
-	else
-		_dividerMotorHomed = true;
-
-}
-
-void ProgramElement::homeTableMotor()
-{
-	if (!_tableEndstop->isClicked())
-		_tableMotor->rotate(-1);
-	else
-		_tableMotorHomed = true;
 }

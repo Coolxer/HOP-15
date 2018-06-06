@@ -6,7 +6,7 @@ Program::Program()
 	_tableEndstop = new Endstop(9);
 
 	_dividerMotor = new StepperMotor(6, 3, 8, _dividerEndstop);
-	_tableMotor = new StepperMotor(5, 2, 8, _tableEndstop);
+	_tableMotor = new DcMotor(_tableEndstop);
 
 	_relay = new Relay();
 }
