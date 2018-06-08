@@ -4,7 +4,7 @@
 #include <Arduino.h>
 
 #include "Input.h"
-#include "ElementManager.h"
+#include "StateManager.h"
 
 class Element
 {
@@ -12,10 +12,10 @@ protected:
 	char* _name;
 	bool _needRedraw = true;
 
-	ElementManager* _elementManager;
+	StateManager* _stateManager;
 
 public:
-	Element(char* name) { _name = name; _elementManager = nullptr; };
+	Element(char* name) { _name = name; _stateManager = nullptr; };
 	virtual ~Element() {};
 
 	virtual void react() = 0;
@@ -23,8 +23,8 @@ public:
 	void setName(char* name) { _name = name; };
 	char* getName() { return _name; };
 
-	void setElementManager(ElementManager* elementManager) { _elementManager = elementManager; };
-	ElementManager* getElementManager() { return _elementManager; };
+	void setStateManager(StateManager* elementManager) { _stateManager = elementManager; };
+	StateManager* getStateManager() { return _stateManager; };
 
 	void needRedraw() { _needRedraw = true; };
 };

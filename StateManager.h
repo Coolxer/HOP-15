@@ -8,24 +8,20 @@ class Element;
 class StateManager
 {
 private:
-	//Count of elements in dynamic array
+	//Count of elements in dynamic array use also as index to last element (stack top)
 	byte count;
-	//Current selected element index
-	int selected;
 	Element** elements;
 
 	void resize(byte size);
-	byte getIndexOfElement(char* name);
 
 public:
 	StateManager();
 	~StateManager();
 
-	void add(Element* element);
 	Element* getCurrent();
-	bool changeElement(char* name);
-	void next() { selected++; };
-	void popBackFromSelected();
+
+	void pushTop(Element* element);
+	void popBack();
 };
 
 #endif
