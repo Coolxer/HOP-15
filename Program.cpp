@@ -40,13 +40,13 @@ void Program::init()
 	menuElement->setElement(1, cycleAmount);
 	menuElement->setElement(2, "Rozpocznij", &onProgramStart);
 
-	_elementManager.add(introductionElement);
-	_elementManager.add(menuElement);
-	_elementManager.changeElement("intro");
+	_stateManager.add(introductionElement);
+	_stateManager.add(menuElement);
+	_stateManager.changeElement("intro");
 }
 
 void Program::step()
 {
-	_elementManager.getCurrent()->react();
+	_stateManager.getCurrent()->react();
 }
 

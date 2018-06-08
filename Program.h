@@ -3,7 +3,7 @@
 
 #include "Input.h"
 #include "Output.h"
-#include "ElementManager.h"
+#include "StateManager.h"
 #include "MenuElement.h"
 #include "IntroductionElement.h"
 #include "ProgramElement.h"
@@ -30,7 +30,7 @@ private:
 	Endstop* _tableEndstop;
 	Relay* _relay;
 
-	ElementManager _elementManager;
+	StateManager _stateManager;
 
 public:
 	Program();

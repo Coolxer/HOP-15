@@ -1,8 +1,8 @@
-#include "ElementManager.h"
+#include "StateManager.h"
 
 #include "Element.h"
 
-ElementManager::ElementManager()
+StateManager::StateManager()
 {
 	count = 0;
 	//Selected equal -1 means no element currently selected
@@ -10,7 +10,7 @@ ElementManager::ElementManager()
 	elements = nullptr;
 }
 
-ElementManager::~ElementManager()
+StateManager::~StateManager()
 {
 	for (byte i = 0; i < count; i++)
 	{
@@ -21,7 +21,7 @@ ElementManager::~ElementManager()
 	delete[] elements;
 }
 
-void ElementManager::resize(byte size)
+void StateManager::resize(byte size)
 {
 	if (elements != nullptr)
 	{
@@ -35,7 +35,7 @@ void ElementManager::resize(byte size)
 	count += size - count;
 }
 
-byte ElementManager::getIndexOfElement(char* name)
+byte StateManager::getIndexOfElement(char* name)
 {
 	for (byte i = 0; i < count; i++)
 	{
@@ -48,7 +48,7 @@ byte ElementManager::getIndexOfElement(char* name)
 	return -1;
 }
 
-void ElementManager::add(Element* element)
+void StateManager::add(Element* element)
 {
 	for (byte i = 0; i < count; i++)
 	{
@@ -64,7 +64,7 @@ void ElementManager::add(Element* element)
 	element->setElementManager(this);
 }
 
-Element* ElementManager::getCurrent()
+Element* StateManager::getCurrent()
 {
 	//If not elements in manager
 	if (selected == -1)
@@ -79,7 +79,7 @@ Element* ElementManager::getCurrent()
 	}
 }
 
-bool ElementManager::changeElement(char* name)
+bool StateManager::changeElement(char* name)
 {
 	int index = getIndexOfElement(name);
 
@@ -92,7 +92,7 @@ bool ElementManager::changeElement(char* name)
 	return false;
 }
 
-void ElementManager::popBackFromSelected()
+void StateManager::popBackFromSelected()
 {
 	if (selected > 0)
 	{

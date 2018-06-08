@@ -1,11 +1,11 @@
-#ifndef _ELEMENTMANAGER_h
-#define _ELEMENTMANAGER_h
+#ifndef _STATEMANAGER_h
+#define _STATEMANAGER_h
 
 #include <Arduino.h>
 
 class Element;
 
-class ElementManager
+class StateManager
 {
 private:
 	//Count of elements in dynamic array
@@ -18,8 +18,8 @@ private:
 	byte getIndexOfElement(char* name);
 
 public:
-	ElementManager();
-	~ElementManager();
+	StateManager();
+	~StateManager();
 
 	void add(Element* element);
 	Element* getCurrent();
