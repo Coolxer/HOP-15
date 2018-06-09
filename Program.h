@@ -12,6 +12,7 @@
 class Program
 {
 private:
+	DeviceManager _deviceManager;
 	StateManager _stateManager;
 
 public:

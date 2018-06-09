@@ -87,6 +87,7 @@
     <ClInclude Include="Buzzer.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="DcMotor.h" />
+    <ClInclude Include="DeviceManager.h" />
     <ClInclude Include="Element.h" />
     <ClInclude Include="Endstop.h" />
     <ClInclude Include="Input.h" />
@@ -108,6 +109,7 @@
   <ItemGroup>
     <ClCompile Include="Buzzer.cpp" />
     <ClCompile Include="DcMotor.cpp" />
+    <ClCompile Include="DeviceManager.cpp" />
     <ClCompile Include="Endstop.cpp" />
     <ClCompile Include="IntroductionElement.cpp" />
     <ClCompile Include="Lcd.cpp" />
