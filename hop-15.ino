@@ -1,3 +1,4 @@
+#include "DeviceManager.h"
 #include "ProgramElement.h"
 #include "IntroductionElement.h"
 #include "program.h"
