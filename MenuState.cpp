@@ -7,13 +7,13 @@
 #include "SimpleKeypad.h"
 #include "Buzzer.h"
 
+#include "ProgramState.h"
 #include "SetValueElement.h"
 
 void onProgramStart(MenuState* menuState)
 {
-	ProgramElement* programElement = new ProgramElement("Program", menuElement->_lcd, menuElement->_simpleKeypad, menuElement->_buzzer, menuElement->_sevSegms, menuElement->_dividerMotor, menuElement->_tableMotor, menuElement->_dividerEndstop, menuElement->_tableEndstop, menuElement->_relay, menuElement->getValueAtIndex(0), menuElement->getValueAtIndex(1));
-	menuElement->getElementManager()->add(programElement);
-	menuElement->getElementManager()->changeElement("Program");
+	ProgramState* programState = new ProgramState(menuState->getProgram(), menuState->getValueAtIndex(0), menuState->getValueAtIndex(1));
+	menuState->getProgram()->getStateManager()->pushBack(programState);
 }
 
 MenuState::MenuState(Program* program) : State(program)
@@ -44,6 +44,12 @@ MenuState::MenuState(Program* program) : State(program)
 
 MenuState::~MenuState()
 {
+	DeviceManager* deviceManager = _program->getDeviceManager();
+
+	deviceManager->releaseLcd();
+	deviceManager->releaseSimpleKeypad();
+	deviceManager->releaseBuzzer();
+
 	delete[] _itemNames;
 
 	for (byte i = 0; i < _itemsCount; i++)
@@ -88,18 +94,22 @@ bool MenuState::setElement(byte index, SetValueElement* element)
 
 void MenuState::react()
 {
-	if (_lcd != nullptr && _simpleKeypad != nullptr)
+	char key = _simpleKeypad->getKey();
+
+	if (key != KEY_NONE)
+		_buzzer->playOnPress();
+
+	if (key == KEY_UP)
+		up();
+	else if (key == KEY_DOWN)
+		down();
+	else if (key == KEY_ENTER)
+		enter();
+
+	if (_needRedraw)
 	{
-		_simpleKeypad->manage(this);
-
-		if (_simpleKeypad->getKey() != KEY_NONE)
-			_buzzer->playOnPress();
-
-		if (_needRedraw)
-		{
-			_lcd->manage(this);
-			_needRedraw = false;
-		}
+		_lcd->manage(this);
+		_needRedraw = false;
 	}
 }
 

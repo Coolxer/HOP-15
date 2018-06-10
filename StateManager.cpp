@@ -1,57 +1,62 @@
 #include "StateManager.h"
 
-#include "Element.h"
+#include "State.h"
 
 StateManager::StateManager()
 {
 	count = 0;
-	elements = nullptr;
+	states = nullptr;
 }
 
 StateManager::~StateManager()
 {
 	for (byte i = 0; i < count; i++)
 	{
-		if (elements[i] != nullptr)
-			delete elements[i];
+		if (states[i] != nullptr)
+			delete states[i];
 	}
 
-	delete[] elements;
+	delete[] states;
 }
 
-Element* StateManager::getCurrent()
+State* StateManager::getCurrent()
 {
 	if (count > 0)
-		return elements[count];
+		return states[count];
 	else return nullptr;
 }
 
-void StateManager::pushTop(Element* element)
+void StateManager::pushBack(State* state)
 {
 	resize(++count);
-	elements[count - 1] = element;
-	element->setStateManager(this);
+	states[count - 1] = state;
 }
 
 void StateManager::popBack()
 {
 	if (count > 0)
 	{
-		delete elements[count - 1];
+		delete states[count - 1];
 		resize(--count);
 
 		if(count > 0)
-			elements[count - 1]->needRedraw();
+			states[count - 1]->needRedraw();
 	}
+}
+
+void StateManager::changeState(State* state)
+{
+	popBack();
+	pushBack(state);
 }
 
 void StateManager::resize(byte size)
 {
-	if (elements != nullptr)
+	if (states != nullptr)
 	{
-		Element** resizedElements = new Element*[size];
-		memcpy(resizedElements, elements, (size - 1) * sizeof(Element));
+		State** resizedStates = new State*[size];
+		memcpy(resizedStates, states, (size - 1) * sizeof(State));
 	}
 	else
-		elements = new Element*[size];
+		states = new State*[size];
 }

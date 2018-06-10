@@ -2,13 +2,14 @@
 #define _MENUSTATE_h
 
 #include "State.h"
-#include "SetValueElement.h"
 
 class Program;
 
 class Lcd;
 class SimpleKeypad;
 class Buzzer;
+
+class SetValueElement;
 
 struct ItemBind
 {

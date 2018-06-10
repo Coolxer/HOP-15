@@ -3,7 +3,8 @@
 
 #include <Arduino.h>
 #include <SevSeg.h>
-#include "ProgramElement.h"
+
+class ProgramState;
 
 class SevSegms
 {
@@ -20,7 +21,7 @@ private:
 public:
 	SevSegms();
 
-	void manage(ProgramElement* programElement);
+	void manage(ProgramState* programState);
 	
 };
 

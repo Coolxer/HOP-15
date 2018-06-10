@@ -40,28 +40,6 @@ Keys SimpleKeypad::getPressedKey()
 		return KEY_NONE;
 }
 
-void SimpleKeypad::manage(MenuState* menuState)
-{
-	_key = getPressedKey();
-
-	if (_key == KEY_UP)
-		menuState->up();
-	else if (_key == KEY_DOWN)
-		menuState->down();
-	else if (_key == KEY_ENTER)
-		menuState->enter();
-	//else if (key == KEY_RETURN)
-	//	menuElement->back();
-}
-
-void SimpleKeypad::manage(IntroductionState* introductionState)
-{
-	_key = getPressedKey();
-
-	if (_key != KEY_NONE)
-		introductionState->getElementManager()->next();
-}
-
 void SimpleKeypad::manage(ProgramState* programState)
 {
 	_key = getPressedKey();

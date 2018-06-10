@@ -7,6 +7,8 @@
 #include "SimpleKeypad.h"
 #include "Buzzer.h"
 
+#include "MenuState.h"
+
 IntroductionState::IntroductionState(Program* program) : State(program)
 {
 	DeviceManager* deviceManager = program->getDeviceManager();
@@ -27,17 +29,15 @@ IntroductionState::~IntroductionState()
 
 void IntroductionState::react()
 {
-	if (_lcd != nullptr && _simpleKeypad != nullptr)
+	if (_simpleKeypad->getKey() != KEY_NONE)
 	{
-		_simpleKeypad->manage(this);
+		_program->getStateManager()->changeState(new MenuState(_program));
+		_buzzer->playOnPress();
+	}
 
-		if (_simpleKeypad->getKey() != KEY_NONE)
-			_buzzer->playOnPress();
-
-		if (_needRedraw)
-		{
-			_lcd->manage(this);
-			_needRedraw = false;
-		}
+	if (_needRedraw)
+	{
+		_lcd->manage(this);
+		_needRedraw = false;
 	}
 }

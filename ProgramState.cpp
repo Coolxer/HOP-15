@@ -52,87 +52,84 @@ ProgramState::~ProgramState()
 
 void ProgramState::react()
 {
-	if (_simpleKeypad != nullptr && _dividerMotor != nullptr && _tableMotor != nullptr && _dividerEndstop != nullptr && _tableEndstop != nullptr && _relay != nullptr)
-	{	
-		if (_needRedraw)
+	if (_needRedraw)
+	{
+		_lcd->manage(this);
+		_sevSegms->manage(this);
+		_needRedraw = false;
+	}
+
+	_simpleKeypad->manage(this);
+
+	if (_simpleKeypad->getKey() != KEY_NONE)
+		_buzzer->playOnPress();
+
+	if (!_inited)
+	{
+		_dividerMotor->home();
+		_tableMotor->home();
+
+		_rotatedInPeriod = true;
+		_isEndstopClickExecuted = true;
+
+		_inited = true;
+	}
+	else
+	{
+		if (!_finished)
 		{
-			_lcd->manage(this);
-			_sevSegms->manage(this);
-			_needRedraw = false;
-		}
-
-		_simpleKeypad->manage(this);
-
-		if (_simpleKeypad->getKey() != KEY_NONE)
-			_buzzer->playOnPress();
-
-		if (!_inited)
-		{
-			_dividerMotor->home();
-			_tableMotor->home();
-
-			_rotatedInPeriod = true;
-			_isEndstopClickExecuted = true;
-
-			_inited = true;
-		}
-		else
-		{
-			if (!_finished)
+			//Table and divider motor
+			if (_tableEndstop->isClicked())
 			{
-				//Table and divider motor
-				if (_tableEndstop->isClicked())
+				if (!_isEndstopClickExecuted)
 				{
-					if (!_isEndstopClickExecuted)
+					_isMotorMoveForward = !_isMotorMoveForward;
+					_motorAngleRotateSpeed *= -1;
+
+					if (_isMotorMoveForward)
 					{
-						_isMotorMoveForward = !_isMotorMoveForward;
-						_motorAngleRotateSpeed *= -1;
-
-						if (_isMotorMoveForward)
+						_currentFeather++;
+						if (_currentFeather > _feathersCount)
 						{
-							_currentFeather++;
-							if (_currentFeather > _feathersCount)
-							{
-								_currentFeather = 1;
-								_currentCycle++;
+							_currentFeather = 1;
+							_currentCycle++;
 
-								if (_currentCycle > _cyclesCount)
-									finish();
-							}
-
-							if (!_finished)
-							{
-								_relay->setHighState(true);
-								_dividerMotor->rotate(_rotateAngle);
-								_relay->setHighState(false);
-							}
-
-							_needRedraw = true;
+							if (_currentCycle > _cyclesCount)
+								finish();
 						}
 
-						_isEndstopClickExecuted = true;
-					}
-					//else
-						//_tableMotor->rotate(_motorAngleRotateSpeed);
-				}
-				else
-				{
-					//_tableMotor->rotate(_motorAngleRotateSpeed);
+						if (!_finished)
+						{
+							_relay->setHighState(true);
+							_dividerMotor->rotate(_rotateAngle);
+							_relay->setHighState(false);
+						}
 
-					if (_isEndstopClickExecuted)
-						_isEndstopClickExecuted = false;
+						_needRedraw = true;
+					}
+
+					_isEndstopClickExecuted = true;
 				}
+				//else
+					//_tableMotor->rotate(_motorAngleRotateSpeed);
 			}
 			else
 			{
-				if (!_finalized)
-				{
-					_buzzer->playOnFinish();
-					_finalized = true;
-				}
+				//_tableMotor->rotate(_motorAngleRotateSpeed);
+
+				if (_isEndstopClickExecuted)
+					_isEndstopClickExecuted = false;
 			}
-				
 		}
+		else
+		{
+			if (!_finalized)
+			{
+				_buzzer->playOnFinish();
+				_finalized = true;
+			}
+		}
+				
 	}
 }
 

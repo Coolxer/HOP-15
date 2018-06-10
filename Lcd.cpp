@@ -123,10 +123,7 @@ void Lcd::manage(MenuState* menuState)
 
 void Lcd::manage(IntroductionState* introductionState)
 {
-	writeNewLine(0, introductionState->getCompanyName());
-	writeNewLine(1, introductionState->getProgramName());
-	writeNewLine(2, introductionState->getMachineAuthor());
-	writeNewLine(3, introductionState->getInfo());
+	
 }
 
 void Lcd::manage(ProgramState* programState)

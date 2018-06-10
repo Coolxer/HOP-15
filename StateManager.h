@@ -3,14 +3,14 @@
 
 #include <Arduino.h>
 
-class Element;
+class State;
 
 class StateManager
 {
 private:
 	//Count of elements in dynamic array use also as index to last element (stack top)
 	byte count;
-	Element** elements;
+	State** states;
 
 	void resize(byte size);
 
@@ -18,10 +18,12 @@ public:
 	StateManager();
 	~StateManager();
 
-	Element* getCurrent();
+	State* getCurrent();
 
-	void pushTop(Element* element);
+	void pushBack(State* state);
 	void popBack();
+
+	void changeState(State* state);
 };
 
 #endif
