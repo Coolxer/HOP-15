@@ -1,25 +1,5 @@
 #include "Program.h"
 
-Program::Program()
-{
-	_dividerEndstop = new Endstop(10);
-	_tableEndstop = new Endstop(9);
-
-	_dividerMotor = new StepperMotor(6, 3, 8, _dividerEndstop);
-	_tableMotor = new DcMotor(_tableEndstop);
-
-	_relay = new Relay();
-}
-
-Program::~Program()
-{
-	delete _dividerMotor;
-	delete _tableMotor;
-	delete _dividerEndstop;
-	delete _tableEndstop;
-	delete _relay;
-}
-
 void onProgramStart(MenuElement* menuElement)
 {
 	ProgramElement* programElement = new ProgramElement("Program", menuElement->_lcd, menuElement->_simpleKeypad, menuElement->_buzzer, menuElement->_sevSegms,  menuElement->_dividerMotor, menuElement->_tableMotor, menuElement->_dividerEndstop, menuElement->_tableEndstop, menuElement->_relay, menuElement->getValueAtIndex(0), menuElement->getValueAtIndex(1));
