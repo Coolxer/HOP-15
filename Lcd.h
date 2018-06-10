@@ -3,11 +3,10 @@
 
 #include "Arduino.h"
 #include <LiquidCrystal.h>
-#include "Output.h"
-#include "MenuElement.h"
-#include "ProgramElement.h"
 
-class IntroductionElement;
+class IntroductionState;
+class MenuState;
+class ProgramState;
 
 struct LinePointerPair
 {
@@ -45,9 +44,9 @@ public:
 	void writeLine(byte lineNumber, char* text);
 	void writeNewLine(byte lineNumber, char* text);
 
-	void manage(MenuElement* menuElement);
-	void manage(IntroductionElement* introductionElement);
-	void manage(ProgramElement* programElement);
+	void manage(MenuState* menuState);
+	void manage(IntroductionState* introductionState);
+	void manage(ProgramState* programState);
 
 };
 

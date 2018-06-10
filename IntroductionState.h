@@ -1,12 +1,15 @@
-#ifndef _INTRODUCTIONELEMENT_h
-#define _INTRODUCTIONELEMENT_h
+#ifndef _INTRODUCTIONSTATE_h
+#define _INTRODUCTIONSTATE_h
 
-#include "Element.h"
-#include "Lcd.h"
-#include "SimpleKeypad.h"
-#include "Buzzer.h"
+#include "State.h"
 
-class IntroductionElement : public Element
+class Program;
+
+class Lcd;
+class SimpleKeypad;
+class Buzzer;
+
+class IntroductionState : public State
 {
 private:
 	Lcd* _lcd;
@@ -19,7 +22,8 @@ private:
 	char* _info = "WCISNIJ PRZYCISK";
 
 public:
-	IntroductionElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer);
+	IntroductionState(Program* program);
+	~IntroductionState();
 
 	virtual void react();
 

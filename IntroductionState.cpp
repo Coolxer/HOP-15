@@ -1,13 +1,31 @@
-#include "IntroductionElement.h"
+#include "IntroductionState.h"
 
-IntroductionElement::IntroductionElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer) : Element(name)
+#include "Program.h"
+#include "DeviceManager.h"
+
+#include "Lcd.h"
+#include "SimpleKeypad.h"
+#include "Buzzer.h"
+
+IntroductionState::IntroductionState(Program* program) : State(program)
 {
-	_lcd = lcd;
-	_simpleKeypad = simpleKeypad;
-	_buzzer = buzzer;
+	DeviceManager* deviceManager = program->getDeviceManager();
+
+	_lcd = deviceManager->requestLcd();
+	_simpleKeypad = deviceManager->requestSimpleKeypad();
+	_buzzer = deviceManager->requestBuzzer();
 }
 
-void IntroductionElement::react()
+IntroductionState::~IntroductionState()
+{
+	DeviceManager* deviceManager = _program->getDeviceManager();
+
+	deviceManager->releaseLcd();
+	deviceManager->releaseSimpleKeypad();
+	deviceManager->releaseBuzzer();
+}
+
+void IntroductionState::react()
 {
 	if (_lcd != nullptr && _simpleKeypad != nullptr)
 	{

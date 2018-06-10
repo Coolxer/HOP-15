@@ -15,6 +15,7 @@ protected:
 	StateManager* _stateManager;
 
 public:
+	Element() { _stateManager = nullptr; }
 	Element(char* name) { _name = name; _stateManager = nullptr; };
 	virtual ~Element() {};
 

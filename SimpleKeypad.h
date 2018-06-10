@@ -3,12 +3,13 @@
 
 #include <Arduino.h>
 #include <Keypad.h>
+
 #include "Config.h"
 #include "Input.h"
 
-class MenuElement;
-class IntroductionElement;
-class ProgramElement;
+class MenuState;
+class IntroductionState;
+class ProgramState;
 
 class SimpleKeypad : public Input
 {
@@ -31,9 +32,9 @@ public:
 	SimpleKeypad() {};
 	Keys getPressedKey();
 
-	void manage(MenuElement* menuElement);
-	void manage(IntroductionElement* introductionElement);
-	void manage(ProgramElement* programElement);
+	void manage(MenuState* menuState);
+	void manage(IntroductionState* introductionState);
+	void manage(ProgramState* programState);
 
 	char getKey() { return _key; };
 };

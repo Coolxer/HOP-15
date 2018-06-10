@@ -102,6 +102,7 @@
     <ClInclude Include="SetValueElement.h" />
     <ClInclude Include="SevSegms.h" />
     <ClInclude Include="SimpleKeypad.h" />
+    <ClInclude Include="State.h" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="StepperMotor.h" />
     <ClInclude Include="__vm\.HOP-15.vsarduino.h" />

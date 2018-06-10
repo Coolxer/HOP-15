@@ -1,17 +1,14 @@
-#ifndef _MENUELEMENT_h
-#define _MENUELEMENT_h
+#ifndef _MENUSTATE_h
+#define _MENUSTATE_h
 
+#include "State.h"
 #include "SetValueElement.h"
-#include "Element.h"
+
+class Program;
 
 class Lcd;
 class SimpleKeypad;
 class Buzzer;
-class SevSegms;
-class StepperMotor;
-class DcMotor;
-class Endstop;
-class Relay;
 
 struct ItemBind
 {
@@ -19,32 +16,26 @@ struct ItemBind
 	SetValueElement* item = nullptr;
 };
 
-class MenuElement : public Element
+class MenuState : public State
 {
 private:
+	Lcd * _lcd;
+	SimpleKeypad* _simpleKeypad;
+	Buzzer* _buzzer;
+
 	String* _itemNames;
 	ItemBind** _itemBinds;
-	void(**_itemCalbacks)(MenuElement*);
+	void(**_itemCalbacks)(MenuState*);
 
-	byte _itemsCount;
+	byte _itemsCount = 3;
 	byte _selectedIndex = 1;
 	bool _isFocused = false;
 
 public:
-	Lcd* _lcd;
-	SimpleKeypad* _simpleKeypad;
-	Buzzer* _buzzer;
-	SevSegms *_sevSegms;
-	StepperMotor* _dividerMotor;
-	DcMotor* _tableMotor;
-	Endstop* _dividerEndstop;
-	Endstop* _tableEndstop;
-	Relay* _relay;
+	MenuState(Program* program);
+	~MenuState();
 
-	MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, StepperMotor* dividerMotor, DcMotor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, Relay* relay, byte itemsCount);
-	~MenuElement();
-
-	bool setElement(byte index, char* description, void(*callback)(MenuElement*));
+	bool setElement(byte index, char* description, void(*callback)(MenuState*));
 	bool setElement(byte index, SetValueElement* element);
 
 	virtual void react();

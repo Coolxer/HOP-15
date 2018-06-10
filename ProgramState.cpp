@@ -1,4 +1,7 @@
-#include "ProgramElement.h"
+#include "ProgramState.h"
+
+#include "Program.h"
+#include "DeviceManager.h"
 
 #include "Lcd.h"
 #include "Buzzer.h"
@@ -9,17 +12,19 @@
 #include "Endstop.h"
 #include "Relay.h"
 
-ProgramElement::ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, StepperMotor* dividerMotor, DcMotor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, Relay* relay, byte feathersCount, byte cyclesCount) : Element(name)
+ProgramState::ProgramState(Program* program, byte feathersCount, byte cyclesCount) : State(program)
 {
-	_lcd = lcd;
-	_simpleKeypad = simpleKeypad;
-	_buzzer = buzzer;
-	_sevSegms = sevSegms;
-	_dividerMotor = dividerMotor;
-	_tableMotor = tableMotor;
-	_dividerEndstop = dividerEndstop;
-	_tableEndstop = tableEndstop;
-	_relay = relay;
+	DeviceManager* deviceManager = program->getDeviceManager();
+
+	_lcd = deviceManager->requestLcd();
+	_simpleKeypad = deviceManager->requestSimpleKeypad();
+	_buzzer = deviceManager->requestBuzzer();
+	_sevSegms = deviceManager->requestSevSegms();
+	_dividerMotor = deviceManager->requestDividerMotor();
+	_tableMotor = deviceManager->requestTableMotor();
+	_dividerEndstop = deviceManager->requestDividerEndstop();
+	_tableEndstop = deviceManager->requestTableEndstop();
+	_relay = deviceManager->requestRelay();
 
 	_feathersCount = feathersCount;
 	_cyclesCount = cyclesCount;
@@ -30,7 +35,22 @@ ProgramElement::ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad,
 	_rotateAngle = 360.0 / _feathersCount;
 }
 
-void ProgramElement::react()
+ProgramState::~ProgramState()
+{
+	DeviceManager* deviceManager = _program->getDeviceManager();
+
+	deviceManager->releaseLcd();
+	deviceManager->releaseSimpleKeypad();
+	deviceManager->releaseBuzzer();
+	deviceManager->releaseSevSegms();
+	deviceManager->releaseDividerMotor();
+	deviceManager->releaseTableMotor();
+	deviceManager->releaseDividerEndstop();
+	deviceManager->releaseTableEndstop();
+	deviceManager->releaseRelay();
+}
+
+void ProgramState::react()
 {
 	if (_simpleKeypad != nullptr && _dividerMotor != nullptr && _tableMotor != nullptr && _dividerEndstop != nullptr && _tableEndstop != nullptr && _relay != nullptr)
 	{	
@@ -116,7 +136,7 @@ void ProgramElement::react()
 	}
 }
 
-bool ProgramElement::canChangeFeather()
+bool ProgramState::canChangeFeather()
 {
 	if (_isEndstopClickExecuted && !_rotatedInPeriod)
 		return true;

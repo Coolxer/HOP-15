@@ -1,7 +1,8 @@
 #include "Lcd.h"
 
-#include "MenuElement.h"
-#include "IntroductionElement.h"
+#include "IntroductionState.h"
+#include "MenuState.h"
+#include "ProgramState.h"
 
 Lcd::Lcd()
 {
@@ -56,10 +57,10 @@ void Lcd::writeNewLine(byte lineNumber, char* text)
 	writeLine(lineNumber, text);
 }
 
-void Lcd::manage(MenuElement* menuElement)
+void Lcd::manage(MenuState* menuState)
 {
 	//Line 1
-	char* prevName = (char*)menuElement->getPrev();
+	char* prevName = (char*)menuState->getPrev();
 
 	if (prevName != "")
 	{
@@ -67,7 +68,7 @@ void Lcd::manage(MenuElement* menuElement)
 		writeLine(0, prevName);
 		changeLeftOrientation(false);
 
-		char* prevNameValue = (char*)menuElement->getPrevValue();
+		char* prevNameValue = (char*)menuState->getPrevValue();
 		if (prevNameValue != "")
 		{
 			writeLine(0, "^");
@@ -79,14 +80,14 @@ void Lcd::manage(MenuElement* menuElement)
 	changeLeftOrientation(true);
 
 	//Line 2
-	char* currentName = (char*)menuElement->getCurrent();
+	char* currentName = (char*)menuState->getCurrent();
 	if (currentName != "")
 	{
 		writeNewLine(1, "* ");
 		writeLine(1, currentName);
 		changeLeftOrientation(false);
 
-		char* currentNameValue = (char*)menuElement->getCurrentValue();
+		char* currentNameValue = (char*)menuState->getCurrentValue();
 		if (currentNameValue != "")
 		{
 			writeLine(1, "I");
@@ -98,14 +99,14 @@ void Lcd::manage(MenuElement* menuElement)
 	changeLeftOrientation(true);
 	
 	//Line 3
-	char* nextName = (char*)menuElement->getNext();
+	char* nextName = (char*)menuState->getNext();
 	if (nextName != "")
 	{
 		writeNewLine(2, "- ");
 		writeLine(2, nextName);
 		changeLeftOrientation(false);
 
-		char* nextNameValue = (char*)menuElement->getNextValue();
+		char* nextNameValue = (char*)menuState->getNextValue();
 		if (nextNameValue != "")
 		{
 			writeLine(2, "V");
@@ -117,20 +118,20 @@ void Lcd::manage(MenuElement* menuElement)
 	changeLeftOrientation(true);
 
 	//Line 4
-	writeNewLine(3, menuElement->getTip());
+	writeNewLine(3, menuState->getTip());
 }
 
-void Lcd::manage(IntroductionElement* introductionElement)
+void Lcd::manage(IntroductionState* introductionState)
 {
-	writeNewLine(0, introductionElement->getCompanyName());
-	writeNewLine(1, introductionElement->getProgramName());
-	writeNewLine(2, introductionElement->getMachineAuthor());
-	writeNewLine(3, introductionElement->getInfo());
+	writeNewLine(0, introductionState->getCompanyName());
+	writeNewLine(1, introductionState->getProgramName());
+	writeNewLine(2, introductionState->getMachineAuthor());
+	writeNewLine(3, introductionState->getInfo());
 }
 
-void Lcd::manage(ProgramElement* programElement)
+void Lcd::manage(ProgramState* programState)
 {
-	if (programElement->isFinished())
+	if (programState->isFinished())
 	{
 		clearScreen();
 		writeNewLine(0, "Zakonczono");
@@ -140,10 +141,10 @@ void Lcd::manage(ProgramElement* programElement)
 	{
 		writeNewLine(0, "Przetwarzanie w toku");
 
-		byte feather = programElement->getCurrentFeather();
-		byte feathers = programElement->getFeathersCount();
-		byte cycle = programElement->getCurrentCycle();
-		byte cycles = programElement->getCyclesCount();
+		byte feather = programState->getCurrentFeather();
+		byte feathers = programState->getFeathersCount();
+		byte cycle = programState->getCurrentCycle();
+		byte cycles = programState->getCyclesCount();
 
 		char featherLine[20] = { 0 };
 		char cycleLine[20] = { 0 };

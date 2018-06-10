@@ -4,10 +4,6 @@
 #include "StateManager.h"
 #include "DeviceManager.h"
 
-#include "IntroductionState.h"
-#include "MenuState.h"
-#include "ProgramState.h"
-
 class Program
 {
 private:
@@ -19,6 +15,9 @@ public:
 
 	void init();
 	void step();
+
+	DeviceManager* getDeviceManager() { return &_deviceManager; };
+	StateManager* getStateManager() { return &_stateManager; };
 };
 
 #endif

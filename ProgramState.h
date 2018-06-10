@@ -1,7 +1,9 @@
-#ifndef _PROGRAMELEMENT_h
-#define _PROGRAMELEMENT_h
+#ifndef _PROGRAMSTATE_h
+#define _PROGRAMSTATE_h
 
-#include "Element.h"
+#include "State.h"
+
+class Program;
 
 class Lcd;
 class SimpleKeypad;
@@ -12,7 +14,7 @@ class DcMotor;
 class Endstop;
 class Relay;
 
-class ProgramElement : public Element
+class ProgramState : public State
 {
 private:
 	Lcd* _lcd;
@@ -52,7 +54,8 @@ private:
 	bool _finalized = false;
 
 public:
-	ProgramElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, StepperMotor* dividerMotor, DcMotor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, Relay* relay, byte feathers, byte cycles);
+	ProgramState(Program* program, byte feathers, byte cycles);
+	~ProgramState();
 
 	byte getCurrentFeather() { return _currentFeather; };
 	void setCurrentFeather(byte currentFeather) { _currentFeather = currentFeather; };
