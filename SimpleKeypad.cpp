@@ -39,14 +39,3 @@ Keys SimpleKeypad::getPressedKey()
 	else
 		return KEY_NONE;
 }
-
-void SimpleKeypad::manage(ProgramState* programState)
-{
-	_key = getPressedKey();
-
-	if (programState->isFinished())
-	{
-		if (_key == KEY_ENTER)
-			programState->getElementManager()->popBackFromSelected();
-	}
-}

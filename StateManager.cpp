@@ -22,7 +22,7 @@ StateManager::~StateManager()
 State* StateManager::getCurrent()
 {
 	if (count > 0)
-		return states[count];
+		return states[count - 1];
 	else return nullptr;
 }
 

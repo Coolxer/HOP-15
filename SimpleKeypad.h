@@ -32,8 +32,6 @@ public:
 	SimpleKeypad() {};
 	Keys getPressedKey();
 
-	void manage(ProgramState* programState);
-
 	char getKey() { return _key; };
 };
 

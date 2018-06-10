@@ -59,11 +59,14 @@ void ProgramState::react()
 		_needRedraw = false;
 	}
 
-	_simpleKeypad->manage(this);
-
-	if (_simpleKeypad->getKey() != KEY_NONE)
+	if (_simpleKeypad->getKey() == KEY_ENTER)
+	{
 		_buzzer->playOnPress();
 
+		if (isFinished())
+			_program->getStateManager()->popBack();
+	}
+		
 	if (!_inited)
 	{
 		_dividerMotor->home();
