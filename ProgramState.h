@@ -49,6 +49,8 @@ private:
 	bool _inited = false;
 	//If all cycles and feathers in cycle was processed this flag is set to true
 	bool _finished = false;
+	//Tells if program process is paused
+	bool _paused = false;
 
 	//If the process is ended but before buzzer's melody 
 	bool _finalized = false;
@@ -68,6 +70,7 @@ public:
 	int getRotateAngle() { return _rotateAngle; };
 	bool isFinished() { return _finished; };
 	void finish() { _finished = true; };
+	void togglePause() { _paused = !_paused; };
 	
 	bool canChangeFeather();
 	bool getInRotationArea() { return _isEndstopClickExecuted; };

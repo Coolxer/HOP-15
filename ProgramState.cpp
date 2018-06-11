@@ -59,12 +59,20 @@ void ProgramState::react()
 		_needRedraw = false;
 	}
 
-	if (_simpleKeypad->getKey() == KEY_ENTER)
-	{
+	char key = _simpleKeypad->getKey();
+
+	if (key != KEY_NONE)
 		_buzzer->playOnPress();
 
+	if (key == KEY_ENTER)
+	{
 		if (isFinished())
 			_program->getStateManager()->popBack();
+	}
+	else if (key == KEY_RETURN)
+	{
+		if (!isFinished() && _inited)
+			togglePause();
 	}
 		
 	if (!_inited)
@@ -79,7 +87,7 @@ void ProgramState::react()
 	}
 	else
 	{
-		if (!_finished)
+		if (!_finished && !_paused)
 		{
 			//Table and divider motor
 			if (_tableEndstop->isClicked())
