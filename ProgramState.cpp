@@ -68,12 +68,11 @@ void ProgramState::react()
 	{
 		if (isFinished())
 			_program->getStateManager()->popBack();
-	}
-	else if (key == KEY_RETURN)
-	{
-		if (!isFinished() && _inited)
+		else
 			togglePause();
 	}
+	else if (key == KEY_RETURN)
+		_program->getStateManager()->popBack();
 		
 	if (!_inited)
 	{

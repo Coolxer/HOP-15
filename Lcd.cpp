@@ -123,7 +123,10 @@ void Lcd::manage(MenuState* menuState)
 
 void Lcd::manage(IntroductionState* introductionState)
 {
-	
+	writeNewLine(0, introductionState->getCompanyName());
+	writeNewLine(1, introductionState->getProgramName());
+	writeNewLine(2, introductionState->getMachineAuthor());
+	writeNewLine(3, introductionState->getInfo());
 }
 
 void Lcd::manage(ProgramState* programState)
@@ -152,6 +155,9 @@ void Lcd::manage(ProgramState* programState)
 		writeNewLine(1, featherLine);
 		writeNewLine(2, cycleLine);
 
-		writeNewLine(3, "");
+		if(programState->isPaused())
+			writeNewLine(3, "*-Wznów #-Zatrzymaj");
+		else
+			writeNewLine(3, "*-Pauza #-Zatrzymaj");
 	}
 }

@@ -70,6 +70,7 @@ public:
 	int getRotateAngle() { return _rotateAngle; };
 	bool isFinished() { return _finished; };
 	void finish() { _finished = true; };
+	bool isPaused() { return _paused; };
 	void togglePause() { _paused = !_paused; };
 	
 	bool canChangeFeather();
