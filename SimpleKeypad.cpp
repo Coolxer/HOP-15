@@ -1,10 +1,8 @@
 #include "SimpleKeypad.h"
 
-#include "MenuElement.h"
-#include "IntroductionElement.h"
-#include "ProgramElement.h"
-
-#include "Buzzer.h"
+#include "MenuState.h"
+#include "IntroductionState.h"
+#include "ProgramState.h"
 
 Keys SimpleKeypad::getPressedKey()
 {
@@ -40,37 +38,4 @@ Keys SimpleKeypad::getPressedKey()
 		return KEY_9;
 	else
 		return KEY_NONE;
-}
-
-void SimpleKeypad::manage(MenuElement* menuElement)
-{
-	_key = getPressedKey();
-
-	if (_key == KEY_UP)
-		menuElement->up();
-	else if (_key == KEY_DOWN)
-		menuElement->down();
-	else if (_key == KEY_ENTER)
-		menuElement->enter();
-	//else if (key == KEY_RETURN)
-	//	menuElement->back();
-}
-
-void SimpleKeypad::manage(IntroductionElement* introductionElement)
-{
-	_key = getPressedKey();
-
-	if (_key != KEY_NONE)
-		introductionElement->getElementManager()->next();
-}
-
-void SimpleKeypad::manage(ProgramElement* programElement)
-{
-	_key = getPressedKey();
-
-	if (programElement->isFinished())
-	{
-		if (_key == KEY_ENTER)
-			programElement->getElementManager()->popBackFromSelected();
-	}
 }

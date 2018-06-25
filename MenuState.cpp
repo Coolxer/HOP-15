@@ -1,39 +1,55 @@
-#include "MenuElement.h"
+#include "MenuState.h"
+
+#include "Program.h"
+#include "DeviceManager.h"
 
 #include "Lcd.h"
 #include "SimpleKeypad.h"
 #include "Buzzer.h"
 
-MenuElement::MenuElement(char* name, Lcd* lcd, SimpleKeypad* simpleKeypad, Buzzer* buzzer, SevSegms* sevSegms, StepperMotor* dividerMotor, DcMotor* tableMotor, Endstop* dividerEndstop, Endstop* tableEndstop, Relay* relay, byte itemsCount) : Element(name)
-{
-	_lcd = lcd;
-	_simpleKeypad = simpleKeypad;
-	_buzzer = buzzer;
-	_sevSegms = sevSegms;
-	_dividerMotor = dividerMotor;
-	_tableMotor = tableMotor;
-	_dividerEndstop = dividerEndstop;
-	_tableEndstop = tableEndstop;
-	_relay = relay;
+#include "ProgramState.h"
+#include "SetValueElement.h"
 
-	if (itemsCount < 1)
-		_itemsCount = 1;
-	else
-		_itemsCount = itemsCount;
+void onProgramStart(MenuState* menuState)
+{
+	ProgramState* programState = new ProgramState(menuState->getProgram(), menuState->getValueAtIndex(0), menuState->getValueAtIndex(1));
+	menuState->getProgram()->getStateManager()->pushBack(programState);
+}
+
+MenuState::MenuState(Program* program) : State(program)
+{
+	DeviceManager* deviceManager = program->getDeviceManager();
+
+	_lcd = deviceManager->requestLcd();
+	_simpleKeypad = deviceManager->requestSimpleKeypad();
+	_buzzer = deviceManager->requestBuzzer();
 
 	_itemNames = new String[_itemsCount];
 	_itemBinds = new ItemBind*[_itemsCount];
-	_itemCalbacks = new (void(*[3])(MenuElement*));
+	_itemCalbacks = new (void(*[3])(MenuState*));
 
 	for (byte i = 0; i < _itemsCount; i++)
 	{
 		_itemBinds[i] = nullptr;
 		_itemCalbacks[i] = nullptr;
 	}
+
+	SetValueElement* featherAmount = new SetValueElement("Piora", _lcd, _simpleKeypad, 2, 32, 4, 2);
+	SetValueElement* cycleAmount = new SetValueElement("Cykle", _lcd, _simpleKeypad, 1, 16, 1, 1);
+
+	setElement(0, featherAmount);
+	setElement(1, cycleAmount);
+	setElement(2, "Rozpocznij", &onProgramStart);
 }
 
-MenuElement::~MenuElement()
+MenuState::~MenuState()
 {
+	DeviceManager* deviceManager = _program->getDeviceManager();
+
+	deviceManager->releaseLcd();
+	deviceManager->releaseSimpleKeypad();
+	deviceManager->releaseBuzzer();
+
 	delete[] _itemNames;
 
 	for (byte i = 0; i < _itemsCount; i++)
@@ -45,7 +61,7 @@ MenuElement::~MenuElement()
 	delete[] _itemCalbacks;
 }
 
-bool MenuElement::setElement(byte index, char* description, void(*callback)(MenuElement*))
+bool MenuState::setElement(byte index, char* description, void(*callback)(MenuState*))
 {
 	if (index >= 0 && index < _itemsCount)
 	{
@@ -57,7 +73,7 @@ bool MenuElement::setElement(byte index, char* description, void(*callback)(Menu
 	return false;
 }
 
-bool MenuElement::setElement(byte index, SetValueElement* element)
+bool MenuState::setElement(byte index, SetValueElement* element)
 {
 	if (index >= 0 && index < _itemsCount)
 	{
@@ -76,24 +92,28 @@ bool MenuElement::setElement(byte index, SetValueElement* element)
 	return false;
 }
 
-void MenuElement::react()
+void MenuState::react()
 {
-	if (_lcd != nullptr && _simpleKeypad != nullptr)
+	char key = _simpleKeypad->getKey();
+
+	if (key != KEY_NONE)
+		_buzzer->playOnPress();
+
+	if (key == KEY_UP)
+		up();
+	else if (key == KEY_DOWN)
+		down();
+	else if (key == KEY_ENTER)
+		enter();
+
+	if (_needRedraw)
 	{
-		_simpleKeypad->manage(this);
-
-		if (_simpleKeypad->getKey() != KEY_NONE)
-			_buzzer->playOnPress();
-
-		if (_needRedraw)
-		{
-			_lcd->manage(this);
-			_needRedraw = false;
-		}
+		_lcd->manage(this);
+		_needRedraw = false;
 	}
 }
 
-void MenuElement::up()
+void MenuState::up()
 {
 	if (!_isFocused)
 	{
@@ -111,7 +131,7 @@ void MenuElement::up()
 	_needRedraw = true;
 }
 
-void MenuElement::down()
+void MenuState::down()
 {
 	if (!_isFocused)
 	{
@@ -129,7 +149,7 @@ void MenuElement::down()
 	_needRedraw = true;
 }
 
-void MenuElement::enter()
+void MenuState::enter()
 {
 	if (_itemBinds[_selectedIndex]->item != nullptr)
 		_isFocused = !_isFocused;
@@ -140,7 +160,7 @@ void MenuElement::enter()
 	_needRedraw = true;
 }
 
-const char* MenuElement::getNext()
+const char* MenuState::getNext()
 {
 	byte index;
 
@@ -152,7 +172,7 @@ const char* MenuElement::getNext()
 	return _itemNames[index].c_str();
 }
 
-const char* MenuElement::getCurrent()
+const char* MenuState::getCurrent()
 {
 	char valueBuf[20] = { 0 };
 	_itemNames[_selectedIndex].toCharArray(valueBuf, 20);
@@ -160,7 +180,7 @@ const char* MenuElement::getCurrent()
 	return _itemNames[_selectedIndex].c_str();
 }
 
-const char* MenuElement::getPrev()
+const char* MenuState::getPrev()
 {
 	byte index;
 
@@ -174,7 +194,7 @@ const char* MenuElement::getPrev()
 	return _itemNames[index].c_str();
 }
 
-const char* MenuElement::getNextValue()
+const char* MenuState::getNextValue()
 {
 	byte index;
 
@@ -195,7 +215,7 @@ const char* MenuElement::getNextValue()
 	return "";
 }
 
-const char* MenuElement::getCurrentValue()
+const char* MenuState::getCurrentValue()
 {
 	if (_itemBinds[_selectedIndex] != nullptr)
 	{
@@ -209,7 +229,7 @@ const char* MenuElement::getCurrentValue()
 	return "";
 }
 
-const char* MenuElement::getPrevValue()
+const char* MenuState::getPrevValue()
 {
 	byte index;
 
@@ -230,12 +250,12 @@ const char* MenuElement::getPrevValue()
 	return "";
 }
 
-char* MenuElement::getTip()
+char* MenuState::getTip()
 {
 	return "A-Gora D-Dol *-Enter";
 }
 
-byte MenuElement::getValueAtIndex(byte index)
+byte MenuState::getValueAtIndex(byte index)
 {
 	if (_itemBinds[index] != nullptr)
 	{
