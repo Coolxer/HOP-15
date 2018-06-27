@@ -42,7 +42,7 @@ void DcMotor::moveRight()
 	digitalWrite(_dirPinB, HIGH);
 }
 
-void DcMotor::manage(ProgramElement* programElement)
+void DcMotor::manage(ProgramState* ProgramState)
 {
 
 }

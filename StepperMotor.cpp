@@ -64,17 +64,17 @@ void StepperMotor::rotate(int angle)
 	_stepper->step(stepsToRotate);
 }
 
-void StepperMotor::manage(ProgramElement* programElement)
+void StepperMotor::manage(ProgramState* ProgramState)
 {
-	if(programElement->canChangeFeather())
+	if(ProgramState->canChangeFeather())
 	{
-		programElement->setRotatedInCycle(true);
+		ProgramState->setRotatedInCycle(true);
 
-		byte feather = programElement->getCurrentFeather();
-		byte feathers = programElement->getFeathersCount();
-		byte cycle = programElement->getCurrentCycle();
-		byte cycles = programElement->getCyclesCount();
-		int rotateAngle = programElement->getRotateAngle();
+		byte feather = ProgramState->getCurrentFeather();
+		byte feathers = ProgramState->getFeathersCount();
+		byte cycle = ProgramState->getCurrentCycle();
+		byte cycles = ProgramState->getCyclesCount();
+		int rotateAngle = ProgramState->getRotateAngle();
 
 		//delay(1000);
 		rotate(rotateAngle);
@@ -86,14 +86,14 @@ void StepperMotor::manage(ProgramElement* programElement)
 			cycle++;
 
 			if (cycle > cycles)
-				programElement->finish();
+				ProgramState->finish();
 			else
 			{
-				programElement->setCurrentFeather(feather);
-				programElement->setCurrentCycle(cycle);
+				ProgramState->setCurrentFeather(feather);
+				ProgramState->setCurrentCycle(cycle);
 			}
 		}
 		else
-			programElement->setCurrentFeather(feather);
+			ProgramState->setCurrentFeather(feather);
 	}
 }

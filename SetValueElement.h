@@ -1,6 +1,7 @@
 #ifndef _SETVALUEELEMENT_h
 #define _SETVALUEELEMENT_h
 
+#include <Arduino.h>
 #include "Element.h"
 
 class Lcd;

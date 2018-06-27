@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
-#include "ProgramElement.h"
+#include "ProgramState.h"
 
 class DcMotor
 {
@@ -25,6 +25,6 @@ public:
 	void moveLeft();
 	void moveRight();
 
-	void manage(ProgramElement* programElement);
+	void manage(ProgramState* ProgramState);
 };
 

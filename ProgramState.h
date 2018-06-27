@@ -1,6 +1,7 @@
 #ifndef _PROGRAMSTATE_h
 #define _PROGRAMSTATE_h
 
+#include <Arduino.h>
 #include "State.h"
 
 class Program;

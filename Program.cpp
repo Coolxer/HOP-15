@@ -8,7 +8,8 @@ void Program::init()
 {
 	IntroductionState* introductionElement = new IntroductionState(this);
 
-	_stateManager.pushTop(introductionElement);
+	//_stateManager.pushTop(introductionElement);
+	_stateManager.pushBack(introductionElement);
 }
 
 void Program::step()

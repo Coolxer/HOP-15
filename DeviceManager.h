@@ -1,6 +1,8 @@
 #ifndef _DEVICEMANAGER_h
 #define _DEVICEMANAGER_h
 
+#include <Arduino.h>
+
 class Lcd;
 class SimpleKeypad;
 class Buzzer;

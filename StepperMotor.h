@@ -3,15 +3,15 @@
 
 #include <Arduino.h>
 #include <Stepper.h>
-#include "ProgramElement.h"
+#include "ProgramState.h"
 
 class Endstop;
 
 class StepperMotor
 {
 private:
-	byte _motorSteps = 800;
-	byte _speed = 100;
+	byte _motorSteps = 800.0;
+	byte _speed = 100.0;
 	byte _microSteps = 1;
 
 	byte _dirPin;
@@ -36,7 +36,7 @@ public:
 	void home();
 	void rotate(int angle);
 
-	void manage(ProgramElement* programElement);
+	void manage(ProgramState* ProgramState);
 };
 
 #endif
