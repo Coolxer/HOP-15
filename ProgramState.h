@@ -41,12 +41,12 @@ private:
 	bool _rotatedInPeriod = true;
 	bool _isEndstopClickExecuted = false;
 	bool _isMotorMoveForward = true;
-	byte _motorAngleRotateSpeed = 5;
+	int _motorAngleRotateSpeed = 5;
 
 	bool _dividerMotorHomed = false;
 	bool _tableMotorHomed = false;
 
-	//If all two motors are homed initiation is finished and set to true
+	//If all (two) motors are homed initiation is finished and set to true
 	bool _inited = false;
 	//If all cycles and feathers in cycle was processed this flag is set to true
 	bool _finished = false;

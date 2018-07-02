@@ -60,6 +60,8 @@ void ProgramState::react()
 
 	char key = _simpleKeypad->getPressedKey();
 
+	if(key != KEY_NONE)
+		_buzzer->playOnPress();
 
 	if (key == KEY_ENTER)
 	{
@@ -73,13 +75,11 @@ void ProgramState::react()
 			_dividerMotor->enable(false);
 			togglePause();
 		}	
-		_buzzer->playOnPress();
 	}
 	else if (key == KEY_RETURN)
 	{
 		_dividerMotor->enable(false);
 		_program->getStateManager()->popBack();
-		_buzzer->playOnPress();
 	}
 			
 	if (!_inited)
@@ -107,6 +107,7 @@ void ProgramState::react()
 					if (_isMotorMoveForward)
 					{
 						_currentFeather++;
+
 						if (_currentFeather > _feathersCount)
 						{
 							_currentFeather = 1;
@@ -122,10 +123,8 @@ void ProgramState::react()
 							_dividerMotor->rotate(_rotateAngle);
 							_relay->setHighState(false);
 						}
-
 						_needRedraw = true;
 					}
-
 					_isEndstopClickExecuted = true;
 				}
 				//else

@@ -34,6 +34,8 @@ void DcMotor::home()
 	}
 }
 
+void DcMotor::move()
+
 void DcMotor::moveLeft()
 {
 	digitalWrite(_dirPinA, HIGH);
@@ -46,7 +48,3 @@ void DcMotor::moveRight()
 	digitalWrite(_dirPinB, HIGH);
 }
 
-void DcMotor::manage(ProgramState* ProgramState)
-{
-	
-}

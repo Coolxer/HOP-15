@@ -24,9 +24,10 @@ public:
 	byte getSpeed() { return _speed; };
 
 	void home();
+	void move(byte );
+
 	void moveLeft();
 	void moveRight();
 
-	void manage(ProgramState* ProgramState);
 };
 
