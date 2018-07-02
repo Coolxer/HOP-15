@@ -26,13 +26,9 @@ private:
 
 	Keypad _keypad = Keypad(makeKeymap(_keys), _rowPins, _colPins, 4, 4);
 
-	char _key;
-
 public:
 	SimpleKeypad() {};
 	Keys getPressedKey();
-
-	char getKey() { return _key; };
 };
 
 #endif

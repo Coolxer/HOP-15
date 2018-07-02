@@ -55,25 +55,33 @@ void ProgramState::react()
 	if (_needRedraw)
 	{
 		_lcd->manage(this);
-		_sevSegms->manage(this);
 		_needRedraw = false;
 	}
 
-	char key = _simpleKeypad->getKey();
+	char key = _simpleKeypad->getPressedKey();
 
-	if (key != KEY_NONE)
-		_buzzer->playOnPress();
 
 	if (key == KEY_ENTER)
 	{
 		if (isFinished())
+		{
+			_dividerMotor->enable(false);
 			_program->getStateManager()->popBack();
+		}	
 		else
+		{
+			_dividerMotor->enable(false);
 			togglePause();
+		}	
+		_buzzer->playOnPress();
 	}
 	else if (key == KEY_RETURN)
+	{
+		_dividerMotor->enable(false);
 		_program->getStateManager()->popBack();
-		
+		_buzzer->playOnPress();
+	}
+			
 	if (!_inited)
 	{
 		_dividerMotor->home();
@@ -138,8 +146,7 @@ void ProgramState::react()
 				_buzzer->playOnFinish();
 				_finalized = true;
 			}
-		}
-				
+		}		
 	}
 }
 

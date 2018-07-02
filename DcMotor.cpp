@@ -4,6 +4,7 @@
 DcMotor::DcMotor(Endstop* endstop)
 {
 	_endstop = endstop;
+	_potentiometer = new Potentiometer();
 	
 	pinMode(_pwmPin, OUTPUT);
 	pinMode(_dirPinA, OUTPUT);
@@ -13,12 +14,15 @@ DcMotor::DcMotor(Endstop* endstop)
 DcMotor::~DcMotor()
 {
 	delete _endstop;
+	delete _potentiometer;
 }
 
-void DcMotor::setSpeed(byte speed)
+void DcMotor::setSpeed()
 {
-	analogWrite(_pwmPin, speed);
-	_speed = speed;
+	_potentiometer->setValue();
+	_speed = _potentiometer->getValue() / 4;
+	
+	analogWrite(_pwmPin, _speed);
 }
 
 void DcMotor::home()
@@ -44,5 +48,5 @@ void DcMotor::moveRight()
 
 void DcMotor::manage(ProgramState* ProgramState)
 {
-
+	
 }

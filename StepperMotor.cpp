@@ -22,30 +22,12 @@ StepperMotor::~StepperMotor()
 	delete _endstop;
 }
 
-void StepperMotor::setMotorSteps(byte motorSteps)
-{
-	_motorSteps = motorSteps;
-}
-
-void StepperMotor::setMotorSpeed(byte speed)
-{
-	_speed = speed;
-	_stepper->setSpeed(_speed);
-}
-
-void StepperMotor::setMicroSteps(byte microSteps)
-{
-	_microSteps = microSteps;
-}
-
 void StepperMotor::enable(bool e)
 {
 	if (e)
 		digitalWrite(_enablePin, LOW);
 	else
 		digitalWrite(_enablePin, HIGH);
-
-	_isEnable = e;
 }
 
 void StepperMotor::home()
@@ -64,6 +46,7 @@ void StepperMotor::rotate(int angle)
 	_stepper->step(stepsToRotate);
 }
 
+/*
 void StepperMotor::manage(ProgramState* ProgramState)
 {
 	if(ProgramState->canChangeFeather())
@@ -97,3 +80,4 @@ void StepperMotor::manage(ProgramState* ProgramState)
 			ProgramState->setCurrentFeather(feather);
 	}
 }
+*/

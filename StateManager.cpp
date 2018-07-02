@@ -10,11 +10,7 @@ StateManager::StateManager()
 
 StateManager::~StateManager()
 {
-	for (byte i = 0; i < count; i++)
-	{
-		if (states[i] != nullptr)
-			delete states[i];
-	}
+	clear();
 
 	delete[] states;
 }
@@ -52,11 +48,30 @@ void StateManager::changeState(State* state)
 
 void StateManager::resize(byte size)
 {
-	if (states != nullptr)
+	if (size == 0)
 	{
-		State** resizedStates = new State*[size];
-		memcpy(resizedStates, states, (size - 1) * sizeof(State));
+		clear();
+		delete states;
+
+		states = nullptr;
 	}
 	else
-		states = new State*[size];
+	{
+		if (states != nullptr)
+		{
+			State** resizedStates = new State*[size];
+			memcpy(resizedStates, states, (size - 1) * sizeof(State));
+		}
+		else
+			states = new State*[size];
+	}
+}
+
+void StateManager::clear()
+{
+	for (byte i = 0; i < count; i++)
+	{
+		if (states[i] != nullptr)
+			delete states[i];
+	}
 }

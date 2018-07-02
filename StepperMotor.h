@@ -21,22 +21,16 @@ private:
 	Stepper* _stepper;
 	Endstop* _endstop;
 
-	bool _isEnable;
-
 public:
 	StepperMotor(byte dirPin, byte stepPin, byte enablePin, Endstop* endstop);
 	~StepperMotor();
-
-	void setMotorSteps(byte motorSteps);
-	void setMotorSpeed(byte speed);
-	void setMicroSteps(byte microSteps);
 
 	void enable(bool e);
 	
 	void home();
 	void rotate(int angle);
 
-	void manage(ProgramState* ProgramState);
+	//void manage(ProgramState* ProgramState);
 };
 
 #endif

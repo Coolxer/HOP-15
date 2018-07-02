@@ -14,6 +14,8 @@ private:
 
 	void resize(byte size);
 
+	void clear();
+
 public:
 	StateManager();
 	~StateManager();
