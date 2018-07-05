@@ -20,10 +20,11 @@ ProgramState::ProgramState(Program* program, byte feathersCount, byte cyclesCoun
 	_simpleKeypad = deviceManager->requestSimpleKeypad();
 	_buzzer = deviceManager->requestBuzzer();
 	_sevSegms = deviceManager->requestSevSegms();
-	_dividerMotor = deviceManager->requestDividerMotor();
-	_tableMotor = deviceManager->requestTableMotor();
 	_dividerEndstop = deviceManager->requestDividerEndstop();
+	_dividerMotor = deviceManager->requestDividerMotor(_dividerEndstop);
 	_tableEndstop = deviceManager->requestTableEndstop();
+	_tablePotentiometer = deviceManager->requestTablePotentiometer();
+	_tableMotor = deviceManager->requestTableMotor(_tableEndstop, _tablePotentiometer);
 	_relay = deviceManager->requestRelay();
 
 	_feathersCount = feathersCount;
@@ -52,16 +53,18 @@ ProgramState::~ProgramState()
 
 void ProgramState::react()
 {
+	_tableMotor->setSpeed();
+	_sevSegms->display(_tableMotor->getSpeed());
+
 	if (_needRedraw)
 	{
 		_lcd->manage(this);
-		_sevSegms->manage(this);
 		_needRedraw = false;
 	}
 
-	char key = _simpleKeypad->getKey();
+	char key = _simpleKeypad->getPressedKey();
 
-	if (key != KEY_NONE)
+	if(key != KEY_NONE)
 		_buzzer->playOnPress();
 
 	if (key == KEY_ENTER)
@@ -70,13 +73,18 @@ void ProgramState::react()
 			_program->getStateManager()->popBack();
 		else
 			togglePause();
+
+		_dividerMotor->enable(false);
 	}
 	else if (key == KEY_RETURN)
+	{
+		_dividerMotor->enable(false);
 		_program->getStateManager()->popBack();
-		
+	}
+			
 	if (!_inited)
 	{
-		_dividerMotor->home();
+		//_dividerMotor->home();
 		_tableMotor->home();
 
 		_rotatedInPeriod = true;
@@ -99,6 +107,7 @@ void ProgramState::react()
 					if (_isMotorMoveForward)
 					{
 						_currentFeather++;
+
 						if (_currentFeather > _feathersCount)
 						{
 							_currentFeather = 1;
@@ -114,18 +123,16 @@ void ProgramState::react()
 							_dividerMotor->rotate(_rotateAngle);
 							_relay->setHighState(false);
 						}
-
 						_needRedraw = true;
 					}
-
 					_isEndstopClickExecuted = true;
 				}
-				//else
-					//_tableMotor->rotate(_motorAngleRotateSpeed);
+				else
+					_tableMotor->move(_motorAngleRotateSpeed);
 			}
 			else
 			{
-				//_tableMotor->rotate(_motorAngleRotateSpeed);
+				_tableMotor->move(_motorAngleRotateSpeed);
 
 				if (_isEndstopClickExecuted)
 					_isEndstopClickExecuted = false;
@@ -138,8 +145,7 @@ void ProgramState::react()
 				_buzzer->playOnFinish();
 				_finalized = true;
 			}
-		}
-				
+		}		
 	}
 }
 

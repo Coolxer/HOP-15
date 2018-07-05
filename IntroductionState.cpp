@@ -29,7 +29,7 @@ IntroductionState::~IntroductionState()
 
 void IntroductionState::react()
 {
-	if (_simpleKeypad->getKey() != KEY_NONE)
+	if (_simpleKeypad->getPressedKey() != KEY_NONE)
 	{
 		_program->getStateManager()->changeState(new MenuState(_program));
 		_buzzer->playOnPress();

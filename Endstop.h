@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-class ProgramElement;
+class ProgramState;
 
 class Endstop
 {
@@ -13,7 +13,7 @@ public:
 	Endstop(byte ePin);
 	bool isClicked();
 
-	void manage(ProgramElement* programElement);
+	void manage(ProgramState* ProgramState);
 };
 
 #endif

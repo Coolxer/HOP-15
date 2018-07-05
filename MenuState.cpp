@@ -94,7 +94,7 @@ bool MenuState::setElement(byte index, SetValueElement* element)
 
 void MenuState::react()
 {
-	char key = _simpleKeypad->getKey();
+	char key = _simpleKeypad->getPressedKey();
 
 	if (key != KEY_NONE)
 		_buzzer->playOnPress();

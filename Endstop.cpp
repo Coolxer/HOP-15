@@ -1,6 +1,6 @@
 #include "Endstop.h"
 
-#include "ProgramElement.h"
+#include "ProgramState.h"
 
 Endstop::Endstop(byte ePin)
 {
@@ -16,16 +16,16 @@ bool Endstop::isClicked()
 		return false;
 }
 
-void Endstop::manage(ProgramElement* programElement)
+void Endstop::manage(ProgramState* ProgramState)
 {
 	if (isClicked())
 	{
 		//If endstop enters to being pressed - first time this function executed during endstop pressed
-		if (!programElement->getInRotationArea())
-			programElement->setRotatedInCycle(false);
+		if (!ProgramState->getInRotationArea())
+			ProgramState->setRotatedInCycle(false);
 
-		programElement->setInRotationArea(true);
+		ProgramState->setInRotationArea(true);
 	}
 	else
-		programElement->setInRotationArea(false);
+		ProgramState->setInRotationArea(false);
 }

@@ -1,6 +1,7 @@
 #ifndef _MENUSTATE_h
 #define _MENUSTATE_h
 
+#include <Arduino.h>
 #include "State.h"
 
 class Program;

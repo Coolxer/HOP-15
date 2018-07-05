@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include <SevSeg.h>
+#include <math.h>
 
 class ProgramState;
 
@@ -21,7 +22,8 @@ private:
 public:
 	SevSegms();
 
-	void manage(ProgramState* programState);
+	void display(byte number);
+	byte getNumber() { return _number; };
 	
 };
 
