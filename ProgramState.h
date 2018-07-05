@@ -14,6 +14,7 @@ class StepperMotor;
 class DcMotor;
 class Endstop;
 class Relay;
+class Potentiometer;
 
 class ProgramState : public State
 {
@@ -28,6 +29,7 @@ private:
 	DcMotor* _tableMotor;
 	Endstop* _tableEndstop;
 	Relay* _relay;
+	Potentiometer* _tablePotentiometer;
 
 	byte _feathersCount;
 	byte _currentFeather;

@@ -1,10 +1,12 @@
 #include "DcMotor.h"
-#include "Endstop.h"
 
-DcMotor::DcMotor(Endstop* endstop)
+#include "Endstop.h"
+#include "Potentiometer.h"
+
+DcMotor::DcMotor(Endstop* endstop, Potentiometer* potentiometer)
 {
 	_endstop = endstop;
-	_potentiometer = new Potentiometer();
+	_potentiometer = potentiometer;
 	
 	pinMode(_pwmPin, OUTPUT);
 	pinMode(_dirPinA, OUTPUT);
@@ -20,7 +22,7 @@ DcMotor::~DcMotor()
 void DcMotor::setSpeed()
 {
 	_potentiometer->setValue();
-	_speed = _potentiometer->getValue() / 4;
+	_speed = _potentiometer->getValue();
 	
 	analogWrite(_pwmPin, _speed);
 }
@@ -34,7 +36,13 @@ void DcMotor::home()
 	}
 }
 
-void DcMotor::move()
+void DcMotor::move(int steps)
+{
+	if (steps < 0)
+		moveLeft();
+	else
+		moveRight();
+}
 
 void DcMotor::moveLeft()
 {

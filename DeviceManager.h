@@ -11,6 +11,7 @@ class StepperMotor;
 class DcMotor;
 class Endstop;
 class Relay;
+class Potentiometer;
 
 class DeviceManager
 {
@@ -42,6 +43,9 @@ private:
 	Relay* _relay = nullptr;
 	byte   _relayUseCount = 0;
 
+	Potentiometer* _tablePotentiometer = nullptr;
+	byte           _tablePotentiometerUseCount = 0;
+
 public:
 	DeviceManager() {};
 	~DeviceManager();
@@ -58,10 +62,10 @@ public:
 	SevSegms* requestSevSegms();
 	void      releaseSevSegms();
 
-	StepperMotor* requestDividerMotor();
+	StepperMotor* requestDividerMotor(Endstop* dividerEndstop);
 	void          releaseDividerMotor();
 
-	DcMotor* requestTableMotor();
+	DcMotor* requestTableMotor(Endstop* tableEndstop, Potentiometer* potentiometer);
 	void     releaseTableMotor();
 
 	Endstop* requestDividerEndstop();
@@ -69,6 +73,9 @@ public:
 
 	Endstop* requestTableEndstop();
 	void     releaseTableEndstop();
+
+	Potentiometer* requestTablePotentiometer();
+	void           releaseTablePotentiometer();
 
 	Relay* requestRelay();
 	void   releaseRelay();

@@ -11,7 +11,6 @@ StateManager::StateManager()
 StateManager::~StateManager()
 {
 	clear();
-
 	delete[] states;
 }
 

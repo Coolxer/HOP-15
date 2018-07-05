@@ -8,14 +8,12 @@ SevSegms::SevSegms()
 	_sevSeg.setBrightness(50);
 }
 
-void SevSegms::manage(ProgramState* programState)
+void SevSegms::display(byte number)
 {
-	byte feather = programState->getCurrentFeather();
-	byte feathers = programState->getFeathersCount();
-	byte cycle = programState->getCurrentCycle();
-	byte cycles = programState->getCyclesCount();
+	_number = floor((number * 100) / 255);
 
-	_number = (feathers * cycles) - (feather * cycle) + 1;
+	if (_number == 100)
+		_number = 99;
 
 	_sevSeg.setNumber(_number, 0);
 	_sevSeg.refreshDisplay();

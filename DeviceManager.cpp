@@ -8,6 +8,7 @@
 #include "DcMotor.h"
 #include "Endstop.h"
 #include "Relay.h"
+#include "Potentiometer.h"
 
 DeviceManager::~DeviceManager()
 {
@@ -106,12 +107,12 @@ void DeviceManager::releaseSevSegms()
 	}
 }
 
-StepperMotor* DeviceManager::requestDividerMotor()
+StepperMotor* DeviceManager::requestDividerMotor(Endstop* dividerEndstop)
 {
 	_dividerMotorUseCount++;
 
 	if (_dividerMotor == nullptr)
-		_dividerMotor = new StepperMotor(6, 3, 8, requestDividerEndstop());
+		_dividerMotor = new StepperMotor(6, 3, 8, dividerEndstop);
 
 	return _dividerMotor;
 }
@@ -127,12 +128,12 @@ void DeviceManager::releaseDividerMotor()
 	}
 }
 
-DcMotor* DeviceManager::requestTableMotor()
+DcMotor* DeviceManager::requestTableMotor(Endstop* tableEndstop, Potentiometer* potentiometer)
 {
 	_tableMotorUseCount++;
 
 	if (_tableMotor == nullptr)
-		_tableMotor = new DcMotor(requestTableEndstop());
+		_tableMotor = new DcMotor(tableEndstop, potentiometer);
 
 	return _tableMotor;
 }
@@ -208,5 +209,26 @@ void DeviceManager::releaseRelay()
 	{
 		delete _relay;
 		_relay = nullptr;
+	}
+}
+
+Potentiometer * DeviceManager::requestTablePotentiometer()
+{
+	_tablePotentiometerUseCount++;
+
+	if (_tablePotentiometer == nullptr)
+		_tablePotentiometer = new Potentiometer();
+
+	return _tablePotentiometer;
+}
+
+void DeviceManager::releaseTablePotentiometer()
+{
+	_tablePotentiometerUseCount--;
+
+	if (_tablePotentiometerUseCount == 0)
+	{
+		delete _tablePotentiometer;
+		_tablePotentiometer = nullptr;
 	}
 }

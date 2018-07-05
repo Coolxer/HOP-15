@@ -20,10 +20,11 @@ ProgramState::ProgramState(Program* program, byte feathersCount, byte cyclesCoun
 	_simpleKeypad = deviceManager->requestSimpleKeypad();
 	_buzzer = deviceManager->requestBuzzer();
 	_sevSegms = deviceManager->requestSevSegms();
-	_dividerMotor = deviceManager->requestDividerMotor();
-	_tableMotor = deviceManager->requestTableMotor();
 	_dividerEndstop = deviceManager->requestDividerEndstop();
+	_dividerMotor = deviceManager->requestDividerMotor(_dividerEndstop);
 	_tableEndstop = deviceManager->requestTableEndstop();
+	_tablePotentiometer = deviceManager->requestTablePotentiometer();
+	_tableMotor = deviceManager->requestTableMotor(_tableEndstop, _tablePotentiometer);
 	_relay = deviceManager->requestRelay();
 
 	_feathersCount = feathersCount;
@@ -52,6 +53,9 @@ ProgramState::~ProgramState()
 
 void ProgramState::react()
 {
+	_tableMotor->setSpeed();
+	_sevSegms->display(_tableMotor->getSpeed());
+
 	if (_needRedraw)
 	{
 		_lcd->manage(this);
@@ -66,15 +70,11 @@ void ProgramState::react()
 	if (key == KEY_ENTER)
 	{
 		if (isFinished())
-		{
-			_dividerMotor->enable(false);
 			_program->getStateManager()->popBack();
-		}	
 		else
-		{
-			_dividerMotor->enable(false);
 			togglePause();
-		}	
+
+		_dividerMotor->enable(false);
 	}
 	else if (key == KEY_RETURN)
 	{
@@ -84,7 +84,7 @@ void ProgramState::react()
 			
 	if (!_inited)
 	{
-		_dividerMotor->home();
+		//_dividerMotor->home();
 		_tableMotor->home();
 
 		_rotatedInPeriod = true;
@@ -127,12 +127,12 @@ void ProgramState::react()
 					}
 					_isEndstopClickExecuted = true;
 				}
-				//else
-					//_tableMotor->rotate(_motorAngleRotateSpeed);
+				else
+					_tableMotor->move(_motorAngleRotateSpeed);
 			}
 			else
 			{
-				//_tableMotor->rotate(_motorAngleRotateSpeed);
+				_tableMotor->move(_motorAngleRotateSpeed);
 
 				if (_isEndstopClickExecuted)
 					_isEndstopClickExecuted = false;

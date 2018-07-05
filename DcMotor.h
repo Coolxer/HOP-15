@@ -2,7 +2,9 @@
 
 #include <Arduino.h>
 #include "ProgramState.h"
-#include "Potentiometer.h"
+
+class Endstop;
+class Potentiometer;
 
 class DcMotor
 {
@@ -17,14 +19,14 @@ private:
 	Potentiometer* _potentiometer;
 
 public:
-	DcMotor(Endstop* endstop);
+	DcMotor(Endstop* endstop, Potentiometer* potentiometer);
 	~DcMotor();
 
 	void setSpeed();
 	byte getSpeed() { return _speed; };
 
 	void home();
-	void move(byte );
+	void move(int steps);
 
 	void moveLeft();
 	void moveRight();
