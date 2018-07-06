@@ -27,7 +27,6 @@ private:
 
 	String* _itemNames;
 	ItemBind** _itemBinds;
-	void(**_itemCalbacks)(MenuState*);
 
 	byte _itemsCount = 3;
 	byte _selectedIndex = 1;
@@ -37,7 +36,7 @@ public:
 	MenuState(Program* program);
 	~MenuState();
 
-	bool setElement(byte index, char* description, void(*callback)(MenuState*));
+	bool setElement(byte index, char* description);
 	bool setElement(byte index, SetValueElement* element);
 
 	virtual void react();
