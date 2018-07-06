@@ -10,12 +10,6 @@
 #include "ProgramState.h"
 #include "SetValueElement.h"
 
-void onProgramStart(MenuState* menuState)
-{
-	ProgramState* programState = new ProgramState(menuState->getProgram(), menuState->getValueAtIndex(0), menuState->getValueAtIndex(1));
-	menuState->getProgram()->getStateManager()->pushBack(programState);
-}
-
 MenuState::MenuState(Program* program) : State(program)
 {
 	DeviceManager* deviceManager = program->getDeviceManager();
@@ -26,20 +20,16 @@ MenuState::MenuState(Program* program) : State(program)
 
 	_itemNames = new String[_itemsCount];
 	_itemBinds = new ItemBind*[_itemsCount];
-	_itemCalbacks = new (void(*[3])(MenuState*));
 
 	for (byte i = 0; i < _itemsCount; i++)
-	{
 		_itemBinds[i] = nullptr;
-		_itemCalbacks[i] = nullptr;
-	}
 
 	SetValueElement* featherAmount = new SetValueElement("Piora", _lcd, _simpleKeypad, 2, 32, 4, 2);
 	SetValueElement* cycleAmount = new SetValueElement("Cykle", _lcd, _simpleKeypad, 1, 16, 1, 1);
 
 	setElement(0, featherAmount);
 	setElement(1, cycleAmount);
-	setElement(2, "Rozpocznij", &onProgramStart);
+	setElement(2, "Rozpocznij");
 }
 
 MenuState::~MenuState()
@@ -58,15 +48,13 @@ MenuState::~MenuState()
 	}
 
 	delete[] _itemBinds;
-	delete[] _itemCalbacks;
 }
 
-bool MenuState::setElement(byte index, char* description, void(*callback)(MenuState*))
+bool MenuState::setElement(byte index, char* description)
 {
 	if (index >= 0 && index < _itemsCount)
 	{
 		_itemNames[index] = description;
-		_itemCalbacks[index] = callback;
 		return true;
 	}
 
@@ -154,8 +142,11 @@ void MenuState::enter()
 	if (_itemBinds[_selectedIndex]->item != nullptr)
 		_isFocused = !_isFocused;
 
-	if (_itemCalbacks[_selectedIndex] != nullptr)
-		_itemCalbacks[_selectedIndex](this);
+	if (_itemBinds[_selectedIndex] == nullptr)
+	{
+		ProgramState* programState = new ProgramState(getProgram(), getValueAtIndex(0), getValueAtIndex(1));
+		getProgram()->getStateManager()->pushBack(programState);
+	}
 
 	_needRedraw = true;
 }
