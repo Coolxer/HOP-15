@@ -12,6 +12,7 @@ private:
 	byte _pwmPin = 4; 
 	byte _dirPinA = 5;
 	byte _dirPinB = 6;
+	byte _enablePin = 7;
 
 	byte _speed = 100; //max speed 255
 
@@ -25,6 +26,7 @@ public:
 	void setSpeed();
 	byte getSpeed() { return _speed; };
 
+	void enable(bool e);
 	void home();
 	void move(int steps);
 

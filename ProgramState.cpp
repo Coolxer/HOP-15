@@ -75,10 +75,12 @@ void ProgramState::react()
 			togglePause();
 
 		_dividerMotor->enable(false);
+		_tableMotor->enable(false);
 	}
 	else if (key == KEY_RETURN)
 	{
 		_dividerMotor->enable(false);
+		_tableMotor->enable(false);
 		_program->getStateManager()->popBack();
 	}
 			
@@ -128,10 +130,15 @@ void ProgramState::react()
 					_isEndstopClickExecuted = true;
 				}
 				else
+				{
+					_dividerMotor->enable(false);
 					_tableMotor->move(_motorAngleRotateSpeed);
+				}
+					
 			}
 			else
 			{
+				_dividerMotor->enable(false);
 				_tableMotor->move(_motorAngleRotateSpeed);
 
 				if (_isEndstopClickExecuted)
