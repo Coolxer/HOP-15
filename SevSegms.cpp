@@ -12,7 +12,7 @@ void SevSegms::display(byte number)
 {
 	_number = floor((number * 100) / 255);
 
-	if (_number == 100)
+	if (_number > 99)
 		_number = 99;
 
 	_sevSeg.setNumber(_number, 0);
