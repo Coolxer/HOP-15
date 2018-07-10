@@ -69,7 +69,7 @@ void ProgramState::react()
 
 	if (key == KEY_ENTER)
 	{
-		if (isFinished())
+		if (_finished)
 			_program->getStateManager()->popBack();
 		else
 			togglePause();
@@ -134,7 +134,6 @@ void ProgramState::react()
 					_dividerMotor->enable(false);
 					_tableMotor->move(_motorAngleRotateSpeed);
 				}
-					
 			}
 			else
 			{
@@ -145,13 +144,11 @@ void ProgramState::react()
 					_isEndstopClickExecuted = false;
 			}
 		}
-		else
+
+		if (_finished && !_finalized)
 		{
-			if (!_finalized)
-			{
-				_buzzer->playOnFinish();
-				_finalized = true;
-			}
+			_buzzer->playOnFinish();
+			_finalized = true;
 		}		
 	}
 }

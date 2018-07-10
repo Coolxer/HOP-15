@@ -45,9 +45,6 @@ private:
 	bool _isMotorMoveForward = true;
 	int _motorAngleRotateSpeed = 5;
 
-	bool _dividerMotorHomed = false;
-	bool _tableMotorHomed = false;
-
 	//If all (two) motors are homed initiation is finished and set to true
 	bool _inited = false;
 	//If all cycles and feathers in cycle was processed this flag is set to true

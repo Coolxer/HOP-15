@@ -10,12 +10,16 @@ SevSegms::SevSegms()
 
 void SevSegms::display(byte number)
 {
-	_number = floor((number * 100) / 255);
+	if (number != _previousNumber)
+	{
+		_number = floor((number * 100) / 255);
 
-	if (_number > 99)
-		_number = 99;
+		if (_number > 99)
+			_number = 99;
 
-	_sevSeg.setNumber(_number, 0);
+		_sevSeg.setNumber(_number, 0);
+		_previousNumber = number;
+	}
 	_sevSeg.refreshDisplay();
 }
 

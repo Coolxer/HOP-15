@@ -3,17 +3,13 @@
 
 #include <Arduino.h>
 
-class ProgramState;
-
 class Endstop
 {
 private:
-	byte _ePin;
+	byte _pin;
 public:
-	Endstop(byte ePin);
+	Endstop(byte pin);
 	bool isClicked();
-
-	void manage(ProgramState* ProgramState);
 };
 
 #endif

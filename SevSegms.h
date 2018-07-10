@@ -18,6 +18,7 @@ private:
 	byte _segmentPins[8] = { 41, 39, 23, 29, 27, 33, 31, 25 };
 
 	byte _number;
+	byte _previousNumber;
 
 public:
 	SevSegms();

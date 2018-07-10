@@ -29,8 +29,6 @@ public:
 	
 	void home();
 	void rotate(int angle);
-
-	//void manage(ProgramState* ProgramState);
 };
 
 #endif

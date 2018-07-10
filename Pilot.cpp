@@ -2,7 +2,7 @@
 
 Pilot::Pilot()
 {
-	//_irrecv = new IRrecv(_irPin);
+	//_irrecv = new IRrecv(__pin);
 }
 
 Pilot::~Pilot()

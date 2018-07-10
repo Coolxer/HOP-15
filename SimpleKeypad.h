@@ -7,10 +7,6 @@
 #include "Config.h"
 #include "Input.h"
 
-class MenuState;
-class IntroductionState;
-class ProgramState;
-
 class SimpleKeypad : public Input
 {
 private:

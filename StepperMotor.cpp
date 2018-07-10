@@ -45,39 +45,3 @@ void StepperMotor::rotate(int angle)
 
 	_stepper->step(stepsToRotate);
 }
-
-/*
-void StepperMotor::manage(ProgramState* ProgramState)
-{
-	if(ProgramState->canChangeFeather())
-	{
-		ProgramState->setRotatedInCycle(true);
-
-		byte feather = ProgramState->getCurrentFeather();
-		byte feathers = ProgramState->getFeathersCount();
-		byte cycle = ProgramState->getCurrentCycle();
-		byte cycles = ProgramState->getCyclesCount();
-		int rotateAngle = ProgramState->getRotateAngle();
-
-		//delay(1000);
-		rotate(rotateAngle);
-
-		feather++;
-		if (feather > feathers)
-		{
-			feather = 1;
-			cycle++;
-
-			if (cycle > cycles)
-				ProgramState->finish();
-			else
-			{
-				ProgramState->setCurrentFeather(feather);
-				ProgramState->setCurrentCycle(cycle);
-			}
-		}
-		else
-			ProgramState->setCurrentFeather(feather);
-	}
-}
-*/

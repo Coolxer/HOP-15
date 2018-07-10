@@ -7,7 +7,7 @@
 class Pilot
 {
 private:
-	byte _irPin;
+	byte _pin;
 	//IRrecv* _irrecv;
 	//decode_results _results;
 public:
