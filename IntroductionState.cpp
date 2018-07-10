@@ -9,29 +9,20 @@
 
 #include "MenuState.h"
 
-IntroductionState::IntroductionState(Program* program) : State(program)
+void IntroductionState::init()
 {
-	DeviceManager* deviceManager = program->getDeviceManager();
+	DeviceManager* deviceManager = _program->getDeviceManager();
 
 	_lcd = deviceManager->requestLcd();
 	_simpleKeypad = deviceManager->requestSimpleKeypad();
 	_buzzer = deviceManager->requestBuzzer();
 }
 
-IntroductionState::~IntroductionState()
-{
-	DeviceManager* deviceManager = _program->getDeviceManager();
-
-	deviceManager->releaseLcd();
-	deviceManager->releaseSimpleKeypad();
-	deviceManager->releaseBuzzer();
-}
-
 void IntroductionState::react()
 {
 	if (_simpleKeypad->getPressedKey() != KEY_NONE)
 	{
-		_program->getStateManager()->changeState(new MenuState(_program));
+		_program->getStateManager()->changeState(1);
 		_buzzer->playOnPress();
 	}
 
@@ -40,4 +31,9 @@ void IntroductionState::react()
 		_lcd->manage(this);
 		_needRedraw = false;
 	}
+}
+
+void IntroductionState::reset()
+{
+
 }

@@ -10,14 +10,17 @@ protected:
 	bool _needRedraw = true;
 
 public:
-	State(Program* program) { _program = program; };
+	State() {};
 	virtual ~State() {};
 
+	virtual void init() = 0;
 	virtual void react() = 0;
+	virtual void reset() = 0;
 
 	void needRedraw() { _needRedraw = true; };
 
 	Program* getProgram() { return _program; };
+	void setProgram(Program* program) { _program = program; };
 };
 
 

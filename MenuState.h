@@ -2,7 +2,9 @@
 #define _MENUSTATE_h
 
 #include <Arduino.h>
+
 #include "State.h"
+#include "SetValueElement.h"
 
 class Program;
 
@@ -10,11 +12,9 @@ class Lcd;
 class SimpleKeypad;
 class Buzzer;
 
-class SetValueElement;
-
 struct ItemBind
 {
-	byte index = 0;
+	int index = -1;
 	SetValueElement* item = nullptr;
 };
 
@@ -25,21 +25,23 @@ private:
 	SimpleKeypad* _simpleKeypad;
 	Buzzer* _buzzer;
 
-	String* _itemNames;
-	ItemBind** _itemBinds;
+	String _itemNames[3];
+	ItemBind _itemBinds[3];
 
 	byte _itemsCount = 3;
 	byte _selectedIndex = 1;
 	bool _isFocused = false;
 
-public:
-	MenuState(Program* program);
-	~MenuState();
+	SetValueElement _featherAmount = SetValueElement("Piora", _lcd, _simpleKeypad, 2, 32, 4, 2);
+	SetValueElement _cycleAmount = SetValueElement("Cykle", _lcd, _simpleKeypad, 1, 16, 1, 1);
 
+public:
 	bool setElement(byte index, char* description);
 	bool setElement(byte index, SetValueElement* element);
 
+	virtual void init();
 	virtual void react();
+	virtual void reset();
 
 	void up();
 	void down();
