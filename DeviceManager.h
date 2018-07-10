@@ -3,82 +3,43 @@
 
 #include <Arduino.h>
 
-class Lcd;
-class SimpleKeypad;
-class Buzzer;
-class SevSegms;
-class StepperMotor;
-class DcMotor;
-class Endstop;
-class Relay;
-class Potentiometer;
+#include "Lcd.h"
+#include "SimpleKeypad.h"
+#include "Buzzer.h"
+#include "SevSegms.h"
+#include "StepperMotor.h"
+#include "DcMotor.h"
+#include "Endstop.h"
+#include "Relay.h"
+#include "Potentiometer.h"
 
 class DeviceManager
 {
 private:
-	Lcd*  _lcd = nullptr;
-	byte _lcdUseCount = 0;
-
-	SimpleKeypad* _simpleKeypad = nullptr;
-	byte         _simpleKeypadUseCount = 0;
-
-	Buzzer* _buzzer = nullptr;
-	byte   _buzzerUseCount = 0;
-
-	SevSegms* _sevSegms = nullptr;
-	byte     _sevSegmsUseCount = 0;
-
-	StepperMotor* _dividerMotor = nullptr;
-	byte          _dividerMotorUseCount = 0;
-
-	DcMotor* _tableMotor = nullptr;
-	byte     _tableMotorUseCount = 0;
-
-	Endstop* _dividerEndstop = nullptr;
-	byte     _dividerEndstopUseCount = 0;
-
-	Endstop* _tableEndstop = nullptr;
-	byte     _tableEndstopUseCount = 0;
-
-	Relay* _relay = nullptr;
-	byte   _relayUseCount = 0;
-
-	Potentiometer* _tablePotentiometer = nullptr;
-	byte           _tablePotentiometerUseCount = 0;
+	Lcd _lcd = Lcd();
+	SimpleKeypad _simpleKeypad = SimpleKeypad();
+	Buzzer _buzzer = Buzzer();
+	SevSegms _sevSegms = SevSegms();
+	Endstop _dividerEndstop = Endstop(10);
+	Endstop _tableEndstop = Endstop(9);
+	Potentiometer _tablePotentiometer = Potentiometer();
+	StepperMotor _dividerMotor = StepperMotor(6, 3, 8, &_dividerEndstop);
+	DcMotor _tableMotor = DcMotor(&_tableEndstop, &_tablePotentiometer);
+	Relay _relay = Relay();
 
 public:
 	DeviceManager() {};
-	~DeviceManager();
 
-	Lcd* requestLcd();
-	void releaseLcd();
-
-	SimpleKeypad* requestSimpleKeypad();
-	void          releaseSimpleKeypad();
-
-	Buzzer* requestBuzzer();
-	void    releaseBuzzer();
-
-	SevSegms* requestSevSegms();
-	void      releaseSevSegms();
-
-	StepperMotor* requestDividerMotor(Endstop* dividerEndstop);
-	void          releaseDividerMotor();
-
-	DcMotor* requestTableMotor(Endstop* tableEndstop, Potentiometer* potentiometer);
-	void     releaseTableMotor();
-
-	Endstop* requestDividerEndstop();
-	void     releaseDividerEndstop();
-
-	Endstop* requestTableEndstop();
-	void     releaseTableEndstop();
-
-	Potentiometer* requestTablePotentiometer();
-	void           releaseTablePotentiometer();
-
-	Relay* requestRelay();
-	void   releaseRelay();
+	Lcd* requestLcd() { return &_lcd; };
+	SimpleKeypad* requestSimpleKeypad() { return &_simpleKeypad; };
+	Buzzer* requestBuzzer() { return &_buzzer; };
+	SevSegms* requestSevSegms() { return &_sevSegms; };
+	Endstop* requestDividerEndstop() { return &_dividerEndstop; };
+	Endstop* requestTableEndstop() { return &_tableEndstop; };
+	Potentiometer* requestTablePotentiometer() { return &_tablePotentiometer; };
+	StepperMotor* requestDividerMotor(Endstop* dividerEndstop) { return &_dividerMotor; };
+	DcMotor* requestTableMotor(Endstop* tableEndstop, Potentiometer* potentiometer) { return &_tableMotor; };
+	Relay* requestRelay() { return &_relay; };
 };
 
 #endif

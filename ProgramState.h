@@ -59,8 +59,8 @@ private:
 	bool _finalized = false;
 
 public:
-	ProgramState(Program* program, byte feathers, byte cycles);
-	~ProgramState();
+	void setFeathers(byte feathers) { _feathersCount = feathers; _rotateAngle = 360.0 / _feathersCount; };
+	void setCycles(byte cycles) { _cyclesCount = cycles; };
 
 	byte getCurrentFeather() { return _currentFeather; };
 	void setCurrentFeather(byte currentFeather) { _currentFeather = currentFeather; };
@@ -81,7 +81,9 @@ public:
 	void setInRotationArea(bool inRotationArea) { _isEndstopClickExecuted = inRotationArea; };
 	void setRotatedInCycle(bool rotatedInCycle) { _rotatedInPeriod = rotatedInCycle; };
 
+	virtual void init();
 	virtual void react();
+	virtual void reset();
 };
 
 #endif

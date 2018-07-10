@@ -22,10 +22,9 @@ private:
 	char* _info = "WCISNIJ PRZYCISK";
 
 public:
-	IntroductionState(Program* program);
-	~IntroductionState();
-
+	virtual void init();
 	virtual void react();
+	virtual void reset();
 
 	char* getCompanyName() { return _companyName; };
 	char* getProgramName() { return _programName; };
