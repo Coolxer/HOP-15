@@ -8,24 +8,17 @@ class State;
 class StateManager
 {
 private:
-	//Count of elements in dynamic array use also as index to last element (stack top)
-	byte count;
-	State** states;
-
-	void resize(byte size);
-
-	void clear();
+	byte _index = 0;
+	byte _count = 3;
+	State* _states[3];
 
 public:
 	StateManager();
-	~StateManager();
 
 	State* getCurrent();
 
-	void pushBack(State* state);
-	void popBack();
-
-	void changeState(State* state);
+	void setState(byte index, State* state);
+	void changeState(byte index);
 };
 
 #endif

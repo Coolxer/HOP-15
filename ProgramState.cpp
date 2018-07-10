@@ -12,9 +12,9 @@
 #include "Endstop.h"
 #include "Relay.h"
 
-ProgramState::ProgramState(Program* program, byte feathersCount, byte cyclesCount) : State(program)
+void ProgramState::init()
 {
-	DeviceManager* deviceManager = program->getDeviceManager();
+	DeviceManager* deviceManager = _program->getDeviceManager();
 
 	_lcd = deviceManager->requestLcd();
 	_simpleKeypad = deviceManager->requestSimpleKeypad();
@@ -27,28 +27,8 @@ ProgramState::ProgramState(Program* program, byte feathersCount, byte cyclesCoun
 	_tableMotor = deviceManager->requestTableMotor(_tableEndstop, _tablePotentiometer);
 	_relay = deviceManager->requestRelay();
 
-	_feathersCount = feathersCount;
-	_cyclesCount = cyclesCount;
-
 	_currentFeather = 1;
 	_currentCycle = 1;
-
-	_rotateAngle = 360.0 / _feathersCount;
-}
-
-ProgramState::~ProgramState()
-{
-	DeviceManager* deviceManager = _program->getDeviceManager();
-
-	deviceManager->releaseLcd();
-	deviceManager->releaseSimpleKeypad();
-	deviceManager->releaseBuzzer();
-	deviceManager->releaseSevSegms();
-	deviceManager->releaseDividerMotor();
-	deviceManager->releaseTableMotor();
-	deviceManager->releaseDividerEndstop();
-	deviceManager->releaseTableEndstop();
-	deviceManager->releaseRelay();
 }
 
 void ProgramState::react()
@@ -69,8 +49,8 @@ void ProgramState::react()
 
 	if (key == KEY_ENTER)
 	{
-		if (_finished)
-			_program->getStateManager()->popBack();
+		if (isFinished())
+			_program->getStateManager()->changeState(1);
 		else
 			togglePause();
 
@@ -81,7 +61,7 @@ void ProgramState::react()
 	{
 		_dividerMotor->enable(false);
 		_tableMotor->enable(false);
-		_program->getStateManager()->popBack();
+		_program->getStateManager()->changeState(1);
 	}
 			
 	if (!_inited)
@@ -151,6 +131,30 @@ void ProgramState::react()
 			_finalized = true;
 		}		
 	}
+}
+
+void ProgramState::reset()
+{
+	_needRedraw = true;
+
+	_tableMotor->home();
+
+	_currentFeather = 1;
+	_currentCycle = 1;
+
+	_rotatedInPeriod = true;
+	_isEndstopClickExecuted = false;
+	_isMotorMoveForward = true;
+	_motorAngleRotateSpeed = 5;
+
+	_dividerMotorHomed = false;
+	_tableMotorHomed = false;
+
+	_inited = false;
+	_finished = false;
+	_paused = false;
+
+	_finalized = false;
 }
 
 bool ProgramState::canChangeFeather()

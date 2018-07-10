@@ -45,6 +45,9 @@ private:
 	bool _isMotorMoveForward = true;
 	int _motorAngleRotateSpeed = 5;
 
+	bool _dividerMotorHomed = false;
+	bool _tableMotorHomed = false;
+
 	//If all (two) motors are homed initiation is finished and set to true
 	bool _inited = false;
 	//If all cycles and feathers in cycle was processed this flag is set to true
@@ -56,8 +59,8 @@ private:
 	bool _finalized = false;
 
 public:
-	ProgramState(Program* program, byte feathers, byte cycles);
-	~ProgramState();
+	void setFeathers(byte feathers) { _feathersCount = feathers; _rotateAngle = 360.0 / _feathersCount; };
+	void setCycles(byte cycles) { _cyclesCount = cycles; };
 
 	byte getCurrentFeather() { return _currentFeather; };
 	void setCurrentFeather(byte currentFeather) { _currentFeather = currentFeather; };
@@ -78,7 +81,9 @@ public:
 	void setInRotationArea(bool inRotationArea) { _isEndstopClickExecuted = inRotationArea; };
 	void setRotatedInCycle(bool rotatedInCycle) { _rotatedInPeriod = rotatedInCycle; };
 
+	virtual void init();
 	virtual void react();
+	virtual void reset();
 };
 
 #endif
