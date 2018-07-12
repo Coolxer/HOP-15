@@ -21,6 +21,9 @@ void StateManager::setState(byte index, State* state)
 
 void StateManager::changeState(byte index)
 {
-	if (index >= 0 && index < _count)
+	if (index >= 0 && index < _count) {
 		_index = index;
+
+		getCurrent()->needRedraw();
+	}
 }
