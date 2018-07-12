@@ -42,6 +42,12 @@ void ProgramState::react()
 		_needRedraw = false;
 	}
 
+	if (_finished && !_finalized)
+	{
+		_buzzer->playOnFinish();
+		_finalized = true;
+	}
+
 	char key = _simpleKeypad->getPressedKey();
 
 	if(key != KEY_NONE)
@@ -123,13 +129,7 @@ void ProgramState::react()
 				if (_isEndstopClickExecuted)
 					_isEndstopClickExecuted = false;
 			}
-		}
-
-		if (_finished && !_finalized)
-		{
-			_buzzer->playOnFinish();
-			_finalized = true;
-		}		
+		}	
 	}
 }
 
@@ -146,9 +146,6 @@ void ProgramState::reset()
 	_isEndstopClickExecuted = false;
 	_isMotorMoveForward = true;
 	_motorAngleRotateSpeed = 5;
-
-	_dividerMotorHomed = false;
-	_tableMotorHomed = false;
 
 	_inited = false;
 	_finished = false;
