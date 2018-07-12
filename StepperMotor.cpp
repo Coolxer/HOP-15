@@ -13,7 +13,7 @@ StepperMotor::StepperMotor(byte dirPin, byte stepPin, byte enablePin, Endstop* e
 	_stepper->setSpeed(_speed);
 
 	pinMode(_enablePin, OUTPUT);
-	enable(true);
+	enable(false);
 }
 
 StepperMotor::~StepperMotor()

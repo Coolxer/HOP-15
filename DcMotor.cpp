@@ -13,7 +13,7 @@ DcMotor::DcMotor(Endstop* endstop, Potentiometer* potentiometer)
 	pinMode(_dirPinB, OUTPUT);
 	pinMode(_enablePin, OUTPUT);
 
-	enable(true);
+	enable(false);
 }
 
 DcMotor::~DcMotor()

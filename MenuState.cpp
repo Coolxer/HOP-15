@@ -126,7 +126,6 @@ void MenuState::enter()
 
 		program->getStateManager()->changeState(2);
 	}
-
 	_needRedraw = true;
 }
 

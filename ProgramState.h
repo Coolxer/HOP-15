@@ -48,7 +48,7 @@ private:
 	bool _dividerMotorHomed = false;
 	bool _tableMotorHomed = false;
 
-	//If all (two) motors are homed initiation is finished and set to true
+	//If all one (two) motors are homed initiation is finished and set to true
 	bool _inited = false;
 	//If all cycles and feathers in cycle was processed this flag is set to true
 	bool _finished = false;
@@ -74,7 +74,7 @@ public:
 	bool isFinished() { return _finished; };
 	void finish() { _finished = true; };
 	bool isPaused() { return _paused; };
-	void togglePause() { _paused = !_paused; };
+	void togglePause() { _paused = !_paused; needRedraw(); };
 	
 	bool canChangeFeather();
 	bool getInRotationArea() { return _isEndstopClickExecuted; };

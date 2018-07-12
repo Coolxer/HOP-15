@@ -72,6 +72,9 @@ void ProgramState::react()
 			
 	if (!_inited)
 	{
+		_dividerMotor->enable(true);
+		_tableMotor->enable(true);
+
 		//_dividerMotor->home();
 		_tableMotor->home();
 
@@ -135,9 +138,7 @@ void ProgramState::react()
 
 void ProgramState::reset()
 {
-	_needRedraw = true;
-
-	_tableMotor->home();
+	//_tableMotor->home();
 
 	_currentFeather = 1;
 	_currentCycle = 1;

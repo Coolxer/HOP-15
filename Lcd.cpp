@@ -139,8 +139,6 @@ void Lcd::manage(ProgramState* programState)
 	}
 	else
 	{
-		writeNewLine(0, "Przetwarzanie w toku");
-
 		byte feather = programState->getCurrentFeather();
 		byte feathers = programState->getFeathersCount();
 		byte cycle = programState->getCurrentCycle();
@@ -155,9 +153,16 @@ void Lcd::manage(ProgramState* programState)
 		writeNewLine(1, featherLine);
 		writeNewLine(2, cycleLine);
 
-		if(programState->isPaused())
-			writeNewLine(3, "*-Wznów #-Zatrzymaj");
+		if (programState->isPaused())
+		{
+			writeNewLine(0, "Pauza");
+			writeNewLine(3, "*-Wznow #-Zatrzymaj");
+		}	
 		else
+		{
+			writeNewLine(0, "Przetwarzanie w toku");
 			writeNewLine(3, "*-Pauza #-Zatrzymaj");
+		}
+			
 	}
 }
