@@ -36,6 +36,9 @@ void ProgramState::react()
 	_tableMotor->setSpeed();
 	_sevSegms->display(_tableMotor->getSpeed());
 
+	_dividerMotor->enable(true);
+	_tableMotor->enable(true);
+
 	if (_needRedraw)
 	{
 		_lcd->manage(this);
@@ -55,26 +58,29 @@ void ProgramState::react()
 
 	if (key == KEY_ENTER)
 	{
-		if (isFinished())
-			_program->getStateManager()->changeState(1);
-		else
-			togglePause();
-
 		_dividerMotor->enable(false);
 		_tableMotor->enable(false);
+
+		if (isFinished())
+		{
+			_program->getStateManager()->changeState(1);
+			_sevSegms->reset();
+		}	
+		else
+			togglePause();
 	}
 	else if (key == KEY_RETURN)
 	{
 		_dividerMotor->enable(false);
 		_tableMotor->enable(false);
+
 		_program->getStateManager()->changeState(1);
+		_sevSegms->reset();
 	}
 			
 	if (!_inited)
 	{
-		_dividerMotor->enable(true);
-		_tableMotor->enable(true);
-
+		_sevSegms->reset();
 		//_dividerMotor->home();
 		_tableMotor->home();
 
@@ -138,7 +144,7 @@ void ProgramState::react()
 
 void ProgramState::reset()
 {
-	//_tableMotor->home();
+	_sevSegms->reset();
 
 	_currentFeather = 1;
 	_currentCycle = 1;

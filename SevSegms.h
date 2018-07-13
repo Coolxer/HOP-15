@@ -18,14 +18,14 @@ private:
 	byte _segmentPins[8] = { 41, 39, 23, 29, 27, 33, 31, 25 };
 
 	byte _number;
-	byte _previousNumber;
+	byte _previousNumber = 0;
 
 public:
 	SevSegms();
 
 	void display(byte number);
 	byte getNumber() { return _number; };
-	
+	void reset();
 };
 
 #endif

@@ -3,6 +3,7 @@
 Relay::Relay()
 {
 	pinMode(_pin, OUTPUT);
+	setHighState(false);
 }
 
 void Relay::setHighState(bool state)

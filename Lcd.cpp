@@ -155,7 +155,7 @@ void Lcd::manage(ProgramState* programState)
 
 		if (programState->isPaused())
 		{
-			writeNewLine(0, "Pauza");
+			writeNewLine(0, "       Pauza");
 			writeNewLine(3, "*-Wznow #-Zatrzymaj");
 		}	
 		else
