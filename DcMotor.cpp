@@ -35,7 +35,9 @@ void DcMotor::enable(bool e)
 	if (e)
 		digitalWrite(_enablePin, HIGH);
 	else
+	{
 		digitalWrite(_enablePin, LOW);
+	}
 }
 
 void DcMotor::home()
@@ -50,9 +52,9 @@ void DcMotor::home()
 void DcMotor::move(int steps)
 {
 	if (steps < 0)
-		moveLeft();
-	else
 		moveRight();
+	else
+		moveLeft();
 }
 
 void DcMotor::moveLeft()
@@ -67,3 +69,8 @@ void DcMotor::moveRight()
 	digitalWrite(_dirPinB, HIGH);
 }
 
+void DcMotor::stop()
+{
+	digitalWrite(_dirPinA, LOW);
+	digitalWrite(_dirPinB, LOW);
+}

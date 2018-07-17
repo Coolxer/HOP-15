@@ -9,10 +9,10 @@ class Potentiometer;
 class DcMotor
 {
 private:
-	byte _pwmPin = 4; 
-	byte _dirPinA = 5;
-	byte _dirPinB = 6;
-	byte _enablePin = 7;
+	byte _pwmPin = 17; 
+	byte _dirPinA = 18;
+	byte _dirPinB = 19;
+	byte _enablePin = 20;
 
 	byte _speed = 100; //max speed 255
 
@@ -32,6 +32,7 @@ public:
 
 	void moveLeft();
 	void moveRight();
+	void stop();
 
 };
 
