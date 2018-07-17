@@ -36,6 +36,7 @@ void DcMotor::enable(bool e)
 		digitalWrite(_enablePin, HIGH);
 	else
 	{
+		stop();
 		digitalWrite(_enablePin, LOW);
 	}
 }
@@ -45,7 +46,11 @@ void DcMotor::home()
 	if (_endstop != nullptr)
 	{
 		while (!_endstop->isClicked())
+		{
 			moveLeft();
+			stop();
+		}
+			
 	}
 }
 
@@ -73,4 +78,7 @@ void DcMotor::stop()
 {
 	digitalWrite(_dirPinA, LOW);
 	digitalWrite(_dirPinB, LOW);
+	_speed = 0;
+	analogWrite(_pwmPin, 0);
+
 }

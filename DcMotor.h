@@ -14,7 +14,7 @@ private:
 	byte _dirPinB = 19;
 	byte _enablePin = 20;
 
-	byte _speed = 100; //max speed 255
+	byte _speed; //max speed 255
 
 	Endstop* _endstop;
 	Potentiometer* _potentiometer;

@@ -47,7 +47,9 @@ void ProgramState::react()
 
 	if (_finished && !_finalized)
 	{
+		_tableMotor->enable(false);
 		_buzzer->playOnFinish();
+		
 		_finalized = true;
 	}
 
@@ -85,7 +87,9 @@ void ProgramState::react()
 		_tableMotor->home();
 
 		_rotatedInPeriod = true;
-		_isEndstopClickExecuted = true;
+		_isEndstopClickExecuted = false;
+
+		//_motorAngleRotateSpeed *= -1;
 
 		_inited = true;
 	}
@@ -116,9 +120,14 @@ void ProgramState::react()
 
 						if (!_finished)
 						{
+							_tableMotor->enable(false);
 							_relay->setHighState(true);
-							_dividerMotor->rotate(_rotateAngle);
+							//delay(100);
+							//_dividerMotor->rotate(_rotateAngle);
+							//delay(100);
+							delay(1500);
 							_relay->setHighState(false);
+							_tableMotor->enable(true);
 						}
 						_needRedraw = true;
 					}
