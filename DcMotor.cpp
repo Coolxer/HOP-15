@@ -46,29 +46,18 @@ void DcMotor::home()
 	if (_endstop != nullptr)
 	{
 		while (!_endstop->isClicked())
-		{
-			moveLeft();
-			stop();
-		}
-			
+			moveBackward();
+		stop();
 	}
 }
 
-void DcMotor::move(int steps)
-{
-	if (steps < 0)
-		moveRight();
-	else
-		moveLeft();
-}
-
-void DcMotor::moveLeft()
+void DcMotor::moveBackward()
 {
 	digitalWrite(_dirPinA, HIGH);
 	digitalWrite(_dirPinB, LOW);
 }
 
-void DcMotor::moveRight()
+void DcMotor::moveForward()
 {
 	digitalWrite(_dirPinA, LOW);
 	digitalWrite(_dirPinB, HIGH);
@@ -79,6 +68,6 @@ void DcMotor::stop()
 	digitalWrite(_dirPinA, LOW);
 	digitalWrite(_dirPinB, LOW);
 	_speed = 0;
-	analogWrite(_pwmPin, 0);
+	analogWrite(_pwmPin, _speed);
 
 }

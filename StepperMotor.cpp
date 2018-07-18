@@ -41,7 +41,7 @@ void StepperMotor::home()
 
 void StepperMotor::rotate(int angle)
 {
-	float stepsToRotate = angle * _motorSteps * _microSteps / 360;
+	float stepsToRotate = angle * _motorSteps * _microSteps / 360.0;
 
 	_stepper->step(stepsToRotate);
 }

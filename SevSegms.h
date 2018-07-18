@@ -24,7 +24,6 @@ public:
 	SevSegms();
 
 	void display(byte number);
-	byte getNumber() { return _number; };
 	void reset();
 };
 

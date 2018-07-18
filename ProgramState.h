@@ -16,6 +16,18 @@ class Endstop;
 class Relay;
 class Potentiometer;
 
+enum ExecutionState 
+{
+	START,
+	MOVE_FORWARD,
+	MOVE_BACKWARD,
+	UNLOCK_DIVIDER,
+	CHANGE_FEATHER,
+	LOCK_DIVIDER,
+	FINISH,
+	PAUSE
+};
+
 class ProgramState : public State
 {
 private:
@@ -26,37 +38,27 @@ private:
 
 	StepperMotor* _dividerMotor;
 	Endstop* _dividerEndstop;
+
 	DcMotor* _tableMotor;
 	Endstop* _tableEndstop;
+	
 	Relay* _relay;
 	Potentiometer* _tablePotentiometer;
 
+	//Current state of execution of program
+	ExecutionState _currentState = START;
+
+	//Place where last state will be kept on pause
+	ExecutionState _savedState;
+
 	byte _feathersCount;
-	byte _currentFeather;
+	byte _currentFeather = 1;
 
 	byte _cyclesCount;
-	byte _currentCycle;
+	byte _currentCycle = 1;
 
 	//360 divided by feather count
 	byte _rotateAngle;
-
-	bool _rotatedInPeriod = true;
-	bool _isEndstopClickExecuted = false;
-	bool _isMotorMoveForward = true;
-	int _motorAngleRotateSpeed = 5;
-
-	bool _dividerMotorHomed = false;
-	bool _tableMotorHomed = false;
-
-	//If all one (two) motors are homed initiation is finished and set to true
-	bool _inited = false;
-	//If all cycles and feathers in cycle was processed this flag is set to true
-	bool _finished = false;
-	//Tells if program process is paused
-	bool _paused = false;
-
-	//If the process is ended but before buzzer's melody 
-	bool _finalized = false;
 
 public:
 	void setFeathers(byte feathers) { _feathersCount = feathers; _rotateAngle = 360.0 / _feathersCount; };
@@ -71,15 +73,11 @@ public:
 	byte getCyclesCount() { return _cyclesCount; };
 	
 	int getRotateAngle() { return _rotateAngle; };
-	bool isFinished() { return _finished; };
-	void finish() { _finished = true; };
-	bool isPaused() { return _paused; };
-	void togglePause() { _paused = !_paused; needRedraw(); };
-	
-	bool canChangeFeather();
-	bool getInRotationArea() { return _isEndstopClickExecuted; };
-	void setInRotationArea(bool inRotationArea) { _isEndstopClickExecuted = inRotationArea; };
-	void setRotatedInCycle(bool rotatedInCycle) { _rotatedInPeriod = rotatedInCycle; };
+
+	void togglePause();
+
+	bool isPaused();
+	bool isFinished();
 
 	virtual void init();
 	virtual void react();

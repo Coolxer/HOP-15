@@ -8,6 +8,5 @@ private:
 public:
 	Relay();
 	void setHighState(bool high);
-	bool isHighState();
 };
 

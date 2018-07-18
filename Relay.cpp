@@ -14,11 +14,3 @@ void Relay::setHighState(bool state)
 		digitalWrite(_pin, LOW);
 }
 
-bool Relay::isHighState()
-{
-	if (digitalRead(_pin) == HIGH)
-		return true;
-	else
-		return false;
-}
-

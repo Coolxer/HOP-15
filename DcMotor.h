@@ -28,10 +28,9 @@ public:
 
 	void enable(bool e);
 	void home();
-	void move(int steps);
 
-	void moveLeft();
-	void moveRight();
+	void moveBackward();
+	void moveForward();
 	void stop();
 
 };

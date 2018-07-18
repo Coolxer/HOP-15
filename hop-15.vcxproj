@@ -95,7 +95,6 @@
     <ClInclude Include="Lcd.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="Output.h" />
-    <ClInclude Include="Pilot.h" />
     <ClInclude Include="Potentiometer.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="ProgramState.h" />
@@ -111,12 +110,10 @@
   <ItemGroup>
     <ClCompile Include="Buzzer.cpp" />
     <ClCompile Include="DcMotor.cpp" />
-    <ClCompile Include="DeviceManager.cpp" />
     <ClCompile Include="Endstop.cpp" />
     <ClCompile Include="IntroductionState.cpp" />
     <ClCompile Include="Lcd.cpp" />
     <ClCompile Include="MenuState.cpp" />
-    <ClCompile Include="Pilot.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="ProgramState.cpp" />
     <ClCompile Include="Relay.cpp" />

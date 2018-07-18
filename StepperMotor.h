@@ -12,7 +12,7 @@ class StepperMotor
 private:
 	byte _motorSteps = 800.0;
 	byte _speed = 100.0;
-	byte _microSteps = 1;
+	byte _microSteps = 16;
 
 	byte _dirPin;
 	byte _stepPin;
