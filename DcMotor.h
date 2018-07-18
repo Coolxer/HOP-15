@@ -21,7 +21,6 @@ private:
 
 public:
 	DcMotor(Endstop* endstop, Potentiometer* potentiometer);
-	~DcMotor();
 
 	void setSpeed();
 	byte getSpeed() { return _speed; };

@@ -16,12 +16,6 @@ DcMotor::DcMotor(Endstop* endstop, Potentiometer* potentiometer)
 	enable(false);
 }
 
-DcMotor::~DcMotor()
-{
-	delete _endstop;
-	delete _potentiometer;
-}
-
 void DcMotor::setSpeed()
 {
 	_potentiometer->setValue();

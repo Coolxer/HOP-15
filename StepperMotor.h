@@ -18,12 +18,11 @@ private:
 	byte _stepPin;
 	byte _enablePin;
 
-	Stepper* _stepper;
+	Stepper _stepper = Stepper(_motorSteps, _dirPin, _stepPin);
 	Endstop* _endstop;
 
 public:
 	StepperMotor(byte dirPin, byte stepPin, byte enablePin, Endstop* endstop);
-	~StepperMotor();
 
 	void enable(bool e);
 	

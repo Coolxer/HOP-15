@@ -9,17 +9,10 @@ StepperMotor::StepperMotor(byte dirPin, byte stepPin, byte enablePin, Endstop* e
 
 	_endstop = endstop;
 
-	_stepper = new Stepper(_motorSteps, _dirPin, _stepPin);
-	_stepper->setSpeed(_speed);
+	_stepper.setSpeed(_speed);
 
 	pinMode(_enablePin, OUTPUT);
 	enable(false);
-}
-
-StepperMotor::~StepperMotor()
-{
-	delete _stepper;
-	delete _endstop;
 }
 
 void StepperMotor::enable(bool e)
@@ -43,5 +36,5 @@ void StepperMotor::rotate(int angle)
 {
 	float stepsToRotate = angle * _motorSteps * _microSteps / 360.0;
 
-	_stepper->step(stepsToRotate);
+	_stepper.step(stepsToRotate);
 }
