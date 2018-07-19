@@ -16,12 +16,6 @@ DcMotor::DcMotor(Endstop* endstop, Potentiometer* potentiometer)
 	enable(false);
 }
 
-DcMotor::~DcMotor()
-{
-	delete _endstop;
-	delete _potentiometer;
-}
-
 void DcMotor::setSpeed()
 {
 	_potentiometer->setValue();
@@ -41,33 +35,50 @@ void DcMotor::enable(bool e)
 	}
 }
 
-void DcMotor::home()
+bool DcMotor::home()
 {
-	if (_endstop != nullptr)
+	if (_endstop->isClicked())
 	{
-		while (!_endstop->isClicked())
-			moveBackward();
 		stop();
+		return true;
+	}
+	else
+	{
+		moveBackward();
+		return false;
 	}
 }
 
 void DcMotor::moveBackward()
 {
+	//Start moving backward
 	digitalWrite(_dirPinA, HIGH);
 	digitalWrite(_dirPinB, LOW);
+
+	//Move for given time
+	delay(_moveTime);
+
+	stop();
 }
 
 void DcMotor::moveForward()
 {
+	//Start moving forward
 	digitalWrite(_dirPinA, LOW);
 	digitalWrite(_dirPinB, HIGH);
+
+	//Move for given time
+	delay(_moveTime);
+
+	stop();
 }
 
 void DcMotor::stop()
 {
+	//Disable pins responsible for moving
 	digitalWrite(_dirPinA, LOW);
 	digitalWrite(_dirPinB, LOW);
-	_speed = 0;
-	analogWrite(_pwmPin, _speed);
-
+	
+	//Set speed to zero
+	analogWrite(_pwmPin, 0);
 }
