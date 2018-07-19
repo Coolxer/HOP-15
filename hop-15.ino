@@ -1,7 +1,5 @@
 #include "program.h"
 
-#include <stdlib.h>
-
 Program program;
 
 void setup()

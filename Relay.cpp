@@ -6,9 +6,9 @@ Relay::Relay()
 	setHighState(true);
 }
 
-void Relay::setHighState(bool state)
+void Relay::setHighState(bool high)
 {
-	if (state)
+	if (high)
 		digitalWrite(_pin, HIGH);
 	else
 		digitalWrite(_pin, LOW);
