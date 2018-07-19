@@ -14,7 +14,11 @@ private:
 	byte _dirPinB = 19;
 	byte _enablePin = 20;
 
-	byte _speed; //max speed 255
+	//Max speed 255
+	byte _speed;
+
+	//Time motor will move until stop in ms
+	int _moveTime = 10;
 
 	Endstop* _endstop;
 	Potentiometer* _potentiometer;
@@ -26,7 +30,7 @@ public:
 	byte getSpeed() { return _speed; };
 
 	void enable(bool e);
-	void home();
+	bool home();
 
 	void moveBackward();
 	void moveForward();
