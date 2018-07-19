@@ -144,7 +144,6 @@ void ProgramState::react()
 				//If endstop click again it mean we met backward endstop
 				if (_tableEndstop->isClicked() && betweenEndstops)
 					backwardEndstopClicked = true;
-
 			}
 
 			_tableMotor->stop();
