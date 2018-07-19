@@ -4,7 +4,7 @@
 class Relay
 {
 private:
-	byte _pin = 21;
+	byte _pin = 53;
 public:
 	Relay();
 	void setHighState(bool high);

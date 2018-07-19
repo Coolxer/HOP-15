@@ -23,7 +23,7 @@ private:
 	Endstop _dividerEndstop = Endstop(10);
 	Endstop _tableEndstop = Endstop(9);
 	Potentiometer _tablePotentiometer = Potentiometer();
-	StepperMotor _dividerMotor = StepperMotor(6, 3, 8, &_dividerEndstop);
+	StepperMotor _dividerMotor = StepperMotor(&_dividerEndstop);
 	DcMotor _tableMotor = DcMotor(&_tableEndstop, &_tablePotentiometer);
 	Relay _relay = Relay();
 

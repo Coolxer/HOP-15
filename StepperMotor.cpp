@@ -1,12 +1,8 @@
 #include "StepperMotor.h"
 #include "Endstop.h"
 
-StepperMotor::StepperMotor(byte dirPin, byte stepPin, byte enablePin, Endstop* endstop)
+StepperMotor::StepperMotor(Endstop* endstop)
 {
-	_dirPin = dirPin;
-	_stepPin = stepPin;
-	_enablePin = enablePin;
-
 	_endstop = endstop;
 
 	_stepper.setSpeed(_speed);
@@ -34,7 +30,7 @@ void StepperMotor::home()
 
 void StepperMotor::rotate(int angle)
 {
-	float stepsToRotate = angle * _motorSteps * _microSteps / 360.0;
+	int stepsToRotate = int(((float)angle * _sumOfSteps) / 360.0);
 
 	_stepper.step(stepsToRotate);
 }

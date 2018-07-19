@@ -26,16 +26,10 @@ void ProgramState::init()
 	_tablePotentiometer = deviceManager->requestTablePotentiometer();
 	_tableMotor = deviceManager->requestTableMotor(_tableEndstop, _tablePotentiometer);
 	_relay = deviceManager->requestRelay();
-
-	_rotateAngle = 360.0 / _feathersCount;
 }
 
 void ProgramState::react()
 {
-	bool betweenEndstops;
-	bool forwardEndstopClicked;
-	bool backwardEndstopClicked;
-
 	_tableMotor->setSpeed();
 	_sevSegms->display(_tableMotor->getSpeed());
 
@@ -81,6 +75,8 @@ void ProgramState::react()
 	{
 		case START:
 		{
+			_rotateAngle = 360 / _feathersCount;
+
 			//Power on table motor to let it home
 			_tableMotor->enable(true);
 
@@ -189,7 +185,7 @@ void ProgramState::react()
 			_tableMotor->enable(true);
 			_dividerMotor->enable(true);
 
-			_relay->setHighState(true);
+			_relay->setHighState(false);
 
 			_currentState = CHANGE_FEATHER;
 
@@ -211,7 +207,7 @@ void ProgramState::react()
 			_tableMotor->enable(true);
 			_dividerMotor->enable(true);
 
-			_relay->setHighState(false);
+			_relay->setHighState(true);
 
 			_currentState = MOVE_FORWARD;
 
@@ -235,8 +231,6 @@ void ProgramState::reset()
 
 	_currentFeather = 1;
 	_currentCycle = 1;
-
-	_rotateAngle = 360.0 / _feathersCount;
 }
 
 void ProgramState::togglePause()

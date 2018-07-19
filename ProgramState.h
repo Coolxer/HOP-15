@@ -53,21 +53,25 @@ private:
 	//Place where last state will be kept on pause
 	ExecutionState _savedState;
 
-	byte _feathersCount;
-	byte _currentFeather = 1;
+	int _feathersCount;
+	int _currentFeather = 1;
 
 	byte _cyclesCount;
 	byte _currentCycle = 1;
 
 	//360 divided by feather count
-	byte _rotateAngle;
+	int _rotateAngle;
+
+	bool betweenEndstops;
+	bool forwardEndstopClicked;
+	bool backwardEndstopClicked;
 
 public:
-	void setFeathers(byte feathers) { _feathersCount = feathers; _rotateAngle = 360.0 / _feathersCount; };
+	void setFeathers(int feathers) { _feathersCount = feathers; };
 	void setCycles(byte cycles) { _cyclesCount = cycles; };
 
 	byte getCurrentFeather() { return _currentFeather; };
-	void setCurrentFeather(byte currentFeather) { _currentFeather = currentFeather; };
+	void setCurrentFeather(int currentFeather) { _currentFeather = currentFeather; };
 	byte getFeathersCount() { return _feathersCount; };
 
 	byte getCurrentCycle() { return _currentCycle; };

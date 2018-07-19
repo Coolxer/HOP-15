@@ -10,19 +10,20 @@ class Endstop;
 class StepperMotor
 {
 private:
-	byte _motorSteps = 800.0;
-	byte _speed = 100.0;
+	int _motorSteps = 800;
+	byte _speed = 100;
 	byte _microSteps = 16;
+	int _sumOfSteps = _motorSteps * _microSteps;
 
-	byte _dirPin;
-	byte _stepPin;
-	byte _enablePin;
+	byte _dirPin = 6;
+	byte _stepPin = 3;
+	byte _enablePin = 8;
 
 	Stepper _stepper = Stepper(_motorSteps, _dirPin, _stepPin);
 	Endstop* _endstop;
 
 public:
-	StepperMotor(byte dirPin, byte stepPin, byte enablePin, Endstop* endstop);
+	StepperMotor(Endstop* endstop);
 
 	void enable(bool e);
 	
