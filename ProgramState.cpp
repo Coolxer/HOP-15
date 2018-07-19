@@ -87,9 +87,8 @@ void ProgramState::react()
 			//Power on divider motor to let it move
 			_dividerMotor->enable(false);
 
-			_tableMotor->home();
-
-			_currentState = MOVE_FORWARD;
+			if(_tableMotor->home())
+				_currentState = MOVE_FORWARD;
 
 			break;
 		}
@@ -101,10 +100,16 @@ void ProgramState::react()
 			//Flag if forward endstop clicked
 			forwardEndstopClicked = false;
 
+			_currentState = MOVING_FORWARD;
+
+			break;
+		}
+		case MOVING_FORWARD:
+		{
 			_tableMotor->enable(true);
 			_dividerMotor->enable(false);
 
-			while (!forwardEndstopClicked)
+			if (!forwardEndstopClicked)
 			{
 				_tableMotor->moveForward();
 
@@ -116,10 +121,12 @@ void ProgramState::react()
 				if (_tableEndstop->isClicked() && betweenEndstops)
 					forwardEndstopClicked = true;
 			}
+			else
+			{
+				_tableMotor->stop();
 
-			_tableMotor->stop();
-
-			_currentState = MOVE_BACKWARD;
+				_currentState = MOVE_BACKWARD;
+			}
 
 			break;
 		}
@@ -130,10 +137,16 @@ void ProgramState::react()
 			//Flag if backward endstop clicked
 			backwardEndstopClicked = false;
 
+			_currentState = MOVING_BACKWARD;
+
+			break;
+		}
+		case MOVING_BACKWARD:
+		{
 			_tableMotor->enable(true);
 			_dividerMotor->enable(false);
 
-			while (!backwardEndstopClicked)//forward?
+			if(!backwardEndstopClicked)
 			{
 				_tableMotor->moveBackward();
 
@@ -146,27 +159,29 @@ void ProgramState::react()
 					backwardEndstopClicked = true;
 
 			}
-
-			_tableMotor->stop();
-
-			_currentFeather++;
-
-			//Start changing feather prodcedure
-			_currentState = UNLOCK_DIVIDER;
-
-			//Check if new cycle should begin
-			if (_currentFeather > _feathersCount)
+			else
 			{
-				_currentFeather = 1;
-				_currentCycle++;
+				_tableMotor->stop();
 
-				//Check if all cycles was done and finish on yes
-				if (_currentCycle > _cyclesCount)
-					_currentState = FINISH;
+				_currentFeather++;
+
+				//Start changing feather prodcedure
+				_currentState = UNLOCK_DIVIDER;
+
+				//Check if new cycle should begin
+				if (_currentFeather > _feathersCount)
+				{
+					_currentFeather = 1;
+					_currentCycle++;
+
+					//Check if all cycles was done and finish on yes
+					if (_currentCycle > _cyclesCount)
+						_currentState = FINISH;
+				}
+
+				//Draw updated feathers and cycles
+				_needRedraw = true;
 			}
-
-			//Draw updated feathers and cycles
-			_needRedraw = true;
 
 			break;
 		}
