@@ -186,6 +186,7 @@ void ProgramState::react()
 			_dividerMotor->enable(true);
 
 			_relay->setHighState(false);
+			delay(100);
 
 			_currentState = CHANGE_FEATHER;
 
@@ -207,6 +208,7 @@ void ProgramState::react()
 			_tableMotor->enable(true);
 			_dividerMotor->enable(true);
 
+			delay(100);
 			_relay->setHighState(true);
 
 			_currentState = MOVE_FORWARD;
@@ -235,6 +237,7 @@ void ProgramState::reset()
 
 void ProgramState::togglePause()
 {
+	_needRedraw = true;
 	if (_currentState != PAUSE)
 	{
 		//Disable motors
