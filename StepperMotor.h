@@ -20,14 +20,11 @@ private:
 	byte _enablePin = 8;
 
 	Stepper _stepper = Stepper(_motorSteps, _dirPin, _stepPin);
-	Endstop* _endstop;
 
 public:
-	StepperMotor(Endstop* endstop);
+	StepperMotor();
 
 	void enable(bool e);
-	
-	void home();
 	void rotate(float angle);
 };
 

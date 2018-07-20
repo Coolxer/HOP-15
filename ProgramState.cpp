@@ -20,11 +20,11 @@ void ProgramState::init()
 	_simpleKeypad = deviceManager->requestSimpleKeypad();
 	_buzzer = deviceManager->requestBuzzer();
 	_sevSegms = deviceManager->requestSevSegms();
-	_dividerEndstop = deviceManager->requestDividerEndstop();
-	_dividerMotor = deviceManager->requestDividerMotor(_dividerEndstop);
-	_tableEndstop = deviceManager->requestTableEndstop();
+	_dividerMotor = deviceManager->requestDividerMotor();
+	_forwardTableEndstop = deviceManager->requestForwardTableEndstop();
+	_backwardTableEndstop = deviceManager->requestBackwardTableEndstop();
 	_tablePotentiometer = deviceManager->requestTablePotentiometer();
-	_tableMotor = deviceManager->requestTableMotor(_tableEndstop, _tablePotentiometer);
+	_tableMotor = deviceManager->requestTableMotor();
 	_relay = deviceManager->requestRelay();
 }
 
@@ -90,10 +90,7 @@ void ProgramState::react()
 		}
 		case MOVE_FORWARD:
 		{	
-			//Check if backward endstop is not still clicked
 			betweenEndstops = false;
-
-			//Flag if forward endstop clicked
 			forwardEndstopClicked = false;
 
 			_currentState = MOVING_FORWARD;
@@ -110,11 +107,11 @@ void ProgramState::react()
 				_tableMotor->moveForward();
 
 				//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
-				if (!_tableEndstop->isClicked())
+				if (!_backwardTableEndstop->isClicked())
 					betweenEndstops = true;
 
-				//If endstop click again it mean we met forward endstop
-				if (_tableEndstop->isClicked() && betweenEndstops)
+				//If endstop click again it mean we met backward endstop
+				if (_forwardTableEndstop->isClicked() && betweenEndstops)
 					forwardEndstopClicked = true;
 			}
 			else
@@ -128,9 +125,7 @@ void ProgramState::react()
 		}
 		case MOVE_BACKWARD:
 		{	
-			//Check if forward endstop is not still clicked
 			betweenEndstops = false;
-			//Flag if backward endstop clicked
 			backwardEndstopClicked = false;
 
 			_currentState = MOVING_BACKWARD;
@@ -147,11 +142,11 @@ void ProgramState::react()
 				_tableMotor->moveBackward();
 
 				//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
-				if (!_tableEndstop->isClicked())
+				if (!_forwardTableEndstop->isClicked())
 					betweenEndstops = true;
 
 				//If endstop click again it mean we met backward endstop
-				if (_tableEndstop->isClicked() && betweenEndstops)
+				if (_backwardTableEndstop->isClicked() && betweenEndstops)
 					backwardEndstopClicked = true;
 			}
 			else

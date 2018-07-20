@@ -1,10 +1,8 @@
 #include "StepperMotor.h"
 #include "Endstop.h"
 
-StepperMotor::StepperMotor(Endstop* endstop)
+StepperMotor::StepperMotor()
 {
-	_endstop = endstop;
-
 	_stepper.setSpeed(_speed);
 
 	pinMode(_enablePin, OUTPUT);
@@ -17,15 +15,6 @@ void StepperMotor::enable(bool e)
 		digitalWrite(_enablePin, LOW);
 	else
 		digitalWrite(_enablePin, HIGH);
-}
-
-void StepperMotor::home()
-{
-	if (_endstop != nullptr)
-	{
-		while (!_endstop->isClicked())
-			rotate(-5);
-	}
 }
 
 void StepperMotor::rotate(float angle)

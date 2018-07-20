@@ -39,11 +39,11 @@ private:
 	SevSegms* _sevSegms;
 
 	StepperMotor* _dividerMotor;
-	Endstop* _dividerEndstop;
 
 	DcMotor* _tableMotor;
-	Endstop* _tableEndstop;
-	
+	Endstop* _forwardTableEndstop;
+	Endstop* _backwardTableEndstop;
+
 	Relay* _relay;
 	Potentiometer* _tablePotentiometer;
 
@@ -62,8 +62,11 @@ private:
 	//360 divided by feather count
 	float _rotateAngle;
 
+	//Check if motor is between endstops
 	bool betweenEndstops;
+	//Flag if forward endstop clicked
 	bool forwardEndstopClicked;
+	//Flag if backward endstop clicked
 	bool backwardEndstopClicked;
 
 public:

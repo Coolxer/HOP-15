@@ -20,11 +20,12 @@ private:
 	//Time motor will move until stop in ms
 	int _moveTime = 10;
 
-	Endstop* _endstop;
+	Endstop* _forwardEndstop;
+	Endstop* _backwardEndstop;
 	Potentiometer* _potentiometer;
 
 public:
-	DcMotor(Endstop* endstop, Potentiometer* potentiometer);
+	DcMotor(Endstop* forwardEndstop, Endstop* backwardEndstop, Potentiometer* potentiometer);
 
 	void setSpeed();
 	byte getSpeed() { return _speed; };

@@ -20,11 +20,11 @@ private:
 	SimpleKeypad _simpleKeypad = SimpleKeypad();
 	Buzzer _buzzer = Buzzer();
 	SevSegms _sevSegms = SevSegms();
-	Endstop _dividerEndstop = Endstop(10);
-	Endstop _tableEndstop = Endstop(9);
+	Endstop _forwardTableEndstop = Endstop(9);
+	Endstop _backwardTableEndstop = Endstop(10);
 	Potentiometer _tablePotentiometer = Potentiometer();
-	StepperMotor _dividerMotor = StepperMotor(&_dividerEndstop);
-	DcMotor _tableMotor = DcMotor(&_tableEndstop, &_tablePotentiometer);
+	StepperMotor _dividerMotor = StepperMotor();
+	DcMotor _tableMotor = DcMotor(&_forwardTableEndstop, &_backwardTableEndstop, &_tablePotentiometer);
 	Relay _relay = Relay();
 
 public:
@@ -34,11 +34,11 @@ public:
 	SimpleKeypad* requestSimpleKeypad() { return &_simpleKeypad; };
 	Buzzer* requestBuzzer() { return &_buzzer; };
 	SevSegms* requestSevSegms() { return &_sevSegms; };
-	Endstop* requestDividerEndstop() { return &_dividerEndstop; };
-	Endstop* requestTableEndstop() { return &_tableEndstop; };
+	Endstop* requestForwardTableEndstop() { return &_forwardTableEndstop; };
+	Endstop* requestBackwardTableEndstop() { return &_backwardTableEndstop; };
 	Potentiometer* requestTablePotentiometer() { return &_tablePotentiometer; };
-	StepperMotor* requestDividerMotor(Endstop* dividerEndstop) { return &_dividerMotor; };
-	DcMotor* requestTableMotor(Endstop* tableEndstop, Potentiometer* potentiometer) { return &_tableMotor; };
+	StepperMotor* requestDividerMotor() { return &_dividerMotor; };
+	DcMotor* requestTableMotor() { return &_tableMotor; };
 	Relay* requestRelay() { return &_relay; };
 };
 
