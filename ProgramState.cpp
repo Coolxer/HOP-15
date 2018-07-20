@@ -75,7 +75,7 @@ void ProgramState::react()
 	{
 		case START:
 		{
-			_rotateAngle = 360 / _feathersCount;
+			_rotateAngle = 360.0 / (float)_feathersCount;
 
 			//Power on table motor to let it home
 			_tableMotor->enable(true);

@@ -60,7 +60,7 @@ private:
 	byte _currentCycle = 1;
 
 	//360 divided by feather count
-	int _rotateAngle;
+	float _rotateAngle;
 
 	bool betweenEndstops;
 	bool forwardEndstopClicked;
@@ -78,7 +78,7 @@ public:
 	void setCurrentCycle(byte currentCycle) { _currentCycle = currentCycle; };
 	byte getCyclesCount() { return _cyclesCount; };
 	
-	int getRotateAngle() { return _rotateAngle; };
+	float getRotateAngle() { return _rotateAngle; };
 
 	void togglePause();
 

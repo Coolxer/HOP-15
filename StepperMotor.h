@@ -28,7 +28,7 @@ public:
 	void enable(bool e);
 	
 	void home();
-	void rotate(int angle);
+	void rotate(float angle);
 };
 
 #endif
