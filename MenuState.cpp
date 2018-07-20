@@ -63,6 +63,12 @@ void MenuState::react()
 	else if (key == KEY_ENTER)
 		enter();
 
+	if (_disrupted)
+	{
+		_lcd->begin;
+		_needRedraw = true;
+	}
+
 	if (_needRedraw)
 	{
 		_lcd->manage(this);

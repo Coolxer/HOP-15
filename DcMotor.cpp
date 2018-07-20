@@ -3,9 +3,10 @@
 #include "Endstop.h"
 #include "Potentiometer.h"
 
-DcMotor::DcMotor(Endstop* endstop, Potentiometer* potentiometer)
+DcMotor::DcMotor(Endstop* forwardEndstop, Endstop* backwardEndstop, Potentiometer* potentiometer)
 {
-	_endstop = endstop;
+	_forwardEndstop = forwardEndstop;
+	_backwardEndstop = backwardEndstop;
 	_potentiometer = potentiometer;
 	
 	pinMode(_pwmPin, OUTPUT);
@@ -37,7 +38,7 @@ void DcMotor::enable(bool e)
 
 bool DcMotor::home()
 {
-	if (_endstop->isClicked())
+	if (_backwardEndstop->isClicked())
 	{
 		stop();
 		return true;
