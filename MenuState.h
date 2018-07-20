@@ -32,7 +32,7 @@ private:
 	byte _selectedIndex = 1;
 	bool _isFocused = false;
 
-	SetValueElement _featherAmount = SetValueElement("Piora", _lcd, _simpleKeypad, 2, 32, 4, 2);
+	SetValueElement _featherAmount = SetValueElement("Piora", _lcd, _simpleKeypad, 2, 32, 4, 1);
 	SetValueElement _cycleAmount = SetValueElement("Cykle", _lcd, _simpleKeypad, 1, 16, 1, 1);
 
 public:
