@@ -33,6 +33,12 @@ void ProgramState::react()
 	_tableMotor->setSpeed();
 	_sevSegms->display(_tableMotor->getSpeed());
 
+	if (_disrupted)
+	{
+		_lcd->begin;
+		_needRedraw = true;
+	}
+
 	if (_needRedraw)
 	{
 		_lcd->manage(this);
@@ -181,6 +187,8 @@ void ProgramState::react()
 			_dividerMotor->enable(true);
 
 			_relay->setHighState(false);
+			//There could be physical disruptions reset Lcd then
+			reportDisruption();
 			delay(100);
 
 			_currentState = CHANGE_FEATHER;
@@ -205,6 +213,8 @@ void ProgramState::react()
 
 			delay(100);
 			_relay->setHighState(true);
+			//There could be physical disruptions reset Lcd then
+			reportDisruption();
 
 			_currentState = MOVE_FORWARD;
 

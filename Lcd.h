@@ -37,6 +37,8 @@ private:
 public:
 	Lcd();
 
+	void begin();
+
 	void changeLeftOrientation(bool isTextToLeft) { _textToLeft = isTextToLeft; };
 
 	void clearScreen();

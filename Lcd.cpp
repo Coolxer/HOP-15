@@ -6,6 +6,11 @@
 
 Lcd::Lcd()
 {
+	begin();
+}
+
+void Lcd::begin()
+{
 	_lcd.begin(20, 4);
 }
 
