@@ -237,6 +237,7 @@ void ProgramState::reset()
 
 void ProgramState::togglePause()
 {
+	_needRedraw = true;
 	if (_currentState != PAUSE)
 	{
 		//Disable motors
