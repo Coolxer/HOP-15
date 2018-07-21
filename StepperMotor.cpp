@@ -23,3 +23,9 @@ void StepperMotor::rotate(float angle)
 
 	_stepper.step(stepsToRotate);
 }
+
+void StepperMotor::setSpeed(byte speed)
+{
+	_speed = speed;
+	_stepper.setSpeed(speed);
+}

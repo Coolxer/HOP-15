@@ -25,15 +25,16 @@ private:
 	SimpleKeypad* _simpleKeypad;
 	Buzzer* _buzzer;
 
-	String _itemNames[3];
-	ItemBind _itemBinds[3];
+	String _itemNames[4];
+	ItemBind _itemBinds[4];
 
-	byte _itemsCount = 3;
+	byte _itemsCount = 4;
 	byte _selectedIndex = 1;
 	bool _isFocused = false;
 
-	SetValueElement _featherAmount = SetValueElement("Piora", _lcd, _simpleKeypad, 2, 32, 4, 1);
-	SetValueElement _cycleAmount = SetValueElement("Cykle", _lcd, _simpleKeypad, 1, 16, 1, 1);
+	SetValueElement _featherAmount = SetValueElement("Piora", this, 2, 32, 4, 1);
+	SetValueElement _cycleAmount = SetValueElement("Cykle", this, 1, 16, 1, 1);
+	SetValueElement _dividerMotorSpeed = SetValueElement("Podz szyb", this, 0, 255, 255, 5);
 
 public:
 	bool setElement(byte index, char* description);
@@ -46,6 +47,7 @@ public:
 	void up();
 	void down();
 	void enter();
+	void back() { _isFocused = false; _needRedraw = true; };
 
 	const char* getNext();
 	const char* getCurrent();

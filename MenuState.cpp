@@ -47,21 +47,27 @@ void MenuState::init()
 	setElement(0, &_featherAmount);
 	setElement(1, &_cycleAmount);
 	setElement(2, "Rozpocznij");
+	setElement(3, &_dividerMotorSpeed);
 }
 
 void MenuState::react()
 {
-	char key = _simpleKeypad->getPressedKey();
+	if (_isFocused)
+		_itemBinds[_selectedIndex].item->react();
+	else
+	{
+		char key = _simpleKeypad->getPressedKey();
 
-	if (key != KEY_NONE)
-		_buzzer->playOnPress();
+		if (key != KEY_NONE)
+			_buzzer->playOnPress();
 
-	if (key == KEY_UP)
-		up();
-	else if (key == KEY_DOWN)
-		down();
-	else if (key == KEY_ENTER)
-		enter();
+		if (key == KEY_UP)
+			up();
+		else if (key == KEY_DOWN)
+			down();
+		else if (key == KEY_ENTER)
+			enter();
+	}
 
 	if (_disrupted)
 	{
@@ -83,36 +89,20 @@ void MenuState::reset()
 
 void MenuState::up()
 {
-	if (!_isFocused)
-	{
-		if (_selectedIndex == 0)
-			_selectedIndex = _itemsCount - 1;
-		else
-			_selectedIndex--;
-	}
+	if (_selectedIndex == 0)
+		_selectedIndex = _itemsCount - 1;
 	else
-	{
-		if(_itemBinds[_selectedIndex].index != -1)
-			_itemBinds[_selectedIndex].item->increase();
-	}
+		_selectedIndex--;
 
 	_needRedraw = true;
 }
 
 void MenuState::down()
 {
-	if (!_isFocused)
-	{
-		if (_selectedIndex == _itemsCount - 1)
-			_selectedIndex = 0;
-		else
-			_selectedIndex++;
-	}
+	if (_selectedIndex == _itemsCount - 1)
+		_selectedIndex = 0;
 	else
-	{
-		if (_itemBinds[_selectedIndex].index != -1)
-			_itemBinds[_selectedIndex].item->decrease();
-	}
+		_selectedIndex++;
 
 	_needRedraw = true;
 }
@@ -126,6 +116,9 @@ void MenuState::enter()
 	{
 		Program* program = getProgram();
 
+		//Set divider motor speed from menu option
+		program->getDeviceManager()->requestDividerMotor()->setSpeed(getValueAtIndex(3));
+		
 		program->getProgramState()->setFeathers(getValueAtIndex(0));
 		program->getProgramState()->setCycles(getValueAtIndex(1));
 		program->getProgramState()->reset();
