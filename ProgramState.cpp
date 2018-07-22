@@ -216,6 +216,12 @@ void ProgramState::react()
 			//There could be physical disruptions reset Lcd then
 			reportDisruption();
 
+			if (_testingDividerMotor)
+			{
+				//If we only wanted to test divider back to menu
+				_program->getStateManager()->changeState(1);
+			}
+
 			_currentState = MOVE_FORWARD;
 
 			break;

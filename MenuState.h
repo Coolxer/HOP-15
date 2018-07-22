@@ -25,10 +25,10 @@ private:
 	SimpleKeypad* _simpleKeypad;
 	Buzzer* _buzzer;
 
-	String _itemNames[4];
-	ItemBind _itemBinds[4];
+	String _itemNames[5];
+	ItemBind _itemBinds[5];
 
-	byte _itemsCount = 4;
+	byte _itemsCount = 5;
 	byte _selectedIndex = 1;
 	bool _isFocused = false;
 

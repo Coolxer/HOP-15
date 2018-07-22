@@ -48,6 +48,7 @@ void MenuState::init()
 	setElement(1, &_cycleAmount);
 	setElement(2, "Rozpocznij");
 	setElement(3, &_dividerMotorSpeed);
+	setElement(4, "Test podzielnicy");
 }
 
 void MenuState::react()
@@ -112,19 +113,37 @@ void MenuState::enter()
 	if (_itemBinds[_selectedIndex].index != -1)
 		_isFocused = !_isFocused;
 
-	if (_itemBinds[_selectedIndex].index == -1)
+	//If we starting new program
+	if (_selectedIndex == 2)
 	{
-		Program* program = getProgram();
+		ProgramState* programState = getProgram()->getProgramState();
 
 		//Set divider motor speed from menu option
-		program->getDeviceManager()->requestDividerMotor()->setSpeed(getValueAtIndex(3));
+		getProgram()->getDeviceManager()->requestDividerMotor()->setSpeed(getValueAtIndex(3));
 		
-		program->getProgramState()->setFeathers(getValueAtIndex(0));
-		program->getProgramState()->setCycles(getValueAtIndex(1));
-		program->getProgramState()->reset();
+		programState->setFeathers(getValueAtIndex(0));
+		programState->setCycles(getValueAtIndex(1));
+		programState->reset();
 
-		program->getStateManager()->changeState(2);
+		getProgram()->getStateManager()->changeState(2);
 	}
+	//If we testing divider
+	else if (_selectedIndex == 4)
+	{
+		ProgramState* programState = getProgram()->getProgramState();
+
+		//Set divider motor speed from menu option
+		getProgram()->getDeviceManager()->requestDividerMotor()->setSpeed(getValueAtIndex(3));
+
+		programState->setFeathers(getValueAtIndex(0));
+		programState->setCycles(getValueAtIndex(1));
+		programState->reset();
+		programState->setExecutionState(UNLOCK_DIVIDER);
+		programState->testDividerMotor();
+
+		getProgram()->getStateManager()->changeState(2);
+	}
+
 	_needRedraw = true;
 }
 
