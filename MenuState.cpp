@@ -49,6 +49,7 @@ void MenuState::init()
 	setElement(2, "Rozpocznij");
 	setElement(3, &_dividerMotorSpeed);
 	setElement(4, "Test podzielnicy");
+	setElement(5, "Test stolu");
 }
 
 void MenuState::react()
@@ -138,8 +139,22 @@ void MenuState::enter()
 		programState->setFeathers(getValueAtIndex(0));
 		programState->setCycles(getValueAtIndex(1));
 		programState->reset();
-		programState->setExecutionState(UNLOCK_DIVIDER);
 		programState->testDividerMotor();
+
+		getProgram()->getStateManager()->changeState(2);
+	}
+	//If we testing table
+	else if (_selectedIndex == 5)
+	{
+		ProgramState* programState = getProgram()->getProgramState();
+
+		//Set divider motor speed from menu option
+		getProgram()->getDeviceManager()->requestDividerMotor()->setSpeed(getValueAtIndex(3));
+
+		programState->setFeathers(getValueAtIndex(0));
+		programState->setCycles(getValueAtIndex(1));
+		programState->reset();
+		programState->testTableMotor();
 
 		getProgram()->getStateManager()->changeState(2);
 	}

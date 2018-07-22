@@ -89,8 +89,14 @@ void ProgramState::react()
 			//Power on divider motor to let it move
 			_dividerMotor->enable(false);
 
-			if(_tableMotor->home())
-				_currentState = MOVE_FORWARD;
+			if (_tableMotor->home())
+			{
+				if (_testingDividerMotor)
+					_currentState = UNLOCK_DIVIDER;
+				else
+					_currentState = MOVE_FORWARD;
+			}
+				
 
 			break;
 		}
@@ -173,6 +179,12 @@ void ProgramState::react()
 					//Check if all cycles was done and finish on yes
 					if (_currentCycle > _cyclesCount)
 						_currentState = FINISH;
+				}
+
+				if (_testingTableMotor)
+				{
+					//If we only wanted to test table back to menu
+					_program->getStateManager()->changeState(1);
 				}
 
 				//Draw updated feathers and cycles

@@ -25,16 +25,16 @@ private:
 	SimpleKeypad* _simpleKeypad;
 	Buzzer* _buzzer;
 
-	String _itemNames[5];
-	ItemBind _itemBinds[5];
+	String _itemNames[6];
+	ItemBind _itemBinds[6];
 
-	byte _itemsCount = 5;
+	byte _itemsCount = 6;
 	byte _selectedIndex = 1;
 	bool _isFocused = false;
 
 	SetValueElement _featherAmount = SetValueElement("Piora", this, 2, 32, 4, 1);
 	SetValueElement _cycleAmount = SetValueElement("Cykle", this, 1, 16, 1, 1);
-	SetValueElement _dividerMotorSpeed = SetValueElement("Podz szyb", this, 0, 255, 255, 5);
+	SetValueElement _dividerMotorSpeed = SetValueElement("Podzielnica", this, 0, 255, 255, 5);
 
 public:
 	bool setElement(byte index, char* description);

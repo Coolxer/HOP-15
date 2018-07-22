@@ -70,6 +70,7 @@ private:
 	bool backwardEndstopClicked;
 
 	bool _testingDividerMotor = false;
+	bool _testingTableMotor = false;
 
 public:
 	void setFeathers(int feathers) { _feathersCount = feathers; };
@@ -90,8 +91,8 @@ public:
 	bool isPaused();
 	bool isFinished();
 
-	void setExecutionState(ExecutionState state) { _currentState = state};
-	void testDividerMotor() { _testingDividerMotor = true; }
+	void testDividerMotor() { _testingDividerMotor = true; };
+	void testTableMotor() { _testingTableMotor = true; };
 
 	virtual void init();
 	virtual void react();
