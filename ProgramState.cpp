@@ -90,8 +90,14 @@ void ProgramState::react()
 			//Power on divider motor to let it move
 			_dividerMotor->enable(false);
 
-			if(_tableMotor->home())
-				_currentState = MOVE_FORWARD;
+			if (_tableMotor->home())
+			{
+				if (_testingDividerMotor)
+					_currentState = UNLOCK_DIVIDER;
+				else
+					_currentState = MOVE_FORWARD;
+			}
+				
 
 			break;
 		}
@@ -176,6 +182,12 @@ void ProgramState::react()
 						_currentState = FINISH;
 				}
 
+				if (_testingTableMotor)
+				{
+					//If we only wanted to test table back to menu
+					_program->getStateManager()->changeState(1);
+				}
+
 				//Draw updated feathers and cycles
 				_needRedraw = true;
 			}
@@ -221,6 +233,12 @@ void ProgramState::react()
 			delay(100);
 			//There could be physical disruptions reset Lcd then
 			reportDisruption();
+
+			if (_testingDividerMotor)
+			{
+				//If we only wanted to test divider back to menu
+				_program->getStateManager()->changeState(1);
+			}
 
 			_currentState = MOVE_FORWARD;
 

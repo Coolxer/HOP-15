@@ -47,21 +47,29 @@ void MenuState::init()
 	setElement(0, &_featherAmount);
 	setElement(1, &_cycleAmount);
 	setElement(2, "Rozpocznij");
+	setElement(3, &_dividerMotorSpeed);
+	setElement(4, "Test podzielnicy");
+	setElement(5, "Test stolu");
 }
 
 void MenuState::react()
 {
-	char key = _simpleKeypad->getPressedKey();
+	if (_isFocused)
+		_itemBinds[_selectedIndex].item->react();
+	else
+	{
+		char key = _simpleKeypad->getPressedKey();
 
-	if (key != KEY_NONE)
-		_buzzer->playOnPress();
+		if (key != KEY_NONE)
+			_buzzer->playOnPress();
 
-	if (key == KEY_UP)
-		up();
-	else if (key == KEY_DOWN)
-		down();
-	else if (key == KEY_ENTER)
-		enter();
+		if (key == KEY_UP)
+			up();
+		else if (key == KEY_DOWN)
+			down();
+		else if (key == KEY_ENTER)
+			enter();
+	}
 
 	if (_disrupted)
 	{
@@ -84,36 +92,20 @@ void MenuState::reset()
 
 void MenuState::up()
 {
-	if (!_isFocused)
-	{
-		if (_selectedIndex == 0)
-			_selectedIndex = _itemsCount - 1;
-		else
-			_selectedIndex--;
-	}
+	if (_selectedIndex == 0)
+		_selectedIndex = _itemsCount - 1;
 	else
-	{
-		if(_itemBinds[_selectedIndex].index != -1)
-			_itemBinds[_selectedIndex].item->increase();
-	}
+		_selectedIndex--;
 
 	_needRedraw = true;
 }
 
 void MenuState::down()
 {
-	if (!_isFocused)
-	{
-		if (_selectedIndex == _itemsCount - 1)
-			_selectedIndex = 0;
-		else
-			_selectedIndex++;
-	}
+	if (_selectedIndex == _itemsCount - 1)
+		_selectedIndex = 0;
 	else
-	{
-		if (_itemBinds[_selectedIndex].index != -1)
-			_itemBinds[_selectedIndex].item->decrease();
-	}
+		_selectedIndex++;
 
 	_needRedraw = true;
 }
@@ -123,16 +115,51 @@ void MenuState::enter()
 	if (_itemBinds[_selectedIndex].index != -1)
 		_isFocused = !_isFocused;
 
-	if (_itemBinds[_selectedIndex].index == -1)
+	//If we starting new program
+	if (_selectedIndex == 2)
 	{
-		Program* program = getProgram();
+		ProgramState* programState = getProgram()->getProgramState();
 
-		program->getProgramState()->setFeathers(getValueAtIndex(0));
-		program->getProgramState()->setCycles(getValueAtIndex(1));
-		program->getProgramState()->reset();
+		//Set divider motor speed from menu option
+		getProgram()->getDeviceManager()->requestDividerMotor()->setSpeed(getValueAtIndex(3));
+		
+		programState->setFeathers(getValueAtIndex(0));
+		programState->setCycles(getValueAtIndex(1));
+		programState->reset();
 
-		program->getStateManager()->changeState(2);
+		getProgram()->getStateManager()->changeState(2);
 	}
+	//If we testing divider
+	else if (_selectedIndex == 4)
+	{
+		ProgramState* programState = getProgram()->getProgramState();
+
+		//Set divider motor speed from menu option
+		getProgram()->getDeviceManager()->requestDividerMotor()->setSpeed(getValueAtIndex(3));
+
+		programState->setFeathers(getValueAtIndex(0));
+		programState->setCycles(getValueAtIndex(1));
+		programState->reset();
+		programState->testDividerMotor();
+
+		getProgram()->getStateManager()->changeState(2);
+	}
+	//If we testing table
+	else if (_selectedIndex == 5)
+	{
+		ProgramState* programState = getProgram()->getProgramState();
+
+		//Set divider motor speed from menu option
+		getProgram()->getDeviceManager()->requestDividerMotor()->setSpeed(getValueAtIndex(3));
+
+		programState->setFeathers(getValueAtIndex(0));
+		programState->setCycles(getValueAtIndex(1));
+		programState->reset();
+		programState->testTableMotor();
+
+		getProgram()->getStateManager()->changeState(2);
+	}
+
 	_needRedraw = true;
 }
 
