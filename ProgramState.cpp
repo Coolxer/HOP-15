@@ -35,8 +35,9 @@ void ProgramState::react()
 
 	if (_disrupted)
 	{
-		_lcd->begin;
+		_lcd->begin();
 		_needRedraw = true;
+		_disrupted = false;
 	}
 
 	if (_needRedraw)
@@ -186,10 +187,12 @@ void ProgramState::react()
 			_tableMotor->enable(true);
 			_dividerMotor->enable(true);
 
+			_relay->setHighState(true);
+			delay(250);
 			_relay->setHighState(false);
+			delay(100);
 			//There could be physical disruptions reset Lcd then
 			reportDisruption();
-			delay(100);
 
 			_currentState = CHANGE_FEATHER;
 
@@ -213,6 +216,9 @@ void ProgramState::react()
 
 			delay(100);
 			_relay->setHighState(true);
+			delay(250);
+			_relay->setHighState(false);
+			delay(100);
 			//There could be physical disruptions reset Lcd then
 			reportDisruption();
 

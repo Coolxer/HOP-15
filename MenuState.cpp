@@ -65,8 +65,9 @@ void MenuState::react()
 
 	if (_disrupted)
 	{
-		_lcd->begin;
+		_lcd->begin();
 		_needRedraw = true;
+		_disrupted = false;
 	}
 
 	if (_needRedraw)
