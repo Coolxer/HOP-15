@@ -199,12 +199,10 @@ void ProgramState::react()
 			_tableMotor->enable(true);
 			_dividerMotor->enable(true);
 
-			_relay->setHighState(true);
-			delay(250);
-			_relay->setHighState(false);
-			delay(100);
+			_relay->push();
 			//There could be physical disruptions reset Lcd then
 			reportDisruption();
+			delay(100);
 
 			_currentState = CHANGE_FEATHER;
 
@@ -227,12 +225,10 @@ void ProgramState::react()
 			_dividerMotor->enable(true);
 
 			delay(100);
-			_relay->setHighState(true);
-			delay(250);
-			_relay->setHighState(false);
-			delay(100);
+			_relay->pull();
 			//There could be physical disruptions reset Lcd then
 			reportDisruption();
+			delay(100);
 
 			if (_testingDividerMotor)
 			{

@@ -2,15 +2,26 @@
 
 Relay::Relay()
 {
-	pinMode(_pin, OUTPUT);
-	setHighState(false);
+	pinMode(_pinPull, OUTPUT);
+	pinMode(_pinPush, OUTPUT);
 }
 
-void Relay::setHighState(bool high)
+void Relay::pull()
 {
-	if (high)
-		digitalWrite(_pin, HIGH);
-	else
-		digitalWrite(_pin, LOW);
+	//to be sure that the opposite is not power on
+	digitalWrite(_pinPush, LOW);
+
+	digitalWrite(_pinPull, HIGH);
+	delay(250);
+	digitalWrite(_pinPull, LOW);
 }
 
+void Relay::push()
+{
+	//to be sure that opposite is not power on
+	digitalWrite(_pinPull, LOW);
+
+	digitalWrite(_pinPush, HIGH);
+	delay(250);
+	digitalWrite(_pinPush, LOW);
+}
