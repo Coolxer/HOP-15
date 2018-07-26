@@ -69,6 +69,9 @@ private:
 	//Flag if backward endstop clicked
 	bool backwardEndstopClicked;
 
+	bool _testingDividerMotor = false;
+	bool _testingTableMotor = false;
+
 public:
 	void setFeathers(int feathers) { _feathersCount = feathers; };
 	void setCycles(byte cycles) { _cyclesCount = cycles; };
@@ -87,6 +90,9 @@ public:
 
 	bool isPaused();
 	bool isFinished();
+
+	void testDividerMotor() { _testingDividerMotor = true; };
+	void testTableMotor() { _testingTableMotor = true; };
 
 	virtual void init();
 	virtual void react();

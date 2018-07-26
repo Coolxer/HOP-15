@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include "Element.h"
 
+class MenuState;
+
 class Lcd;
 class SimpleKeypad;
 
@@ -19,9 +21,7 @@ private:
 	byte _stepValue;
 
 public:
-	SetValueElement(char* name,
-					Lcd* lcd, SimpleKeypad* simpleKeypad,
-					byte minValue, byte maxValue, byte currentValue, byte stepValue);
+	SetValueElement(char* name, MenuState* state, byte minValue, byte maxValue, byte currentValue, byte stepValue);
 	~SetValueElement() {};
 
 	virtual void react();
