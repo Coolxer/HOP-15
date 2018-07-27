@@ -25,3 +25,26 @@ void Relay::push()
 	delay(250);
 	digitalWrite(_pinPush, LOW);
 }
+
+bool Relay::home()
+{
+	if (_currentHomeValue < _homedValue)
+	{
+		//to be sure that opposite is not power on
+		digitalWrite(_pinPush, LOW);
+
+		digitalWrite(_pinPull, HIGH);
+		delay(1);
+		digitalWrite(_pinPull, LOW);
+
+		_currentHomeValue++;
+
+		return false;
+	}
+	else
+	{
+		_currentHomeValue = _notHomedValue;
+
+		return true;
+	}
+}
