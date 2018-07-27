@@ -6,11 +6,14 @@
 #include "State.h"
 #include "SetValueElement.h"
 
+#define ITEM_COUNT 7
+
 class Program;
 
 class Lcd;
 class SimpleKeypad;
 class Buzzer;
+class Relay;
 
 struct ItemBind
 {
@@ -24,16 +27,20 @@ private:
 	Lcd * _lcd;
 	SimpleKeypad* _simpleKeypad;
 	Buzzer* _buzzer;
+	Relay* _relay;
 
-	String _itemNames[3];
-	ItemBind _itemBinds[3];
+	String _itemNames[ITEM_COUNT];
+	ItemBind _itemBinds[ITEM_COUNT];
 
-	byte _itemsCount = 3;
+	byte _itemsCount = ITEM_COUNT;
 	byte _selectedIndex = 1;
 	bool _isFocused = false;
 
-	SetValueElement _featherAmount = SetValueElement("Piora", _lcd, _simpleKeypad, 2, 32, 4, 1);
-	SetValueElement _cycleAmount = SetValueElement("Cykle", _lcd, _simpleKeypad, 1, 16, 1, 1);
+	bool _relayBlocked = false;
+
+	SetValueElement _featherAmount = SetValueElement("Piora", this, 2, 32, 4, 1);
+	SetValueElement _cycleAmount = SetValueElement("Cykle", this, 1, 16, 1, 1);
+	SetValueElement _dividerMotorSpeed = SetValueElement("Podzielnica", this, 0, 255, 255, 5);
 
 public:
 	bool setElement(byte index, char* description);
@@ -46,6 +53,7 @@ public:
 	void up();
 	void down();
 	void enter();
+	void back() { _isFocused = false; _needRedraw = true; };
 
 	const char* getNext();
 	const char* getCurrent();

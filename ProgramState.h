@@ -19,6 +19,7 @@ class Potentiometer;
 enum ExecutionState 
 {
 	START,
+	STARTING,
 	MOVE_FORWARD,
 	MOVING_FORWARD,
 	MOVE_BACKWARD,
@@ -69,6 +70,12 @@ private:
 	//Flag if backward endstop clicked
 	bool backwardEndstopClicked;
 
+	bool _testingDividerMotor = false;
+	bool _testingTableMotor = false;
+
+	bool _relayHomed = false;
+	bool _tableMotorHomed = false;
+
 public:
 	void setFeathers(int feathers) { _feathersCount = feathers; };
 	void setCycles(byte cycles) { _cyclesCount = cycles; };
@@ -87,6 +94,9 @@ public:
 
 	bool isPaused();
 	bool isFinished();
+
+	void testDividerMotor() { _testingDividerMotor = true; };
+	void testTableMotor() { _testingTableMotor = true; };
 
 	virtual void init();
 	virtual void react();

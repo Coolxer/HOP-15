@@ -16,20 +16,29 @@ void Relay::pull()
 	digitalWrite(_pinPull, LOW);
 }
 
-void Relay::home()
-{
-	if (!isHomed)
-	{
-		digitalWrite(_pinPull, HIGH);
-		delay(500);
-		digitalWrite(_pinPull, LOW);
-		isHomed = true;
-	}
-}
-
 void Relay::push()
 {
 	digitalWrite(_pinPush, HIGH);
 	delay(100);
 	digitalWrite(_pinPush, LOW);
+}
+
+bool Relay::home()
+{
+	if (_currentHomeValue < _homedValue)
+	{
+		digitalWrite(_pinPull, HIGH);
+		delay(1);
+		digitalWrite(_pinPull, LOW);
+
+		_currentHomeValue++;
+
+		return false;
+	}
+	else
+	{
+		_currentHomeValue = _notHomedValue;
+
+		return true;
+	}
 }

@@ -1,14 +1,20 @@
 #include "SetValueElement.h"
 
+#include "MenuState.h"
+#include "Program.h"
+#include "DeviceManager.h"
+
 #include "Lcd.h"
 #include "SimpleKeypad.h"
 
-SetValueElement::SetValueElement(char* name,
-								 Lcd* lcd, SimpleKeypad* simpleKeypad,
-								 byte minValue, byte maxValue, byte currentValue, byte stepValue):Element(name)
+SetValueElement::SetValueElement(char* name, MenuState* state, byte minValue, byte maxValue, byte currentValue, byte stepValue) : Element(name)
 {
-	_lcd = lcd;
-	_simpleKeypad = simpleKeypad;
+	_state = state;
+
+	DeviceManager* deviceManager = state->getProgram()->getDeviceManager();
+
+	_lcd = deviceManager->requestLcd();
+	_simpleKeypad = deviceManager->requestSimpleKeypad();
 
 	_minValue = minValue;
 	_maxValue = maxValue;
@@ -18,16 +24,14 @@ SetValueElement::SetValueElement(char* name,
 
 void SetValueElement::react()
 {
-	/*if (_lcd != nullptr && _simpleKeypad != nullptr)
-	{
-		_simpleKeypad->manage(this);
+	char key = _simpleKeypad->getPressedKey();
 
-		if (_needRedraw)
-		{
-			_lcd->manage(this);
-			_needRedraw = false;
-		}
-	}*/
+	if (key == KEY_UP)
+		increase();
+	else if (key == KEY_DOWN)
+		decrease();
+	else if (key == KEY_ENTER)
+		_state->back();
 }
 
 void SetValueElement::increase()
@@ -36,6 +40,8 @@ void SetValueElement::increase()
 
 	if (_currentValue > _maxValue)
 		_currentValue = _maxValue;
+
+	_state->needRedraw();
 }
 
 void SetValueElement::decrease()
@@ -44,4 +50,6 @@ void SetValueElement::decrease()
 
 	if (_currentValue < _minValue)
 		_currentValue = _minValue;
+
+	_state->needRedraw();
 }

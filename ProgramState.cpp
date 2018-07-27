@@ -70,8 +70,6 @@ void ProgramState::react()
 			_dividerMotor->enable(false);
 			_tableMotor->enable(false);
 
-			//relay te¿ powinnien siê wy³¹czyæ?
-
 			_program->getStateManager()->changeState(1);
 
 			break;
@@ -84,17 +82,31 @@ void ProgramState::react()
 		{
 			_rotateAngle = 360.0 / (float)_feathersCount;
 
+			_currentState = STARTING;
+
+			break;
+		}
+		case STARTING:
+		{
 			//Power on table motor to let it home
 			_tableMotor->enable(true);
 
 			//Power on divider motor to let it move
 			_dividerMotor->enable(false);
 
-			//_relay->home();
-			//delay(100);
+			if(!_relayHomed)
+			 _relayHomed = _relay->home();
 
-			if(_tableMotor->home())
-				_currentState = MOVE_FORWARD;
+			if(!_tableMotorHomed)
+				_tableMotorHomed = _tableMotor->home();
+
+			if (_tableMotorHomed && _relayHomed)
+			{
+				if (_testingDividerMotor)
+					_currentState = UNLOCK_DIVIDER;
+				else
+					_currentState = MOVE_FORWARD;
+			}
 
 			break;
 		}
@@ -179,6 +191,12 @@ void ProgramState::react()
 						_currentState = FINISH;
 				}
 
+				if (_testingTableMotor)
+				{
+					//If we only wanted to test table back to menu
+					_program->getStateManager()->changeState(1);
+				}
+
 				//Draw updated feathers and cycles
 				_needRedraw = true;
 			}
@@ -221,6 +239,12 @@ void ProgramState::react()
 			reportDisruption();
 			delay(100);
 
+			if (_testingDividerMotor)
+			{
+				//If we only wanted to test divider back to menu
+				_program->getStateManager()->changeState(1);
+			}
+
 			_currentState = MOVE_FORWARD;
 
 			break;
@@ -243,6 +267,9 @@ void ProgramState::reset()
 
 	_currentFeather = 1;
 	_currentCycle = 1;
+
+	_relayHomed = false;
+	_tableMotorHomed = false;
 }
 
 void ProgramState::togglePause()
