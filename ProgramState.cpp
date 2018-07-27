@@ -97,6 +97,8 @@ void ProgramState::react()
 			if(!_relayHomed)
 			 _relayHomed = _relay->home();
 
+			delay(100);
+
 			if(!_tableMotorHomed)
 				_tableMotorHomed = _tableMotor->home();
 
