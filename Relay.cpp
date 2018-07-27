@@ -18,9 +18,13 @@ void Relay::pull()
 
 void Relay::home()
 {
-	digitalWrite(_pinPull, HIGH);
-	delay(500);
-	digitalWrite(_pinPull, LOW);
+	if (!isHomed)
+	{
+		digitalWrite(_pinPull, HIGH);
+		delay(500);
+		digitalWrite(_pinPull, LOW);
+		isHomed = true;
+	}
 }
 
 void Relay::push()

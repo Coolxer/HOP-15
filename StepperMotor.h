@@ -11,9 +11,9 @@ class StepperMotor
 {
 private:
 	int _motorSteps = 800;
-	byte _speed = 100;
-	byte _microSteps = 16;
-	int _sumOfSteps = _motorSteps * _microSteps;
+	byte _speed = 200;
+	byte _microSteps = 8;
+	float _sumOfSteps = _motorSteps * _microSteps * 7.103825136612022;
 
 	byte _dirPin = 6;
 	byte _stepPin = 3;

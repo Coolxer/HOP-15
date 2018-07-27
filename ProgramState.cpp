@@ -91,6 +91,7 @@ void ProgramState::react()
 			_dividerMotor->enable(false);
 
 			//_relay->home();
+			//delay(100);
 
 			if(_tableMotor->home())
 				_currentState = MOVE_FORWARD;
