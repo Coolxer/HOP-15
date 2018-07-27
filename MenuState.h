@@ -6,6 +6,8 @@
 #include "State.h"
 #include "SetValueElement.h"
 
+#define ITEM_COUNT 7
+
 class Program;
 
 class Lcd;
@@ -24,13 +26,16 @@ private:
 	Lcd * _lcd;
 	SimpleKeypad* _simpleKeypad;
 	Buzzer* _buzzer;
+	Relay* _relay;
 
-	String _itemNames[6];
-	ItemBind _itemBinds[6];
+	String _itemNames[ITEM_COUNT];
+	ItemBind _itemBinds[ITEM_COUNT];
 
-	byte _itemsCount = 6;
+	byte _itemsCount = ITEM_COUNT;
 	byte _selectedIndex = 1;
 	bool _isFocused = false;
+
+	bool _relayBlocked = false;
 
 	SetValueElement _featherAmount = SetValueElement("Piora", this, 2, 32, 4, 1);
 	SetValueElement _cycleAmount = SetValueElement("Cykle", this, 1, 16, 1, 1);

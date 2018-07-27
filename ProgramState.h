@@ -19,6 +19,7 @@ class Potentiometer;
 enum ExecutionState 
 {
 	START,
+	STARTING,
 	MOVE_FORWARD,
 	MOVING_FORWARD,
 	MOVE_BACKWARD,
@@ -71,6 +72,9 @@ private:
 
 	bool _testingDividerMotor = false;
 	bool _testingTableMotor = false;
+
+	bool _relayHomed = false;
+	bool _tableMotorHomed = false;
 
 public:
 	void setFeathers(int feathers) { _feathersCount = feathers; };

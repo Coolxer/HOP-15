@@ -43,13 +43,15 @@ void MenuState::init()
 	_lcd = deviceManager->requestLcd();
 	_simpleKeypad = deviceManager->requestSimpleKeypad();
 	_buzzer = deviceManager->requestBuzzer();
+	_relay = deviceManager->requestRelay();
 
 	setElement(0, &_featherAmount);
 	setElement(1, &_cycleAmount);
 	setElement(2, "Rozpocznij");
-	setElement(3, &_dividerMotorSpeed);
-	setElement(4, "Test podzielnicy");
-	setElement(5, "Test stolu");
+	setElement(3, "Od/blokuj podz.");
+	setElement(4, &_dividerMotorSpeed);
+	setElement(5, "Test podzielnicy");
+	setElement(6, "Test stolu");
 }
 
 void MenuState::react()
@@ -129,8 +131,22 @@ void MenuState::enter()
 
 		getProgram()->getStateManager()->changeState(2);
 	}
-	//If we testing divider
+	//If we blocking or unblocking divider
 	else if (_selectedIndex == 4)
+	{
+		if (!_relayBlocked)
+		{
+			_relay->pull();
+			_relayBlocked = true;
+		}
+		else
+		{
+			_relay->push();
+			_relayBlocked = false;
+		}
+	}
+	//If we testing divider
+	else if (_selectedIndex == 5)
 	{
 		ProgramState* programState = getProgram()->getProgramState();
 
@@ -145,7 +161,7 @@ void MenuState::enter()
 		getProgram()->getStateManager()->changeState(2);
 	}
 	//If we testing table
-	else if (_selectedIndex == 5)
+	else if (_selectedIndex == 6)
 	{
 		ProgramState* programState = getProgram()->getProgramState();
 

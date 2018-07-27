@@ -84,20 +84,31 @@ void ProgramState::react()
 		{
 			_rotateAngle = 360.0 / (float)_feathersCount;
 
+			_currentState = STARTING;
+
+			break;
+		}
+		case STARTING:
+		{
 			//Power on table motor to let it home
 			_tableMotor->enable(true);
 
 			//Power on divider motor to let it move
 			_dividerMotor->enable(false);
 
-			if (_tableMotor->home())
+			if(!_relayHomed)
+			 _relayHomed = _relay->home();
+
+			if(!_tableMotorHomed)
+				_tableMotorHomed = _tableMotor->home();
+
+			if (_tableMotorHomed && _relayHomed)
 			{
 				if (_testingDividerMotor)
 					_currentState = UNLOCK_DIVIDER;
 				else
 					_currentState = MOVE_FORWARD;
 			}
-				
 
 			break;
 		}
@@ -258,6 +269,9 @@ void ProgramState::reset()
 
 	_currentFeather = 1;
 	_currentCycle = 1;
+
+	_relayHomed = false;
+	_tableMotorHomed = false;
 }
 
 void ProgramState::togglePause()
