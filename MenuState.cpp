@@ -132,7 +132,7 @@ void MenuState::enter()
 		getProgram()->getStateManager()->changeState(2);
 	}
 	//If we blocking or unblocking divider
-	else if (_selectedIndex == 4)
+	else if (_selectedIndex == 3)
 	{
 		if (!_relayBlocked)
 		{
