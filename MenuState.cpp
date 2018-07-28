@@ -56,7 +56,7 @@ void MenuState::init()
 
 void MenuState::react()
 {
-	if (_isFocused)
+	if (_isFocused && _itemBinds[_selectedIndex].index != -1)
 		_itemBinds[_selectedIndex].item->react();
 	else
 	{
@@ -123,7 +123,7 @@ void MenuState::enter()
 		ProgramState* programState = getProgram()->getProgramState();
 
 		//Set divider motor speed from menu option
-		getProgram()->getDeviceManager()->requestDividerMotor()->setSpeed(getValueAtIndex(3));
+		getProgram()->getDeviceManager()->requestDividerMotor()->setSpeed(getValueAtIndex(4));
 		
 		programState->setFeathers(getValueAtIndex(0));
 		programState->setCycles(getValueAtIndex(1));
@@ -151,7 +151,7 @@ void MenuState::enter()
 		ProgramState* programState = getProgram()->getProgramState();
 
 		//Set divider motor speed from menu option
-		getProgram()->getDeviceManager()->requestDividerMotor()->setSpeed(getValueAtIndex(3));
+		getProgram()->getDeviceManager()->requestDividerMotor()->setSpeed(getValueAtIndex(4));
 
 		programState->setFeathers(getValueAtIndex(0));
 		programState->setCycles(getValueAtIndex(1));
@@ -166,7 +166,7 @@ void MenuState::enter()
 		ProgramState* programState = getProgram()->getProgramState();
 
 		//Set divider motor speed from menu option
-		getProgram()->getDeviceManager()->requestDividerMotor()->setSpeed(getValueAtIndex(3));
+		getProgram()->getDeviceManager()->requestDividerMotor()->setSpeed(getValueAtIndex(4));
 
 		programState->setFeathers(getValueAtIndex(0));
 		programState->setCycles(getValueAtIndex(1));
