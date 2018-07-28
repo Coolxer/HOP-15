@@ -23,7 +23,7 @@ struct ItemBind
 class MenuState : public State
 {
 private:
-	Lcd * _lcd;
+	Lcd* _lcd;
 	SimpleKeypad* _simpleKeypad;
 	Buzzer* _buzzer;
 	Relay* _relay;
