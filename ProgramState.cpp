@@ -94,10 +94,9 @@ void ProgramState::react()
 			//Power on divider motor to let it move
 			_dividerMotor->enable(false);
 
-			if(!_relayHomed)
-			 _relayHomed = _relay->home();
-
-			delay(100);
+			if (!_relayHomed)
+				_relayHomed = true;
+				// _relayHomed = _relay->home();
 
 			if(!_tableMotorHomed)
 				_tableMotorHomed = _tableMotor->home();
@@ -196,6 +195,8 @@ void ProgramState::react()
 				if (_testingTableMotor)
 				{
 					//If we only wanted to test table back to menu
+					_dividerMotor->enable(false);
+					_tableMotor->enable(false);
 					_program->getStateManager()->changeState(1);
 				}
 
@@ -243,6 +244,8 @@ void ProgramState::react()
 
 			if (_testingDividerMotor)
 			{
+				_dividerMotor->enable(false);
+				_tableMotor->enable(false);
 				//If we only wanted to test divider back to menu
 				_program->getStateManager()->changeState(1);
 			}
@@ -272,6 +275,9 @@ void ProgramState::reset()
 
 	_relayHomed = false;
 	_tableMotorHomed = false;
+
+	_testingDividerMotor = false;
+	_testingTableMotor = false;
 }
 
 void ProgramState::togglePause()

@@ -21,6 +21,7 @@ private:
 	byte _stepValue;
 
 public:
+	SetValueElement() {};
 	SetValueElement(char* name, MenuState* state, byte minValue, byte maxValue, byte currentValue, byte stepValue);
 	~SetValueElement() {};
 

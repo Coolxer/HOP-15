@@ -38,6 +38,10 @@ bool MenuState::setElement(byte index, SetValueElement* element)
 
 void MenuState::init()
 {
+	_featherAmount = SetValueElement("Piora", this, 2, 32, 6, 1);
+	_cycleAmount = SetValueElement("Cykle", this, 1, 16, 1, 1);
+	_dividerMotorSpeed = SetValueElement("Podzielnica", this, 0, 255, 200, 5);
+
 	DeviceManager* deviceManager = _program->getDeviceManager();
 
 	_lcd = deviceManager->requestLcd();
@@ -144,6 +148,8 @@ void MenuState::enter()
 			_relay->push();
 			_relayBlocked = false;
 		}
+
+		reportDisruption();
 	}
 	//If we testing divider
 	else if (_selectedIndex == 5)

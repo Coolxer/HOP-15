@@ -38,9 +38,9 @@ private:
 
 	bool _relayBlocked = false;
 
-	SetValueElement _featherAmount = SetValueElement("Piora", this, 2, 32, 6, 1);
-	SetValueElement _cycleAmount = SetValueElement("Cykle", this, 1, 16, 1, 1);
-	SetValueElement _dividerMotorSpeed = SetValueElement("Podzielnica", this, 0, 255, 255, 5);
+	SetValueElement _featherAmount;
+	SetValueElement _cycleAmount;
+	SetValueElement _dividerMotorSpeed;
 
 public:
 	bool setElement(byte index, char* description);
