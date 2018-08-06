@@ -12,14 +12,14 @@ Relay::Relay()
 void Relay::pull()
 {
 	digitalWrite(_pinPull, HIGH);
-	delay(200);
+	delay(250);
 	digitalWrite(_pinPull, LOW);
 }
 
 void Relay::push()
 {
 	digitalWrite(_pinPush, HIGH);
-	delay(100);
+	delay(150);
 	digitalWrite(_pinPush, LOW);
 }
 
@@ -27,9 +27,9 @@ bool Relay::home()
 {
 	if (_currentHomeValue < _homedValue)
 	{
-		digitalWrite(_pinPull, HIGH);
+		digitalWrite(_pinPush, HIGH);
 		delay(1);
-		digitalWrite(_pinPull, LOW);
+		digitalWrite(_pinPush, LOW);
 
 		_currentHomeValue++;
 

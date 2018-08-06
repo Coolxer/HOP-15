@@ -211,7 +211,7 @@ void ProgramState::react()
 			_tableMotor->enable(true);
 			_dividerMotor->enable(true);
 
-			_relay->push();
+			_relay->pull();
 			//There could be physical disruptions reset Lcd then
 			reportDisruption();
 			delay(100);
@@ -237,7 +237,7 @@ void ProgramState::react()
 			_dividerMotor->enable(true);
 
 			delay(100);
-			_relay->pull();
+			_relay->push();
 			//There could be physical disruptions reset Lcd then
 			reportDisruption();
 			delay(100);

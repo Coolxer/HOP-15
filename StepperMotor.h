@@ -13,7 +13,7 @@ private:
 	int _motorSteps = 800;
 	byte _speed = 200;
 	byte _microSteps = 8;
-	float _sumOfSteps = _motorSteps * _microSteps * 2.0967741;
+	float _sumOfSteps = _motorSteps * _microSteps * 2.0376175;
 
 	byte _dirPin = 6;
 	byte _stepPin = 3;

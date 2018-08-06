@@ -140,12 +140,12 @@ void MenuState::enter()
 	{
 		if (!_relayBlocked)
 		{
-			_relay->pull();
+			_relay->push();
 			_relayBlocked = true;
 		}
 		else
 		{
-			_relay->push();
+			_relay->pull();
 			_relayBlocked = false;
 		}
 
