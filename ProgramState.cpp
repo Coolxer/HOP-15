@@ -116,6 +116,8 @@ void ProgramState::react()
 			betweenEndstops = false;
 			forwardEndstopClicked = false;
 
+			_startMillis = millis();
+
 			_currentState = MOVING_FORWARD;
 
 			break;
@@ -140,6 +142,8 @@ void ProgramState::react()
 			else
 			{
 				_tableMotor->stop();
+
+				_endMillis = millis();
 
 				_currentState = MOVE_BACKWARD;
 			}
