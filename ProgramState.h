@@ -76,6 +76,10 @@ private:
 	bool _relayHomed = false;
 	bool _tableMotorHomed = false;
 
+	//Temporary to measure time interval between table motor move from start to end
+	unsigned long _startMillis = 0;
+	unsigned long _endMillis = 0;
+
 public:
 	void setFeathers(int feathers) { _feathersCount = feathers; };
 	void setCycles(byte cycles) { _cyclesCount = cycles; };
@@ -89,6 +93,8 @@ public:
 	byte getCyclesCount() { return _cyclesCount; };
 	
 	float getRotateAngle() { return _rotateAngle; };
+
+	unsigned long getDeltaTime() { return _endMillis - _startMillis; };
 
 	void togglePause();
 
