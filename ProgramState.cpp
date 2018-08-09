@@ -24,15 +24,11 @@ void ProgramState::init()
 	_forwardTableEndstop = deviceManager->requestForwardTableEndstop();
 	_backwardTableEndstop = deviceManager->requestBackwardTableEndstop();
 	_tablePotentiometer = deviceManager->requestTablePotentiometer();
-	_tableMotor = deviceManager->requestTableMotor();
 	_relay = deviceManager->requestRelay();
 }
 
 void ProgramState::react()
 {
-	_tableMotor->setSpeed();
-	_sevSegms->display(_tableMotor->getSpeed());
-
 	if (_disrupted)
 	{
 		_lcd->begin();
@@ -68,7 +64,6 @@ void ProgramState::react()
 		case KEY_RETURN: //Stop
 		{
 			_dividerMotor->enable(false);
-			_tableMotor->enable(false);
 
 			_program->getStateManager()->changeState(1);
 
@@ -88,9 +83,6 @@ void ProgramState::react()
 		}
 		case STARTING:
 		{
-			//Power on table motor to let it home
-			_tableMotor->enable(true);
-
 			//Power on divider motor to let it move
 			_dividerMotor->enable(false);
 
@@ -99,7 +91,7 @@ void ProgramState::react()
 				// _relayHomed = _relay->home();
 
 			if(!_tableMotorHomed)
-				_tableMotorHomed = _tableMotor->home();
+				_tableMotorHomed = _dividerMotor->home(_forwardTableEndstop);
 
 			if (_tableMotorHomed && _relayHomed)
 			{
@@ -124,12 +116,11 @@ void ProgramState::react()
 		}
 		case MOVING_FORWARD:
 		{
-			_tableMotor->enable(true);
-			_dividerMotor->enable(false);
+			_dividerMotor->enable(true);
 
 			if (!forwardEndstopClicked)
 			{
-				_tableMotor->moveForward();
+				_dividerMotor->rotate(1);
 
 				//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
 				if (!_backwardTableEndstop->isClicked())
@@ -141,8 +132,6 @@ void ProgramState::react()
 			}
 			else
 			{
-				_tableMotor->stop();
-
 				_endMillis = millis();
 
 				_currentState = MOVE_BACKWARD;
@@ -161,12 +150,11 @@ void ProgramState::react()
 		}
 		case MOVING_BACKWARD:
 		{
-			_tableMotor->enable(true);
-			_dividerMotor->enable(false);
+			_dividerMotor->enable(true);
 
 			if(!backwardEndstopClicked)
 			{
-				_tableMotor->moveBackward();
+				_dividerMotor->rotate(-1);
 
 				//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
 				if (!_forwardTableEndstop->isClicked())
@@ -178,8 +166,6 @@ void ProgramState::react()
 			}
 			else
 			{
-				_tableMotor->stop();
-
 				_currentFeather++;
 
 				//Start changing feather prodcedure
@@ -200,7 +186,6 @@ void ProgramState::react()
 				{
 					//If we only wanted to test table back to menu
 					_dividerMotor->enable(false);
-					_tableMotor->enable(false);
 					_program->getStateManager()->changeState(1);
 				}
 
@@ -212,7 +197,6 @@ void ProgramState::react()
 		}
 		case UNLOCK_DIVIDER:
 		{
-			_tableMotor->enable(true);
 			_dividerMotor->enable(true);
 
 			_relay->push();
@@ -226,7 +210,6 @@ void ProgramState::react()
 		}
 		case CHANGE_FEATHER:
 		{	
-			_tableMotor->enable(true);
 			_dividerMotor->enable(true);
 
 			_dividerMotor->rotate(_rotateAngle);
@@ -237,7 +220,6 @@ void ProgramState::react()
 		}
 		case LOCK_DIVIDER:
 		{	
-			_tableMotor->enable(true);
 			_dividerMotor->enable(true);
 
 			delay(100);
@@ -249,7 +231,6 @@ void ProgramState::react()
 			if (_testingDividerMotor)
 			{
 				_dividerMotor->enable(false);
-				_tableMotor->enable(false);
 				//If we only wanted to test divider back to menu
 				_program->getStateManager()->changeState(1);
 			}
@@ -260,7 +241,6 @@ void ProgramState::react()
 		}
 		case FINISH:
 		{	
-			_tableMotor->enable(false);
 			_dividerMotor->enable(false);
 
 			break;
@@ -290,7 +270,6 @@ void ProgramState::togglePause()
 	if (_currentState != PAUSE)
 	{
 		//Disable motors
-		_tableMotor->enable(false);
 		_dividerMotor->enable(false);
 
 		//Save current state to get it back on unpause

@@ -29,3 +29,16 @@ void StepperMotor::setSpeed(byte speed)
 	_speed = speed;
 	_stepper.setSpeed(speed);
 }
+
+bool StepperMotor::home(Endstop* endstop)
+{
+	if (endstop->isClicked())
+	{
+		return true;
+	}
+	else
+	{
+		rotate(-1);
+		return false;
+	}
+}

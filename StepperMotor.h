@@ -27,6 +27,7 @@ public:
 	void enable(bool e);
 	void rotate(float angle);
 	void setSpeed(byte speed);
+	bool home(Endstop* endstop);
 };
 
 #endif
