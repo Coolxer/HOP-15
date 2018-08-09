@@ -41,7 +41,6 @@ private:
 
 	StepperMotor* _dividerMotor;
 
-	DcMotor* _tableMotor;
 	Endstop* _forwardTableEndstop;
 	Endstop* _backwardTableEndstop;
 
