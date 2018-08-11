@@ -3,31 +3,29 @@
 
 StepperMotor::StepperMotor()
 {
-	_stepper.setSpeed(_speed);
-
-	pinMode(_enablePin, OUTPUT);
-	enable(false);
+	_stepper.begin(_speed, _microSteps);
+	disable();
 }
 
-void StepperMotor::enable(bool e)
+void StepperMotor::enable()
 {
-	if (e)
-		digitalWrite(_enablePin, LOW);
-	else
-		digitalWrite(_enablePin, HIGH);
+	_stepper.enable();
 }
 
-void StepperMotor::rotate(float angle)
+void StepperMotor::disable()
 {
-	int stepsToRotate = int(((float)angle * _sumOfSteps) / 360.0);
+	_stepper.disable();
+}
 
-	_stepper.step(-stepsToRotate);
+void StepperMotor::rotate(long angle)
+{
+	_stepper.rotate(-angle);
 }
 
 void StepperMotor::setSpeed(byte speed)
 {
 	_speed = speed;
-	_stepper.setSpeed(speed);
+	_stepper.setRPM(_speed);
 }
 
 bool StepperMotor::home(Endstop* endstop)
@@ -38,7 +36,20 @@ bool StepperMotor::home(Endstop* endstop)
 	}
 	else
 	{
-		rotate(-1);
+		_stepper.move(-1);
 		return false;
 	}
+}
+
+void StepperMotor::move(long steps)
+{
+	_stepper.move(steps);
+}
+
+bool StepperMotor::isEnable()
+{
+	if (digitalRead(_enablePin) == HIGH)
+		return true;
+	else
+		return false;
 }

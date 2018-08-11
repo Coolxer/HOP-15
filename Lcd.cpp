@@ -142,7 +142,7 @@ void Lcd::manage(ProgramState* programState)
 
 		char deltaTimeLine[20] = { 0 };
 
-		sprintf(deltaTimeLine, "Czas %u");
+		sprintf(deltaTimeLine, "Czas %d");
 
 		clearScreen();
 		writeNewLine(0, "Zakonczono");
@@ -175,6 +175,5 @@ void Lcd::manage(ProgramState* programState)
 			writeNewLine(0, "Przetwarzanie w toku");
 			writeNewLine(3, "*-Pauza #-Zatrzymaj");
 		}
-			
 	}
 }

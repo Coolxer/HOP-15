@@ -24,11 +24,15 @@ void ProgramState::init()
 	_forwardTableEndstop = deviceManager->requestForwardTableEndstop();
 	_backwardTableEndstop = deviceManager->requestBackwardTableEndstop();
 	_tablePotentiometer = deviceManager->requestTablePotentiometer();
+	_tableMotor = deviceManager->requestTableMotor();
 	_relay = deviceManager->requestRelay();
 }
 
 void ProgramState::react()
 {
+	_tableMotor->setSpeed();
+	_sevSegms->display(_tableMotor->getSpeed());
+
 	if (_disrupted)
 	{
 		_lcd->begin();
@@ -63,7 +67,8 @@ void ProgramState::react()
 		}
 		case KEY_RETURN: //Stop
 		{
-			_dividerMotor->enable(false);
+			_dividerMotor->disable();
+			_tableMotor->disable();
 
 			_program->getStateManager()->changeState(1);
 
@@ -83,15 +88,18 @@ void ProgramState::react()
 		}
 		case STARTING:
 		{
-			//Power on divider motor to let it move
-			_dividerMotor->enable(false);
+			//Power on table motor to let it home
+			_tableMotor->enable();
+
+			//Power off divider motor
+			_dividerMotor->disable();
 
 			if (!_relayHomed)
 				_relayHomed = true;
 				// _relayHomed = _relay->home();
 
 			if(!_tableMotorHomed)
-				_tableMotorHomed = _dividerMotor->home(_forwardTableEndstop);
+				_tableMotorHomed = _tableMotor->home();
 
 			if (_tableMotorHomed && _relayHomed)
 			{
@@ -116,11 +124,12 @@ void ProgramState::react()
 		}
 		case MOVING_FORWARD:
 		{
-			_dividerMotor->enable(true);
+			_tableMotor->enable();
+			_dividerMotor->disable();
 
 			if (!forwardEndstopClicked)
 			{
-				_dividerMotor->rotate(1);
+				_tableMotor->moveForward();
 
 				//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
 				if (!_backwardTableEndstop->isClicked())
@@ -132,6 +141,8 @@ void ProgramState::react()
 			}
 			else
 			{
+				_tableMotor->stop();
+
 				_endMillis = millis();
 
 				_currentState = MOVE_BACKWARD;
@@ -150,11 +161,12 @@ void ProgramState::react()
 		}
 		case MOVING_BACKWARD:
 		{
-			_dividerMotor->enable(true);
+			_tableMotor->enable();
+			_dividerMotor->disable();
 
 			if(!backwardEndstopClicked)
 			{
-				_dividerMotor->rotate(-1);
+				_tableMotor->moveBackward();
 
 				//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
 				if (!_forwardTableEndstop->isClicked())
@@ -166,6 +178,8 @@ void ProgramState::react()
 			}
 			else
 			{
+				_tableMotor->stop();
+
 				_currentFeather++;
 
 				//Start changing feather prodcedure
@@ -185,7 +199,8 @@ void ProgramState::react()
 				if (_testingTableMotor)
 				{
 					//If we only wanted to test table back to menu
-					_dividerMotor->enable(false);
+					_dividerMotor->disable();
+					_tableMotor->disable();
 					_program->getStateManager()->changeState(1);
 				}
 
@@ -197,7 +212,8 @@ void ProgramState::react()
 		}
 		case UNLOCK_DIVIDER:
 		{
-			_dividerMotor->enable(true);
+			_tableMotor->enable();
+			_dividerMotor->enable();
 
 			_relay->pull();
 			//There could be physical disruptions reset Lcd then
@@ -210,7 +226,8 @@ void ProgramState::react()
 		}
 		case CHANGE_FEATHER:
 		{	
-			_dividerMotor->enable(true);
+			_tableMotor->enable();
+			_dividerMotor->enable();
 
 			_dividerMotor->rotate(_rotateAngle);
 
@@ -220,7 +237,8 @@ void ProgramState::react()
 		}
 		case LOCK_DIVIDER:
 		{	
-			_dividerMotor->enable(true);
+			_tableMotor->enable();
+			_dividerMotor->enable();
 
 			delay(100);
 			_relay->push();
@@ -230,7 +248,8 @@ void ProgramState::react()
 
 			if (_testingDividerMotor)
 			{
-				_dividerMotor->enable(false);
+				_dividerMotor->disable();
+				_tableMotor->disable();
 				//If we only wanted to test divider back to menu
 				_program->getStateManager()->changeState(1);
 			}
@@ -241,7 +260,8 @@ void ProgramState::react()
 		}
 		case FINISH:
 		{	
-			_dividerMotor->enable(false);
+			_tableMotor->disable();
+			_dividerMotor->disable();
 
 			break;
 		}
@@ -270,7 +290,8 @@ void ProgramState::togglePause()
 	if (_currentState != PAUSE)
 	{
 		//Disable motors
-		_dividerMotor->enable(false);
+		_tableMotor->disable();
+		_dividerMotor->disable();
 
 		//Save current state to get it back on unpause
 		_savedState = _currentState;

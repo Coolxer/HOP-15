@@ -30,7 +30,10 @@ public:
 	void setSpeed();
 	byte getSpeed() { return _speed; };
 
-	void enable(bool e);
+	void enable(); //it's turns the motor on and able its to move
+	void disable(); //turns off the motor
+	bool isEnable();
+
 	bool home();
 
 	void moveBackward();

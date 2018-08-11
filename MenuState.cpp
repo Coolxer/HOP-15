@@ -40,7 +40,7 @@ void MenuState::init()
 {
 	_featherAmount = SetValueElement("Piora", this, 2, 32, 6, 1);
 	_cycleAmount = SetValueElement("Cykle", this, 1, 16, 1, 1);
-	_dividerMotorSpeed = SetValueElement("Podzielnica", this, 0, 255, 200, 5);
+	_dividerMotorSpeed = SetValueElement("Podzielnica", this, 0, 200, 60, 5);
 
 	DeviceManager* deviceManager = _program->getDeviceManager();
 
