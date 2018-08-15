@@ -58,26 +58,26 @@ bool DcMotor::home()
 	}
 }
 
-void DcMotor::moveBackward()
+void DcMotor::moveBackward(int moveTime)
 {
 	//Start moving backward
 	digitalWrite(_dirPinA, HIGH);
 	digitalWrite(_dirPinB, LOW);
 
 	//Move for given time
-	delay(_moveTime);
+	delay(moveTime);
 
 	stop();
 }
 
-void DcMotor::moveForward()
+void DcMotor::moveForward(int moveTime)
 {
 	//Start moving forward
 	digitalWrite(_dirPinA, LOW);
 	digitalWrite(_dirPinB, HIGH);
 
 	//Move for given time
-	delay(_moveTime);
+	delay(moveTime);
 
 	stop();
 }
