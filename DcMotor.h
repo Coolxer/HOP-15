@@ -17,9 +17,6 @@ private:
 	//Max speed 255
 	byte _speed;
 
-	//Time motor will move until stop in ms
-	int _moveTime = 10;
-
 	Endstop* _forwardEndstop;
 	Endstop* _backwardEndstop;
 	Potentiometer* _potentiometer;
@@ -36,8 +33,8 @@ public:
 
 	bool home();
 
-	void moveBackward();
-	void moveForward();
+	void moveBackward(int moveTime);
+	void moveForward(int moveTime);
 	void stop();
 
 };

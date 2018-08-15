@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include "State.h"
 
+const float PI = 3.1415;
+
 class Program;
 
 class Lcd;
@@ -79,6 +81,27 @@ private:
 	//Temporary to measure time interval between table motor move from start to end
 	unsigned long _startMillis = 0;
 	unsigned long _endMillis = 0;
+
+	//Table motor average speed in meters per second m/s
+	float _tableMotorAvgSpeed = 0.1;
+
+	//Angle of cutter in degrees
+	float _cutterAngle = 24.0;
+
+	//Radius of directly motor circle
+	float _directlyMotorCircleRadius = 6.0;
+
+	//Radius of shift motor circle
+	float _shiftMotorCircleRadius = 12.0;
+
+	//Tick time for motor move in ms
+	int _tickTime = 10;
+
+	//Proportion of divider circle radiuses
+	float _proportionOfMotorCircles;
+
+	//Angle of which divider need to rotate to fit table motor on one tick
+	float _degreesToCoverLength;
 
 public:
 	void setFeathers(int feathers) { _feathersCount = feathers; };

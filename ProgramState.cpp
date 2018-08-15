@@ -26,6 +26,11 @@ void ProgramState::init()
 	_tablePotentiometer = deviceManager->requestTablePotentiometer();
 	_tableMotor = deviceManager->requestTableMotor();
 	_relay = deviceManager->requestRelay();
+
+	_proportionOfMotorCircles = _shiftMotorCircleRadius / _directlyMotorCircleRadius;
+	float tableLength = _tableMotorAvgSpeed * _tickTime / 1000.0;
+	float dividerLength = tableLength * 1.0 / (cos(_cutterAngle * PI / 180.0));
+	float _degreesToCoverLength = ((dividerLength * 360.0) / (2.0 * PI * _shiftMotorCircleRadius)) * _proportionOfMotorCircles;
 }
 
 void ProgramState::react()
@@ -125,11 +130,12 @@ void ProgramState::react()
 		case MOVING_FORWARD:
 		{
 			_tableMotor->enable();
-			_dividerMotor->disable();
+			_dividerMotor->enable();
 
 			if (!forwardEndstopClicked)
 			{
-				_tableMotor->moveForward();
+				_tableMotor->moveForward(_tickTime);
+				_dividerMotor->rotate(_degreesToCoverLength);
 
 				//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
 				if (!_backwardTableEndstop->isClicked())
@@ -166,7 +172,8 @@ void ProgramState::react()
 
 			if(!backwardEndstopClicked)
 			{
-				_tableMotor->moveBackward();
+				_tableMotor->moveBackward(10);
+				_dividerMotor->rotate(_degreesToCoverLength);
 
 				//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
 				if (!_forwardTableEndstop->isClicked())
@@ -229,7 +236,7 @@ void ProgramState::react()
 			_tableMotor->enable();
 			_dividerMotor->enable();
 
-			_dividerMotor->rotate(_rotateAngle);
+			_dividerMotor->rotate(_rotateAngle * _proportionOfMotorCircles);
 
 			_currentState = LOCK_DIVIDER;
 
