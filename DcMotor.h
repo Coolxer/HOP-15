@@ -15,7 +15,7 @@ private:
 	byte _enablePin = 20;
 
 	//Max speed 255
-	byte _speed;
+	byte _speed = 255;
 
 	Endstop* _forwardEndstop;
 	Endstop* _backwardEndstop;

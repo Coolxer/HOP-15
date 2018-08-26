@@ -4,8 +4,6 @@
 #include <Arduino.h>
 #include "State.h"
 
-const float PI = 3.1415;
-
 class Program;
 
 class Lcd;
@@ -83,7 +81,7 @@ private:
 	unsigned long _endMillis = 0;
 
 	//Table motor average speed in meters per second m/s
-	float _tableMotorAvgSpeed = 0.1;
+	float _tableMotorAvgSpeed = 0.0271012;
 
 	//Angle of cutter in degrees
 	float _cutterAngle = 24.0;
@@ -98,7 +96,7 @@ private:
 	int _tickTime = 10;
 
 	//Proportion of divider circle radiuses
-	float _proportionOfMotorCircles;
+	float _proportionOfMotorCircles = 2.0015384;
 
 	//Angle of which divider need to rotate to fit table motor on one tick
 	float _degreesToCoverLength;

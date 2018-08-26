@@ -35,8 +35,8 @@ void ProgramState::init()
 
 void ProgramState::react()
 {
-	_tableMotor->setSpeed();
-	_sevSegms->display(_tableMotor->getSpeed());
+	//_tableMotor->setSpeed();
+	//_sevSegms->display(_tableMotor->getSpeed());
 
 	if (_disrupted)
 	{
@@ -121,9 +121,8 @@ void ProgramState::react()
 			betweenEndstops = false;
 			forwardEndstopClicked = false;
 
-			_startMillis = millis();
-
 			_currentState = MOVING_FORWARD;
+			_startMillis = millis();
 
 			break;
 		}
@@ -147,10 +146,8 @@ void ProgramState::react()
 			}
 			else
 			{
-				_tableMotor->stop();
-
 				_endMillis = millis();
-
+				_tableMotor->stop();
 				_currentState = MOVE_BACKWARD;
 			}
 

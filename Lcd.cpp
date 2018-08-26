@@ -142,7 +142,7 @@ void Lcd::manage(ProgramState* programState)
 
 		char deltaTimeLine[20] = { 0 };
 
-		sprintf(deltaTimeLine, "Czas %d");
+		sprintf(deltaTimeLine, "Czas %d", deltaTime);
 
 		clearScreen();
 		writeNewLine(0, "Zakonczono");

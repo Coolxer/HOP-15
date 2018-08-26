@@ -15,6 +15,7 @@ DcMotor::DcMotor(Endstop* forwardEndstop, Endstop* backwardEndstop, Potentiomete
 	pinMode(_enablePin, OUTPUT);
 
 	disable();
+	
 }
 
 void DcMotor::setSpeed()
@@ -27,6 +28,7 @@ void DcMotor::setSpeed()
 
 void DcMotor::enable()
 {
+	digitalWrite(_pwmPin, 255);
 	digitalWrite(_enablePin, HIGH);
 }
 
@@ -53,7 +55,7 @@ bool DcMotor::home()
 	}
 	else
 	{
-		moveBackward();
+		moveBackward(10);
 		return false;
 	}
 }
