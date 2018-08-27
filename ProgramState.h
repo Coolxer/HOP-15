@@ -11,7 +11,6 @@ class SimpleKeypad;
 class Buzzer;
 class SevSegms;
 class StepperMotor;
-class DcMotor;
 class Endstop;
 class Relay;
 class Potentiometer;
@@ -41,7 +40,7 @@ private:
 
 	StepperMotor* _dividerMotor;
 
-	DcMotor* _tableMotor;
+	StepperMotor* _tableMotor;
 	Endstop* _forwardTableEndstop;
 	Endstop* _backwardTableEndstop;
 

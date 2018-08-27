@@ -8,7 +8,6 @@
 #include "SevSegms.h"
 #include "SimpleKeypad.h"
 #include "StepperMotor.h"
-#include "DcMotor.h"
 #include "Endstop.h"
 #include "Relay.h"
 
@@ -35,9 +34,6 @@ void ProgramState::init()
 
 void ProgramState::react()
 {
-	//_tableMotor->setSpeed();
-	//_sevSegms->display(_tableMotor->getSpeed());
-
 	if (_disrupted)
 	{
 		_lcd->begin();
@@ -96,8 +92,8 @@ void ProgramState::react()
 			//Power on table motor to let it home
 			_tableMotor->enable();
 
-			//Power off divider motor
-			_dividerMotor->disable();
+			//Power on divider motor
+			_dividerMotor->enable();
 
 			if (!_relayHomed)
 				_relayHomed = true;

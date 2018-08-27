@@ -10,18 +10,24 @@ class Endstop;
 class StepperMotor
 {
 private:
-	int _motorSteps = 200;
+	int _motorSteps;
 	byte _speed = 60; // range 1 - 200
 	byte _microSteps = 8;
 
-	byte _dirPin = 6;
-	byte _stepPin = 3;
-	byte _enablePin = 8;
+	byte _dirPin;
+	byte _stepPin;
+	byte _enablePin;
 
-	A4988 _stepper = A4988(_motorSteps, _dirPin, _stepPin, _enablePin);
+	A4988 _stepper;
+
+	Endstop* _forwardEndstop;
+	Endstop* _backwardEndstop;
+
+	void init();
 
 public:
-	StepperMotor();
+	StepperMotor(int motorSteps, byte dirPin, byte stepPin, byte enablePin);
+	StepperMotor(int motorSteps, byte dirPin, byte stepPin, byte enablePin, Endstop* forwardEndstop, Endstop* backwardEndstop);
 
 	void enable(); //turns on the motor so it can move
 	void disable(); // turns off the motor makes that you can move it by hand <I>
@@ -30,7 +36,7 @@ public:
 	void rotate(long angle);
 
 	void setSpeed(byte speed);
-	bool home(Endstop* endstop);
+	bool home();
 
 	bool isEnable();
 

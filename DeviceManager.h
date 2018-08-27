@@ -8,7 +8,6 @@
 #include "Buzzer.h"
 #include "SevSegms.h"
 #include "StepperMotor.h"
-#include "DcMotor.h"
 #include "Endstop.h"
 #include "Relay.h"
 #include "Potentiometer.h"
@@ -23,8 +22,8 @@ private:
 	Endstop _forwardTableEndstop = Endstop(9);
 	Endstop _backwardTableEndstop = Endstop(10);
 	Potentiometer _tablePotentiometer = Potentiometer();
-	StepperMotor _dividerMotor = StepperMotor();
-	DcMotor _tableMotor = DcMotor(&_forwardTableEndstop, &_backwardTableEndstop, &_tablePotentiometer);
+	StepperMotor _dividerMotor = StepperMotor(200, 6, 3, 8);
+	StepperMotor _tableMotor = StepperMotor(200, 5, 2, 8, &_forwardTableEndstop, &_backwardTableEndstop);
 	Relay _relay = Relay();
 
 public:
@@ -38,7 +37,7 @@ public:
 	Endstop* requestBackwardTableEndstop() { return &_backwardTableEndstop; };
 	Potentiometer* requestTablePotentiometer() { return &_tablePotentiometer; };
 	StepperMotor* requestDividerMotor() { return &_dividerMotor; };
-	DcMotor* requestTableMotor() { return &_tableMotor; };
+	StepperMotor* requestTableMotor() { return &_tableMotor; };
 	Relay* requestRelay() { return &_relay; };
 };
 

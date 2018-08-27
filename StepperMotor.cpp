@@ -1,8 +1,34 @@
 #include "StepperMotor.h"
 #include "Endstop.h"
 
-StepperMotor::StepperMotor()
+StepperMotor::StepperMotor(int motorSteps, byte dirPin, byte stepPin, byte enablePin)
 {
+	_motorSteps = motorSteps;
+	_dirPin = dirPin;
+	_stepPin = stepPin;
+	_enablePin = enablePin;
+
+	init();
+}
+
+StepperMotor::StepperMotor(int motorSteps, byte dirPin, byte stepPin, byte enablePin, Endstop* forwardEndstop, Endstop* backwardEndstop)
+{
+	_motorSteps = motorSteps;
+	_dirPin = dirPin;
+	_stepPin = stepPin;
+	_enablePin = enablePin;
+
+	_forwardEndstop = forwardEndstop;
+	_backwardEndstop = backwardEndstop;
+
+	init();
+}
+
+
+void StepperMotor::init() 
+{
+	_stepper = A4988(_motorSteps, _dirPin, _stepPin, _enablePin);
+
 	_stepper.begin(_speed, _microSteps);
 	disable();
 }
@@ -28,9 +54,9 @@ void StepperMotor::setSpeed(byte speed)
 	_stepper.setRPM(_speed);
 }
 
-bool StepperMotor::home(Endstop* endstop)
+bool StepperMotor::home()
 {
-	if (endstop->isClicked())
+	if (_forwardEndstop->isClicked())
 	{
 		return true;
 	}
