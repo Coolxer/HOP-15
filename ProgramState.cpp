@@ -129,7 +129,7 @@ void ProgramState::react()
 
 			if (!forwardEndstopClicked)
 			{
-				_tableMotor->moveForward(_tickTime);
+				_tableMotor->rotate(1);
 				_dividerMotor->rotate(_degreesToCoverLength);
 
 				//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
@@ -143,7 +143,6 @@ void ProgramState::react()
 			else
 			{
 				_endMillis = millis();
-				_tableMotor->stop();
 				_currentState = MOVE_BACKWARD;
 			}
 
@@ -165,7 +164,7 @@ void ProgramState::react()
 
 			if(!backwardEndstopClicked)
 			{
-				_tableMotor->moveBackward(10);
+				_tableMotor->rotate(-1);
 				_dividerMotor->rotate(_degreesToCoverLength);
 
 				//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
@@ -178,8 +177,6 @@ void ProgramState::react()
 			}
 			else
 			{
-				_tableMotor->stop();
-
 				_currentFeather++;
 
 				//Start changing feather prodcedure
