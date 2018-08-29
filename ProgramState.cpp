@@ -29,7 +29,8 @@ void ProgramState::init()
 	_proportionOfMotorCircles = _shiftMotorCircleRadius / _directlyMotorCircleRadius;
 	float tableLength = _tableMotorAvgSpeed * _tickTime / 1000.0;
 	float dividerLength = tableLength * 1.0 / (cos(_cutterAngle * PI / 180.0));
-	float _degreesToCoverLength = ((dividerLength * 360.0) / (2.0 * PI * _shiftMotorCircleRadius)) * _proportionOfMotorCircles;
+	_degreesToCoverLength = ((dividerLength * 360.0) / (2.0 * PI * _shiftMotorCircleRadius)) * _proportionOfMotorCircles;
+	_singleDividerMotorStepCount = _singleTableMotorStepCount / cos(_cutterAngle * PI / 180.0);
 }
 
 void ProgramState::react()
@@ -129,8 +130,8 @@ void ProgramState::react()
 
 			if (!forwardEndstopClicked)
 			{
-				_tableMotor->moveForward(_tickTime);
-				_dividerMotor->rotate(_degreesToCoverLength);
+				_tableMotor->move(_singleTableMotorStepCount);
+				_dividerMotor->move(_singleDividerMotorStepCount);
 
 				//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
 				if (!_backwardTableEndstop->isClicked())
@@ -143,7 +144,6 @@ void ProgramState::react()
 			else
 			{
 				_endMillis = millis();
-				_tableMotor->stop();
 				_currentState = MOVE_BACKWARD;
 			}
 
@@ -165,8 +165,8 @@ void ProgramState::react()
 
 			if(!backwardEndstopClicked)
 			{
-				_tableMotor->moveBackward(10);
-				_dividerMotor->rotate(_degreesToCoverLength);
+				_tableMotor->move(_singleDividerMotorStepCount * -1.0);
+				_dividerMotor->move(_singleDividerMotorStepCount * -1.0);
 
 				//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
 				if (!_forwardTableEndstop->isClicked())
@@ -178,8 +178,6 @@ void ProgramState::react()
 			}
 			else
 			{
-				_tableMotor->stop();
-
 				_currentFeather++;
 
 				//Start changing feather prodcedure
