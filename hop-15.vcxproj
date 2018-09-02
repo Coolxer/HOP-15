@@ -86,9 +86,9 @@
   <ItemGroup>
     <ClInclude Include="Buzzer.h" />
     <ClInclude Include="Config.h" />
-    <ClInclude Include="DcMotor.h" />
     <ClInclude Include="DeviceManager.h" />
     <ClInclude Include="Element.h" />
+    <ClInclude Include="Encoder.h" />
     <ClInclude Include="Endstop.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IntroductionState.h" />
@@ -97,10 +97,8 @@
     <ClInclude Include="lib\BasicStepperDriver.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="Output.h" />
-    <ClInclude Include="Potentiometer.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="ProgramState.h" />
-    <ClInclude Include="Relay.h" />
     <ClInclude Include="SetValueElement.h" />
     <ClInclude Include="SevSegms.h" />
     <ClInclude Include="SimpleKeypad.h" />
@@ -111,7 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buzzer.cpp" />
-    <ClCompile Include="DcMotor.cpp" />
+    <ClCompile Include="Encoder.cpp" />
     <ClCompile Include="Endstop.cpp" />
     <ClCompile Include="IntroductionState.cpp" />
     <ClCompile Include="Lcd.cpp" />
@@ -120,7 +118,6 @@
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="ProgramState.cpp" />
-    <ClCompile Include="Relay.cpp" />
     <ClCompile Include="SetValueElement.cpp" />
     <ClCompile Include="SevSegms.cpp" />
     <ClCompile Include="SimpleKeypad.cpp" />
