@@ -6,6 +6,7 @@
 #include "Lcd.h"
 #include "SimpleKeypad.h"
 #include "Buzzer.h"
+#include "Encoder.h"
 
 #include "ProgramState.h"
 #include "SetValueElement.h"
@@ -48,6 +49,7 @@ void MenuState::init()
 	_simpleKeypad = deviceManager->requestSimpleKeypad();
 	_buzzer = deviceManager->requestBuzzer();
 	_relay = deviceManager->requestRelay();
+	_encoder = deviceManager->requestEncoder();
 
 	setElement(0, &_featherAmount);
 	setElement(1, &_cycleAmount);

@@ -13,7 +13,6 @@ class SevSegms;
 class StepperMotor;
 class Endstop;
 class Relay;
-class Potentiometer;
 
 enum ExecutionState 
 {
@@ -45,7 +44,6 @@ private:
 	Endstop* _backwardTableEndstop;
 
 	Relay* _relay;
-	Potentiometer* _tablePotentiometer;
 
 	//Current state of execution of program
 	ExecutionState _currentState = START;
