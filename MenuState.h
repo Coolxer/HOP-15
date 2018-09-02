@@ -13,7 +13,6 @@ class Program;
 class Lcd;
 class SimpleKeypad;
 class Buzzer;
-class Relay;
 class Encoder;
 
 struct ItemBind
@@ -28,7 +27,6 @@ private:
 	Lcd* _lcd;
 	SimpleKeypad* _simpleKeypad;
 	Buzzer* _buzzer;
-	Relay* _relay;
 	Encoder* _encoder;
 
 	String _itemNames[ITEM_COUNT];
@@ -37,8 +35,6 @@ private:
 	byte _itemsCount = ITEM_COUNT;
 	byte _selectedIndex = 1;
 	bool _isFocused = false;
-
-	bool _relayBlocked = false;
 
 	SetValueElement _featherAmount;
 	SetValueElement _cycleAmount;

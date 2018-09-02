@@ -12,7 +12,6 @@ class Buzzer;
 class SevSegms;
 class StepperMotor;
 class Endstop;
-class Relay;
 
 enum ExecutionState 
 {
@@ -22,9 +21,7 @@ enum ExecutionState
 	MOVING_FORWARD,
 	MOVE_BACKWARD,
 	MOVING_BACKWARD,
-	UNLOCK_DIVIDER,
 	CHANGE_FEATHER,
-	LOCK_DIVIDER,
 	FINISH,
 	PAUSE
 };
@@ -42,8 +39,6 @@ private:
 	StepperMotor* _tableMotor;
 	Endstop* _forwardTableEndstop;
 	Endstop* _backwardTableEndstop;
-
-	Relay* _relay;
 
 	//Current state of execution of program
 	ExecutionState _currentState = START;
@@ -70,12 +65,7 @@ private:
 	bool _testingDividerMotor = false;
 	bool _testingTableMotor = false;
 
-	bool _relayHomed = false;
 	bool _tableMotorHomed = false;
-
-	//Temporary to measure time interval between table motor move from start to end
-	unsigned long _startMillis = 0;
-	unsigned long _endMillis = 0;
 
 	//Angle of cutter in degrees
 	float _cutterAngle = 24.0;
@@ -105,8 +95,6 @@ public:
 	byte getCyclesCount() { return _cyclesCount; };
 	
 	float getRotateAngle() { return _rotateAngle; };
-
-	unsigned long getDeltaTime() { return _endMillis - _startMillis; };
 
 	void togglePause();
 

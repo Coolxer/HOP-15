@@ -138,15 +138,8 @@ void Lcd::manage(ProgramState* programState)
 {
 	if (programState->isFinished())
 	{
-		unsigned long deltaTime = programState->getDeltaTime();
-
-		char deltaTimeLine[20] = { 0 };
-
-		sprintf(deltaTimeLine, "Czas %d", deltaTime);
-
 		clearScreen();
 		writeNewLine(0, "Zakonczono");
-		writeNewLine(1, deltaTimeLine);
 		writeNewLine(3, "* by wrocic do menu");
 	}
 	else
