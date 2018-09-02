@@ -6,7 +6,7 @@
 #include "State.h"
 #include "SetValueElement.h"
 
-#define ITEM_COUNT 7 //there was 7 items
+#define ITEM_COUNT 9 //there was 7 items
 
 class Program;
 
@@ -38,7 +38,6 @@ private:
 
 	SetValueElement _featherAmount;
 	SetValueElement _cycleAmount;
-	SetValueElement _dividerMotorSpeed;
 
 public:
 	bool setElement(byte index, char* description);

@@ -6,8 +6,25 @@ Encoder::Encoder()
 	digitalWrite(_pinB, INPUT_PULLUP);
 }
 
-void Encoder::run() 
+void Encoder::setOperationType(OperationType operationType)
 {
+	switch (operationType)
+	{
+		case SLOWLY_MOVE:
+			_changeAmount = 1;
+			break;
+		case QUICKLY_MOVE:
+			_changeAmount = 200;
+			break;
+		case SPEED_CHANGE:
+			_changeAmount = 5;
+			break;
+	}
+}
+
+short Encoder::getValue() 
+{
+	/*
 	_currentTime = millis();
 	_lastTime = _currentTime;
 
@@ -19,11 +36,22 @@ void Encoder::run()
 		if ((!_encA) && (_lastA))
 		{
 			if (_encB)
-				_reading--;
+				return _changeAmount;
 			else
-				_reading++;
+				return _changeAmount * -1;
 		}
 		_lastA = _encA;
 		_lastTime = _currentTime;
 	}
+	*/
+
+	if ((!_encA) && (_lastA))
+	{
+		if (_encB)
+			return _changeAmount;
+		else
+			return _changeAmount * (-1);
+	}
+	
+	_lastA = _encA;
 }

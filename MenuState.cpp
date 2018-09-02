@@ -54,6 +54,10 @@ void MenuState::init()
 	setElement(2, "Rozpocznij");
 	setElement(3, "Test podzielnicy");
 	setElement(4, "Test stolu");
+	setElement(5, "Podzielnica powoli");
+	setElement(6, "Podzielnica szybko");
+	setElement(7, "Stol powoli");
+	setElement(8, "Stol szybko");
 }
 
 void MenuState::react()
@@ -153,6 +157,26 @@ void MenuState::enter()
 		programState->testTableMotor();
 
 		getProgram()->getStateManager()->changeState(2);
+	}
+	//If we moving divider motor slowly
+	else if (_selectedIndex == 5)
+	{
+		_encoder->setOperationType(Encoder::SLOWLY_MOVE);
+	}
+	//If we moving divider motor quickly
+	else if (_selectedIndex == 6)
+	{
+		_encoder->setOperationType(Encoder::QUICKLY_MOVE);
+	}
+	//If we moving table motor slowly
+	else if (_selectedIndex == 7)
+	{
+		_encoder->setOperationType(Encoder::SLOWLY_MOVE);
+	}
+	//If we moving table motor quickly
+	else if (_selectedIndex == 8)
+	{
+		_encoder->setOperationType(Encoder::QUICKLY_MOVE);
 	}
 
 	_needRedraw = true;

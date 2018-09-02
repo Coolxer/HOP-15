@@ -10,13 +10,13 @@ private:
 	byte _pinB = 53;
 	
 	//current reading value from encoder
-	int _reading = 0;
+	//int _reading = 0;
 
 	//the smallest value that can be get by encoder
-	short _lowest = -1000;
+	//short _lowest = -1000;
 
 	//the highest value that can be get by encoder
-	short _highest = 1000;
+	//short _highest = 1000;
 
 	//the step size, that defines how much the value will change (increase/decrease) with each pulse
 	short _changeAmount = 1;
@@ -35,9 +35,12 @@ private:
 public:
 	Encoder();
 
-	void run();
+	enum OperationType { SLOWLY_MOVE, QUICKLY_MOVE, SPEED_CHANGE };
 
-	int getReading() { return _reading; };
+	void setOperationType(OperationType operationType);
+	short getValue();
+
+	//int getReading() { return _reading; };
 
 	short getChangeAmount() { return _changeAmount; };
 	void setChangeAmount(short changeAmount) { _changeAmount = changeAmount; };
