@@ -79,9 +79,6 @@ private:
 	unsigned long _startMillis = 0;
 	unsigned long _endMillis = 0;
 
-	//Table motor average speed in meters per second m/s
-	float _tableMotorAvgSpeed = 0.0271012;
-
 	//Angle of cutter in degrees
 	float _cutterAngle = 24.0;
 
@@ -91,14 +88,11 @@ private:
 	//Radius of shift motor circle
 	float _shiftMotorCircleRadius = 12.0;
 
-	//Tick time for motor move in ms
-	int _tickTime = 10;
-
 	//Proportion of divider circle radiuses
 	float _proportionOfMotorCircles = 2.0015384;
 
-	//Angle of which divider need to rotate to fit table motor on one tick
-	float _degreesToCoverLength;
+	float _singleTableMotorStepCount = 16.0;
+	float _singleDividerMotorStepCount;
 
 public:
 	void setFeathers(int feathers) { _feathersCount = feathers; };
