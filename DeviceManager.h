@@ -10,7 +10,6 @@
 #include "StepperMotor.h"
 #include "Endstop.h"
 #include "Relay.h"
-#include "Potentiometer.h"
 
 class DeviceManager
 {
@@ -21,7 +20,6 @@ private:
 	SevSegms _sevSegms = SevSegms();
 	Endstop _forwardTableEndstop = Endstop(9);
 	Endstop _backwardTableEndstop = Endstop(10);
-	Potentiometer _tablePotentiometer = Potentiometer();
 	StepperMotor _dividerMotor = StepperMotor(200, 6, 3, 8);
 	StepperMotor _tableMotor = StepperMotor(200, 7, 4, 8, &_forwardTableEndstop, &_backwardTableEndstop);
 	Relay _relay = Relay();
@@ -35,7 +33,6 @@ public:
 	SevSegms* requestSevSegms() { return &_sevSegms; };
 	Endstop* requestForwardTableEndstop() { return &_forwardTableEndstop; };
 	Endstop* requestBackwardTableEndstop() { return &_backwardTableEndstop; };
-	Potentiometer* requestTablePotentiometer() { return &_tablePotentiometer; };
 	StepperMotor* requestDividerMotor() { return &_dividerMotor; };
 	StepperMotor* requestTableMotor() { return &_tableMotor; };
 	Relay* requestRelay() { return &_relay; };

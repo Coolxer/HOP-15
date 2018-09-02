@@ -22,7 +22,6 @@ void ProgramState::init()
 	_dividerMotor = deviceManager->requestDividerMotor();
 	_forwardTableEndstop = deviceManager->requestForwardTableEndstop();
 	_backwardTableEndstop = deviceManager->requestBackwardTableEndstop();
-	_tablePotentiometer = deviceManager->requestTablePotentiometer();
 	_tableMotor = deviceManager->requestTableMotor();
 	_relay = deviceManager->requestRelay();
 
