@@ -9,7 +9,6 @@
 #include "SimpleKeypad.h"
 #include "StepperMotor.h"
 #include "Endstop.h"
-#include "Relay.h"
 
 void ProgramState::init()
 {
@@ -23,7 +22,6 @@ void ProgramState::init()
 	_forwardTableEndstop = deviceManager->requestForwardTableEndstop();
 	_backwardTableEndstop = deviceManager->requestBackwardTableEndstop();
 	_tableMotor = deviceManager->requestTableMotor();
-	_relay = deviceManager->requestRelay();
 
 	_proportionOfMotorCircles = _shiftMotorCircleRadius / _directlyMotorCircleRadius;
 	_singleDividerMotorStepCount = _singleTableMotorStepCount / cos(_cutterAngle * PI / 180.0);
@@ -92,17 +90,13 @@ void ProgramState::react()
 			//Power on divider motor
 			_dividerMotor->enable();
 
-			if (!_relayHomed)
-				_relayHomed = true;
-				// _relayHomed = _relay->home();
-
 			if(!_tableMotorHomed)
 				_tableMotorHomed = _tableMotor->home();
 
-			if (_tableMotorHomed && _relayHomed)
+			if (_tableMotorHomed)
 			{
 				if (_testingDividerMotor)
-					_currentState = UNLOCK_DIVIDER;
+					_currentState = CHANGE_FEATHER;
 				else
 					_currentState = MOVE_FORWARD;
 			}
@@ -115,7 +109,6 @@ void ProgramState::react()
 			forwardEndstopClicked = false;
 
 			_currentState = MOVING_FORWARD;
-			_startMillis = millis();
 
 			break;
 		}
@@ -139,7 +132,6 @@ void ProgramState::react()
 			}
 			else
 			{
-				_endMillis = millis();
 				_currentState = MOVE_BACKWARD;
 			}
 
@@ -157,7 +149,7 @@ void ProgramState::react()
 		case MOVING_BACKWARD:
 		{
 			_tableMotor->enable();
-			_dividerMotor->disable();
+			_dividerMotor->enable();
 
 			if(!backwardEndstopClicked)
 			{
@@ -176,8 +168,8 @@ void ProgramState::react()
 			{
 				_currentFeather++;
 
-				//Start changing feather prodcedure
-				_currentState = UNLOCK_DIVIDER;
+				//change state to CHANGE_FEATHER
+				_currentState = CHANGE_FEATHER;
 
 				//Check if new cycle should begin
 				if (_currentFeather > _feathersCount)
@@ -204,20 +196,6 @@ void ProgramState::react()
 
 			break;
 		}
-		case UNLOCK_DIVIDER:
-		{
-			_tableMotor->enable();
-			_dividerMotor->enable();
-
-			_relay->pull();
-			//There could be physical disruptions reset Lcd then
-			reportDisruption();
-			delay(100);
-
-			_currentState = CHANGE_FEATHER;
-
-			break;
-		}
 		case CHANGE_FEATHER:
 		{	
 			_tableMotor->enable();
@@ -225,25 +203,8 @@ void ProgramState::react()
 
 			_dividerMotor->rotate(_rotateAngle * _proportionOfMotorCircles);
 
-			_currentState = LOCK_DIVIDER;
-
-			break;
-		}
-		case LOCK_DIVIDER:
-		{	
-			_tableMotor->enable();
-			_dividerMotor->enable();
-
-			delay(100);
-			_relay->push();
-			//There could be physical disruptions reset Lcd then
-			reportDisruption();
-			delay(100);
-
 			if (_testingDividerMotor)
 			{
-				_dividerMotor->disable();
-				_tableMotor->disable();
 				//If we only wanted to test divider back to menu
 				_program->getStateManager()->changeState(1);
 			}
@@ -271,7 +232,6 @@ void ProgramState::reset()
 	_currentFeather = 1;
 	_currentCycle = 1;
 
-	_relayHomed = false;
 	_tableMotorHomed = false;
 
 	_testingDividerMotor = false;

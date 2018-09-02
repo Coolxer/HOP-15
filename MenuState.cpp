@@ -6,6 +6,7 @@
 #include "Lcd.h"
 #include "SimpleKeypad.h"
 #include "Buzzer.h"
+#include "Encoder.h"
 
 #include "ProgramState.h"
 #include "SetValueElement.h"
@@ -40,22 +41,19 @@ void MenuState::init()
 {
 	_featherAmount = SetValueElement("Piora", this, 2, 32, 6, 1);
 	_cycleAmount = SetValueElement("Cykle", this, 1, 16, 1, 1);
-	_dividerMotorSpeed = SetValueElement("Podzielnica", this, 0, 200, 60, 5);
 
 	DeviceManager* deviceManager = _program->getDeviceManager();
 
 	_lcd = deviceManager->requestLcd();
 	_simpleKeypad = deviceManager->requestSimpleKeypad();
 	_buzzer = deviceManager->requestBuzzer();
-	_relay = deviceManager->requestRelay();
+	_encoder = deviceManager->requestEncoder();
 
 	setElement(0, &_featherAmount);
 	setElement(1, &_cycleAmount);
 	setElement(2, "Rozpocznij");
-	setElement(3, "Od/blokuj podz.");
-	setElement(4, &_dividerMotorSpeed);
-	setElement(5, "Test podzielnicy");
-	setElement(6, "Test stolu");
+	setElement(3, "Test podzielnicy");
+	setElement(4, "Test stolu");
 }
 
 void MenuState::react()
@@ -125,9 +123,6 @@ void MenuState::enter()
 	if (_selectedIndex == 2)
 	{
 		ProgramState* programState = getProgram()->getProgramState();
-
-		//Set divider motor speed from menu option
-		getProgram()->getDeviceManager()->requestDividerMotor()->setSpeed(getValueAtIndex(4));
 		
 		programState->setFeathers(getValueAtIndex(0));
 		programState->setCycles(getValueAtIndex(1));
@@ -135,29 +130,10 @@ void MenuState::enter()
 
 		getProgram()->getStateManager()->changeState(2);
 	}
-	//If we blocking or unblocking divider
+	//If we testing divider
 	else if (_selectedIndex == 3)
 	{
-		if (!_relayBlocked)
-		{
-			_relay->push();
-			_relayBlocked = true;
-		}
-		else
-		{
-			_relay->pull();
-			_relayBlocked = false;
-		}
-
-		reportDisruption();
-	}
-	//If we testing divider
-	else if (_selectedIndex == 5)
-	{
 		ProgramState* programState = getProgram()->getProgramState();
-
-		//Set divider motor speed from menu option
-		getProgram()->getDeviceManager()->requestDividerMotor()->setSpeed(getValueAtIndex(4));
 
 		programState->setFeathers(getValueAtIndex(0));
 		programState->setCycles(getValueAtIndex(1));
@@ -167,12 +143,9 @@ void MenuState::enter()
 		getProgram()->getStateManager()->changeState(2);
 	}
 	//If we testing table
-	else if (_selectedIndex == 6)
+	else if (_selectedIndex == 4)
 	{
 		ProgramState* programState = getProgram()->getProgramState();
-
-		//Set divider motor speed from menu option
-		getProgram()->getDeviceManager()->requestDividerMotor()->setSpeed(getValueAtIndex(4));
 
 		programState->setFeathers(getValueAtIndex(0));
 		programState->setCycles(getValueAtIndex(1));
