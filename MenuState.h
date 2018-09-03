@@ -6,7 +6,7 @@
 #include "State.h"
 #include "SetValueElement.h"
 
-#define ITEM_COUNT 7 //there was 7 items
+#define ITEM_COUNT 7 
 
 class Program;
 
