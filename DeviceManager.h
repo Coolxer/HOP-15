@@ -9,7 +9,6 @@
 #include "SevSegms.h"
 #include "StepperMotor.h"
 #include "Endstop.h"
-#include "Encoder.h"
 
 class DeviceManager
 {
@@ -22,7 +21,6 @@ private:
 	Endstop _backwardTableEndstop = Endstop(10);
 	StepperMotor _dividerMotor = StepperMotor(200, 6, 3, 8);
 	StepperMotor _tableMotor = StepperMotor(200, 7, 4, 8, &_forwardTableEndstop, &_backwardTableEndstop);
-	Encoder _encoder = Encoder();
 
 public:
 	DeviceManager() {};
@@ -35,7 +33,6 @@ public:
 	Endstop* requestBackwardTableEndstop() { return &_backwardTableEndstop; };
 	StepperMotor* requestDividerMotor() { return &_dividerMotor; };
 	StepperMotor* requestTableMotor() { return &_tableMotor; };
-	Encoder* requestEncoder() { return &_encoder; };
 };
 
 #endif

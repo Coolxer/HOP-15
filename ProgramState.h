@@ -96,8 +96,6 @@ public:
 	
 	float getRotateAngle() { return _rotateAngle; };
 
-	unsigned long getDeltaTime() { return _endMillis - _startMillis; };
-
 	void togglePause();
 
 	bool isPaused();

@@ -47,7 +47,6 @@ void MenuState::init()
 	_lcd = deviceManager->requestLcd();
 	_simpleKeypad = deviceManager->requestSimpleKeypad();
 	_buzzer = deviceManager->requestBuzzer();
-	_encoder = deviceManager->requestEncoder();
 
 	setElement(0, &_featherAmount);
 	setElement(1, &_cycleAmount);
