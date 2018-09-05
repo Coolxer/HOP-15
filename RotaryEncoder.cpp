@@ -24,32 +24,24 @@ void RotaryEncoder::setOperationType(OperationType operationType)
 
 short RotaryEncoder::getValue()
 {
-	/*
 	_currentTime = millis();
 	_lastTime = _currentTime;
+
 	if (_currentTime >= _lastTime + 5)
 	{
-	_encA = digitalRead(_pinA);
-	_encB = digitalRead(_pinB);
-	if ((!_encA) && (_lastA))
-	{
-	if (_encB)
-	return _changeAmount;
-	else
-	return _changeAmount * -1;
+		_encA = digitalRead(_pinA);
+		_encB = digitalRead(_pinB);
+
+		if ((!_encA) && (_lastA))
+		{
+			if (_encB)
+				return _changeAmount;
+			else
+				return _changeAmount * -1;
+		}
 	}
+
 	_lastA = _encA;
 	_lastTime = _currentTime;
-	}
-	*/
 
-	if ((!_encA) && (_lastA))
-	{
-		if (_encB)
-			return _changeAmount;
-		else
-			return _changeAmount * (-1);
-	}
-
-	_lastA = _encA;
 }

@@ -164,22 +164,26 @@ void MenuState::enter()
 	else if (_selectedIndex == 5)
 	{
 		_rotaryEncoder->setOperationType(RotaryEncoder::QUICKLY_MOVE);
+		_dividerMotor->move(_rotaryEncoder->getValue());
 		
 	}
 	//If we moving divider slowly
 	else if (_selectedIndex == 6)
 	{
 		_rotaryEncoder->setOperationType(RotaryEncoder::SLOWLY_MOVE);
+		_dividerMotor->move(_rotaryEncoder->getValue());
 	}
 	//If we moving table quickly
 	else if (_selectedIndex == 7)
 	{
 		_rotaryEncoder->setOperationType(RotaryEncoder::QUICKLY_MOVE);
+		_tableMotor->move(_rotaryEncoder->getValue());
 	}
 	//If we moving table slowly
 	else if (_selectedIndex == 8)
 	{
 		_rotaryEncoder->setOperationType(RotaryEncoder::SLOWLY_MOVE);
+		_tableMotor->move(_rotaryEncoder->getValue());
 	}
 
 	_needRedraw = true;
