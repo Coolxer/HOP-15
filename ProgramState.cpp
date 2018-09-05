@@ -18,10 +18,13 @@ void ProgramState::init()
 	_simpleKeypad = deviceManager->requestSimpleKeypad();
 	_buzzer = deviceManager->requestBuzzer();
 	_sevSegms = deviceManager->requestSevSegms();
-	_dividerMotor = deviceManager->requestDividerMotor();
+
 	_forwardTableEndstop = deviceManager->requestForwardTableEndstop();
 	_backwardTableEndstop = deviceManager->requestBackwardTableEndstop();
+
+	_dividerMotor = deviceManager->requestDividerMotor();
 	_tableMotor = deviceManager->requestTableMotor();
+	_syncDriver = deviceManager->requestSyncDriver();
 
 	_proportionOfMotorCircles = _shiftMotorCircleRadius / _directlyMotorCircleRadius;
 	_singleDividerMotorStepCount = _singleTableMotorStepCount / cos(_cutterAngle * PI / 180.0);

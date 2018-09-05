@@ -10,8 +10,9 @@ class Lcd;
 class SimpleKeypad;
 class Buzzer;
 class SevSegms;
-class A4988;
 class Endstop;
+class A4988;
+class SyncDriver;
 
 enum ExecutionState 
 {
@@ -34,11 +35,12 @@ private:
 	Buzzer* _buzzer;
 	SevSegms* _sevSegms;
 
-	StepperMotor* _dividerMotor;
-
-	StepperMotor* _tableMotor;
 	Endstop* _forwardTableEndstop;
 	Endstop* _backwardTableEndstop;
+
+	A4988* _dividerMotor;
+	A4988* _tableMotor;
+	SyncDriver* _syncDriver;
 
 	//Current state of execution of program
 	ExecutionState _currentState = START;

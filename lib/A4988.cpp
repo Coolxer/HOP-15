@@ -21,16 +21,25 @@ const uint8_t A4988::MS_TABLE[] = {0b000, 0b001, 0b010, 0b011, 0b111};
  */
 A4988::A4988(short steps, short dir_pin, short step_pin)
 :BasicStepperDriver(steps, dir_pin, step_pin)
-{}
+{
+	begin(30, 8);
+	disable();
+}
 
 A4988::A4988(short steps, short dir_pin, short step_pin, short enable_pin)
 :BasicStepperDriver(steps, dir_pin, step_pin, enable_pin)
-{}
+{
+	begin(30, 8);
+	disable();
+}
 
 /* SHARP METAL */
 A4988::A4988(short steps, short dir_pin, short step_pin, short enable_pin, Endstop* endstop)
 :BasicStepperDriver(steps, dir_pin, step_pin, enable_pin)
-{}
+{
+	begin(30, 8);
+	disable();
+}
 
 /*
  * Fully wired.
