@@ -6,7 +6,8 @@
 #include "Lcd.h"
 #include "SimpleKeypad.h"
 #include "Buzzer.h"
-#include "Encoder.h"
+#include "lib/A4988.h"
+#include "RotaryEncoder.h"
 
 #include "ProgramState.h"
 #include "SetValueElement.h"
@@ -46,6 +47,8 @@ void MenuState::init()
 
 	_lcd = deviceManager->requestLcd();
 	_simpleKeypad = deviceManager->requestSimpleKeypad();
+	_dividerMotor = deviceManager->requestDividerMotor();
+	_tableMotor = deviceManager->requestTableMotor();
 	_buzzer = deviceManager->requestBuzzer();
 
 	setElement(0, &_featherAmount);
@@ -161,6 +164,7 @@ void MenuState::enter()
 	else if (_selectedIndex == 5)
 	{
 		_rotaryEncoder->setOperationType(RotaryEncoder::QUICKLY_MOVE);
+		
 	}
 	//If we moving divider slowly
 	else if (_selectedIndex == 6)
