@@ -95,6 +95,8 @@
     <ClInclude Include="Lcd.h" />
     <ClInclude Include="lib\A4988.h" />
     <ClInclude Include="lib\BasicStepperDriver.h" />
+    <ClInclude Include="lib\MultiDriver.h" />
+    <ClInclude Include="lib\SyncDriver.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="Output.h" />
     <ClInclude Include="Potentiometer.h" />
@@ -117,6 +119,8 @@
     <ClCompile Include="Lcd.cpp" />
     <ClCompile Include="lib\A4988.cpp" />
     <ClCompile Include="lib\BasicStepperDriver.cpp" />
+    <ClCompile Include="lib\MultiDriver.cpp" />
+    <ClCompile Include="lib\SyncDriver.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="ProgramState.cpp" />
