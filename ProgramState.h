@@ -10,7 +10,7 @@ class Lcd;
 class SimpleKeypad;
 class Buzzer;
 class SevSegms;
-class StepperMotor;
+class A4988;
 class Endstop;
 
 enum ExecutionState 

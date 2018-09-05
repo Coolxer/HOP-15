@@ -319,3 +319,16 @@ void BasicStepperDriver::disable(void){
 short BasicStepperDriver::getMaxMicrostep(){
     return BasicStepperDriver::MAX_MICROSTEP;
 }
+
+/* SHARP METAL*/
+bool BasicStepperDriver::home() {
+	if (_endstop->isClicked())
+	{
+		return true;
+	}
+	else
+	{
+		move(-1);
+		return false;
+	}
+}

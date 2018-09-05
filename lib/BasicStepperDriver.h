@@ -11,6 +11,8 @@
 #define STEPPER_DRIVER_BASE_H
 #include <Arduino.h>
 
+#include "../Endstop.h"
+
 // used internally by the library to mark unconnected pins
 #define PIN_UNCONNECTED -1
 #define IS_CONNECTED(pin) (pin != PIN_UNCONNECTED)
@@ -81,6 +83,9 @@ protected:
 
     short rpm = 0;
 
+	/* SHARP METAL*/
+	Endstop* _endstop;
+
     /*
      * Movement state
      */
@@ -110,6 +115,10 @@ public:
      */
     BasicStepperDriver(short steps, short dir_pin, short step_pin);
     BasicStepperDriver(short steps, short dir_pin, short step_pin, short enable_pin);
+
+	/* SHARP METAL*/
+	BasicStepperDriver(short steps, short dir_pin, short step_pin, short enable_pin, Endstop* endstop);
+
     /*
      * Initialize pins, calculate timings etc
      */
@@ -218,5 +227,8 @@ public:
     long calcStepsForRotation(double deg){
         return deg * motor_steps * microsteps / 360;
     }
+
+	/* SHARP METAL*/
+	bool home();
 };
 #endif // STEPPER_DRIVER_BASE_H

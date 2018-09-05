@@ -27,6 +27,11 @@ A4988::A4988(short steps, short dir_pin, short step_pin, short enable_pin)
 :BasicStepperDriver(steps, dir_pin, step_pin, enable_pin)
 {}
 
+/* SHARP METAL */
+A4988::A4988(short steps, short dir_pin, short step_pin, short enable_pin, Endstop* endstop)
+:BasicStepperDriver(steps, dir_pin, step_pin, enable_pin)
+{}
+
 /*
  * Fully wired.
  * All the necessary control pins for A4988 are connected.
