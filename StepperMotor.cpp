@@ -24,34 +24,33 @@ StepperMotor::StepperMotor(byte motorSteps, byte dirPin, byte stepPin, byte enab
 	init();
 }
 
-
 void StepperMotor::init() 
 {
-	_stepper = &A4988(_motorSteps, _dirPin, _stepPin, _enablePin);
+	_stepper = A4988(_motorSteps, _dirPin, _stepPin, _enablePin);
 
-	_stepper->begin(_speed, _microSteps);
+	_stepper.begin(_speed, _microSteps);
 	disable();
 }
 
 void StepperMotor::enable()
 {
-	_stepper->enable();
+	_stepper.enable();
 }
 
 void StepperMotor::disable()
 {
-	_stepper->disable();
+	_stepper.disable();
 }
 
 void StepperMotor::rotate(long angle)
 {
-	_stepper->rotate(-angle);
+	_stepper.rotate(-angle);
 }
 
 void StepperMotor::setSpeed(byte speed)
 {
 	_speed = speed;
-	_stepper->setRPM(_speed);
+	_stepper.setRPM(_speed);
 }
 
 bool StepperMotor::home()
@@ -62,14 +61,14 @@ bool StepperMotor::home()
 	}
 	else
 	{
-		_stepper->move(-1);
+		_stepper.move(-1);
 		return false;
 	}
 }
 
 void StepperMotor::move(long steps)
 {
-	_stepper->move(steps);
+	_stepper.move(steps);
 }
 
 bool StepperMotor::isEnable()

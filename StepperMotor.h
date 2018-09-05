@@ -18,7 +18,7 @@ private:
 	byte _stepPin;
 	byte _enablePin;
 
-	A4988* _stepper;
+	A4988 _stepper = A4988(200, 100, 101, 102);
 
 	Endstop* _forwardEndstop;
 	Endstop* _backwardEndstop;
