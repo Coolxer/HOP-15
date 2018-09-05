@@ -6,14 +6,14 @@
 #include "State.h"
 #include "SetValueElement.h"
 
-#define ITEM_COUNT 5 
+#define ITEM_COUNT 9 
 
 class Program;
 
 class Lcd;
 class SimpleKeypad;
 class Buzzer;
-class Encoder;
+class RotaryEncoder;
 
 struct ItemBind
 {
@@ -27,7 +27,7 @@ private:
 	Lcd* _lcd;
 	SimpleKeypad* _simpleKeypad;
 	Buzzer* _buzzer;
-	Encoder* _encoder;
+	RotaryEncoder* _rotaryEncoder;
 
 	String _itemNames[ITEM_COUNT];
 	ItemBind _itemBinds[ITEM_COUNT];
@@ -38,7 +38,6 @@ private:
 
 	SetValueElement _featherAmount;
 	SetValueElement _cycleAmount;
-	SetValueElement _dividerMotorSpeed;
 
 public:
 	bool setElement(byte index, char* description);
