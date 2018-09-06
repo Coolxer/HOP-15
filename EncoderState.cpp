@@ -74,6 +74,8 @@ void EncoderState::react()
 		}
 	}
 
+	_needRedraw = true;
+
 }
 
 void EncoderState::reset()
