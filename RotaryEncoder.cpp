@@ -68,4 +68,6 @@ short RotaryEncoder::getValue()
 	}
 
 	lastA = n;
+
+	return 0;
 }

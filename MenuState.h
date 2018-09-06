@@ -28,8 +28,6 @@ private:
 	Lcd* _lcd;
 	SimpleKeypad* _simpleKeypad;
 	Buzzer* _buzzer;
-	A4988* _dividerMotor;
-	A4988* _tableMotor;
 	RotaryEncoder* _rotaryEncoder;
 
 	String _itemNames[ITEM_COUNT];
