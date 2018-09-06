@@ -25,6 +25,11 @@ BasicStepperDriver::BasicStepperDriver(short steps, short dir_pin, short step_pi
 :motor_steps(steps), dir_pin(dir_pin), step_pin(step_pin), enable_pin(enable_pin)
 {}
 
+/* SHARP METAL*/
+BasicStepperDriver::BasicStepperDriver(short steps, short dir_pin, short step_pin, short enable_pin, Endstop* endstop)
+:motor_steps(steps), dir_pin(dir_pin), step_pin(step_pin), enable_pin(enable_pin), _endstop(endstop)
+{}
+
 /*
  * Initialize pins, calculate timings etc
  */

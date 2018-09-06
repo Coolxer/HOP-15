@@ -35,7 +35,7 @@ A4988::A4988(short steps, short dir_pin, short step_pin, short enable_pin)
 
 /* SHARP METAL */
 A4988::A4988(short steps, short dir_pin, short step_pin, short enable_pin, Endstop* endstop)
-:BasicStepperDriver(steps, dir_pin, step_pin, enable_pin)
+:BasicStepperDriver(steps, dir_pin, step_pin, enable_pin, endstop)
 {
 	begin(30, 8);
 	disable();

@@ -46,7 +46,6 @@ public:
      */
     A4988(short steps, short dir_pin, short step_pin);
     A4988(short steps, short dir_pin, short step_pin, short enable_pin);
-	
 	/* SHARP METAL */
 	A4988(short steps, short dir_pin, short step_pin, short enable_pin, Endstop* endstop);
     
