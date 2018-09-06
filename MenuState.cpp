@@ -52,8 +52,6 @@ void MenuState::init()
 	_buzzer = deviceManager->requestBuzzer();
 	_rotaryEncoder = deviceManager->requestRotaryEncoder();
 
-	_rotaryEncoder->init(this);
-
 	setElement(0, &_featherAmount);
 	setElement(1, &_cycleAmount);
 	setElement(2, "Rozpocznij");
@@ -167,8 +165,10 @@ void MenuState::enter()
 	else if (_selectedIndex == 5)
 	{
 		_rotaryEncoder->setOperationType(RotaryEncoder::QUICKLY_MOVE);
-		_dividerMotor->enable();
-		_dividerMotor->move(_rotaryEncoder->getValue());
+		//_dividerMotor->enable();
+		//_dividerMotor->move(_rotaryEncoder->getValue());
+
+		Serial.println("elo");
 		
 	}
 	//If we moving divider slowly

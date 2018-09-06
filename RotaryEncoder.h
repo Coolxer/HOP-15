@@ -2,9 +2,6 @@
 
 #include <Arduino.h>
 
-class MenuState;
-class SimpleKeypad;
-
 class RotaryEncoder
 {
 private:
@@ -12,6 +9,7 @@ private:
 	byte _pinA = 51;
 	byte _pinB = 53;
 
+	/*
 	//current reading value from encoder
 	//int _reading = 0;
 
@@ -34,14 +32,15 @@ private:
 	// Timing for polling the encoder
 	unsigned long _currentTime = 0;
 	unsigned long _lastTime = 0;
+	*/
 
-	MenuState* _state;
-	SimpleKeypad* _simpleKeypad;
+	short _changeAmount = 1;
+
+	int n = LOW;
+	int lastA = LOW;
 
 public:
 	RotaryEncoder();
-
-	void init(MenuState* state);
 
 	enum OperationType { SLOWLY_MOVE, QUICKLY_MOVE, SPEED_CHANGE };
 

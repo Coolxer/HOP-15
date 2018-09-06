@@ -11,15 +11,6 @@ RotaryEncoder::RotaryEncoder()
 	digitalWrite(_pinB, INPUT_PULLUP);
 }
 
-void RotaryEncoder::init(MenuState* state)
-{
-	_state = state;
-
-	DeviceManager* deviceManager = state->getProgram()->getDeviceManager();
-
-	_simpleKeypad = deviceManager->requestSimpleKeypad();
-}
-
 void RotaryEncoder::setOperationType(OperationType operationType)
 {
 	switch (operationType)
@@ -38,6 +29,7 @@ void RotaryEncoder::setOperationType(OperationType operationType)
 
 short RotaryEncoder::getValue()
 {
+	/*
 	_currentTime = millis();
 	_lastTime = _currentTime;
 
@@ -56,12 +48,24 @@ short RotaryEncoder::getValue()
 		else
 			return 0;
 	}
-
+	
 	_lastA = _encA;
 	_lastTime = _currentTime;
+	*/
 
-	char key = _simpleKeypad->getPressedKey();
+	n = digitalRead(_pinA);
 
-	if (key == KEY_ENTER)
-		_state->back();
+	if ((lastA == LOW) && (n == HIGH))
+	{
+		if (digitalRead(_pinB) == LOW)
+		{
+			return _changeAmount;
+		}
+		else
+		{
+			return _changeAmount * -1.0;
+		}	
+	}
+
+	lastA = n;
 }
