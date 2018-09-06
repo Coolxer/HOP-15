@@ -26,6 +26,8 @@ void ProgramState::init()
 	_tableMotor = deviceManager->requestTableMotor();
 	_syncDriver = deviceManager->requestSyncDriver();
 
+	_rotaryEncoder = deviceManager->requestRotaryEncoder();
+
 	_proportionOfMotorCircles = _shiftMotorCircleRadius / _directlyMotorCircleRadius;
 	_singleDividerMotorStepCount = _singleTableMotorStepCount / cos(_cutterAngle * PI / 180.0);
 }
@@ -81,7 +83,10 @@ void ProgramState::react()
 		{
 			_rotateAngle = 360.0 / (float)_feathersCount;
 
-			_currentState = STARTING;
+			if (_movingDividerMotorByEncoder || _movingTableMotorByEncoder)
+				_currentState = ENCODER_SERVICE;
+			else
+				_currentState = STARTING;
 
 			break;
 		}
@@ -228,6 +233,15 @@ void ProgramState::react()
 
 			break;
 		}
+		case ENCODER_SERVICE:
+		{
+			if (_movingDividerMotorByEncoder)
+				_dividerMotor->move(_rotaryEncoder->getValue());
+			else
+				_tableMotor->move(_rotaryEncoder->getValue());
+
+			break;
+		}
 	}
 }
 
@@ -244,6 +258,9 @@ void ProgramState::reset()
 
 	_testingDividerMotor = false;
 	_testingTableMotor = false;
+
+	_movingDividerMotorByEncoder = false;
+	_movingTableMotorByEncoder = false;
 }
 
 void ProgramState::togglePause()

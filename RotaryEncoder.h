@@ -36,8 +36,8 @@ private:
 
 	short _changeAmount = 1;
 
-	int n = LOW;
-	int lastA = LOW;
+	int _readA = LOW;
+	int _lastA = LOW;
 
 public:
 	RotaryEncoder();

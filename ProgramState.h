@@ -13,6 +13,7 @@ class SevSegms;
 class Endstop;
 class A4988;
 class SyncDriver;
+class RotaryEncoder;
 
 enum ExecutionState 
 {
@@ -25,6 +26,7 @@ enum ExecutionState
 	CHANGE_FEATHER,
 	FINISH,
 	PAUSE,
+	ENCODER_SERVICE
 };
 
 class ProgramState : public State
@@ -41,6 +43,8 @@ private:
 	A4988* _dividerMotor;
 	A4988* _tableMotor;
 	SyncDriver* _syncDriver;
+
+	RotaryEncoder* _rotaryEncoder;
 
 	//Current state of execution of program
 	ExecutionState _currentState = START;
@@ -66,6 +70,10 @@ private:
 
 	bool _testingDividerMotor = false;
 	bool _testingTableMotor = false;
+
+	//for encoder service
+	bool _movingDividerMotorByEncoder = false;
+	bool _movingTableMotorByEncoder = false;
 
 	bool _tableMotorHomed = false;
 
@@ -105,6 +113,9 @@ public:
 
 	void testDividerMotor() { _testingDividerMotor = true; };
 	void testTableMotor() { _testingTableMotor = true; };
+
+	void moveDividerMotorByEncoder() { _movingDividerMotorByEncoder = true; };
+	void moveTableMotorByEncoder() { _movingTableMotorByEncoder = true; };
 
 	virtual void init();
 	virtual void react();
