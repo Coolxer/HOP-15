@@ -1,9 +1,23 @@
 #include "RotaryEncoder.h"
 
+#include "MenuState.h"
+#include "Program.h"
+#include "DeviceManager.h"
+#include "SimpleKeypad.h"
+
 RotaryEncoder::RotaryEncoder()
 {
 	digitalWrite(_pinA, INPUT_PULLUP);
 	digitalWrite(_pinB, INPUT_PULLUP);
+}
+
+void RotaryEncoder::init(MenuState* state)
+{
+	_state = state;
+
+	DeviceManager* deviceManager = state->getProgram()->getDeviceManager();
+
+	_simpleKeypad = deviceManager->requestSimpleKeypad();
 }
 
 void RotaryEncoder::setOperationType(OperationType operationType)
@@ -39,9 +53,15 @@ short RotaryEncoder::getValue()
 			else
 				return _changeAmount * -1;
 		}
+		else
+			return 0;
 	}
 
 	_lastA = _encA;
 	_lastTime = _currentTime;
 
+	char key = _simpleKeypad->getPressedKey();
+
+	if (key == KEY_ENTER)
+		_state->back();
 }

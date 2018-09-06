@@ -2,6 +2,9 @@
 
 #include <Arduino.h>
 
+class MenuState;
+class SimpleKeypad;
+
 class RotaryEncoder
 {
 private:
@@ -32,8 +35,13 @@ private:
 	unsigned long _currentTime = 0;
 	unsigned long _lastTime = 0;
 
+	MenuState* _state;
+	SimpleKeypad* _simpleKeypad;
+
 public:
 	RotaryEncoder();
+
+	void init(MenuState* state);
 
 	enum OperationType { SLOWLY_MOVE, QUICKLY_MOVE, SPEED_CHANGE };
 

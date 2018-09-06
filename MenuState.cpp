@@ -50,6 +50,9 @@ void MenuState::init()
 	_dividerMotor = deviceManager->requestDividerMotor();
 	_tableMotor = deviceManager->requestTableMotor();
 	_buzzer = deviceManager->requestBuzzer();
+	_rotaryEncoder = deviceManager->requestRotaryEncoder();
+
+	_rotaryEncoder->init(this);
 
 	setElement(0, &_featherAmount);
 	setElement(1, &_cycleAmount);
@@ -164,6 +167,7 @@ void MenuState::enter()
 	else if (_selectedIndex == 5)
 	{
 		_rotaryEncoder->setOperationType(RotaryEncoder::QUICKLY_MOVE);
+		_dividerMotor->enable();
 		_dividerMotor->move(_rotaryEncoder->getValue());
 		
 	}
@@ -171,18 +175,21 @@ void MenuState::enter()
 	else if (_selectedIndex == 6)
 	{
 		_rotaryEncoder->setOperationType(RotaryEncoder::SLOWLY_MOVE);
+		_dividerMotor->enable();
 		_dividerMotor->move(_rotaryEncoder->getValue());
 	}
 	//If we moving table quickly
 	else if (_selectedIndex == 7)
 	{
 		_rotaryEncoder->setOperationType(RotaryEncoder::QUICKLY_MOVE);
+		_tableMotor->enable();
 		_tableMotor->move(_rotaryEncoder->getValue());
 	}
 	//If we moving table slowly
 	else if (_selectedIndex == 8)
 	{
 		_rotaryEncoder->setOperationType(RotaryEncoder::SLOWLY_MOVE);
+		_tableMotor->enable();
 		_tableMotor->move(_rotaryEncoder->getValue());
 	}
 
