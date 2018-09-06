@@ -164,44 +164,45 @@ void MenuState::enter()
 	{
 		_rotaryEncoder->setOperationType(RotaryEncoder::QUICKLY_MOVE);
 
-		ProgramState* programState = getProgram()->getProgramState();
-		programState->reset();
-		programState->moveDividerMotorByEncoder();
+		EncoderState* encoderState = getProgram()->getEncoderState();
+		//encoderState->setOperation(EncoderState::MOVING_DIVIDER_MOTOR);
+		encoderState->reset();
+		encoderState->setOperation(MOVING_DIVIDER_MOTOR);
 
-		getProgram()->getStateManager()->changeState(2);
+		getProgram()->getStateManager()->changeState(3);
 	}
 	//If we moving divider slowly
 	else if (_selectedIndex == 6)
 	{
 		_rotaryEncoder->setOperationType(RotaryEncoder::SLOWLY_MOVE);
 
-		ProgramState* programState = getProgram()->getProgramState();
-		programState->reset();
-		programState->moveDividerMotorByEncoder();
+		EncoderState* encoderState = getProgram()->getEncoderState();
+		encoderState->reset();
+		encoderState->setOperation(MOVING_DIVIDER_MOTOR);
 
-		getProgram()->getStateManager()->changeState(2);
+		getProgram()->getStateManager()->changeState(3);
 	}
 	//If we moving table quickly
 	else if (_selectedIndex == 7)
 	{
 		_rotaryEncoder->setOperationType(RotaryEncoder::QUICKLY_MOVE);
 
-		ProgramState* programState = getProgram()->getProgramState();
-		programState->reset();
-		programState->moveTableMotorByEncoder();
+		EncoderState* encoderState = getProgram()->getEncoderState();
+		encoderState->reset();
+		encoderState->setOperation(MOVING_TABLE_MOTOR);
 
-		getProgram()->getStateManager()->changeState(2);
+		getProgram()->getStateManager()->changeState(3);
 	}
 	//If we moving table slowly
 	else if (_selectedIndex == 8)
 	{
 		_rotaryEncoder->setOperationType(RotaryEncoder::SLOWLY_MOVE);
 
-		ProgramState* programState = getProgram()->getProgramState();
-		programState->reset();
-		programState->moveTableMotorByEncoder();
+		EncoderState* encoderState = getProgram()->getEncoderState();
+		encoderState->reset();
+		encoderState->setOperation(MOVING_TABLE_MOTOR);
 
-		getProgram()->getStateManager()->changeState(2);
+		getProgram()->getStateManager()->changeState(3);
 	}
 
 	_needRedraw = true;

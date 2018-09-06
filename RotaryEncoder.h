@@ -10,8 +10,8 @@ private:
 	byte _pinB = 53;
 
 	/*
-	//current reading value from encoder
-	//int _reading = 0;
+	current reading value from encoder
+	int _reading = 0;
 
 	//the smallest value that can be get by encoder
 	//short _lowest = -1000;
@@ -34,7 +34,7 @@ private:
 	unsigned long _lastTime = 0;
 	*/
 
-	short _changeAmount = 1;
+	float _changeAmount = 1.0;
 
 	int _readA = LOW;
 	int _lastA = LOW;
@@ -42,10 +42,10 @@ private:
 public:
 	RotaryEncoder();
 
-	enum OperationType { SLOWLY_MOVE, QUICKLY_MOVE, SPEED_CHANGE };
+	enum OperationType { SLOWLY_MOVE, QUICKLY_MOVE, SPEED_CHANGE, CUTTER_ANGLE_CHANGE };
 
 	void setOperationType(OperationType operationType);
-	short getValue();
+	short read();
 
 	//int getReading() { return _reading; };
 

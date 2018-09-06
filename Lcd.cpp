@@ -3,6 +3,7 @@
 #include "IntroductionState.h"
 #include "MenuState.h"
 #include "ProgramState.h"
+#include "EncoderState.h"
 
 Lcd::Lcd()
 {
@@ -169,4 +170,44 @@ void Lcd::manage(ProgramState* programState)
 			writeNewLine(3, "*-Pauza #-Zatrzymaj");
 		}
 	}
+}
+
+void Lcd::manage(EncoderState* encoderState)
+{
+	int position = encoderState->getPosition();
+	int speed = encoderState->getSpeed();
+	float cutterAngle = encoderState->getCutterAngle();
+
+	char valueLine[20] = { 0 };
+
+	switch (encoderState->getOperation())
+	{
+		case MOVING_DIVIDER_MOTOR:
+		{
+			writeNewLine(0, "  ruch podzielnicy");
+			sprintf(valueLine, "Pozycja: %d", position);
+			break;
+		}
+		case MOVING_TABLE_MOTOR:
+		{
+			writeNewLine(0, "     ruch stolu");
+			sprintf(valueLine, "Pozycja: %d", position);
+			break;
+		}
+		case CHANGE_SPEED:
+		{
+			writeNewLine(0, "  zmiana predkosci");
+			sprintf(valueLine, "Prêdkoœæ: %d", speed);
+			break;
+		}
+		case CHANGE_CUTTER_ANGLE:
+		{
+			writeNewLine(0, "    zmiana katu");
+			sprintf(valueLine, "K¹t nachylenia: %d", cutterAngle);
+			break;
+		}
+	}
+
+	writeNewLine(1, valueLine);
+	writeNewLine(3, "* by wrocic do menu");
 }
