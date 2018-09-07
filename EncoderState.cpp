@@ -78,13 +78,17 @@ void EncoderState::react()
 		}
 	}
 
-	_needRedraw = true;
+	if (_reading != 0)
+		_needRedraw = true;
+
+	_reading = 0;
 }
 
 void EncoderState::reset()
 {
 	_needRedraw = true;
 
+	_reading = 0;
 	_position = 0;
 
 	_rotaryEncoder->reset();

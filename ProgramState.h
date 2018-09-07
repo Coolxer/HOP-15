@@ -87,6 +87,7 @@ private:
 public:
 	void setFeathers(int feathers) { _feathersCount = feathers; };
 	void setCycles(byte cycles) { _cyclesCount = cycles; };
+	void setCutterAngle(float angle) { _cutterAngle = angle; };
 
 	byte getCurrentFeather() { return _currentFeather; };
 	void setCurrentFeather(int currentFeather) { _currentFeather = currentFeather; };

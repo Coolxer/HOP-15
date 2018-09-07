@@ -129,9 +129,9 @@ void MenuState::enter()
 	if (_selectedIndex == 2)
 	{
 		ProgramState* programState = getProgram()->getProgramState();
-		
 		programState->setFeathers(getValueAtIndex(0));
 		programState->setCycles(getValueAtIndex(1));
+		programState->setCutterAngle(getProgram()->getEncoderState()->getCutterAngle());
 		programState->reset();
 
 		getProgram()->getStateManager()->changeState(2);
@@ -143,6 +143,7 @@ void MenuState::enter()
 
 		programState->setFeathers(getValueAtIndex(0));
 		programState->setCycles(getValueAtIndex(1));
+		programState->setCutterAngle(getProgram()->getEncoderState()->getCutterAngle());
 		programState->reset();
 		programState->testDividerMotor();
 
@@ -155,6 +156,7 @@ void MenuState::enter()
 
 		programState->setFeathers(getValueAtIndex(0));
 		programState->setCycles(getValueAtIndex(1));
+		programState->setCutterAngle(getProgram()->getEncoderState()->getCutterAngle());
 		programState->reset();
 		programState->testTableMotor();
 
