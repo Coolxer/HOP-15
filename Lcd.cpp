@@ -209,5 +209,6 @@ void Lcd::manage(EncoderState* encoderState)
 	}
 
 	writeNewLine(1, valueLine);
+	writeNewLine(2, "");
 	writeNewLine(3, "* by wrocic do menu");
 }

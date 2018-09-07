@@ -24,7 +24,6 @@ void EncoderState::init()
 
 void EncoderState::react()
 {
-	Serial.println("react");
 	if (_disrupted)
 	{
 		_lcd->begin();
@@ -56,7 +55,7 @@ void EncoderState::react()
 			_reading = _rotaryEncoder->read();
 			_position += _reading;
 			_dividerMotor->move(_reading);
-;			break;
+			break;
 		}
 		case MOVE_TABLE_MOTOR:
 		{
@@ -87,4 +86,6 @@ void EncoderState::reset()
 	_needRedraw = true;
 
 	_position = 0;
+
+	_rotaryEncoder->reset();
 }

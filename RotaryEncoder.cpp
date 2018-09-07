@@ -31,6 +31,7 @@ void RotaryEncoder::setOperationType(OperationType operationType)
 
 short RotaryEncoder::read()
 {
+	/*
 	_readA = digitalRead(_pinA);
 
 	if ((_lastA == LOW) && (_readA == HIGH))
@@ -44,4 +45,52 @@ short RotaryEncoder::read()
 	_lastA = _readA;
 
 	return 0;
+	*/
+
+	if (_start)
+	{
+		_currentTime = millis();
+		_lastTime = _currentTime;
+		_start = false;
+	}
+
+	_currentTime = millis();
+	
+	if (_currentTime >= (_lastTime + 20))
+	{
+		_encA = digitalRead(_pinA);
+		_encB = digitalRead(_pinB);
+
+		if ((!_encA) && (_lastA))
+		{
+			if (_encB)
+			{
+				_lastA = _encA;
+				_lastTime = _currentTime;
+				return _changeAmount;
+			}
+				
+			else
+			{
+				_lastA = _encA;
+				_lastTime = _currentTime;
+				return _changeAmount * -1.0;
+			}
+				
+		}
+	}
+	_lastA = _encA;
+	_lastTime = _currentTime;
+	return 0;
+}
+
+void RotaryEncoder::reset()
+{
+	_start = true;
+	_encA = false;
+	_encB = false;
+	_lastA = false;
+
+	_currentTime = 0;
+	_lastTime = 0;
 }

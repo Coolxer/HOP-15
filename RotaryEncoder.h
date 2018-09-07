@@ -9,19 +9,6 @@ private:
 	byte _pinA = 51;
 	byte _pinB = 53;
 
-	/*
-	current reading value from encoder
-	int _reading = 0;
-
-	//the smallest value that can be get by encoder
-	//short _lowest = -1000;
-
-	//the highest value that can be get by encoder
-	//short _highest = 1000;
-
-	//the step size, that defines how much the value will change (increase/decrease) with each pulse
-	short _changeAmount = 1;
-
 	//bools variables store the current state of encoder( it allows to find in which direction the encoder is rotated reacts accordingly 
 	bool _encA = false;
 	bool _encB = false;
@@ -29,15 +16,13 @@ private:
 	//store true if the last signal was from A pin 
 	bool _lastA = false;
 
+	bool _start = true;
+
 	// Timing for polling the encoder
 	unsigned long _currentTime = 0;
 	unsigned long _lastTime = 0;
-	*/
 
 	float _changeAmount = 1.0;
-
-	int _readA = LOW;
-	int _lastA = LOW;
 
 public:
 	RotaryEncoder();
@@ -47,7 +32,7 @@ public:
 	void setOperationType(OperationType operationType);
 	short read();
 
-	//int getReading() { return _reading; };
+	void reset();
 
 	short getChangeAmount() { return _changeAmount; };
 	void setChangeAmount(short changeAmount) { _changeAmount = changeAmount; };
