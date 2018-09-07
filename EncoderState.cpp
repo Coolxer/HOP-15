@@ -7,6 +7,7 @@
 #include "SimpleKeypad.h"
 #include "Buzzer.h"
 #include "RotaryEncoder.h"
+#include "lib/A4988.h"
 
 void EncoderState::init()
 {
@@ -23,6 +24,7 @@ void EncoderState::init()
 
 void EncoderState::react()
 {
+	Serial.println("react");
 	if (_disrupted)
 	{
 		_lcd->begin();
@@ -44,16 +46,19 @@ void EncoderState::react()
 	if (key == KEY_ENTER)
 		_program->getStateManager()->changeState(1);
 
+	_dividerMotor->enable();
+	_tableMotor->enable();
+
 	switch (_operation)
 	{
-		case MOVING_DIVIDER_MOTOR:
+		case MOVE_DIVIDER_MOTOR:
 		{
 			_reading = _rotaryEncoder->read();
 			_position += _reading;
 			_dividerMotor->move(_reading);
 ;			break;
 		}
-		case MOVING_TABLE_MOTOR:
+		case MOVE_TABLE_MOTOR:
 		{
 			_reading = _rotaryEncoder->read();
 			_position += _reading;
@@ -75,7 +80,6 @@ void EncoderState::react()
 	}
 
 	_needRedraw = true;
-
 }
 
 void EncoderState::reset()

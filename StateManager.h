@@ -9,8 +9,8 @@ class StateManager
 {
 private:
 	byte _index = 0;
-	byte _count = 3;
-	State* _states[3];
+	byte _count = 4;
+	State* _states[4];
 
 public:
 	StateManager();

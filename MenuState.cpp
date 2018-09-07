@@ -11,6 +11,7 @@
 
 #include "ProgramState.h"
 #include "SetValueElement.h"
+#include "EncoderState.h"
 
 bool MenuState::setElement(byte index, char* description)
 {
@@ -167,7 +168,7 @@ void MenuState::enter()
 		EncoderState* encoderState = getProgram()->getEncoderState();
 		//encoderState->setOperation(EncoderState::MOVING_DIVIDER_MOTOR);
 		encoderState->reset();
-		encoderState->setOperation(MOVING_DIVIDER_MOTOR);
+		encoderState->setOperation(MOVE_DIVIDER_MOTOR);
 
 		getProgram()->getStateManager()->changeState(3);
 	}
@@ -178,7 +179,7 @@ void MenuState::enter()
 
 		EncoderState* encoderState = getProgram()->getEncoderState();
 		encoderState->reset();
-		encoderState->setOperation(MOVING_DIVIDER_MOTOR);
+		encoderState->setOperation(MOVE_DIVIDER_MOTOR);
 
 		getProgram()->getStateManager()->changeState(3);
 	}
@@ -189,7 +190,7 @@ void MenuState::enter()
 
 		EncoderState* encoderState = getProgram()->getEncoderState();
 		encoderState->reset();
-		encoderState->setOperation(MOVING_TABLE_MOTOR);
+		encoderState->setOperation(MOVE_TABLE_MOTOR);
 
 		getProgram()->getStateManager()->changeState(3);
 	}
@@ -200,7 +201,7 @@ void MenuState::enter()
 
 		EncoderState* encoderState = getProgram()->getEncoderState();
 		encoderState->reset();
-		encoderState->setOperation(MOVING_TABLE_MOTOR);
+		encoderState->setOperation(MOVE_TABLE_MOTOR);
 
 		getProgram()->getStateManager()->changeState(3);
 	}

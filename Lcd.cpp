@@ -182,13 +182,13 @@ void Lcd::manage(EncoderState* encoderState)
 
 	switch (encoderState->getOperation())
 	{
-		case MOVING_DIVIDER_MOTOR:
+		case MOVE_DIVIDER_MOTOR:
 		{
 			writeNewLine(0, "  ruch podzielnicy");
 			sprintf(valueLine, "Pozycja: %d", position);
 			break;
 		}
-		case MOVING_TABLE_MOTOR:
+		case MOVE_TABLE_MOTOR:
 		{
 			writeNewLine(0, "     ruch stolu");
 			sprintf(valueLine, "Pozycja: %d", position);

@@ -1,7 +1,7 @@
 #ifndef lcd_h
 #define lcd_h
 
-#include "Arduino.h"
+#include <Arduino.h>
 #include <LiquidCrystal.h>
 
 class IntroductionState;

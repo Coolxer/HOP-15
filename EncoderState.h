@@ -1,4 +1,7 @@
-#pragma once
+#ifndef _ENCODERSTATE_h
+#define _ENCODERSTATE_h
+
+#include <Arduino.h>
 #include "State.h"
 
 class Program;
@@ -11,8 +14,8 @@ class A4988;
 
 enum Operations
 {
-	MOVING_DIVIDER_MOTOR,
-	MOVING_TABLE_MOTOR,
+	MOVE_DIVIDER_MOTOR,
+	MOVE_TABLE_MOTOR,
 	CHANGE_SPEED,
 	CHANGE_CUTTER_ANGLE
 };
@@ -49,3 +52,4 @@ public:
 	float getCutterAngle() { return _cutterAngle; };
 };
 
+#endif
