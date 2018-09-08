@@ -60,6 +60,7 @@ void MenuState::init()
 	setElement(6, "Podziel. wolno");
 	setElement(7, "Stol szybko");
 	setElement(8, "Stol wolno");
+	setElement(9, "Predkosc")
 }
 
 void MenuState::react()
