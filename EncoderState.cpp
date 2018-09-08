@@ -64,6 +64,7 @@ void EncoderState::react()
 			_tableMotor->move(_reading);
 			break;
 		}
+		/*
 		case CHANGE_SPEED:
 		{
 			_reading = _rotaryEncoder->read();
@@ -76,6 +77,7 @@ void EncoderState::react()
 			_cutterAngle += _reading;
 			break;
 		}
+		*/
 	}
 
 	if (_reading != 0)

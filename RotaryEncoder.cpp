@@ -31,45 +31,6 @@ void RotaryEncoder::setOperationType(OperationType operationType)
 
 short RotaryEncoder::read()
 {
-	/*
-
-	if (_start)
-	{
-		_currentTime = millis();
-		_lastTime = _currentTime;
-		_start = false;
-	}
-
-	_currentTime = millis();
-	
-	if (_currentTime >= (_lastTime + 20))
-	{
-		_encA = digitalRead(_pinA);
-		_encB = digitalRead(_pinB);
-
-		if ((!_encA) && (_lastA))
-		{
-			if (_encB)
-			{
-				_lastA = _encA;
-				_lastTime = _currentTime;
-				return _changeAmount;
-			}
-				
-			else
-			{
-				_lastA = _encA;
-				_lastTime = _currentTime;
-				return _changeAmount * -1.0;
-			}
-				
-		}
-	}
-	_lastA = _encA;
-	_lastTime = _currentTime;
-	return 0;
-	*/
-
 	_encA = digitalRead(_pinA);
 	_encB = digitalRead(_pinB);
 

@@ -48,8 +48,8 @@ private:
 	//Place where last state will be kept on pause
 	ExecutionState _savedState;
 
-	int _feathersCount;
-	int _currentFeather = 1;
+	byte _feathersCount;
+	byte _currentFeather = 1;
 
 	byte _cyclesCount;
 	byte _currentCycle = 1;
@@ -70,7 +70,8 @@ private:
 	bool _tableMotorHomed = false;
 
 	//Angle of cutter in degrees
-	float _cutterAngle = 24.0;
+	//float _cutterAngle = 24.0;
+	float _cutterAngle;
 
 	//Radius of directly motor circle
 	float _directlyMotorCircleRadius = 6.0;
@@ -85,12 +86,12 @@ private:
 	float _singleDividerMotorStepCount;
 
 public:
-	void setFeathers(int feathers) { _feathersCount = feathers; };
+	void setFeathers(byte feathers) { _feathersCount = feathers; };
 	void setCycles(byte cycles) { _cyclesCount = cycles; };
-	void setCutterAngle(float angle) { _cutterAngle = angle; };
+	void setCutterAngle(float angle);
 
 	byte getCurrentFeather() { return _currentFeather; };
-	void setCurrentFeather(int currentFeather) { _currentFeather = currentFeather; };
+	void setCurrentFeather(byte currentFeather) { _currentFeather = currentFeather; };
 	byte getFeathersCount() { return _feathersCount; };
 
 	byte getCurrentCycle() { return _currentCycle; };

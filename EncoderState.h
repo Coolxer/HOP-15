@@ -16,8 +16,8 @@ enum Operations
 {
 	MOVE_DIVIDER_MOTOR,
 	MOVE_TABLE_MOTOR,
-	CHANGE_SPEED,
-	CHANGE_CUTTER_ANGLE
+	//CHANGE_SPEED,
+	//CHANGE_CUTTER_ANGLE
 };
 
 class EncoderState : public State
@@ -31,9 +31,9 @@ private:
 	A4988* _dividerMotor;
 	A4988* _tableMotor;
 
-	float _cutterAngle = 24.0;
+	//float _cutterAngle = 24.0;
 	int _position = 0;
-	int _speed = 15.0;
+	//int _speed = 15.0;
 
 	short _reading;
 
@@ -48,8 +48,8 @@ public:
 	Operations getOperation() { return _operation; };
 
 	int getPosition() { return _position; };
-	int getSpeed() { return _speed; };
-	float getCutterAngle() { return _cutterAngle; };
+	//int getSpeed() { return _speed; };
+	//float getCutterAngle() { return _cutterAngle; };
 };
 
 #endif

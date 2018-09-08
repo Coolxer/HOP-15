@@ -43,6 +43,8 @@ void MenuState::init()
 {
 	_featherAmount = SetValueElement("Piora", this, 2, 32, 6, 1);
 	_cycleAmount = SetValueElement("Cykle", this, 1, 16, 1, 1);
+	_speed = SetValueElement("Predkosc", this, 1, 100, 30, 5);
+	_cutterAngle = SetValueElement("Kat obrotu", this, 1, 60, 24, 0.1);
 
 	DeviceManager* deviceManager = _program->getDeviceManager();
 
@@ -60,7 +62,8 @@ void MenuState::init()
 	setElement(6, "Podziel. wolno");
 	setElement(7, "Stol szybko");
 	setElement(8, "Stol wolno");
-	setElement(9, "Predkosc")
+	setElement(9, &_speed);
+	setElement(10, &_cutterAngle);
 }
 
 void MenuState::react()
@@ -132,7 +135,8 @@ void MenuState::enter()
 		ProgramState* programState = getProgram()->getProgramState();
 		programState->setFeathers(getValueAtIndex(0));
 		programState->setCycles(getValueAtIndex(1));
-		programState->setCutterAngle(getProgram()->getEncoderState()->getCutterAngle());
+		programState->setCutterAngle(getValueAtIndex(10));
+		//programState->setSpeed(getValueAtIndex(10));
 		programState->reset();
 
 		getProgram()->getStateManager()->changeState(2);
@@ -144,7 +148,8 @@ void MenuState::enter()
 
 		programState->setFeathers(getValueAtIndex(0));
 		programState->setCycles(getValueAtIndex(1));
-		programState->setCutterAngle(getProgram()->getEncoderState()->getCutterAngle());
+		programState->setCutterAngle(getValueAtIndex(10));
+		//programState->setCutterAngle(getProgram()->getEncoderState()->getCutterAngle());
 		programState->reset();
 		programState->testDividerMotor();
 
@@ -157,7 +162,8 @@ void MenuState::enter()
 
 		programState->setFeathers(getValueAtIndex(0));
 		programState->setCycles(getValueAtIndex(1));
-		programState->setCutterAngle(getProgram()->getEncoderState()->getCutterAngle());
+		programState->setCutterAngle(getValueAtIndex(10));
+		//programState->setCutterAngle(getProgram()->getEncoderState()->getCutterAngle());
 		programState->reset();
 		programState->testTableMotor();
 

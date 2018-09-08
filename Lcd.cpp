@@ -175,8 +175,8 @@ void Lcd::manage(ProgramState* programState)
 void Lcd::manage(EncoderState* encoderState)
 {
 	int position = encoderState->getPosition();
-	int speed = encoderState->getSpeed();
-	float cutterAngle = encoderState->getCutterAngle();
+	//int speed = encoderState->getSpeed();
+	//float cutterAngle = encoderState->getCutterAngle();
 
 	char valueLine[20] = { 0 };
 
@@ -194,6 +194,7 @@ void Lcd::manage(EncoderState* encoderState)
 			sprintf(valueLine, "Pozycja: %d", position);
 			break;
 		}
+		/*
 		case CHANGE_SPEED:
 		{
 			writeNewLine(0, "  zmiana predkosci");
@@ -206,6 +207,7 @@ void Lcd::manage(EncoderState* encoderState)
 			sprintf(valueLine, "K¹t nachylenia: %d", cutterAngle);
 			break;
 		}
+		*/
 	}
 
 	writeNewLine(1, valueLine);

@@ -39,6 +39,8 @@ private:
 
 	SetValueElement _featherAmount;
 	SetValueElement _cycleAmount;
+	SetValueElement _speed;
+	SetValueElement _cutterAngle;
 
 public:
 	bool setElement(byte index, char* description);

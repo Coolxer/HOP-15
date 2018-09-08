@@ -27,9 +27,6 @@ void ProgramState::init()
 	_syncDriver = deviceManager->requestSyncDriver();
 
 	_proportionOfMotorCircles = _shiftMotorCircleRadius / _directlyMotorCircleRadius;
-
-	//this should be setting always when we start a program because the cutterAngle would changed
-	_singleDividerMotorStepCount = _singleTableMotorStepCount / cos(_cutterAngle * PI / 180.0);
 }
 
 void ProgramState::react()
@@ -280,4 +277,12 @@ bool ProgramState::isFinished()
 	if (_currentState == FINISH)
 		return true;
 	return false;
+}
+
+void ProgramState::setCutterAngle(float angle)
+{
+	_cutterAngle = angle;
+
+	//this should be setting always when we start a program because the cutterAngle would changed
+	_singleDividerMotorStepCount = _singleTableMotorStepCount / cos(_cutterAngle * PI / 180.0);
 }

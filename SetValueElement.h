@@ -8,21 +8,23 @@ class MenuState;
 
 class Lcd;
 class SimpleKeypad;
+class RotaryEncoder;
 
 class SetValueElement: public Element
 {
 private:
 	Lcd* _lcd;
 	SimpleKeypad* _simpleKeypad;
+	RotaryEncoder* _rotaryEncoder;
 
-	byte _minValue;
-	byte _maxValue;
-	byte _currentValue;
-	byte _stepValue;
+	float _minValue;
+	float _maxValue;
+	float _currentValue;
+	float _stepValue;
 
 public:
 	SetValueElement() {};
-	SetValueElement(char* name, MenuState* state, byte minValue, byte maxValue, byte currentValue, byte stepValue);
+	SetValueElement(char* name, MenuState* state, float minValue, float maxValue, float currentValue, float stepValue);
 	~SetValueElement() {};
 
 	virtual void react();
@@ -30,7 +32,7 @@ public:
 	void increase();
 	void decrease();
 
-	byte getValue() { return _currentValue; };
+	float getValue() { return _currentValue; };
 	String getValueStr() { return String(_currentValue); };
 	
 };
