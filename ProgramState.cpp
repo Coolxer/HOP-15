@@ -27,6 +27,8 @@ void ProgramState::init()
 	_syncDriver = deviceManager->requestSyncDriver();
 
 	_proportionOfMotorCircles = _shiftMotorCircleRadius / _directlyMotorCircleRadius;
+
+	//this should be setting always when we start a program because the cutterAngle would changed
 	_singleDividerMotorStepCount = _singleTableMotorStepCount / cos(_cutterAngle * PI / 180.0);
 }
 
