@@ -86,7 +86,6 @@
   <ItemGroup>
     <ClInclude Include="Buzzer.h" />
     <ClInclude Include="Config.h" />
-    <ClInclude Include="DcMotor.h" />
     <ClInclude Include="DeviceManager.h" />
     <ClInclude Include="Element.h" />
     <ClInclude Include="EncoderState.h" />
@@ -100,10 +99,8 @@
     <ClInclude Include="lib\SyncDriver.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="Output.h" />
-    <ClInclude Include="Potentiometer.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="ProgramState.h" />
-    <ClInclude Include="Relay.h" />
     <ClInclude Include="RotaryEncoder.h" />
     <ClInclude Include="SetValueElement.h" />
     <ClInclude Include="SevSegms.h" />
@@ -115,7 +112,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buzzer.cpp" />
-    <ClCompile Include="DcMotor.cpp" />
     <ClCompile Include="EncoderState.cpp" />
     <ClCompile Include="Endstop.cpp" />
     <ClCompile Include="IntroductionState.cpp" />
@@ -127,7 +123,6 @@
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="ProgramState.cpp" />
-    <ClCompile Include="Relay.cpp" />
     <ClCompile Include="RotaryEncoder.cpp" />
     <ClCompile Include="SetValueElement.cpp" />
     <ClCompile Include="SevSegms.cpp" />
