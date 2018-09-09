@@ -292,3 +292,22 @@ void ProgramState::setCutterAngle(float angle)
 	_singleTableMotorStepCount = _singleTableMotorStepCount / nww;
 	_singleDividerMotorStepCount = _singleDividerMotorStepCount / nww;
 }
+
+int ProgramState::NWD(int a, int b)
+{
+	int pom;
+
+	while (b != 0)
+	{
+		pom = b;
+		b = a % b;
+		a = pom;
+	}
+
+	return a;
+}
+
+int ProgramState::NWW(int a, int b)
+{
+	return a / NWD(a, b) * b;
+}

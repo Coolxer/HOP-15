@@ -247,8 +247,6 @@ const char* MenuState::getPrev()
 	else
 		index = _selectedIndex - 1;
 
-	//Serial.println(_itemNames[index]);
-
 	return _itemNames[index].c_str();
 }
 
@@ -263,12 +261,11 @@ const char* MenuState::getNextValue()
 
 	if (_itemBinds[index].index != -1)
 	{
-		byte value = _itemBinds[index].item->getValue();
+		float value = _itemBinds[index].item->getValue();
 		char valueStr[6] = { 0 };
 		sprintf(valueStr, "%d", value);
 		return valueStr;
 	}
-		//return _itemBinds[index]->item->getValueStr().c_str();
 
 	return "";
 }
@@ -277,12 +274,11 @@ const char* MenuState::getCurrentValue()
 {
 	if (_itemBinds[_selectedIndex].index != -1)
 	{
-		byte value = _itemBinds[_selectedIndex].item->getValue();
+		float value = _itemBinds[_selectedIndex].item->getValue();
 		char valueStr[6] = { 0 };
 		sprintf(valueStr, "%d", value);
 		return valueStr;
 	}
-		//return _itemBinds[_selectedIndex]->item->getValueStr().c_str();
 
 	return "";
 }
@@ -298,12 +294,11 @@ const char* MenuState::getPrevValue()
 
 	if (_itemBinds[index].index != -1)
 	{
-		byte value = _itemBinds[index].item->getValue();
+		float value = _itemBinds[index].item->getValue();
 		char valueStr[6] = { 0 };
 		sprintf(valueStr, "%d", value);
 		return valueStr;
 	}
-		//return _itemBinds[index]->item->getValueStr().c_str();
 
 	return "";
 }
@@ -313,7 +308,7 @@ char* MenuState::getTip()
 	return "A-Gora D-Dol *-Enter";
 }
 
-byte MenuState::getValueAtIndex(byte index)
+float MenuState::getValueAtIndex(byte index)
 {
 	if (_itemBinds[index].index != -1)
 	{

@@ -65,7 +65,7 @@ public:
 
 	char* getTip();
 
-	byte getValueAtIndex(byte index);
+	float getValueAtIndex(byte index);
 
 };
 
