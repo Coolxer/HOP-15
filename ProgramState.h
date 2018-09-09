@@ -27,6 +27,25 @@ enum ExecutionState
 	PAUSE,
 };
 
+int NWD(int a, int b)
+{
+	int pom;
+
+	while (b != 0)
+	{
+		pom = b;
+		b = a % b;
+		a = pom;
+	}
+
+	return a;
+}
+
+int NWW(int a, int b)
+{
+	return a / NWD(a, b) * b;
+}
+
 class ProgramState : public State
 {
 private:
@@ -82,8 +101,8 @@ private:
 	//Proportion of divider circle radiuses
 	float _proportionOfMotorCircles = 2.0015384;
 
-	float _singleTableMotorStepCount = 16.0;
-	float _singleDividerMotorStepCount;
+	int _singleTableMotorStepCount = 2880;
+	int _singleDividerMotorStepCount;
 
 public:
 	void setFeathers(byte feathers) { _feathersCount = feathers; };
