@@ -285,4 +285,10 @@ void ProgramState::setCutterAngle(float angle)
 
 	//this should be setting always when we start a program because the cutterAngle would changed
 	_singleDividerMotorStepCount = _singleTableMotorStepCount / cos(_cutterAngle * PI / 180.0);
+
+	//Get lowest common divider
+	int nww = NWW(_singleTableMotorStepCount, _singleDividerMotorStepCount);
+	
+	_singleTableMotorStepCount = _singleTableMotorStepCount / nww;
+	_singleDividerMotorStepCount = _singleDividerMotorStepCount / nww;
 }
