@@ -29,7 +29,7 @@ void RotaryEncoder::setOperationType(OperationType operationType)
 	}
 }
 
-short RotaryEncoder::read()
+float RotaryEncoder::read()
 {
 	_encA = digitalRead(_pinA);
 	_encB = digitalRead(_pinB);
@@ -58,7 +58,4 @@ void RotaryEncoder::reset()
 	_encA = false;
 	_encB = false;
 	_lastA = false;
-
-	_currentTime = 0;
-	_lastTime = 0;
 }

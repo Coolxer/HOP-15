@@ -18,10 +18,6 @@ private:
 
 	bool _start = true;
 
-	// Timing for polling the encoder
-	unsigned long _currentTime = 0;
-	unsigned long _lastTime = 0;
-
 	float _changeAmount = 1.0;
 
 public:
@@ -30,7 +26,7 @@ public:
 	enum OperationType { SLOWLY_MOVE, QUICKLY_MOVE, SPEED_CHANGE, CUTTER_ANGLE_CHANGE };
 
 	void setOperationType(OperationType operationType);
-	short read();
+	float read();
 
 	void reset();
 

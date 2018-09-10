@@ -41,10 +41,10 @@ bool MenuState::setElement(byte index, SetValueElement* element)
 
 void MenuState::init()
 {
-	_featherAmount = SetValueElement("Piora", this, 2, 32, 6, 1);
-	_cycleAmount = SetValueElement("Cykle", this, 1, 16, 1, 1);
-	_speed = SetValueElement("Predkosc", this, 5, 100, 30, 5);
-	_cutterAngle = SetValueElement("Kat obrotu", this, 1, 60, 24, 0.1);
+	_featherAmount = SetValueElement("Piora", this, 2.0, 32.0, 6.0, 1.0);
+	_cycleAmount = SetValueElement("Cykle", this, 1.0, 16.0, 1.0, 1.0);
+	_speed = SetValueElement("Predkosc", this, 5.0, 100.0, 30.0, 5.0);
+	_cutterAngle = SetValueElement("Kat obrotu", this, 1.0, 60.0, 24.0, 0.1);
 
 	DeviceManager* deviceManager = _program->getDeviceManager();
 
@@ -272,7 +272,9 @@ const char* MenuState::getNextValue()
 	{
 		float value = _itemBinds[index].item->getValue();
 		char valueStr[6] = { 0 };
-		sprintf(valueStr, "%d", value);
+		strcpy(valueStr, "");
+		dtostrf(value, 2, 1, &valueStr[strlen(valueStr)]);
+
 		return valueStr;
 	}
 
@@ -285,7 +287,8 @@ const char* MenuState::getCurrentValue()
 	{
 		float value = _itemBinds[_selectedIndex].item->getValue();
 		char valueStr[6] = { 0 };
-		sprintf(valueStr, "%d", value);
+		strcpy(valueStr, "");
+		dtostrf(value, 2, 1, &valueStr[strlen(valueStr)]);
 		return valueStr;
 	}
 
@@ -304,8 +307,10 @@ const char* MenuState::getPrevValue()
 	if (_itemBinds[index].index != -1)
 	{
 		float value = _itemBinds[index].item->getValue();
+
 		char valueStr[6] = { 0 };
-		sprintf(valueStr, "%d", value);
+		strcpy(valueStr, "");
+		dtostrf(value, 2, 1, &valueStr[strlen(valueStr)]);
 		return valueStr;
 	}
 

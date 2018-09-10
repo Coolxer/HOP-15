@@ -27,7 +27,7 @@ void SetValueElement::react()
 {
 	char key = _simpleKeypad->getPressedKey();
 
-	int value = _rotaryEncoder->read();
+	float value = _rotaryEncoder->read();
 
 	if (key == KEY_UP || value > 0)
 		increase();
