@@ -26,7 +26,7 @@ void ProgramState::init()
 	_tableMotor = deviceManager->requestTableMotor();
 	_syncDriver = deviceManager->requestSyncDriver();
 
-	_proportionOfMotorCircles = _shiftMotorCircleRadius / _directlyMotorCircleRadius;
+	_proportionOfDividerMotorCircles = _shiftMotorCircleRadius / _directlyMotorCircleRadius;
 }
 
 void ProgramState::react()
@@ -207,7 +207,7 @@ void ProgramState::react()
 
 			delay(100);
 
-			_dividerMotor->rotate(_rotateAngle * _proportionOfMotorCircles);
+			_dividerMotor->rotate(_rotateAngle * _proportionOfDividerMotorCircles);
 
 			if (_testingDividerMotor)
 			{

@@ -80,7 +80,8 @@ private:
 	float _shiftMotorCircleRadius = 12.0;
 
 	//Proportion of divider circle radiuses
-	float _proportionOfMotorCircles = 2.0015384;
+	float _proportionOfDividerMotorCircles = 2.0015384;
+	float _proportionOfTableMotorCircles;
 
 	int _singleTableMotorStepCount = 2880;
 	int _singleDividerMotorStepCount;
