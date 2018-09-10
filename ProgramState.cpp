@@ -91,6 +91,8 @@ void ProgramState::react()
 			//Power on divider motor
 			_dividerMotor->enable();
 
+			_tableMotor->setRPM(1);
+
 			if(!_tableMotorHomed)
 				_tableMotorHomed = _tableMotor->home();
 
@@ -117,6 +119,8 @@ void ProgramState::react()
 		{
 			_tableMotor->enable();
 			_dividerMotor->enable();
+
+			_tableMotor->setRPM(30);
 
 			if (!forwardEndstopClicked)
 			{

@@ -217,7 +217,7 @@ void MenuState::enter()
 
 		getProgram()->getStateManager()->changeState(3);
 	}
-
+	//If we want to disable motors
 	else if (_selectedIndex == 11)
 	{
 		_dividerMotor->disable();
