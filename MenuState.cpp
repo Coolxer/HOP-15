@@ -51,6 +51,8 @@ void MenuState::init()
 	_lcd = deviceManager->requestLcd();
 	_simpleKeypad = deviceManager->requestSimpleKeypad();
 	_buzzer = deviceManager->requestBuzzer();
+	_dividerMotor = deviceManager->requestDividerMotor();
+	_tableMotor = deviceManager->requestTableMotor();
 	_rotaryEncoder = deviceManager->requestRotaryEncoder();
 
 	setElement(0, &_featherAmount);
@@ -64,6 +66,7 @@ void MenuState::init()
 	setElement(8, "Stol wolno");
 	setElement(9, &_speed);
 	setElement(10, &_cutterAngle);
+	setElement(11, "Wylacz silniki");
 }
 
 void MenuState::react()
@@ -213,6 +216,12 @@ void MenuState::enter()
 		encoderState->setOperation(MOVE_TABLE_MOTOR);
 
 		getProgram()->getStateManager()->changeState(3);
+	}
+
+	else if (_selectedIndex == 11)
+	{
+		_dividerMotor->disable();
+		_tableMotor->disable();
 	}
 
 	_needRedraw = true;

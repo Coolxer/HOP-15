@@ -6,7 +6,7 @@
 #include "State.h"
 #include "SetValueElement.h"
 
-#define ITEM_COUNT 11 
+#define ITEM_COUNT 12
 
 class Program;
 
@@ -28,6 +28,8 @@ private:
 	Lcd* _lcd;
 	SimpleKeypad* _simpleKeypad;
 	Buzzer* _buzzer;
+	A4988* _dividerMotor;
+	A4988* _tableMotor;
 	RotaryEncoder* _rotaryEncoder;
 
 	String _itemNames[ITEM_COUNT];
