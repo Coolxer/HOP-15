@@ -43,7 +43,7 @@ void MenuState::init()
 {
 	_featherAmount = SetValueElement("Piora", this, 2, 32, 6, 1);
 	_cycleAmount = SetValueElement("Cykle", this, 1, 16, 1, 1);
-	_speed = SetValueElement("Predkosc", this, 1, 100, 30, 5);
+	_speed = SetValueElement("Predkosc", this, 5, 100, 30, 5);
 	_cutterAngle = SetValueElement("Kat obrotu", this, 1, 60, 24, 0.1);
 
 	DeviceManager* deviceManager = _program->getDeviceManager();
