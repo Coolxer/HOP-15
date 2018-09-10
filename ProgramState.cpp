@@ -122,7 +122,7 @@ void ProgramState::react()
 			{
 				//_tableMotor->move(_singleTableMotorStepCount);
 				//_dividerMotor->move(_singleDividerMotorStepCount);
-				_syncDriver->move(_singleDividerMotorStepCount, _singleTableMotorStepCount);
+				_syncDriver->move(_singleDividerMotorStepCount * -1.0, _singleTableMotorStepCount * -1.0);
 
 				//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
 				if (!_backwardTableEndstop->isClicked())
@@ -158,7 +158,7 @@ void ProgramState::react()
 				//_tableMotor->move(_singleDividerMotorStepCount * -1.0);
 				//_dividerMotor->move(_singleDividerMotorStepCount * -1.0);
 
-				_syncDriver->move(_singleDividerMotorStepCount * -1.0, _singleDividerMotorStepCount * -1.0);
+				_syncDriver->move(_singleDividerMotorStepCount, _singleDividerMotorStepCount);
 
 				//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
 				if (!_forwardTableEndstop->isClicked())
