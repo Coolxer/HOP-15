@@ -24,6 +24,7 @@ private:
 
 public:
 	SetValueElement() {};
+	SetValueElement(char* name, MenuState* state, byte minValue, byte maxValue, byte currentValue, byte stepValue);
 	SetValueElement(char* name, MenuState* state, float minValue, float maxValue, float currentValue, float stepValue);
 	~SetValueElement() {};
 

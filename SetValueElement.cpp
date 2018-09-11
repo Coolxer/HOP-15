@@ -7,6 +7,22 @@
 #include "Lcd.h"
 #include "SimpleKeypad.h"
 
+SetValueElement::SetValueElement(char* name, MenuState* state, byte minValue, byte maxValue, byte currentValue, byte stepValue)
+{
+	_state = state;
+
+	DeviceManager* deviceManager = state->getProgram()->getDeviceManager();
+
+	_lcd = deviceManager->requestLcd();
+	_simpleKeypad = deviceManager->requestSimpleKeypad();
+	_rotaryEncoder = deviceManager->requestRotaryEncoder();
+
+	_minValue = minValue;
+	_maxValue = maxValue;
+	_currentValue = currentValue;
+	_stepValue = stepValue;
+}
+
 SetValueElement::SetValueElement(char* name, MenuState* state, float minValue, float maxValue, float currentValue, float stepValue) : Element(name)
 {
 	_state = state;
