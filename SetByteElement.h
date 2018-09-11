@@ -15,5 +15,8 @@ public:
 
 	void increase();
 	void decrease();
+
+	byte getValue() { return _currentValue; };
+	String getValueStr() { return String(_currentValue); };
 };
 

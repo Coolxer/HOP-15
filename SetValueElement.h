@@ -25,8 +25,7 @@ public:
 	virtual void increase();
 	virtual void decrease();
 
-	//float getValue() { return _currentValue; };
-	//String getValueStr() { return String(_currentValue); };
+	virtual String getValueStr();
 	
 };
 

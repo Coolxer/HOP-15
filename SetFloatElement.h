@@ -16,5 +16,8 @@ public:
 
 	void increase();
 	void decrease();
+
+	float getValue() { return value; };
+	String getValueStr() { return String(_currentValue, 1); };
 };
 
