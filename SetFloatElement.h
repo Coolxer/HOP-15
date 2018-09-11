@@ -17,7 +17,7 @@ public:
 	void increase();
 	void decrease();
 
-	float getValue() { return value; };
+	float getValue() { return _currentValue; };
 	String getValueStr() { return String(_currentValue, 1); };
 };
 
