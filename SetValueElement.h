@@ -18,7 +18,7 @@ private:
 	RotaryEncoder* _rotaryEncoder;
 
 public:
-	SetValueElement() {};
+	SetValueElement(MenuState* state);
 
 	virtual void react();
 
