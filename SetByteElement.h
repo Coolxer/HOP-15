@@ -11,12 +11,13 @@ private:
 	byte _stepValue;
 
 public:
+	SetByteElement() {};
 	SetByteElement(char* name, MenuState* state, byte minValue, byte maxValue, byte currentValue, byte stepValue);
 
 	void increase();
 	void decrease();
 
-	byte getValue() { return _currentValue; };
+	float getValue() { return float(_currentValue); };
 	String getValueStr() { return String(_currentValue); };
 };
 

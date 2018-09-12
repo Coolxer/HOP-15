@@ -23,10 +23,11 @@ public:
 
 	virtual void react();
 
-	virtual void increase();
-	virtual void decrease();
+	virtual void increase() {};
+	virtual void decrease() {};
 
-	virtual String getValueStr();
+	virtual float getValue() {};
+	virtual String getValueStr() {};
 };
 
 #endif

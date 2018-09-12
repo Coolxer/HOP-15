@@ -10,10 +10,11 @@
 #include "RotaryEncoder.h"
 
 #include "ProgramState.h"
+#include "EncoderState.h"
+
 #include "SetValueElement.h"
 #include "SetByteElement.h"
 #include "SetFloatElement.h"
-#include "EncoderState.h"
 
 bool MenuState::setElement(byte index, char* description)
 {
@@ -139,9 +140,9 @@ void MenuState::enter()
 	if (_selectedIndex == 2)
 	{
 		ProgramState* programState = getProgram()->getProgramState();
-		programState->setFeathers(reinterpret_cast<SetByteElement*>(_itemBinds[0].item)->getValue());
-		programState->setCycles(reinterpret_cast<SetByteElement*>(_itemBinds[1].item)->getValue());
-		programState->setCutterAngle(reinterpret_cast<SetFloatElement*>(_itemBinds[10].item)->getValue());
+		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
+		programState->setCycles(byte(_itemBinds[1].item->getValue()));
+		programState->setCutterAngle(_itemBinds[10].item->getValue());
 		programState->reset();
 
 		getProgram()->getStateManager()->changeState(2);
@@ -151,10 +152,9 @@ void MenuState::enter()
 	{
 		ProgramState* programState = getProgram()->getProgramState();
 
-		programState->setFeathers(reinterpret_cast<SetByteElement*>(_itemBinds[0].item)->getValue());
-		programState->setCycles(reinterpret_cast<SetByteElement*>(_itemBinds[1].item)->getValue());
-		programState->setCutterAngle(reinterpret_cast<SetFloatElement*>(_itemBinds[10].item)->getValue());
-		//programState->setCutterAngle(getProgram()->getEncoderState()->getCutterAngle());
+		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
+		programState->setCycles(byte(_itemBinds[1].item->getValue()));
+		programState->setCutterAngle(_itemBinds[10].item->getValue());
 		programState->reset();
 		programState->testDividerMotor();
 
@@ -165,10 +165,9 @@ void MenuState::enter()
 	{
 		ProgramState* programState = getProgram()->getProgramState();
 
-		programState->setFeathers(reinterpret_cast<SetByteElement*>(_itemBinds[0].item)->getValue());
-		programState->setCycles(reinterpret_cast<SetByteElement*>(_itemBinds[1].item)->getValue());
-		programState->setCutterAngle(reinterpret_cast<SetFloatElement*>(_itemBinds[10].item)->getValue());
-		//programState->setCutterAngle(getProgram()->getEncoderState()->getCutterAngle());
+		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
+		programState->setCycles(byte(_itemBinds[1].item->getValue()));
+		programState->setCutterAngle(_itemBinds[10].item->getValue());
 		programState->reset();
 		programState->testTableMotor();
 
@@ -304,10 +303,10 @@ char* MenuState::getTip()
 	return "A-Gora D-Dol *-Enter";
 }
 
-//float MenuState::getValueAtIndex(byte index)
-//{
-//	if (_itemBinds[index].index != -1)
-//		return _itemBinds[index].item->getValue();
-//	else
-//		return NULL;
-//}
+float MenuState::getValueAtIndex(byte index)
+{
+	if (_itemBinds[index].index != -1)
+		return _itemBinds[index].item->getValue();
+	else
+		return NULL;
+}

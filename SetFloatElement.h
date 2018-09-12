@@ -12,6 +12,7 @@ private:
 	float _currentValue;
 	float _stepValue;
 public:
+	SetFloatElement() {};
 	SetFloatElement(char* name, MenuState* state, float minValue, float maxValue, float currentValue, float stepValue);
 
 	void increase();
