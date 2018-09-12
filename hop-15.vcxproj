@@ -102,6 +102,8 @@
     <ClInclude Include="Program.h" />
     <ClInclude Include="ProgramState.h" />
     <ClInclude Include="RotaryEncoder.h" />
+    <ClInclude Include="SetByteElement.h" />
+    <ClInclude Include="SetFloatElement.h" />
     <ClInclude Include="SetValueElement.h" />
     <ClInclude Include="SevSegms.h" />
     <ClInclude Include="SimpleKeypad.h" />
@@ -124,6 +126,8 @@
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="ProgramState.cpp" />
     <ClCompile Include="RotaryEncoder.cpp" />
+    <ClCompile Include="SetByteElement.cpp" />
+    <ClCompile Include="SetFloatElement.cpp" />
     <ClCompile Include="SetValueElement.cpp" />
     <ClCompile Include="SevSegms.cpp" />
     <ClCompile Include="SimpleKeypad.cpp" />

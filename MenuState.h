@@ -64,9 +64,9 @@ public:
 	const char* getCurrent();
 	const char* getPrev();
 
-	const char* getNextValue();
-	const char* getCurrentValue();
-	const char* getPrevValue();
+	String getNextValue();
+	String getCurrentValue();
+	String getPrevValue();
 
 	char* getTip();
 

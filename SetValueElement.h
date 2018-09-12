@@ -26,7 +26,6 @@ public:
 	virtual void decrease();
 
 	virtual String getValueStr();
-	
 };
 
 #endif
