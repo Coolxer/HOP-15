@@ -1,5 +1,7 @@
 #include "SetFloatElement.h"
 
+#include "MenuState.h"
+
 SetFloatElement::SetFloatElement(char* name, MenuState* state, float minValue, float maxValue, float currentValue, float stepValue):SetValueElement(state)
 {
 	_minValue = minValue;

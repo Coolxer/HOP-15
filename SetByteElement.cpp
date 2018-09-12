@@ -1,5 +1,7 @@
 #include "SetByteElement.h"
 
+#include "MenuState.h"
+
 SetByteElement::SetByteElement(char* name, MenuState* state, byte minValue, byte maxValue, byte currentValue, byte stepValue):SetValueElement(state)
 {
 	_minValue = minValue;
