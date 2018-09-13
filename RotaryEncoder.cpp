@@ -39,12 +39,12 @@ float RotaryEncoder::read()
 		if (_encB)
 		{
 			_lastA = _encA;
-			return _changeAmount;
+			return _changeAmount * -1.0;
 		}	
 		else
 		{
 			_lastA = _encA;
-			return _changeAmount * -1.0;
+			return _changeAmount;
 		}		
 	}
 
