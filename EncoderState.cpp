@@ -20,6 +20,9 @@ void EncoderState::init()
 
 	_dividerMotor = deviceManager->requestDividerMotor();
 	_tableMotor = deviceManager->requestTableMotor();
+
+	_forwardTableEndstop = deviceManager->requestForwardTableEndstop();
+	_backwardTableEndstop = deviceManager->requestBackwardTableEndstop();
 }
 
 void EncoderState::react()
@@ -61,7 +64,13 @@ void EncoderState::react()
 		{
 			_reading = _rotaryEncoder->read();
 			_position += _reading;
-			_tableMotor->move(_reading);
+
+			if (_reading < 0 && !_forwardTableEndstop->isClicked())
+				_tableMotor->move(_reading);
+
+			if (_reading > 0 && !_backwardTableEndstop->isClicked())
+				_tableMotor->move(_reading);
+			
 			break;
 		}
 		/*

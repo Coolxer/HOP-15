@@ -12,6 +12,8 @@ class Buzzer;
 class RotaryEncoder;
 class A4988;
 
+class Endstop;
+
 enum Operations
 {
 	MOVE_DIVIDER_MOTOR,
@@ -30,6 +32,9 @@ private:
 
 	A4988* _dividerMotor;
 	A4988* _tableMotor;
+
+	Endstop* _forwardTableEndstop;
+	Endstop* _backwardTableEndstop;
 
 	//float _cutterAngle = 24.0;
 	int _position = 0;
