@@ -17,17 +17,23 @@ private:
 	SimpleKeypad* _simpleKeypad;
 	RotaryEncoder* _rotaryEncoder;
 
+	float _minValue;
+	float _maxValue;
+	float _currentValue;
+	float _stepValue;
+
 public:
 	SetValueElement() {};
-	SetValueElement(MenuState* state);
+	SetValueElement(char* name, MenuState* state, float minValue, float maxValue, float currentValue, float stepValue);
+	~SetValueElement() {};
 
 	virtual void react();
 
-	virtual void increase() {};
-	virtual void decrease() {};
+	void increase();
+	void decrease();
 
-	virtual float getValue() {};
-	virtual String getValueStr() {};
+	float getValue()
+	String getValueStr();
 };
 
 #endif
