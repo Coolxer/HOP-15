@@ -88,7 +88,7 @@ void Lcd::manage(MenuState* menuState)
 	char* currentName = (char*)menuState->getCurrent();
 	if (currentName != "")
 	{
-		writeNewLine(1, "*");
+		writeNewLine(1, "* ");
 		writeLine(1, currentName);
 		changeLeftOrientation(false);
 

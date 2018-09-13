@@ -56,6 +56,8 @@ void ProgramState::react()
 			if (_currentState == FINISH)
 			{
 				//If program finished back to menu
+				_dividerMotor->disable();
+				_tableMotor->disable();
 				_program->getStateManager()->changeState(1);
 			}
 			else
