@@ -12,7 +12,6 @@
 #include "lib/A4988.h"
 #include "lib/SyncDriver.h"
 
-
 class DeviceManager
 {
 private:
@@ -23,12 +22,12 @@ private:
 	Endstop _forwardTableEndstop = Endstop(10);
 	Endstop _backwardTableEndstop = Endstop(9);
 	A4988 _dividerMotor = A4988(200, 6, 3, 8);
-	A4988 _tableMotor = A4988(200, 7, 4, 8, &_forwardTableEndstop);
+	A4988 _tableMotor = A4988(200, 7, 4, 8);
 	SyncDriver _syncDriver = SyncDriver(_dividerMotor, _tableMotor);
 	RotaryEncoder _rotaryEncoder = RotaryEncoder();
 
 public:
-	DeviceManager() {};
+	DeviceManager() { _dividerMotor.begin(50, 8); _tableMotor.begin(50, 8); _dividerMotor.disable(); _tableMotor.disable(); };
 
 	Lcd* requestLcd() { return &_lcd; };
 	SimpleKeypad* requestSimpleKeypad() { return &_simpleKeypad; };

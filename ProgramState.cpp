@@ -93,10 +93,15 @@ void ProgramState::react()
 			//Power on divider motor
 			_dividerMotor->enable();
 
-			_tableMotor->setRPM(1);
+			if (!_tableMotorHomed)
+			{
+				_tableMotor->setRPM(10);
 
-			if(!_tableMotorHomed)
-				_tableMotorHomed = _tableMotor->home();
+				if (_forwardTableEndstop->isClicked())
+					_tableMotorHomed = true;
+				else
+					_tableMotor->move(-1);
+			}
 
 			if (_tableMotorHomed)
 			{
@@ -112,6 +117,8 @@ void ProgramState::react()
 		{	
 			betweenEndstops = false;
 			forwardEndstopClicked = false;
+
+			_tableMotor->setRPM(50);
 
 			_currentState = MOVING_FORWARD;
 

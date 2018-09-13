@@ -24,7 +24,7 @@ enum ExecutionState
 	MOVING_BACKWARD,
 	CHANGE_FEATHER,
 	FINISH,
-	PAUSE,
+	PAUSE
 };
 
 class ProgramState : public State
