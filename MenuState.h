@@ -6,8 +6,6 @@
 #include "State.h"
 
 #include "SetValueElement.h"
-#include "SetByteElement.h"
-#include "SetFloatElement.h"
 
 #define ITEM_COUNT 12
 

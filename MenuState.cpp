@@ -13,8 +13,6 @@
 #include "EncoderState.h"
 
 #include "SetValueElement.h"
-#include "SetByteElement.h"
-#include "SetFloatElement.h"
 
 bool MenuState::setElement(byte index, char* description)
 {
@@ -44,11 +42,11 @@ bool MenuState::setElement(byte index, SetValueElement* element)
 
 void MenuState::init()
 {
-	_featherAmount = SetByteElement("Piora", this, 2, 32, 6, 1);
-	_cycleAmount = SetByteElement("Cykle", this, 1, 16, 1, 1);
-	_speed = SetByteElement("Predkosc", this, 5, 100, 30, 5);
+	_featherAmount = SetValueElement("Piora", this, 2, 32, 6, 1);
+	_cycleAmount = SetValueElement("Cykle", this, 1, 16, 1, 1);
+	_speed = SetValueElement("Predkosc", this, 5, 100, 30, 5);
 
-	_cutterAngle = SetFloatElement("Kat obrotu", this, 1.0, 60.0, 24.0, 0.1);
+	_cutterAngle = SetValueElement("Kat obrotu", this, 1.0, 60.0, 24.0, 0.1);
 
 	DeviceManager* deviceManager = _program->getDeviceManager();
 
@@ -270,7 +268,13 @@ const char* MenuState::getNextValue()
 		index = _selectedIndex + 1;
 
 	if (_itemBinds[index].index != -1)
-		return _itemBinds[index].item->getValueStr().c_str();
+	{
+		float value = _itemBinds[_selectedIndex].item->getValue();
+		char valueStr[6] = { 0 };
+		strcpy(valueStr, "");
+		dtostrf(value, 2, 1, &valueStr[strlen(valueStr)]);
+		return valueStr;
+	}
 
 	return "";
 }
@@ -278,7 +282,13 @@ const char* MenuState::getNextValue()
 const char* MenuState::getCurrentValue()
 {
 	if (_itemBinds[_selectedIndex].index != -1)
-		return _itemBinds[_selectedIndex].item->getValueStr().c_str();
+	{
+		float value = _itemBinds[_selectedIndex].item->getValue();
+		char valueStr[6] = { 0 };
+		strcpy(valueStr, "");
+		dtostrf(value, 2, 1, &valueStr[strlen(valueStr)]);
+		return valueStr;
+	}
 
 	return "";
 }
@@ -293,7 +303,13 @@ const char* MenuState::getPrevValue()
 		index = _selectedIndex - 1;
 
 	if (_itemBinds[index].index != -1)
-		return _itemBinds[index].item->getValueStr().c_str();
+	{
+		float value = _itemBinds[_selectedIndex].item->getValue();
+		char valueStr[6] = { 0 };
+		strcpy(valueStr, "");
+		dtostrf(value, 2, 1, &valueStr[strlen(valueStr)]);
+		return valueStr;
+	}
 
 	return "";
 }

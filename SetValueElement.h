@@ -32,8 +32,8 @@ public:
 	void increase();
 	void decrease();
 
-	float getValue()
-	String getValueStr();
+	float getValue() { return _currentValue; };
+	String getValueStr() { return String(_currentValue); }
 };
 
 #endif

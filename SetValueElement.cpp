@@ -7,7 +7,7 @@
 #include "Lcd.h"
 #include "SimpleKeypad.h"
 
-SetValueElement::SetValueElement(char* name, MenuState* state, byte minValue, byte maxValue, byte currentValue, byte stepValue) : Element(name)
+SetValueElement::SetValueElement(char* name, MenuState* state, float minValue, float maxValue, float currentValue, float stepValue) : Element(name)
 {
 	_state = state;
 
