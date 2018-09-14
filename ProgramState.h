@@ -54,6 +54,8 @@ private:
 	byte _cyclesCount;
 	byte _currentCycle = 1;
 
+	float const _PI = 3.1415;
+
 	//360 divided by feather count
 	float _rotateAngle;
 
@@ -84,11 +86,8 @@ private:
 	float _proportionOfDividerMotorCircles = 2.0015384;
 	float _proportionOfTableMotorCircles = 5.7272727;
 
-	//int _singleTableMotorStepCount = 2880;
-	//int _singleDividerMotorStepCount;
-
-	float _singleTableMotorStepCount = 16.0;
-	float _singleDividerMotorStepCount;
+	int _singleTableMotorStepCount = 1600;
+	int _singleDividerMotorStepCount;
 
 	int NWD(int a, int b);
 	int NWW(int a, int b);

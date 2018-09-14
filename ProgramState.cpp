@@ -295,18 +295,13 @@ void ProgramState::setCutterAngle(float angle)
 	_cutterAngle = angle;
 
 	//this should be setting always when we start a program because the cutterAngle would changed
-	_singleDividerMotorStepCount = _singleTableMotorStepCount / cos(_cutterAngle * PI / 180.0);
+	_singleDividerMotorStepCount = double(_singleTableMotorStepCount) / cos(_cutterAngle * _PI / 180.0);
 
-	/*
 	//Get lowest common divider
 	int nww = NWW(_singleTableMotorStepCount, _singleDividerMotorStepCount);
-
-	Serial.println("NWW");
-	Serial.println(nww);
 	
 	_singleTableMotorStepCount /= nww;
 	_singleDividerMotorStepCount /= nww;
-	*/
 }
 
 int ProgramState::NWD(int a, int b)
@@ -325,5 +320,5 @@ int ProgramState::NWD(int a, int b)
 
 int ProgramState::NWW(int a, int b)
 {
-	return (a * b) / NWD(a, b) ;
+	return (long(a) * long(b)) / NWD(a, b) ;
 }
