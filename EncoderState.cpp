@@ -63,13 +63,18 @@ void EncoderState::react()
 		case MOVE_TABLE_MOTOR:
 		{
 			_reading = _rotaryEncoder->read();
-			_position += _reading;
 
 			if (_reading < 0 && !_forwardTableEndstop->isClicked())
+			{
+				_position += _reading;
 				_tableMotor->move(_reading);
+			}
 
 			if (_reading > 0 && !_backwardTableEndstop->isClicked())
+			{
+				_position += _reading;
 				_tableMotor->move(_reading);
+			}
 			
 			break;
 		}

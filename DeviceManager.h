@@ -19,8 +19,8 @@ private:
 	SimpleKeypad _simpleKeypad = SimpleKeypad();
 	Buzzer _buzzer = Buzzer();
 	SevSegms _sevSegms = SevSegms();
-	Endstop _forwardTableEndstop = Endstop(10);
-	Endstop _backwardTableEndstop = Endstop(9);
+	Endstop _forwardTableEndstop = Endstop(9);
+	Endstop _backwardTableEndstop = Endstop(10);
 	A4988 _dividerMotor = A4988(200, 6, 3, 8);
 	A4988 _tableMotor = A4988(200, 7, 4, 8);
 	SyncDriver _syncDriver = SyncDriver(_dividerMotor, _tableMotor);

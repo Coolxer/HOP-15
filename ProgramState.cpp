@@ -95,17 +95,17 @@ void ProgramState::react()
 
 			if (!_tableMotorHomed)
 			{
-				_tableMotor->setRPM(10);
+				_tableMotor->setRPM(30);
 
-				if (_forwardTableEndstop->isClicked())
+				if (_backwardTableEndstop->isClicked())
 					_tableMotorHomed = true;
 				else
-					_tableMotor->move(-1);
+					_tableMotor->move(-8);
 			}
 
 			if (_tableMotorHomed)
 			{
-				if(_testingHome)
+				if (_testingHome)
 					_program->getStateManager()->changeState(1);
 
 				if (_testingDividerMotor)
@@ -132,13 +132,11 @@ void ProgramState::react()
 			_tableMotor->enable();
 			_dividerMotor->enable();
 
-			_tableMotor->setRPM(30);
-
 			if (!forwardEndstopClicked)
 			{
 				//_tableMotor->move(_singleTableMotorStepCount);
 				//_dividerMotor->move(_singleDividerMotorStepCount);
-				_syncDriver->move(_singleDividerMotorStepCount * -1.0, _singleTableMotorStepCount * -1.0);
+				_syncDriver->move(_singleDividerMotorStepCount, _singleTableMotorStepCount);
 
 				//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
 				if (!_backwardTableEndstop->isClicked())
@@ -174,7 +172,7 @@ void ProgramState::react()
 				//_tableMotor->move(_singleDividerMotorStepCount * -1.0);
 				//_dividerMotor->move(_singleDividerMotorStepCount * -1.0);
 
-				_syncDriver->move(_singleDividerMotorStepCount, _singleDividerMotorStepCount);
+				_syncDriver->move(_singleDividerMotorStepCount * -1.0, _singleDividerMotorStepCount * -1.0);
 
 				//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
 				if (!_forwardTableEndstop->isClicked())
@@ -266,10 +264,6 @@ void ProgramState::togglePause()
 	_needRedraw = true;
 	if (_currentState != PAUSE)
 	{
-		//Disable motors
-		_tableMotor->disable();
-		_dividerMotor->disable();
-
 		//Save current state to get it back on unpause
 		_savedState = _currentState;
 		//Set current state to pause
@@ -303,11 +297,16 @@ void ProgramState::setCutterAngle(float angle)
 	//this should be setting always when we start a program because the cutterAngle would changed
 	_singleDividerMotorStepCount = _singleTableMotorStepCount / cos(_cutterAngle * PI / 180.0);
 
+	/*
 	//Get lowest common divider
 	int nww = NWW(_singleTableMotorStepCount, _singleDividerMotorStepCount);
+
+	Serial.println("NWW");
+	Serial.println(nww);
 	
-	_singleTableMotorStepCount = _singleTableMotorStepCount / nww;
-	_singleDividerMotorStepCount = _singleDividerMotorStepCount / nww;
+	_singleTableMotorStepCount /= nww;
+	_singleDividerMotorStepCount /= nww;
+	*/
 }
 
 int ProgramState::NWD(int a, int b)
@@ -326,5 +325,5 @@ int ProgramState::NWD(int a, int b)
 
 int ProgramState::NWW(int a, int b)
 {
-	return a / NWD(a, b) * b;
+	return (a * b) / NWD(a, b) ;
 }

@@ -228,13 +228,16 @@ void MenuState::enter()
 	{
 		ProgramState* programState = getProgram()->getProgramState();
 
-		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
-		programState->setCycles(byte(_itemBinds[1].item->getValue()));
-		programState->setCutterAngle(_itemBinds[10].item->getValue());
+		//programState->setFeathers(byte(_itemBinds[0].item->getValue()));
+		//programState->setCycles(byte(_itemBinds[1].item->getValue()));
+		//programState->setCutterAngle(_itemBinds[10].item->getValue());
 		programState->reset();
-		programState->testHome();
 
-		getProgram()->getStateManager()->changeState(2);
+		if (!programState->isHomed())
+		{
+			programState->testHome();
+			getProgram()->getStateManager()->changeState(2);
+		}		
 	}
 
 	_needRedraw = true;

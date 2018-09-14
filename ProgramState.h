@@ -82,10 +82,13 @@ private:
 
 	//Proportion of divider circle radiuses
 	float _proportionOfDividerMotorCircles = 2.0015384;
-	float _proportionOfTableMotorCircles;
+	float _proportionOfTableMotorCircles = 5.7272727;
 
-	int _singleTableMotorStepCount = 2880;
-	int _singleDividerMotorStepCount;
+	//int _singleTableMotorStepCount = 2880;
+	//int _singleDividerMotorStepCount;
+
+	float _singleTableMotorStepCount = 16.0;
+	float _singleDividerMotorStepCount;
 
 	int NWD(int a, int b);
 	int NWW(int a, int b);
@@ -109,6 +112,7 @@ public:
 
 	bool isPaused();
 	bool isFinished();
+	bool isHomed() { return _tableMotorHomed; };
 
 	void testDividerMotor() { _testingDividerMotor = true; };
 	void testTableMotor() { _testingTableMotor = true; };
