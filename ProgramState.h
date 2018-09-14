@@ -66,6 +66,7 @@ private:
 
 	bool _testingDividerMotor = false;
 	bool _testingTableMotor = false;
+	bool _testingHome = false;
 
 	bool _tableMotorHomed = false;
 
@@ -111,6 +112,7 @@ public:
 
 	void testDividerMotor() { _testingDividerMotor = true; };
 	void testTableMotor() { _testingTableMotor = true; };
+	void testHome() { _testingHome = true; };
 
 	virtual void init();
 	virtual void react();

@@ -105,6 +105,9 @@ void ProgramState::react()
 
 			if (_tableMotorHomed)
 			{
+				if(_testingHome)
+					_program->getStateManager()->changeState(1);
+
 				if (_testingDividerMotor)
 					_currentState = CHANGE_FEATHER;
 				else
@@ -255,6 +258,7 @@ void ProgramState::reset()
 
 	_testingDividerMotor = false;
 	_testingTableMotor = false;
+	_testingHome = false;
 }
 
 void ProgramState::togglePause()

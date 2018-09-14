@@ -69,6 +69,7 @@ void MenuState::init()
 	setElement(9, &_speed);
 	setElement(10, &_cutterAngle);
 	setElement(11, "Wylacz silniki");
+	setElement(12, "Ustaw do bazy");
 }
 
 void MenuState::react()
@@ -222,6 +223,19 @@ void MenuState::enter()
 		_dividerMotor->disable();
 		_tableMotor->disable();
 	}
+	//If we want to home table motor
+	else if (_selectedIndex == 12)
+	{
+		ProgramState* programState = getProgram()->getProgramState();
+
+		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
+		programState->setCycles(byte(_itemBinds[1].item->getValue()));
+		programState->setCutterAngle(_itemBinds[10].item->getValue());
+		programState->reset();
+		programState->testHome();
+
+		getProgram()->getStateManager()->changeState(2);
+	}
 
 	_needRedraw = true;
 }
@@ -269,7 +283,7 @@ const char* MenuState::getNextValue()
 
 	if (_itemBinds[index].index != -1)
 	{
-		float value = _itemBinds[_selectedIndex].item->getValue();
+		float value = _itemBinds[index].item->getValue();
 		char valueStr[6] = { 0 };
 		strcpy(valueStr, "");
 		dtostrf(value, 2, 1, &valueStr[strlen(valueStr)]);
@@ -304,7 +318,7 @@ const char* MenuState::getPrevValue()
 
 	if (_itemBinds[index].index != -1)
 	{
-		float value = _itemBinds[_selectedIndex].item->getValue();
+		float value = _itemBinds[index].item->getValue();
 		char valueStr[6] = { 0 };
 		strcpy(valueStr, "");
 		dtostrf(value, 2, 1, &valueStr[strlen(valueStr)]);
