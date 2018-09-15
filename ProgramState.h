@@ -13,6 +13,7 @@ class SevSegms;
 class Endstop;
 class A4988;
 class SyncDriver;
+class MultiDriver;
 
 enum ExecutionState 
 {
@@ -41,6 +42,7 @@ private:
 	A4988* _dividerMotor;
 	A4988* _tableMotor;
 	SyncDriver* _syncDriver;
+	MultiDriver* _multiDriver;
 
 	//Current state of execution of program
 	ExecutionState _currentState = START;
@@ -91,6 +93,8 @@ private:
 
 	int NWD(int a, int b);
 	int NWW(int a, int b);
+
+	void synchronizedMove(int x);
 
 public:
 	void setFeathers(byte feathers) { _feathersCount = feathers; };
