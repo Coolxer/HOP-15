@@ -56,8 +56,6 @@ void ProgramState::react()
 		if (_currentState == FINISH)
 		{
 			//If program finished back to menu
-			_dividerMotor->disable();
-			_tableMotor->disable();
 			_program->getStateManager()->changeState(1);
 		}
 		else
@@ -65,11 +63,11 @@ void ProgramState::react()
 
 		break;
 	}
-	case KEY_RETURN: //Stop
+	case KEY_RETURN:
 	{
+		//If we stopped the program
 		_dividerMotor->disable();
 		_tableMotor->disable();
-
 		_program->getStateManager()->changeState(1);
 
 		break;
@@ -130,8 +128,6 @@ void ProgramState::react()
 
 		if (!forwardEndstopClicked)
 		{
-			//_tableMotor->move(_singleTableMotorStepCount);
-			//_dividerMotor->move(_singleDividerMotorStepCount);
 			_syncDriver->move(_singleDividerMotorStepCount, _singleTableMotorStepCount);
 			//synchronizedMove(1);
 
@@ -166,8 +162,6 @@ void ProgramState::react()
 
 		if (!backwardEndstopClicked)
 		{
-			//_tableMotor->move(_singleDividerMotorStepCount * -1.0);
-			//_dividerMotor->move(_singleDividerMotorStepCount * -1.0);
 			_syncDriver->move(_singleDividerMotorStepCount * -1.0, _singleDividerMotorStepCount * -1.0);
 			//synchronizedMove(-1);
 
@@ -292,17 +286,21 @@ void ProgramState::setCutterAngle(float angle)
 	_cutterAngle = angle;
 
 	Serial.println(_cutterAngle);
-	Serial.println(_singleDividerMotorStepCount);
 
 	//this should be setting always when we start a program because the cutterAngle would changed
 	_singleDividerMotorStepCount = double(_singleTableMotorStepCount) / cos(_cutterAngle * _PI / 180.0);
+
 	Serial.println(_singleDividerMotorStepCount);
 
 	_singleDividerMotorStepCount = round(_singleDividerMotorStepCount / 2) * 2;
 
+	Serial.println(_singleDividerMotorStepCount);
+
 	//Get lowest common divider
 	long nwd = NWD(_singleTableMotorStepCount, _singleDividerMotorStepCount);
+
 	Serial.println(nwd);
+
 	_singleTableMotorStepCount /= nwd;
 	_singleDividerMotorStepCount /= nwd;
 

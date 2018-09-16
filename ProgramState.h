@@ -42,7 +42,6 @@ private:
 	A4988* _dividerMotor;
 	A4988* _tableMotor;
 	SyncDriver* _syncDriver;
-	MultiDriver* _multiDriver;
 
 	//Current state of execution of program
 	ExecutionState _currentState = START;
@@ -75,17 +74,16 @@ private:
 	bool _tableMotorHomed = false;
 
 	//Angle of cutter in degrees
-	//float _cutterAngle = 24.0;
 	float _cutterAngle;
 
 	//Radius of directly motor circle
-	float _directlyMotorCircleRadius = 6.0;
+	float _directlyMotorCircleRadius = 32.48;
 
 	//Radius of shift motor circle
-	float _shiftMotorCircleRadius = 12.0;
+	float _shiftMotorCircleRadius = 130.13;
 
 	//Proportion of divider circle radiuses
-	float _proportionOfDividerMotorCircles = 4.0064655;
+	float _proportionOfDividerMotorCircles;
 	float _proportionOfTableMotorCircles = 5.7272727;
 
 	int _singleTableMotorStepCount = 1600;

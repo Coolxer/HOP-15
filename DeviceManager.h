@@ -11,7 +11,6 @@
 #include "RotaryEncoder.h"
 #include "lib/A4988.h"
 #include "lib/SyncDriver.h"
-#include "lib/MultiDriver.h"
 
 class DeviceManager
 {
@@ -25,7 +24,6 @@ private:
 	A4988 _dividerMotor = A4988(200, 6, 3, 8);
 	A4988 _tableMotor = A4988(200, 7, 4, 8);
 	SyncDriver _syncDriver = SyncDriver(_dividerMotor, _tableMotor);
-	MultiDriver _multiDriver = MultiDriver(_dividerMotor, _tableMotor);
 	RotaryEncoder _rotaryEncoder = RotaryEncoder();
 
 public:
@@ -40,7 +38,6 @@ public:
 	A4988* requestDividerMotor() { return &_dividerMotor; };
 	A4988* requestTableMotor() { return &_tableMotor; };
 	SyncDriver* requestSyncDriver() { return &_syncDriver; };
-	MultiDriver* requestMultiDriver() { return &_multiDriver; };
 	RotaryEncoder* requestRotaryEncoder() { return &_rotaryEncoder; };
 };
 

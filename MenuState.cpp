@@ -46,7 +46,7 @@ void MenuState::init()
 	_cycleAmount = SetValueElement("Cykle", this, 1, 16, 1, 1);
 	_speed = SetValueElement("Predkosc", this, 5, 100, 30, 5);
 
-	_cutterAngle = SetValueElement("Kat obrotu", this, 1.0, 60.0, 24.0, 0.1);
+	_cutterAngle = SetValueElement("Kat obrotu", this, 1.0, 60.0, 30.0, 0.1);
 
 	DeviceManager* deviceManager = _program->getDeviceManager();
 
