@@ -292,7 +292,7 @@ void ProgramState::setCutterAngle(float angle)
 
 	//Serial.println(_singleDividerMotorStepCount);
 
-	//_singleDividerMotorStepCount = round(_singleDividerMotorStepCount / 2) * 2;
+	_singleDividerMotorStepCount = round(_singleDividerMotorStepCount / 2) * 2;
 
 	//Serial.println(_singleDividerMotorStepCount);
 
