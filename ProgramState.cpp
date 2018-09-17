@@ -129,7 +129,6 @@ void ProgramState::react()
 		if (!forwardEndstopClicked)
 		{
 			_syncDriver->move(_singleDividerMotorStepCount, _singleTableMotorStepCount);
-			//synchronizedMove(1);
 
 			//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
 			if (!_backwardTableEndstop->isClicked())
@@ -163,7 +162,6 @@ void ProgramState::react()
 		if (!backwardEndstopClicked)
 		{
 			_syncDriver->move(_singleDividerMotorStepCount * -1.0, _singleDividerMotorStepCount * -1.0);
-			//synchronizedMove(-1);
 
 			//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
 			if (!_forwardTableEndstop->isClicked())
@@ -219,6 +217,8 @@ void ProgramState::react()
 			//If we only wanted to test divider back to menu
 			_program->getStateManager()->changeState(1);
 		}
+
+		delay(100);
 
 		_currentState = MOVE_FORWARD;
 
@@ -285,21 +285,21 @@ void ProgramState::setCutterAngle(float angle)
 {
 	_cutterAngle = angle;
 
-	Serial.println(_cutterAngle);
+	//Serial.println(_cutterAngle);
 
 	//this should be setting always when we start a program because the cutterAngle would changed
 	_singleDividerMotorStepCount = double(_singleTableMotorStepCount) / cos(_cutterAngle * _PI / 180.0);
 
-	Serial.println(_singleDividerMotorStepCount);
+	//Serial.println(_singleDividerMotorStepCount);
 
-	_singleDividerMotorStepCount = round(_singleDividerMotorStepCount / 2) * 2;
+	//_singleDividerMotorStepCount = round(_singleDividerMotorStepCount / 2) * 2;
 
-	Serial.println(_singleDividerMotorStepCount);
+	//Serial.println(_singleDividerMotorStepCount);
 
 	//Get lowest common divider
 	long nwd = NWD(_singleTableMotorStepCount, _singleDividerMotorStepCount);
 
-	Serial.println(nwd);
+	//Serial.println(nwd);
 
 	_singleTableMotorStepCount /= nwd;
 	_singleDividerMotorStepCount /= nwd;

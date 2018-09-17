@@ -77,10 +77,10 @@ private:
 	float _cutterAngle;
 
 	//Radius of directly motor circle
-	float _directlyMotorCircleRadius = 32.48;
+	float _directlyMotorCircleRadius = 33.55;
 
 	//Radius of shift motor circle
-	float _shiftMotorCircleRadius = 130.13;
+	float _shiftMotorCircleRadius = 130.1;
 
 	//Proportion of divider circle radiuses
 	float _proportionOfDividerMotorCircles;
