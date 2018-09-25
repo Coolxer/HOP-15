@@ -26,7 +26,8 @@ void ProgramState::init()
 	_tableMotor = deviceManager->requestTableMotor();
 	_syncDriver = deviceManager->requestSyncDriver();
 
-	_proportionOfDividerMotorCircles = _shiftMotorCircleRadius / _directlyMotorCircleRadius;
+	_proportionOfDividerMotorCircles = _bigGearOfDividerMotor / _smallGearOfDividerMotor;
+	_proportionOfTableMotorCircles = _bigGearOfTableMotor / _smallGearOfTableMotor;
 }
 
 void ProgramState::react()
@@ -161,7 +162,7 @@ void ProgramState::react()
 
 		if (!backwardEndstopClicked)
 		{
-			_syncDriver->move(_singleDividerMotorStepCount * -1.0, _singleDividerMotorStepCount * -1.0);
+			_syncDriver->move(_singleDividerMotorStepCount * -1.0, _singleTableMotorStepCount * -1.0);
 
 			//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
 			if (!_forwardTableEndstop->isClicked())
@@ -248,6 +249,8 @@ void ProgramState::reset()
 	_testingDividerMotor = false;
 	_testingTableMotor = false;
 	_testingHome = false;
+
+	_singleTableMotorStepCount = 0.1;
 }
 
 void ProgramState::togglePause()
@@ -281,28 +284,35 @@ bool ProgramState::isFinished()
 	return false;
 }
 
-void ProgramState::setCutterAngle(float angle)
+void ProgramState::calcSteps()
 {
-	_cutterAngle = angle;
-
-	//Serial.println(_cutterAngle);
-
+	/*
 	//this should be setting always when we start a program because the cutterAngle would changed
-	_singleDividerMotorStepCount = double(_singleTableMotorStepCount) / cos(_cutterAngle * _PI / 180.0);
+	//_singleDividerMotorStepCount = double(_singleTableMotorStepCount) / cos(_cutterAngle * _PI / 180.0);
 
-	//Serial.println(_singleDividerMotorStepCount);
+	//_singleDividerMotorStepCount = round(_singleDividerMotorStepCount / 2) * 2;
 
-	_singleDividerMotorStepCount = round(_singleDividerMotorStepCount / 2) * 2;
-
-	//Serial.println(_singleDividerMotorStepCount);
+	_singleDividerMotorStepCount = double(_singleTableMotorStepCount) * tan((_cutterAngle * _PI) / 180.0);
+	float circuit = _PI * _diameter * 14.63116457257362;
+	_singleDividerMotorStepCount /= circuit;
+	_singleDividerMotorStepCount /= 360;
 
 	//Get lowest common divider
-	long nwd = NWD(_singleTableMotorStepCount, _singleDividerMotorStepCount);
+	//long nwd = NWD(_singleTableMotorStepCount, _singleDividerMotorStepCount);
 
-	//Serial.println(nwd);
+	//_singleTableMotorStepCount /= nwd;
+	//_singleDividerMotorStepCount /= nwd;
+	*/
 
-	_singleTableMotorStepCount /= nwd;
-	_singleDividerMotorStepCount /= nwd;
+	_singleTableMotorStepCount *= _proportionOfTableMotorCircles;
+
+	_singleDividerMotorStepCount = double(_singleTableMotorStepCount) * tan((_cutterAngle * _PI) / 180.0);
+	float circuit = _PI * _diameter;
+	_singleDividerMotorStepCount /= circuit;
+	_singleDividerMotorStepCount *= 360;
+
+	_singleTableMotorStepCount *= 14.63116457257362;
+	_singleDividerMotorStepCount *= 14.63116457257362;
 
 	Serial.println(_singleTableMotorStepCount);
 	Serial.println(_singleDividerMotorStepCount);
@@ -329,6 +339,7 @@ int ProgramState::NWW(int a, int b)
 
 void ProgramState::synchronizedMove(int x)
 {
+	/*
 	int currentStep = 0;
 	int step = 8;
 	int factor = _singleDividerMotorStepCount / _singleTableMotorStepCount;
@@ -376,4 +387,6 @@ void ProgramState::synchronizedMove(int x)
 
 	if (movedDividerSteps < _singleDividerMotorStepCount)
 		_dividerMotor->move((_singleDividerMotorStepCount - movedDividerSteps) * x);
+
+		*/
 }

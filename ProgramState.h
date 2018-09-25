@@ -13,7 +13,6 @@ class SevSegms;
 class Endstop;
 class A4988;
 class SyncDriver;
-class MultiDriver;
 
 enum ExecutionState 
 {
@@ -76,18 +75,21 @@ private:
 	//Angle of cutter in degrees
 	float _cutterAngle;
 
-	//Radius of directly motor circle
-	float _directlyMotorCircleRadius = 33.55;
+	//Diameter of cutter
+	float _diameter;
 
-	//Radius of shift motor circle
-	float _shiftMotorCircleRadius = 130.1;
+	float _smallGearOfDividerMotor = 34.81;
+	float _bigGearOfDividerMotor = 130.1;
+
+	float _smallGearOfTableMotor = 16.42;
+	float _bigGearOfTableMotor = 87;
 
 	//Proportion of divider circle radiuses
-	float _proportionOfDividerMotorCircles;
-	float _proportionOfTableMotorCircles = 5.7272727;
+	float _proportionOfDividerMotorCircles; 
+	float _proportionOfTableMotorCircles;
 
-	int _singleTableMotorStepCount = 1600;
-	int _singleDividerMotorStepCount;
+	float _singleTableMotorStepCount = 0.1;//128; //lets try do that in mm
+	float _singleDividerMotorStepCount; //lets try do that in mm
 
 	int NWD(int a, int b);
 	int NWW(int a, int b);
@@ -97,7 +99,10 @@ private:
 public:
 	void setFeathers(byte feathers) { _feathersCount = feathers; };
 	void setCycles(byte cycles) { _cyclesCount = cycles; };
-	void setCutterAngle(float angle);
+	void setCutterAngle(float angle) { _cutterAngle = angle; };
+	void setDiameter(float diameter) { _diameter = diameter; };
+
+	void calcSteps();
 
 	byte getCurrentFeather() { return _currentFeather; };
 	void setCurrentFeather(byte currentFeather) { _currentFeather = currentFeather; };

@@ -47,6 +47,7 @@ void MenuState::init()
 	_speed = SetValueElement("Predkosc", this, 5, 100, 30, 5);
 
 	_cutterAngle = SetValueElement("Kat obrotu", this, 1.0, 60.0, 30.0, 0.1);
+	_diameter = SetValueElement("Srednica", this, 5.0, 100.0, 20.0, 0.1);
 
 	DeviceManager* deviceManager = _program->getDeviceManager();
 
@@ -59,17 +60,18 @@ void MenuState::init()
 
 	setElement(0, &_featherAmount);
 	setElement(1, &_cycleAmount);
-	setElement(2, "Rozpocznij");
-	setElement(3, "Test podzielnicy");
-	setElement(4, "Test stolu");
-	setElement(5, "Podziel. szybko");
-	setElement(6, "Podziel. wolno");
-	setElement(7, "Stol szybko");
-	setElement(8, "Stol wolno");
-	setElement(9, &_speed);
-	setElement(10, &_cutterAngle);
-	setElement(11, "Wylacz silniki");
-	setElement(12, "Ustaw do bazy");
+	setElement(2, &_cutterAngle);
+	setElement(3, &_diameter);
+	setElement(4, "Rozpocznij");
+	setElement(5, "Test podzielnicy");
+	setElement(6, "Test stolu");
+	setElement(7, "Podziel. szybko");
+	setElement(8, "Podziel. wolno");
+	setElement(9, "Stol szybko");
+	setElement(10, "Stol wolno");
+	setElement(11, &_speed);
+	setElement(12, "Wylacz silniki");
+	setElement(13, "Ustaw do bazy");
 }
 
 void MenuState::react()
@@ -136,44 +138,51 @@ void MenuState::enter()
 		_isFocused = !_isFocused;
 
 	//If we starting new program
-	if (_selectedIndex == 2)
+	if (_selectedIndex == 4)
 	{
 		ProgramState* programState = getProgram()->getProgramState();
+		programState->reset();
+
 		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
-		programState->setCutterAngle(_itemBinds[10].item->getValue());
-		programState->reset();
+		programState->setCutterAngle(_itemBinds[2].item->getValue());
+		programState->setDiameter(_itemBinds[3].item->getValue());
+		programState->calcSteps();
 
 		getProgram()->getStateManager()->changeState(2);
 	}
 	//If we testing divider
-	else if (_selectedIndex == 3)
+	else if (_selectedIndex == 5)
 	{
 		ProgramState* programState = getProgram()->getProgramState();
+		programState->reset();
 
 		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
-		programState->setCutterAngle(_itemBinds[10].item->getValue());
-		programState->reset();
+		programState->setCutterAngle(_itemBinds[2].item->getValue());
+		programState->setDiameter(_itemBinds[3].item->getValue());
+		programState->calcSteps();
 		programState->testDividerMotor();
 
 		getProgram()->getStateManager()->changeState(2);
 	}
 	//If we testing table
-	else if (_selectedIndex == 4)
+	else if (_selectedIndex == 6)
 	{
 		ProgramState* programState = getProgram()->getProgramState();
+		programState->reset();
 
 		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
-		programState->setCutterAngle(_itemBinds[10].item->getValue());
-		programState->reset();
+		programState->setCutterAngle(_itemBinds[2].item->getValue());
+		programState->setDiameter(_itemBinds[3].item->getValue());
+		programState->calcSteps();
 		programState->testTableMotor();
 
 		getProgram()->getStateManager()->changeState(2);
 	}
 	//If we moving divider quickly
-	else if (_selectedIndex == 5)
+	else if (_selectedIndex == 7)
 	{
 		_rotaryEncoder->setOperationType(RotaryEncoder::QUICKLY_MOVE);
 
@@ -185,7 +194,7 @@ void MenuState::enter()
 		getProgram()->getStateManager()->changeState(3);
 	}
 	//If we moving divider slowly
-	else if (_selectedIndex == 6)
+	else if (_selectedIndex == 8)
 	{
 		_rotaryEncoder->setOperationType(RotaryEncoder::SLOWLY_MOVE);
 
@@ -196,7 +205,7 @@ void MenuState::enter()
 		getProgram()->getStateManager()->changeState(3);
 	}
 	//If we moving table quickly
-	else if (_selectedIndex == 7)
+	else if (_selectedIndex == 9)
 	{
 		_rotaryEncoder->setOperationType(RotaryEncoder::QUICKLY_MOVE);
 
@@ -207,7 +216,7 @@ void MenuState::enter()
 		getProgram()->getStateManager()->changeState(3);
 	}
 	//If we moving table slowly
-	else if (_selectedIndex == 8)
+	else if (_selectedIndex == 10)
 	{
 		_rotaryEncoder->setOperationType(RotaryEncoder::SLOWLY_MOVE);
 
@@ -218,13 +227,13 @@ void MenuState::enter()
 		getProgram()->getStateManager()->changeState(3);
 	}
 	//If we want to disable motors
-	else if (_selectedIndex == 11)
+	else if (_selectedIndex == 12)
 	{
 		_dividerMotor->disable();
 		_tableMotor->disable();
 	}
 	//If we want to home table motor
-	else if (_selectedIndex == 12)
+	else if (_selectedIndex == 13)
 	{
 		ProgramState* programState = getProgram()->getProgramState();
 

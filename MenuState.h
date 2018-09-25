@@ -7,7 +7,7 @@
 
 #include "SetValueElement.h"
 
-#define ITEM_COUNT 13
+#define ITEM_COUNT 14
 
 class Program;
 
@@ -44,6 +44,7 @@ private:
 	SetValueElement _cycleAmount;
 	SetValueElement _speed;
 	SetValueElement _cutterAngle;
+	SetValueElement _diameter;
 
 public:
 	bool setElement(byte index, char* description);
