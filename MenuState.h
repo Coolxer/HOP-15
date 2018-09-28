@@ -14,7 +14,7 @@ class Program;
 class Lcd;
 class SimpleKeypad;
 class Buzzer;
-class A4988;
+class AccelStepper;
 class RotaryEncoder;
 
 struct ItemBind
@@ -29,8 +29,8 @@ private:
 	Lcd* _lcd;
 	SimpleKeypad* _simpleKeypad;
 	Buzzer* _buzzer;
-	A4988* _dividerMotor;
-	A4988* _tableMotor;
+	AccelStepper* _dividerMotor;
+	AccelStepper* _tableMotor;
 	RotaryEncoder* _rotaryEncoder;
 
 	String _itemNames[ITEM_COUNT];
@@ -70,7 +70,6 @@ public:
 	char* getTip();
 
 	float getValueAtIndex(byte index);
-
 };
 
 #endif

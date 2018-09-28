@@ -1,12 +1,13 @@
 #include "MenuState.h"
 
+#include <AccelStepper.h>
+
 #include "Program.h"
 #include "DeviceManager.h"
 
 #include "Lcd.h"
 #include "SimpleKeypad.h"
 #include "Buzzer.h"
-#include "lib/A4988.h"
 #include "RotaryEncoder.h"
 
 #include "ProgramState.h"
@@ -229,8 +230,8 @@ void MenuState::enter()
 	//If we want to disable motors
 	else if (_selectedIndex == 12)
 	{
-		_dividerMotor->disable();
-		_tableMotor->disable();
+		_dividerMotor->enableOutputs();
+		_tableMotor->enableOutputs();
 	}
 	//If we want to home table motor
 	else if (_selectedIndex == 13)

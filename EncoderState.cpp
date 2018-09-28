@@ -1,5 +1,7 @@
 #include "EncoderState.h"
 
+#include <AccelStepper.h>
+
 #include "Program.h"
 #include "DeviceManager.h"
 
@@ -7,7 +9,6 @@
 #include "SimpleKeypad.h"
 #include "Buzzer.h"
 #include "RotaryEncoder.h"
-#include "lib/A4988.h"
 
 void EncoderState::init()
 {
@@ -48,8 +49,8 @@ void EncoderState::react()
 	if (key == KEY_ENTER)
 		_program->getStateManager()->changeState(1);
 
-	_dividerMotor->enable();
-	_tableMotor->enable();
+	_dividerMotor->disableOutputs();
+	_tableMotor->disableOutputs();
 
 	switch (_operation)
 	{
@@ -58,6 +59,10 @@ void EncoderState::react()
 			_reading = _rotaryEncoder->read();
 			_position += _reading;
 			_dividerMotor->move(_reading);
+			while (_dividerMotor->distanceToGo() != 0)
+			{
+				_dividerMotor->runSpeedToPosition();
+			}	
 			break;
 		}
 		case MOVE_TABLE_MOTOR:
@@ -68,12 +73,21 @@ void EncoderState::react()
 			{
 				_position += _reading;
 				_tableMotor->move(_reading);
+				while (_tableMotor->distanceToGo() != 0)
+				{	
+					_tableMotor->runSpeedToPosition();
+				}
 			}
+				
 
 			if (_reading > 0 && !_forwardTableEndstop->isClicked())
 			{
 				_position += _reading;
 				_tableMotor->move(_reading);
+				while (_tableMotor->distanceToGo() != 0)
+				{
+					_tableMotor->runSpeedToPosition();
+				}
 			}
 			
 			break;

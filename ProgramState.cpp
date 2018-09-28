@@ -1,5 +1,7 @@
 #include "ProgramState.h"
 
+#include <AccelStepper.h>
+
 #include "Program.h"
 #include "DeviceManager.h"
 
@@ -24,10 +26,13 @@ void ProgramState::init()
 
 	_dividerMotor = deviceManager->requestDividerMotor();
 	_tableMotor = deviceManager->requestTableMotor();
-	_syncDriver = deviceManager->requestSyncDriver();
+	_multiStepper = deviceManager->requestMultiStepper();
 
 	_proportionOfDividerMotorCircles = _bigGearOfDividerMotor / _smallGearOfDividerMotor;
 	_proportionOfTableMotorCircles = _bigGearOfTableMotor / _smallGearOfTableMotor;
+	
+	positions[0] = 8;
+	positions[1] = 8;
 }
 
 void ProgramState::react()
@@ -67,8 +72,8 @@ void ProgramState::react()
 	case KEY_RETURN:
 	{
 		//If we stopped the program
-		_dividerMotor->disable();
-		_tableMotor->disable();
+		_dividerMotor->enableOutputs();
+		_tableMotor->enableOutputs();
 		_program->getStateManager()->changeState(1);
 
 		break;
@@ -86,18 +91,24 @@ void ProgramState::react()
 	}
 	case STARTING:
 	{
-		//Power on table motor to let it home
-		_tableMotor->enable();
-
-		//Power on divider motor
-		_dividerMotor->enable();
+		_tableMotor->disableOutputs();
+		_dividerMotor->disableOutputs();
 
 		if (!_tableMotorHomed)
 		{
 			if (_backwardTableEndstop->isClicked())
 				_tableMotorHomed = true;
 			else
-				_tableMotor->move(-8);
+			{
+				if (_tableMotor->distanceToGo() == 0)
+				{
+					_tableMotor->setCurrentPosition(0);
+					_tableMotor->moveTo(-8);
+				}
+	;
+				_tableMotor->runSpeedToPosition();
+			}
+				
 		}
 
 		if (_tableMotorHomed)
@@ -105,7 +116,7 @@ void ProgramState::react()
 			if (_testingHome)
 				_program->getStateManager()->changeState(1);
 
-			if (_testingDividerMotor)
+			else if (_testingDividerMotor)
 				_currentState = CHANGE_FEATHER;
 			else
 				_currentState = MOVE_FORWARD;
@@ -124,12 +135,23 @@ void ProgramState::react()
 	}
 	case MOVING_FORWARD:
 	{
-		_tableMotor->enable();
-		_dividerMotor->enable();
+		_tableMotor->disableOutputs();
+		_dividerMotor->disableOutputs();
 
 		if (!forwardEndstopClicked)
 		{
-			_syncDriver->move(_singleDividerMotorStepCount, _singleTableMotorStepCount);
+			positions[0] = 8;
+			positions[1] = 8;
+
+			_multiStepper->moveTo(positions);
+
+			if (_tableMotor->distanceToGo() == 0)
+				_tableMotor->setCurrentPosition(0);
+
+			if (_dividerMotor->distanceToGo() == 0)
+				_dividerMotor->setCurrentPosition(0);
+	
+			_multiStepper->runSpeedToPosition();
 
 			//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
 			if (!_backwardTableEndstop->isClicked())
@@ -157,12 +179,23 @@ void ProgramState::react()
 	}
 	case MOVING_BACKWARD:
 	{
-		_tableMotor->enable();
-		_dividerMotor->enable();
+		_tableMotor->disableOutputs();
+		_dividerMotor->disableOutputs();
 
 		if (!backwardEndstopClicked)
 		{
-			_syncDriver->move(_singleDividerMotorStepCount * -1.0, _singleTableMotorStepCount * -1.0);
+			positions[0] = -8;
+			positions[1] = -8;
+
+			_multiStepper->moveTo(positions);
+
+			if (_tableMotor->distanceToGo() == 0)
+				_tableMotor->setCurrentPosition(0);
+
+			if (_dividerMotor->distanceToGo() == 0)
+				_dividerMotor->setCurrentPosition(0);
+
+			_multiStepper->runSpeedToPosition();
 
 			//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
 			if (!_forwardTableEndstop->isClicked())
@@ -177,6 +210,7 @@ void ProgramState::react()
 			_currentFeather++;
 
 			//change state to CHANGE_FEATHER
+			_dividerMotor->setCurrentPosition(0);
 			_currentState = CHANGE_FEATHER;
 
 			//Check if new cycle should begin
@@ -193,8 +227,8 @@ void ProgramState::react()
 			if (_testingTableMotor)
 			{
 				//If we only wanted to test table back to menu
-				_dividerMotor->disable();
-				_tableMotor->disable();
+				_dividerMotor->disableOutputs();
+				_tableMotor->disableOutputs();
 				_program->getStateManager()->changeState(1);
 			}
 
@@ -206,20 +240,22 @@ void ProgramState::react()
 	}
 	case CHANGE_FEATHER:
 	{
-		_tableMotor->enable();
-		_dividerMotor->enable();
+		_tableMotor->disableOutputs();
+		_dividerMotor->disableOutputs();
 
-		delay(100);
+		//_dividerMotor->rotate(_rotateAngle * _proportionOfDividerMotorCircles * -1.0);
+		_dividerMotor->moveTo(_rotateAngle * _proportionOfDividerMotorCircles * 200 * 8 / 360);
 
-		_dividerMotor->rotate(_rotateAngle * _proportionOfDividerMotorCircles * -1.0);
-
+		while (_dividerMotor->distanceToGo() != 0)
+		{
+			_dividerMotor->runSpeedToPosition();
+		}
+		
 		if (_testingDividerMotor)
 		{
 			//If we only wanted to test divider back to menu
 			_program->getStateManager()->changeState(1);
 		}
-
-		delay(100);
 
 		_currentState = MOVE_FORWARD;
 
@@ -227,8 +263,8 @@ void ProgramState::react()
 	}
 	case FINISH:
 	{
-		_tableMotor->disable();
-		_dividerMotor->disable();
+		_tableMotor->enableOutputs();
+		_dividerMotor->enableOutputs();
 
 		break;
 	}
@@ -304,12 +340,15 @@ void ProgramState::calcSteps()
 	//_singleDividerMotorStepCount /= nwd;
 	*/
 
-	_singleTableMotorStepCount *= _proportionOfTableMotorCircles;
+	//_singleTableMotorStepCount *= _proportionOfTableMotorCircles;
 
 	_singleDividerMotorStepCount = double(_singleTableMotorStepCount) * tan((_cutterAngle * _PI) / 180.0);
 	float circuit = _PI * _diameter;
 	_singleDividerMotorStepCount /= circuit;
 	_singleDividerMotorStepCount *= 360;
+
+	_singleTableMotorStepCount *= _proportionOfTableMotorCircles;
+	_singleDividerMotorStepCount *= _proportionOfDividerMotorCircles;
 
 	_singleTableMotorStepCount *= 14.63116457257362;
 	_singleDividerMotorStepCount *= 14.63116457257362;

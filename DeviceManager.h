@@ -9,8 +9,9 @@
 #include "SevSegms.h"
 #include "Endstop.h"
 #include "RotaryEncoder.h"
-#include "lib/A4988.h"
-#include "lib/SyncDriver.h"
+
+#include <MultiStepper.h>
+#include <AccelStepper.h>
 
 class DeviceManager
 {
@@ -21,13 +22,31 @@ private:
 	SevSegms _sevSegms = SevSegms();
 	Endstop _forwardTableEndstop = Endstop(9);
 	Endstop _backwardTableEndstop = Endstop(10);
-	A4988 _dividerMotor = A4988(200, 6, 3, 8);
-	A4988 _tableMotor = A4988(200, 7, 4, 8);
-	SyncDriver _syncDriver = SyncDriver(_dividerMotor, _tableMotor);
+	AccelStepper _dividerMotor = AccelStepper(1, 3, 6);
+	AccelStepper _tableMotor = AccelStepper(1, 4, 7);
+	MultiStepper _multiStepper = MultiStepper();
 	RotaryEncoder _rotaryEncoder = RotaryEncoder();
 
 public:
-	DeviceManager() { _dividerMotor.begin(60, 8); _tableMotor.begin(60, 8); _dividerMotor.disable(); _tableMotor.disable(); };
+	DeviceManager() { 
+		_dividerMotor.setEnablePin(8);
+		_tableMotor.setEnablePin(8);
+
+		_dividerMotor.enableOutputs(); 
+		_tableMotor.enableOutputs();
+
+		_dividerMotor.setAcceleration(8000000);
+		_tableMotor.setAcceleration(8000000);
+
+		_dividerMotor.setMaxSpeed(3000);
+		_tableMotor.setMaxSpeed(3000);
+
+		_dividerMotor.setSpeed(1000);
+		_tableMotor.setSpeed(1000);
+
+		_multiStepper.addStepper(_tableMotor);
+		_multiStepper.addStepper(_dividerMotor);
+	}// _dividerMotor.begin(60, 8); _tableMotor.begin(60, 8); _dividerMotor.disable(); _tableMotor.disable(); };
 
 	Lcd* requestLcd() { return &_lcd; };
 	SimpleKeypad* requestSimpleKeypad() { return &_simpleKeypad; };
@@ -35,9 +54,10 @@ public:
 	SevSegms* requestSevSegms() { return &_sevSegms; };
 	Endstop* requestForwardTableEndstop() { return &_forwardTableEndstop; };
 	Endstop* requestBackwardTableEndstop() { return &_backwardTableEndstop; };
-	A4988* requestDividerMotor() { return &_dividerMotor; };
-	A4988* requestTableMotor() { return &_tableMotor; };
-	SyncDriver* requestSyncDriver() { return &_syncDriver; };
+	//A4988* requestDividerMotor() { return &_dividerMotor; };
+	AccelStepper* requestDividerMotor() { return &_dividerMotor; };
+	AccelStepper* requestTableMotor() { return &_tableMotor; };
+	MultiStepper* requestMultiStepper() { return &_multiStepper; };
 	RotaryEncoder* requestRotaryEncoder() { return &_rotaryEncoder; };
 };
 

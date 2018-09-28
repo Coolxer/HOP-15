@@ -11,8 +11,9 @@ class SimpleKeypad;
 class Buzzer;
 class SevSegms;
 class Endstop;
-class A4988;
-class SyncDriver;
+
+class AccelStepper;
+class MultiStepper;
 
 enum ExecutionState 
 {
@@ -38,9 +39,9 @@ private:
 	Endstop* _forwardTableEndstop;
 	Endstop* _backwardTableEndstop;
 
-	A4988* _dividerMotor;
-	A4988* _tableMotor;
-	SyncDriver* _syncDriver;
+	AccelStepper* _dividerMotor;
+	AccelStepper* _tableMotor;
+	MultiStepper* _multiStepper;
 
 	//Current state of execution of program
 	ExecutionState _currentState = START;
@@ -88,8 +89,10 @@ private:
 	float _proportionOfDividerMotorCircles; 
 	float _proportionOfTableMotorCircles;
 
-	float _singleTableMotorStepCount = 0.1;//128; //lets try do that in mm
-	float _singleDividerMotorStepCount; //lets try do that in mm
+	float _singleTableMotorStepCount = 0.1;//128;
+	float _singleDividerMotorStepCount; 
+
+	long positions[2];
 
 	int NWD(int a, int b);
 	int NWW(int a, int b);
