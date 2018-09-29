@@ -30,9 +30,6 @@ void ProgramState::init()
 
 	_proportionOfDividerMotorCircles = _bigGearOfDividerMotor / _smallGearOfDividerMotor;
 	_proportionOfTableMotorCircles = _bigGearOfTableMotor / _smallGearOfTableMotor;
-	
-	positions[0] = 8;
-	positions[1] = 8;
 }
 
 void ProgramState::react()
@@ -140,10 +137,10 @@ void ProgramState::react()
 
 		if (!forwardEndstopClicked)
 		{
-			positions[0] = 8;
-			positions[1] = 8;
+			_stepsOfMotors[0] = long(_tableCountInSteps);
+			_stepsOfMotors[1] = long(_dividerCountInSteps);
 
-			_multiStepper->moveTo(positions);
+			_multiStepper->moveTo(_stepsOfMotors);
 
 			if (_tableMotor->distanceToGo() == 0)
 				_tableMotor->setCurrentPosition(0);
@@ -184,10 +181,10 @@ void ProgramState::react()
 
 		if (!backwardEndstopClicked)
 		{
-			positions[0] = -8;
-			positions[1] = -8;
+			_stepsOfMotors[0] = long(_tableCountInSteps * -1);
+			_stepsOfMotors[1] = long(_dividerCountInSteps * -1);
 
-			_multiStepper->moveTo(positions);
+			_multiStepper->moveTo(_stepsOfMotors);
 
 			if (_tableMotor->distanceToGo() == 0)
 				_tableMotor->setCurrentPosition(0);
@@ -286,7 +283,7 @@ void ProgramState::reset()
 	_testingTableMotor = false;
 	_testingHome = false;
 
-	_singleTableMotorStepCount = 0.1;
+	_tableCountInMM = 0.1;
 }
 
 void ProgramState::togglePause()
@@ -322,110 +319,21 @@ bool ProgramState::isFinished()
 
 void ProgramState::calcSteps()
 {
-	/*
-	//this should be setting always when we start a program because the cutterAngle would changed
-	//_singleDividerMotorStepCount = double(_singleTableMotorStepCount) / cos(_cutterAngle * _PI / 180.0);
+	_dividerCountInMM = _tableCountInMM * tan((_cutterAngle * _PI) / 180.0);
 
-	//_singleDividerMotorStepCount = round(_singleDividerMotorStepCount / 2) * 2;
+	double circuit = _PI * _diameter;
 
-	_singleDividerMotorStepCount = double(_singleTableMotorStepCount) * tan((_cutterAngle * _PI) / 180.0);
-	float circuit = _PI * _diameter * 14.63116457257362;
-	_singleDividerMotorStepCount /= circuit;
-	_singleDividerMotorStepCount /= 360;
+	double numberOfLaps = _dividerCountInMM / circuit;
 
-	//Get lowest common divider
-	//long nwd = NWD(_singleTableMotorStepCount, _singleDividerMotorStepCount);
+	double dividerDegress = numberOfLaps * 360;
 
-	//_singleTableMotorStepCount /= nwd;
-	//_singleDividerMotorStepCount /= nwd;
-	*/
+	_dividerCountInSteps = dividerDegress * 1600 / 360.0;
 
-	//_singleTableMotorStepCount *= _proportionOfTableMotorCircles;
+	_dividerCountInSteps *= _proportionOfDividerMotorCircles;
+	_tableCountInSteps *= _proportionOfTableMotorCircles * _tableCountInMM * 14.63116457257362;
 
-	_singleDividerMotorStepCount = double(_singleTableMotorStepCount) * tan((_cutterAngle * _PI) / 180.0);
-	float circuit = _PI * _diameter;
-	_singleDividerMotorStepCount /= circuit;
-	_singleDividerMotorStepCount *= 360;
+	//round values, because later we will cast them to long
 
-	_singleTableMotorStepCount *= _proportionOfTableMotorCircles;
-	_singleDividerMotorStepCount *= _proportionOfDividerMotorCircles;
-
-	_singleTableMotorStepCount *= 14.63116457257362;
-	_singleDividerMotorStepCount *= 14.63116457257362;
-
-	Serial.println(_singleTableMotorStepCount);
-	Serial.println(_singleDividerMotorStepCount);
-}
-
-int ProgramState::NWD(int a, int b)
-{
-	int pom;
-
-	while (b != 0)
-	{
-		pom = b;
-		b = a % b;
-		a = pom;
-	}
-
-	return a;
-}
-
-int ProgramState::NWW(int a, int b)
-{
-	return (long(a) * long(b)) / NWD(a, b);
-}
-
-void ProgramState::synchronizedMove(int x)
-{
-	/*
-	int currentStep = 0;
-	int step = 8;
-	int factor = _singleDividerMotorStepCount / _singleTableMotorStepCount;
-	int difference = _singleDividerMotorStepCount % _singleTableMotorStepCount;
-	int frequency = (_singleTableMotorStepCount / step) / difference;
-	int frequencyCounter = 0;
-
-	int movedTableSteps = 0;
-	int movedDividerSteps = 0;
-
-	for (int i = 0; i < _singleTableMotorStepCount; i += step)
-	{
-		int stepsToRotateDivider = step * factor;
-
-		frequencyCounter++;
-
-		if (frequencyCounter == frequency)
-		{
-			frequencyCounter = 0;
-			stepsToRotateDivider += 1;
-		}
-
-		if (movedTableSteps + step > _singleTableMotorStepCount)
-		{
-			_tableMotor->move((_singleTableMotorStepCount - movedTableSteps) * x);
-			movedTableSteps = _singleTableMotorStepCount;
-		}
-		else
-		{
-			_tableMotor->move(step * x);
-			movedTableSteps += step;
-		}
-			
-		if (movedDividerSteps + stepsToRotateDivider > _singleDividerMotorStepCount)
-		{
-			_dividerMotor->move((_singleDividerMotorStepCount - movedDividerSteps) * x);
-			movedDividerSteps = _singleDividerMotorStepCount;
-		}
-		else
-		{
-			_dividerMotor->move(stepsToRotateDivider * x);
-			movedDividerSteps += stepsToRotateDivider;
-		}
-	}
-
-	if (movedDividerSteps < _singleDividerMotorStepCount)
-		_dividerMotor->move((_singleDividerMotorStepCount - movedDividerSteps) * x);
-
-		*/
+	_dividerCountInSteps = round(_dividerCountInSteps);
+	_tableCountInSteps = round(_tableCountInSteps);
 }

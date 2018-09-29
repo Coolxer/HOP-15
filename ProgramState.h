@@ -79,25 +79,23 @@ private:
 	//Diameter of cutter
 	float _diameter;
 
-	float _smallGearOfDividerMotor = 34.81;
-	float _bigGearOfDividerMotor = 130.1;
+	double _smallGearOfDividerMotor = 34.81;
+	double _bigGearOfDividerMotor = 130.1;
 
-	float _smallGearOfTableMotor = 16.42;
-	float _bigGearOfTableMotor = 87;
+	double _smallGearOfTableMotor = 16.42;
+	double _bigGearOfTableMotor = 87;
 
 	//Proportion of divider circle radiuses
-	float _proportionOfDividerMotorCircles; 
-	float _proportionOfTableMotorCircles;
+	double _proportionOfDividerMotorCircles;
+	double _proportionOfTableMotorCircles;
 
-	float _singleTableMotorStepCount = 0.1;//128;
-	float _singleDividerMotorStepCount; 
+	double _tableCountInMM = 1;//128;
+	double _dividerCountInMM;
 
-	long positions[2];
+	double _tableCountInSteps;
+	double _dividerCountInSteps;
 
-	int NWD(int a, int b);
-	int NWW(int a, int b);
-
-	void synchronizedMove(int x);
+	long _stepsOfMotors[2];
 
 public:
 	void setFeathers(byte feathers) { _feathersCount = feathers; };
