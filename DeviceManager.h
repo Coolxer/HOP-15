@@ -38,8 +38,8 @@ public:
 		//_dividerMotor.setAcceleration(9000000);
 		//_tableMotor.setAcceleration(9000000);
 
-		_dividerMotor.setMaxSpeed(800);
-		_tableMotor.setMaxSpeed(800);
+		_dividerMotor.setMaxSpeed(10000);
+		_tableMotor.setMaxSpeed(10000);
 
 		_dividerMotor.setSpeed(800);
 		_tableMotor.setSpeed(800);

@@ -89,13 +89,17 @@ private:
 	double _proportionOfDividerMotorCircles;
 	double _proportionOfTableMotorCircles;
 
-	double _tableCountInMM = 32;//128;
+	double _tableCountInMM = 50;//128;
 	double _dividerCountInMM;
 
 	double _tableCountInSteps;
 	double _dividerCountInSteps;
 
 	long _stepsOfMotors[2];
+
+	double _tableSpeed = 800;
+	double _multiplier;
+	double _dividerSpeed;
 
 public:
 	void setFeathers(byte feathers) { _feathersCount = feathers; };

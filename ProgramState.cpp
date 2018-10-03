@@ -84,7 +84,7 @@ void ProgramState::react()
 		_rotateAngle = 360.0 / (float)_feathersCount;
 		_currentState = STARTING;
 
-		_tableMotor->setSpeed(-800);
+		_tableMotor->setSpeed(-_tableSpeed);
 
 		break;
 	}
@@ -132,8 +132,8 @@ void ProgramState::react()
 		betweenEndstops = false;
 		forwardEndstopClicked = false;
 
-		_tableMotor->setSpeed(800);
-		_dividerMotor->setSpeed(800);
+		_tableMotor->setSpeed(_tableSpeed);
+		_dividerMotor->setSpeed(_dividerSpeed);
 
 		_currentState = MOVING_FORWARD;
 
@@ -183,8 +183,8 @@ void ProgramState::react()
 		betweenEndstops = false;
 		backwardEndstopClicked = false;
 
-		_tableMotor->setSpeed(-800);
-		_dividerMotor->setSpeed(-800);
+		_tableMotor->setSpeed(-_tableSpeed);
+		_dividerMotor->setSpeed(-_dividerSpeed);
 
 		_currentState = MOVING_BACKWARD;
 
@@ -312,7 +312,7 @@ void ProgramState::reset()
 	_testingTableMotor = false;
 	_testingHome = false;
 
-	_tableCountInMM = 32;
+	_tableCountInMM = 50;
 }
 
 void ProgramState::togglePause()
@@ -371,4 +371,10 @@ void ProgramState::calcSteps()
 
 	Serial.println(_dividerCountInSteps);
 	Serial.println(_tableCountInSteps);
+
+	_multiplier = _dividerCountInSteps / _tableCountInSteps;
+	_dividerSpeed = _tableSpeed * _multiplier;
+
+	Serial.println(_multiplier);
+	Serial.println(_dividerSpeed);
 }
