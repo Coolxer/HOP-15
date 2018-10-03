@@ -89,7 +89,7 @@ private:
 	double _proportionOfDividerMotorCircles;
 	double _proportionOfTableMotorCircles;
 
-	double _tableCountInMM = 1;//128;
+	double _tableCountInMM = 32;//128;
 	double _dividerCountInMM;
 
 	double _tableCountInSteps;

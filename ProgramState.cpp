@@ -76,13 +76,15 @@ void ProgramState::react()
 		break;
 	}
 	}
-
+	
 	switch (_currentState)
 	{
 	case START:
 	{
 		_rotateAngle = 360.0 / (float)_feathersCount;
 		_currentState = STARTING;
+
+		_tableMotor->setSpeed(-800);
 
 		break;
 	}
@@ -97,6 +99,7 @@ void ProgramState::react()
 				_tableMotorHomed = true;
 			else
 			{
+				/*
 				if (_tableMotor->distanceToGo() == 0)
 				{
 					_tableMotor->setCurrentPosition(0);
@@ -104,6 +107,9 @@ void ProgramState::react()
 				}
 	;
 				_tableMotor->runSpeedToPosition();
+				*/
+				
+				_tableMotor->runSpeed();
 			}
 				
 		}
@@ -126,6 +132,9 @@ void ProgramState::react()
 		betweenEndstops = false;
 		forwardEndstopClicked = false;
 
+		_tableMotor->setSpeed(800);
+		_dividerMotor->setSpeed(800);
+
 		_currentState = MOVING_FORWARD;
 
 		break;
@@ -140,15 +149,19 @@ void ProgramState::react()
 			_stepsOfMotors[0] = long(_tableCountInSteps);
 			_stepsOfMotors[1] = long(_dividerCountInSteps);
 
-			_multiStepper->moveTo(_stepsOfMotors);
+			//_multiStepper->moveTo(_stepsOfMotors);
+			//_tableMotor->moveTo(_tableCountInSteps);
+			//_dividerMotor->moveTo(_dividerCountInSteps);
 
-			if (_tableMotor->distanceToGo() == 0)
-				_tableMotor->setCurrentPosition(0);
+			//_tableMotor->setSpeed(_tableCountInSteps);
+			//_dividerMotor->setSpeed(_dividerCountInSteps);
 
-			if (_dividerMotor->distanceToGo() == 0)
-				_dividerMotor->setCurrentPosition(0);
-	
-			_multiStepper->runSpeedToPosition();
+			_tableMotor->runSpeed();
+			_dividerMotor->runSpeed();
+				
+			//_multiStepper->run();
+
+			//_multiStepper->runSpeedToPosition();
 
 			//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
 			if (!_backwardTableEndstop->isClicked())
@@ -170,6 +183,9 @@ void ProgramState::react()
 		betweenEndstops = false;
 		backwardEndstopClicked = false;
 
+		_tableMotor->setSpeed(-800);
+		_dividerMotor->setSpeed(-800);
+
 		_currentState = MOVING_BACKWARD;
 
 		break;
@@ -184,15 +200,27 @@ void ProgramState::react()
 			_stepsOfMotors[0] = long(_tableCountInSteps * -1);
 			_stepsOfMotors[1] = long(_dividerCountInSteps * -1);
 
-			_multiStepper->moveTo(_stepsOfMotors);
+			//_tableMotor->moveTo(_tableCountInSteps);
+			//_dividerMotor->moveTo(_dividerCountInSteps);
 
-			if (_tableMotor->distanceToGo() == 0)
-				_tableMotor->setCurrentPosition(0);
+			//_tableMotor->runSpeedToPosition();
+			//_dividerMotor->runSpeedToPosition();
 
-			if (_dividerMotor->distanceToGo() == 0)
-				_dividerMotor->setCurrentPosition(0);
+			//if (_tableMotor->distanceToGo() == 0)
+			//	_tableMotor->setCurrentPosition(0);
 
-			_multiStepper->runSpeedToPosition();
+			//if (_dividerMotor->distanceToGo() == 0)
+			//	_dividerMotor->setCurrentPosition(0);
+
+			//_tableMotor->setSpeed(_tableCountInSteps * -1);
+			//_dividerMotor->setSpeed(_dividerCountInSteps * -1);
+
+			//_tableMotor->runSpeed();
+			//_dividerMotor->runSpeed();
+
+			_tableMotor->runSpeed();
+			_dividerMotor->runSpeed();
+
 
 			//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
 			if (!_forwardTableEndstop->isClicked())
@@ -241,10 +269,11 @@ void ProgramState::react()
 		_dividerMotor->disableOutputs();
 
 		//_dividerMotor->rotate(_rotateAngle * _proportionOfDividerMotorCircles * -1.0);
-		_dividerMotor->moveTo(_rotateAngle * _proportionOfDividerMotorCircles * 200 * 8 / 360);
+		_dividerMotor->move(_rotateAngle * _proportionOfDividerMotorCircles * 200 * 8 / 360);
 
 		while (_dividerMotor->distanceToGo() != 0)
 		{
+			_dividerMotor->setSpeed(800);
 			_dividerMotor->runSpeedToPosition();
 		}
 		
@@ -283,7 +312,7 @@ void ProgramState::reset()
 	_testingTableMotor = false;
 	_testingHome = false;
 
-	_tableCountInMM = 0.1;
+	_tableCountInMM = 32;
 }
 
 void ProgramState::togglePause()
@@ -320,20 +349,26 @@ bool ProgramState::isFinished()
 void ProgramState::calcSteps()
 {
 	_dividerCountInMM = _tableCountInMM * tan((_cutterAngle * _PI) / 180.0);
-
+	Serial.println(_tableCountInMM);
+	Serial.println(_dividerCountInMM);
 	double circuit = _PI * _diameter;
+	Serial.println(circuit);
 
 	double numberOfLaps = _dividerCountInMM / circuit;
-
+	Serial.println(numberOfLaps);
 	double dividerDegress = numberOfLaps * 360;
-
-	_dividerCountInSteps = dividerDegress * 1600 / 360.0;
+	Serial.println(dividerDegress);
+	_dividerCountInSteps = (dividerDegress * 1600) / 360.0;
 
 	_dividerCountInSteps *= _proportionOfDividerMotorCircles;
-	_tableCountInSteps *= _proportionOfTableMotorCircles * _tableCountInMM * 14.63116457257362;
-
+	_tableCountInSteps = _proportionOfTableMotorCircles * _tableCountInMM * 14.63116457257362;
+	Serial.println(_dividerCountInSteps);
+	Serial.println(_tableCountInSteps);
 	//round values, because later we will cast them to long
 
-	_dividerCountInSteps = round(_dividerCountInSteps);
-	_tableCountInSteps = round(_tableCountInSteps);
+	//_dividerCountInSteps = round(_dividerCountInSteps);
+	//_tableCountInSteps = round(_tableCountInSteps);
+
+	Serial.println(_dividerCountInSteps);
+	Serial.println(_tableCountInSteps);
 }

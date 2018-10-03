@@ -35,14 +35,14 @@ public:
 		_dividerMotor.enableOutputs(); 
 		_tableMotor.enableOutputs();
 
-		_dividerMotor.setAcceleration(8000000);
-		_tableMotor.setAcceleration(8000000);
+		//_dividerMotor.setAcceleration(9000000);
+		//_tableMotor.setAcceleration(9000000);
 
-		_dividerMotor.setMaxSpeed(3000);
-		_tableMotor.setMaxSpeed(3000);
+		_dividerMotor.setMaxSpeed(800);
+		_tableMotor.setMaxSpeed(800);
 
-		_dividerMotor.setSpeed(1000);
-		_tableMotor.setSpeed(1000);
+		_dividerMotor.setSpeed(800);
+		_tableMotor.setSpeed(800);
 
 		_multiStepper.addStepper(_tableMotor);
 		_multiStepper.addStepper(_dividerMotor);

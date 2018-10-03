@@ -61,6 +61,11 @@ void EncoderState::react()
 			_dividerMotor->move(_reading);
 			while (_dividerMotor->distanceToGo() != 0)
 			{
+				if (_reading > 0)
+					_dividerMotor->setSpeed(800);
+				else if (_reading < 0)
+					_dividerMotor->setSpeed(-800);
+
 				_dividerMotor->runSpeedToPosition();
 			}	
 			break;
@@ -75,6 +80,7 @@ void EncoderState::react()
 				_tableMotor->move(_reading);
 				while (_tableMotor->distanceToGo() != 0)
 				{	
+					_tableMotor->setSpeed(-800);
 					_tableMotor->runSpeedToPosition();
 				}
 			}
@@ -86,6 +92,7 @@ void EncoderState::react()
 				_tableMotor->move(_reading);
 				while (_tableMotor->distanceToGo() != 0)
 				{
+					_tableMotor->setSpeed(800);
 					_tableMotor->runSpeedToPosition();
 				}
 			}
