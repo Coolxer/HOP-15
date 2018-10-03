@@ -74,10 +74,10 @@ private:
 	bool _tableMotorHomed = false;
 
 	//Angle of cutter in degrees
-	float _cutterAngle;
+	double _cutterAngle;
 
 	//Diameter of cutter
-	float _diameter;
+	double _diameter;
 
 	double _smallGearOfDividerMotor = 34.81;
 	double _bigGearOfDividerMotor = 130.1;
@@ -97,15 +97,16 @@ private:
 
 	long _stepsOfMotors[2];
 
-	double _tableSpeed = 800;
+	double _tableSpeed;
 	double _multiplier;
 	double _dividerSpeed;
 
 public:
 	void setFeathers(byte feathers) { _feathersCount = feathers; };
 	void setCycles(byte cycles) { _cyclesCount = cycles; };
-	void setCutterAngle(float angle) { _cutterAngle = angle; };
-	void setDiameter(float diameter) { _diameter = diameter; };
+	void setCutterAngle(double angle) { _cutterAngle = angle; };
+	void setDiameter(double diameter) { _diameter = diameter; };
+	void setSpeed(double speed) { _tableSpeed = speed; };
 
 	void calcSteps();
 

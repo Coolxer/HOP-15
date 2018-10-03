@@ -17,14 +17,14 @@ private:
 	SimpleKeypad* _simpleKeypad;
 	RotaryEncoder* _rotaryEncoder;
 
-	float _minValue;
-	float _maxValue;
-	float _currentValue;
-	float _stepValue;
+	double _minValue;
+	double _maxValue;
+	double _currentValue;
+	double _stepValue;
 
 public:
 	SetValueElement() {};
-	SetValueElement(char* name, MenuState* state, float minValue, float maxValue, float currentValue, float stepValue);
+	SetValueElement(char* name, MenuState* state, double minValue, double maxValue, double currentValue, double stepValue);
 	~SetValueElement() {};
 
 	virtual void react();

@@ -349,32 +349,22 @@ bool ProgramState::isFinished()
 void ProgramState::calcSteps()
 {
 	_dividerCountInMM = _tableCountInMM * tan((_cutterAngle * _PI) / 180.0);
-	Serial.println(_tableCountInMM);
-	Serial.println(_dividerCountInMM);
+
 	double circuit = _PI * _diameter;
-	Serial.println(circuit);
 
 	double numberOfLaps = _dividerCountInMM / circuit;
-	Serial.println(numberOfLaps);
+
 	double dividerDegress = numberOfLaps * 360;
-	Serial.println(dividerDegress);
+
 	_dividerCountInSteps = (dividerDegress * 1600) / 360.0;
 
 	_dividerCountInSteps *= _proportionOfDividerMotorCircles;
 	_tableCountInSteps = _proportionOfTableMotorCircles * _tableCountInMM * 14.63116457257362;
-	Serial.println(_dividerCountInSteps);
-	Serial.println(_tableCountInSteps);
-	//round values, because later we will cast them to long
-
-	//_dividerCountInSteps = round(_dividerCountInSteps);
-	//_tableCountInSteps = round(_tableCountInSteps);
-
-	Serial.println(_dividerCountInSteps);
-	Serial.println(_tableCountInSteps);
 
 	_multiplier = _dividerCountInSteps / _tableCountInSteps;
 	_dividerSpeed = _tableSpeed * _multiplier;
 
 	Serial.println(_multiplier);
+	Serial.println(_tableSpeed);
 	Serial.println(_dividerSpeed);
 }

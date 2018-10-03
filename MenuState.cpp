@@ -45,7 +45,7 @@ void MenuState::init()
 {
 	_featherAmount = SetValueElement("Piora", this, 2, 32, 6, 1);
 	_cycleAmount = SetValueElement("Cykle", this, 1, 16, 1, 1);
-	_speed = SetValueElement("Predkosc", this, 5, 100, 30, 5);
+	_speed = SetValueElement("Predkosc", this, 100.0, 2000.0, 800.0, 100.0);
 
 	_cutterAngle = SetValueElement("Kat obrotu", this, 1.0, 60.0, 30.0, 0.1);
 	_diameter = SetValueElement("Srednica", this, 5.0, 100.0, 20.0, 0.1);
@@ -148,6 +148,7 @@ void MenuState::enter()
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
 		programState->setCutterAngle(_itemBinds[2].item->getValue());
 		programState->setDiameter(_itemBinds[3].item->getValue());
+		programState->setSpeed(_itemBinds[11].item->getValue());
 		programState->calcSteps();
 
 		getProgram()->getStateManager()->changeState(2);
@@ -162,6 +163,7 @@ void MenuState::enter()
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
 		programState->setCutterAngle(_itemBinds[2].item->getValue());
 		programState->setDiameter(_itemBinds[3].item->getValue());
+		programState->setSpeed(_itemBinds[11].item->getValue());
 		programState->calcSteps();
 		programState->testDividerMotor();
 
@@ -177,6 +179,7 @@ void MenuState::enter()
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
 		programState->setCutterAngle(_itemBinds[2].item->getValue());
 		programState->setDiameter(_itemBinds[3].item->getValue());
+		programState->setSpeed(_itemBinds[11].item->getValue());
 		programState->calcSteps();
 		programState->testTableMotor();
 
@@ -188,7 +191,6 @@ void MenuState::enter()
 		_rotaryEncoder->setOperationType(RotaryEncoder::QUICKLY_MOVE);
 
 		EncoderState* encoderState = getProgram()->getEncoderState();
-		//encoderState->setOperation(EncoderState::MOVING_DIVIDER_MOTOR);
 		encoderState->reset();
 		encoderState->setOperation(MOVE_DIVIDER_MOTOR);
 

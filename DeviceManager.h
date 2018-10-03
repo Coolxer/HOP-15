@@ -28,15 +28,13 @@ private:
 	RotaryEncoder _rotaryEncoder = RotaryEncoder();
 
 public:
-	DeviceManager() { 
+	DeviceManager() 
+	{ 
 		_dividerMotor.setEnablePin(8);
 		_tableMotor.setEnablePin(8);
 
 		_dividerMotor.enableOutputs(); 
 		_tableMotor.enableOutputs();
-
-		//_dividerMotor.setAcceleration(9000000);
-		//_tableMotor.setAcceleration(9000000);
 
 		_dividerMotor.setMaxSpeed(10000);
 		_tableMotor.setMaxSpeed(10000);
@@ -46,7 +44,7 @@ public:
 
 		_multiStepper.addStepper(_tableMotor);
 		_multiStepper.addStepper(_dividerMotor);
-	}// _dividerMotor.begin(60, 8); _tableMotor.begin(60, 8); _dividerMotor.disable(); _tableMotor.disable(); };
+	}
 
 	Lcd* requestLcd() { return &_lcd; };
 	SimpleKeypad* requestSimpleKeypad() { return &_simpleKeypad; };
@@ -54,7 +52,6 @@ public:
 	SevSegms* requestSevSegms() { return &_sevSegms; };
 	Endstop* requestForwardTableEndstop() { return &_forwardTableEndstop; };
 	Endstop* requestBackwardTableEndstop() { return &_backwardTableEndstop; };
-	//A4988* requestDividerMotor() { return &_dividerMotor; };
 	AccelStepper* requestDividerMotor() { return &_dividerMotor; };
 	AccelStepper* requestTableMotor() { return &_tableMotor; };
 	MultiStepper* requestMultiStepper() { return &_multiStepper; };
