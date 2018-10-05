@@ -45,8 +45,8 @@ void MenuState::init()
 {
 	_featherAmount = SetValueElement("Piora", this, 2, 32, 6, 1);
 	_cycleAmount = SetValueElement("Cykle", this, 1, 16, 1, 1);
-	_speed = SetValueElement("Predkosc", this, 100.0, 2000.0, 800.0, 100.0);
-
+	
+	_speed = SetValueElement("Predkosc", this, 100.0, 10000.0, 800.0, 100.0);
 	_cutterAngle = SetValueElement("Kat obrotu", this, 1.0, 60.0, 30.0, 0.1);
 	_diameter = SetValueElement("Srednica", this, 5.0, 100.0, 20.0, 0.1);
 

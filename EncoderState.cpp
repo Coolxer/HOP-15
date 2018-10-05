@@ -57,6 +57,7 @@ void EncoderState::react()
 		case MOVE_DIVIDER_MOTOR:
 		{
 			_reading = _rotaryEncoder->read();
+			Serial.println(_reading);
 			_position += _reading;
 			_dividerMotor->move(_reading);
 			while (_dividerMotor->distanceToGo() != 0)
