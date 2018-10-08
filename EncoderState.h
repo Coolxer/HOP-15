@@ -38,7 +38,7 @@ private:
 
 	int _position = 0;
 
-	short _reading;
+	float _reading;
 
 	Operations _operation;
 

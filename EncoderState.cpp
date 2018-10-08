@@ -61,7 +61,12 @@ void EncoderState::react()
 		case MOVE_DIVIDER_MOTOR:
 		{
 			_reading = _rotaryEncoder->read();
-			Serial.println(_reading);
+
+			if (key == KEY_UP)
+				_reading = _rotaryEncoder->getChangeAmount();
+			else if (key == KEY_DOWN)
+				_reading = _rotaryEncoder->getChangeAmount() * -1.0;
+
 			_position += _reading;
 			_dividerMotor->move(_reading);
 			while (_dividerMotor->distanceToGo() != 0)
@@ -79,6 +84,11 @@ void EncoderState::react()
 		{
 			_reading = _rotaryEncoder->read();
 
+			if (key == KEY_UP)
+				_reading = _rotaryEncoder->getChangeAmount();
+			else if (key == KEY_DOWN)
+				_reading = _rotaryEncoder->getChangeAmount() * -1.0;
+
 			if (_reading < 0 && !_backwardTableEndstop->isClicked())
 			{
 				_position += _reading;
@@ -89,7 +99,6 @@ void EncoderState::react()
 					_tableMotor->runSpeedToPosition();
 				}
 			}
-				
 
 			if (_reading > 0 && !_forwardTableEndstop->isClicked())
 			{

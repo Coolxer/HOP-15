@@ -16,13 +16,13 @@ void RotaryEncoder::setOperationType(OperationType operationType)
 	switch (operationType)
 	{
 	case SLOWLY_MOVE:
-		_changeAmount = 1.0;
+		_changeAmount = 2.0;
 		break;
 	case QUICKLY_MOVE:
 		_changeAmount = 200.0;
 		break;
 	case SPEED_CHANGE:
-		_changeAmount = 5.0;
+		_changeAmount = 100.0;
 		break;
 	case CUTTER_ANGLE_CHANGE:
 		_changeAmount = 0.1;

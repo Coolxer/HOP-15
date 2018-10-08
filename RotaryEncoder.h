@@ -18,7 +18,7 @@ private:
 
 	bool _start = true;
 
-	float _changeAmount = 1.0;
+	float _changeAmount;
 
 public:
 	RotaryEncoder();
@@ -30,6 +30,6 @@ public:
 
 	void reset();
 
-	short getChangeAmount() { return _changeAmount; };
+	float getChangeAmount() { return _changeAmount; };
 	void setChangeAmount(short changeAmount) { _changeAmount = changeAmount; };
 };
