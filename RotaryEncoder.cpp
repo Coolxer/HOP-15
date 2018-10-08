@@ -11,25 +11,7 @@ RotaryEncoder::RotaryEncoder()
 	digitalWrite(_pinB, INPUT_PULLUP);
 }
 
-void RotaryEncoder::setOperationType(OperationType operationType)
-{
-	switch (operationType)
-	{
-	case SLOWLY_MOVE:
-		_changeAmount = 2.0;
-		break;
-	case QUICKLY_MOVE:
-		_changeAmount = 200.0;
-		break;
-	case SPEED_CHANGE:
-		_changeAmount = 100.0;
-		break;
-	case CUTTER_ANGLE_CHANGE:
-		_changeAmount = 0.1;
-	}
-}
-
-float RotaryEncoder::read()
+short RotaryEncoder::read()
 {
 	_encA = digitalRead(_pinA);
 	_encB = digitalRead(_pinB);
@@ -39,12 +21,12 @@ float RotaryEncoder::read()
 		if (_encB)
 		{
 			_lastA = _encA;
-			return _changeAmount * -1.0;
+			return -1;
 		}	
 		else
 		{
 			_lastA = _encA;
-			return _changeAmount;
+			return 1;
 		}		
 	}
 

@@ -7,7 +7,7 @@
 #include "IntroductionState.h"
 #include "MenuState.h"
 #include "ProgramState.h"
-#include "EncoderState.h"
+#include "ManualControlState.h"
 
 class Program
 {
@@ -18,7 +18,7 @@ private:
 	IntroductionState _introductionState;
 	MenuState _menuState;
 	ProgramState _programState;
-	EncoderState _encoderState;
+	ManualControlState _ManualControlState;
 
 public:
 	Program() {};
@@ -29,7 +29,7 @@ public:
 	DeviceManager* getDeviceManager() { return &_deviceManager; };
 	StateManager* getStateManager() { return &_stateManager; };
 	ProgramState* getProgramState() { return &_programState; };
-	EncoderState* getEncoderState() { return &_encoderState; };
+	ManualControlState* getManualControlState() { return &_ManualControlState; };
 };
 
 #endif

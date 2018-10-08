@@ -7,7 +7,7 @@
 
 #include "SetValueElement.h"
 
-#define ITEM_COUNT 14
+#define ITEM_COUNT 12
 
 class Program;
 

@@ -3,7 +3,7 @@
 #include "IntroductionState.h"
 #include "MenuState.h"
 #include "ProgramState.h"
-#include "EncoderState.h"
+#include "ManualControlState.h"
 
 Lcd::Lcd()
 {
@@ -170,45 +170,25 @@ void Lcd::manage(ProgramState* programState)
 	}
 }
 
-void Lcd::manage(EncoderState* encoderState)
+void Lcd::manage(ManualControlState* ManualControlState)
 {
-	int position = encoderState->getPosition();
-	//int speed = encoderState->getSpeed();
-	//float cutterAngle = encoderState->getCutterAngle();
+	int position = ManualControlState->getPosition();
 
 	char valueLine[20] = { 0 };
 
-	switch (encoderState->getOperation())
+	if (ManualControlState->getOperation() == "MOVE_DIVIDER_MOTOR")
 	{
-		case MOVE_DIVIDER_MOTOR:
-		{
-			writeNewLine(0, "  ruch podzielnicy");
-			sprintf(valueLine, "Pozycja: %d", position);
-			break;
-		}
-		case MOVE_TABLE_MOTOR:
-		{
-			writeNewLine(0, "     ruch stolu");
-			sprintf(valueLine, "Pozycja: %d", position);
-			break;
-		}
-		/*
-		case CHANGE_SPEED:
-		{
-			writeNewLine(0, "  zmiana predkosci");
-			sprintf(valueLine, "Prêdkoœæ: %d", speed);
-			break;
-		}
-		case CHANGE_CUTTER_ANGLE:
-		{
-			writeNewLine(0, "    zmiana katu");
-			sprintf(valueLine, "K¹t nachylenia: %d", cutterAngle);
-			break;
-		}
-		*/
+		writeNewLine(0, "  ruch podzielnicy");
+		sprintf(valueLine, "Pozycja: %d", position);
+	}
+	else if (ManualControlState->getOperation() == "MOVE_TABLE_MOTOR")
+	{
+		writeNewLine(0, "     ruch stolu");
+		sprintf(valueLine, "Pozycja: %d", position);
 	}
 
 	writeNewLine(1, valueLine);
 	writeNewLine(2, "");
 	writeNewLine(3, "* by wrocic do menu");
+		
 }

@@ -11,7 +11,7 @@
 #include "RotaryEncoder.h"
 
 #include "ProgramState.h"
-#include "EncoderState.h"
+#include "ManualControlState.h"
 
 #include "SetValueElement.h"
 
@@ -66,13 +66,11 @@ void MenuState::init()
 	setElement(4, "Rozpocznij");
 	setElement(5, "Test podzielnicy");
 	setElement(6, "Test stolu");
-	setElement(7, "Podziel. szybko");
-	setElement(8, "Podziel. wolno");
-	setElement(9, "Stol szybko");
-	setElement(10, "Stol wolno");
-	setElement(11, &_speed);
-	setElement(12, "Wylacz silniki");
-	setElement(13, "Ustaw do bazy");
+	setElement(7, "Obroc podziel.");
+	setElement(8, "Przesun stol");
+	setElement(9, &_speed);
+	setElement(10, "Wylacz silniki");
+	setElement(11, "Ustaw do bazy");
 }
 
 void MenuState::react()
@@ -152,7 +150,7 @@ void MenuState::enter()
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
 		programState->setCutterAngle(_itemBinds[2].item->getValue());
 		programState->setDiameter(_itemBinds[3].item->getValue());
-		programState->setSpeed(_itemBinds[11].item->getValue());
+		programState->setSpeed(_itemBinds[9].item->getValue());
 		programState->calcSteps();
 
 		getProgram()->getStateManager()->changeState(2);
@@ -167,7 +165,7 @@ void MenuState::enter()
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
 		programState->setCutterAngle(_itemBinds[2].item->getValue());
 		programState->setDiameter(_itemBinds[3].item->getValue());
-		programState->setSpeed(_itemBinds[11].item->getValue());
+		programState->setSpeed(_itemBinds[9].item->getValue());
 		programState->calcSteps();
 		programState->testDividerMotor();
 
@@ -183,70 +181,40 @@ void MenuState::enter()
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
 		programState->setCutterAngle(_itemBinds[2].item->getValue());
 		programState->setDiameter(_itemBinds[3].item->getValue());
-		programState->setSpeed(_itemBinds[11].item->getValue());
+		programState->setSpeed(_itemBinds[9].item->getValue());
 		programState->calcSteps();
 		programState->testTableMotor();
 
 		getProgram()->getStateManager()->changeState(2);
 	}
-	//If we moving divider quickly
+	//If we rotating divider
 	else if (_selectedIndex == 7)
 	{
-		_rotaryEncoder->setOperationType(RotaryEncoder::QUICKLY_MOVE);
-
-		EncoderState* encoderState = getProgram()->getEncoderState();
-		encoderState->reset();
-		encoderState->setOperation(MOVE_DIVIDER_MOTOR);
+		ManualControlState* ManualControlState = getProgram()->getManualControlState();
+		ManualControlState->reset();
+		ManualControlState->setOperation("MOVE_DIVIDER_MOTOR");
 
 		getProgram()->getStateManager()->changeState(3);
 	}
-	//If we moving divider slowly
+	//If we moving table
 	else if (_selectedIndex == 8)
 	{
-		_rotaryEncoder->setOperationType(RotaryEncoder::SLOWLY_MOVE);
-
-		EncoderState* encoderState = getProgram()->getEncoderState();
-		encoderState->reset();
-		encoderState->setOperation(MOVE_DIVIDER_MOTOR);
+		ManualControlState* ManualControlState = getProgram()->getManualControlState();
+		ManualControlState->reset();
+		ManualControlState->setOperation("MOVE_TABLE_MOTOR");
 
 		getProgram()->getStateManager()->changeState(3);
 	}
-	//If we moving table quickly
-	else if (_selectedIndex == 9)
-	{
-		_rotaryEncoder->setOperationType(RotaryEncoder::QUICKLY_MOVE);
-
-		EncoderState* encoderState = getProgram()->getEncoderState();
-		encoderState->reset();
-		encoderState->setOperation(MOVE_TABLE_MOTOR);
-
-		getProgram()->getStateManager()->changeState(3);
-	}
-	//If we moving table slowly
+	//If we disabling motors
 	else if (_selectedIndex == 10)
-	{
-		_rotaryEncoder->setOperationType(RotaryEncoder::SLOWLY_MOVE);
-
-		EncoderState* encoderState = getProgram()->getEncoderState();
-		encoderState->reset();
-		encoderState->setOperation(MOVE_TABLE_MOTOR);
-
-		getProgram()->getStateManager()->changeState(3);
-	}
-	//If we want to disable motors
-	else if (_selectedIndex == 12)
 	{
 		_dividerMotor->enableOutputs();
 		_tableMotor->enableOutputs();
 	}
-	//If we want to home table motor
-	else if (_selectedIndex == 13)
+	//If homing table motor
+	else if (_selectedIndex == 11)
 	{
 		ProgramState* programState = getProgram()->getProgramState();
-
-		//programState->setFeathers(byte(_itemBinds[0].item->getValue()));
-		//programState->setCycles(byte(_itemBinds[1].item->getValue()));
-		//programState->setCutterAngle(_itemBinds[10].item->getValue());
 		programState->reset();
 
 		if (!programState->isHomed())

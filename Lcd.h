@@ -7,7 +7,7 @@
 class IntroductionState;
 class MenuState;
 class ProgramState;
-class EncoderState;
+class ManualControlState;
 
 struct LinePointerPair
 {
@@ -50,7 +50,7 @@ public:
 	void manage(MenuState* menuState);
 	void manage(IntroductionState* introductionState);
 	void manage(ProgramState* programState);
-	void manage(EncoderState* encoderState);
+	void manage(ManualControlState* ManualControlState);
 };
 
 #endif

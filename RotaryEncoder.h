@@ -18,18 +18,9 @@ private:
 
 	bool _start = true;
 
-	float _changeAmount;
-
 public:
 	RotaryEncoder();
 
-	enum OperationType { SLOWLY_MOVE, QUICKLY_MOVE, SPEED_CHANGE, CUTTER_ANGLE_CHANGE };
-
-	void setOperationType(OperationType operationType);
-	float read();
-
+	short read();
 	void reset();
-
-	float getChangeAmount() { return _changeAmount; };
-	void setChangeAmount(short changeAmount) { _changeAmount = changeAmount; };
 };

@@ -1,5 +1,5 @@
-#ifndef _ENCODERSTATE_h
-#define _ENCODERSTATE_h
+#ifndef _ManualControlState_h
+#define _ManualControlState_h
 
 #include <Arduino.h>
 #include "State.h"
@@ -14,15 +14,7 @@ class AccelStepper;
 
 class Endstop;
 
-enum Operations
-{
-	MOVE_DIVIDER_MOTOR,
-	MOVE_TABLE_MOTOR,
-	//CHANGE_SPEED,
-	//CHANGE_CUTTER_ANGLE
-};
-
-class EncoderState : public State
+class ManualControlState : public State
 {
 private:
 	Lcd * _lcd;
@@ -37,19 +29,19 @@ private:
 	Endstop* _backwardTableEndstop;
 
 	int _position = 0;
-
 	float _reading;
+	unsigned int _value = 1;
 
-	Operations _operation;
+	String _operation;
+	char _lastKeyPressed = ' ';
 
 public:
 	virtual void init();
 	virtual void react();
 	virtual void reset();
 
-	void setOperation(Operations operation) { _operation = operation; };
-	Operations getOperation() { return _operation; };
-
+	void setOperation(String operation) { _operation = operation; };
+	String getOperation() { return _operation; };
 	int getPosition() { return _position; };
 };
 

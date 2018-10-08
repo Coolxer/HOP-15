@@ -29,9 +29,9 @@ void SetValueElement::react()
 
 	float value = _rotaryEncoder->read();
 
-	if (key == KEY_UP || value > 0)
+	if (key == KEY_UP || value == 1)
 		increase();
-	else if (key == KEY_DOWN || value < 0)
+	else if (key == KEY_DOWN || value == -1)
 		decrease();
 	else if (key == KEY_ENTER)
 		_state->back();
