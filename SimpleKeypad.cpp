@@ -15,7 +15,9 @@ Keys SimpleKeypad::getPressedKey()
 	else if (key == 'A')
 		return KEY_UP;
 	else if (key == 'B')
-		return KEY_B;
+		return KEY_DISRUPT;
+	else if (key == 'C')
+		return KEY_RESET;
 	else if (key == 'D')
 		return KEY_DOWN;
 	else if (key == '0')

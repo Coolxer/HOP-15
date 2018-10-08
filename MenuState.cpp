@@ -92,8 +92,10 @@ void MenuState::react()
 			down();
 		else if (key == KEY_ENTER)
 			enter();
-		else if (key == KEY_B)
+		else if (key == KEY_DISRUPT)
 			reportDisruption();
+		else if (key == KEY_RESET)
+			resetFunc();
 	}
 
 	if (_disrupted)

@@ -62,9 +62,15 @@ void ProgramState::react()
 
 		break;
 	}
-	case KEY_B:
+	case KEY_DISRUPT:
 	{
 		reportDisruption();
+		break;
+	}
+	case KEY_RESET:
+	{
+		resetFunc();
+		break;
 	}
 	}
 

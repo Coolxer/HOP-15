@@ -21,6 +21,7 @@ public:
 
 	void needRedraw() { _needRedraw = true; };
 	void reportDisruption() { _disrupted = true; }
+	void(*resetFunc) (void) = 0;
 
 	Program* getProgram() { return _program; };
 	void setProgram(Program* program) { _program = program; };
