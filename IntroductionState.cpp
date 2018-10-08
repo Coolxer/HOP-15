@@ -26,13 +26,6 @@ void IntroductionState::react()
 		_buzzer->playOnPress();
 	}
 
-	if (_disrupted)
-	{
-		_lcd->begin();
-		_needRedraw = true;
-		_disrupted = false;
-	}
-
 	if (_needRedraw)
 	{
 		_lcd->manage(this);

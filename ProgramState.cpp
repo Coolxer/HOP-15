@@ -34,19 +34,6 @@ void ProgramState::init()
 
 void ProgramState::react()
 {
-	if (_disrupted)
-	{
-		_lcd->begin();
-		_needRedraw = true;
-		_disrupted = false;
-	}
-
-	if (_needRedraw)
-	{
-		_lcd->manage(this);
-		_needRedraw = false;
-	}
-
 	char key = _simpleKeypad->getPressedKey();
 
 	if (key != KEY_NONE)
@@ -75,6 +62,23 @@ void ProgramState::react()
 
 		break;
 	}
+	case KEY_B:
+	{
+		reportDisruption();
+	}
+	}
+
+	if (_disrupted)
+	{
+		_lcd->begin();
+		_needRedraw = true;
+		_disrupted = false;
+	}
+
+	if (_needRedraw)
+	{
+		_lcd->manage(this);
+		_needRedraw = false;
 	}
 	
 	switch (_currentState)

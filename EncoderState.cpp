@@ -28,6 +28,16 @@ void EncoderState::init()
 
 void EncoderState::react()
 {
+	char key = _simpleKeypad->getPressedKey();
+
+	if (key != KEY_NONE)
+		_buzzer->playOnPress();
+
+	if (key == KEY_ENTER)
+		_program->getStateManager()->changeState(1);
+	else if (key == KEY_B)
+		reportDisruption();
+
 	if (_disrupted)
 	{
 		_lcd->begin();
@@ -40,14 +50,6 @@ void EncoderState::react()
 		_lcd->manage(this);
 		_needRedraw = false;
 	}
-
-	char key = _simpleKeypad->getPressedKey();
-
-	if (key != KEY_NONE)
-		_buzzer->playOnPress();
-
-	if (key == KEY_ENTER)
-		_program->getStateManager()->changeState(1);
 
 	_dividerMotor->disableOutputs();
 	_tableMotor->disableOutputs();
@@ -100,20 +102,6 @@ void EncoderState::react()
 			
 			break;
 		}
-		/*
-		case CHANGE_SPEED:
-		{
-			_reading = _rotaryEncoder->read();
-			_speed += _reading;
-			break;
-		}
-		case CHANGE_CUTTER_ANGLE:
-		{
-			_reading = _rotaryEncoder->read();
-			_cutterAngle += _reading;
-			break;
-		}
-		*/
 	}
 
 	if (_reading != 0)
