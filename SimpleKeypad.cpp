@@ -43,3 +43,8 @@ Keys SimpleKeypad::getPressedKey()
 	else
 		return KEY_NONE;
 }
+
+char SimpleKeypad::getNaturalKey()
+{
+	return _keypad.getKey();
+}

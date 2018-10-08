@@ -29,11 +29,14 @@ private:
 	Endstop* _backwardTableEndstop;
 
 	int _position = 0;
-	float _reading;
-	unsigned int _value = 1;
+	short _reading;
+	unsigned int _stepCount = 1;
+	int _currentStep = 1;
 
 	String _operation;
 	char _lastKeyPressed = ' ';
+
+	String _sNumber;
 
 public:
 	virtual void init();

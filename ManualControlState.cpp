@@ -56,44 +56,49 @@ void ManualControlState::react()
 	_dividerMotor->disableOutputs();
 	_tableMotor->disableOutputs();
 
+	if (key == KEY_1 || key == KEY_2 || key == KEY_3 || key == KEY_4 || key == KEY_5
+		|| key == KEY_6 || key == KEY_7 || key == KEY_8 || key == KEY_9)
+	{
+		char nkey = _simpleKeypad->getNaturalKey();
+
+		while (nkey != '*')
+		{
+			if (nkey != 'A' && nkey != 'B' && nkey != 'C' && nkey != 'D' && nkey != '#' && nkey != ' ')
+				_sNumber += nkey;
+		}
+		_stepCount = _sNumber.toInt();
+
+		nkey == ' ';
+		_sNumber = "";
+	}
+
+	_reading = _rotaryEncoder->read();
+
+	if (key == KEY_UP || _reading == 1)
+		_currentStep = _stepCount;
+	else if (key == KEY_DOWN || _reading == -1)
+		_currentStep = _stepCount * -1;
+
 	if(_operation == "MOVE_DIVIDER_MOTOR")
 	{
-
-
-
-		_reading = _rotaryEncoder->read();
-
-		if (key == KEY_UP)
-			_reading = _rotaryEncoder->getChangeAmount();
-		else if (key == KEY_DOWN)
-			_reading = _rotaryEncoder->getChangeAmount() * -1.0;
-		
-
-		_position += _reading;
-		_dividerMotor->move(_reading);
+		_position += _currentStep;
+		_dividerMotor->move(_currentStep);
 		while (_dividerMotor->distanceToGo() != 0)
 		{
-			if (_reading > 0)
+			if (_currentStep > 0)
 				_dividerMotor->setSpeed(800);
-			else if (_reading < 0)
+			else if (_currentStep < 0)
 				_dividerMotor->setSpeed(-800);
 
 			_dividerMotor->runSpeedToPosition();
-		}	
+		}
 	}
 	else if (_operation = "MOVE_TABLE_MOTOR")
 	{
-		_reading = _rotaryEncoder->read();
-
-		if (key == KEY_UP)
-			_reading = _rotaryEncoder->getChangeAmount();
-		else if (key == KEY_DOWN)
-			_reading = _rotaryEncoder->getChangeAmount() * -1.0;
-
-		if (_reading < 0 && !_backwardTableEndstop->isClicked())
+		if (_currentStep < 0 && !_backwardTableEndstop->isClicked())
 		{
-			_position += _reading;
-			_tableMotor->move(_reading);
+			_position += _currentStep;
+			_tableMotor->move(_currentStep);
 			while (_tableMotor->distanceToGo() != 0)
 			{	
 				_tableMotor->setSpeed(-800);
@@ -101,10 +106,10 @@ void ManualControlState::react()
 			}
 		}
 
-		if (_reading > 0 && !_forwardTableEndstop->isClicked())
+		if (_currentStep > 0 && !_forwardTableEndstop->isClicked())
 		{
-			_position += _reading;
-			_tableMotor->move(_reading);
+			_position += _currentStep;
+			_tableMotor->move(_currentStep);
 			while (_tableMotor->distanceToGo() != 0)
 			{
 				_tableMotor->setSpeed(800);
@@ -112,23 +117,28 @@ void ManualControlState::react()
 			}
 		}
 	}
-}
+	//if (_reading != 0)
+	//	_needRedraw = true;
 
-	if (_reading != 0)
+	//_reading = 0;
+
+	if (_currentStep != 0)
 		_needRedraw = true;
 
-	_reading = 0;
+	_currentStep = 0;
 }
 
 void ManualControlState::reset()
 {
 	_needRedraw = true;
 
-	_reading = 0;
-	_position = 0;
-	_value = 1;
+	//_reading = 0;
+	//_position = 0;
+	_stepCount = 1;
+	_currentStep = 1;
 
 	_lastKeyPressed = ' ';
+	_sNumber = "";
 
 	_rotaryEncoder->reset();
 }

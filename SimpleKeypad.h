@@ -25,6 +25,7 @@ private:
 public:
 	SimpleKeypad() {};
 	Keys getPressedKey();
+	char getNaturalKey();
 };
 
 #endif
