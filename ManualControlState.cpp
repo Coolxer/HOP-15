@@ -59,7 +59,7 @@ void ManualControlState::react()
 	if (key == KEY_1 || key == KEY_2 || key == KEY_3 || key == KEY_4 || key == KEY_5
 		|| key == KEY_6 || key == KEY_7 || key == KEY_8 || key == KEY_9)
 	{
-		char nkey = _simpleKeypad->getNaturalKey();
+		char nkey = _simpleKeypad->getKeyValue();
 
 		while (nkey != '*')
 		{
@@ -117,15 +117,12 @@ void ManualControlState::react()
 			}
 		}
 	}
-	//if (_reading != 0)
-	//	_needRedraw = true;
-
-	//_reading = 0;
 
 	if (_currentStep != 0)
 		_needRedraw = true;
 
 	_currentStep = 0;
+	_reading = 0;
 }
 
 void ManualControlState::reset()

@@ -56,8 +56,8 @@ void ProgramState::react()
 	case KEY_RETURN:
 	{
 		//If we stopped the program
-		_dividerMotor->enableOutputs();
-		_tableMotor->enableOutputs();
+		//_dividerMotor->enableOutputs();
+		//_tableMotor->enableOutputs();
 		_program->getStateManager()->changeState(1);
 
 		break;
@@ -299,8 +299,8 @@ void ProgramState::react()
 	}
 	case FINISH:
 	{
-		_tableMotor->enableOutputs();
-		_dividerMotor->enableOutputs();
+		//_tableMotor->enableOutputs();
+		//_dividerMotor->enableOutputs();
 
 		break;
 	}

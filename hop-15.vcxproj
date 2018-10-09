@@ -88,7 +88,7 @@
     <ClInclude Include="Config.h" />
     <ClInclude Include="DeviceManager.h" />
     <ClInclude Include="Element.h" />
-    <ClInclude Include="EncoderState.h" />
+    <ClInclude Include="ManualControlState.h" />
     <ClInclude Include="Endstop.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IntroductionState.h" />
@@ -112,7 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buzzer.cpp" />
-    <ClCompile Include="EncoderState.cpp" />
+    <ClCompile Include="ManualControlState.cpp" />
     <ClCompile Include="Endstop.cpp" />
     <ClCompile Include="IntroductionState.cpp" />
     <ClCompile Include="Lcd.cpp" />

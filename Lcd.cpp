@@ -179,13 +179,13 @@ void Lcd::manage(ManualControlState* ManualControlState)
 	if (ManualControlState->getOperation() == "MOVE_DIVIDER_MOTOR")
 	{
 		writeNewLine(0, "  ruch podzielnicy");
-		sprintf(valueLine, "Pozycja: %d", position);
 	}
 	else if (ManualControlState->getOperation() == "MOVE_TABLE_MOTOR")
 	{
-		writeNewLine(0, "     ruch stolu");
-		sprintf(valueLine, "Pozycja: %d", position);
+		writeNewLine(0, "     ruch stolu");	
 	}
+
+	sprintf(valueLine, "Pozycja: %d", position);
 
 	writeNewLine(1, valueLine);
 	writeNewLine(2, "");

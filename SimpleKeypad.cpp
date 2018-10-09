@@ -44,7 +44,7 @@ Keys SimpleKeypad::getPressedKey()
 		return KEY_NONE;
 }
 
-char SimpleKeypad::getNaturalKey()
+char SimpleKeypad::getKeyValue()
 {
 	return _keypad.getKey();
 }
