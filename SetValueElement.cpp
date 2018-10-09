@@ -15,6 +15,7 @@ SetValueElement::SetValueElement(char* name, MenuState* state, double minValue, 
 
 	_lcd = deviceManager->requestLcd();
 	_simpleKeypad = deviceManager->requestSimpleKeypad();
+	_buzzer = deviceManager->requestBuzzer();
 	_rotaryEncoder = deviceManager->requestRotaryEncoder();
 
 	_minValue = minValue;
@@ -34,7 +35,11 @@ void SetValueElement::react()
 	else if (key == KEY_DOWN || value == -1)
 		decrease();
 	else if (key == KEY_ENTER)
+	{
+		_buzzer->playOnPress();
 		_state->back();
+	}
+		
 }
 
 void SetValueElement::increase()

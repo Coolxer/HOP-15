@@ -8,6 +8,7 @@ class MenuState;
 
 class Lcd;
 class SimpleKeypad;
+class Buzzer;
 class RotaryEncoder;
 
 class SetValueElement: public Element
@@ -15,6 +16,7 @@ class SetValueElement: public Element
 private:
 	Lcd* _lcd;
 	SimpleKeypad* _simpleKeypad;
+	Buzzer* _buzzer;
 	RotaryEncoder* _rotaryEncoder;
 
 	double _minValue;
