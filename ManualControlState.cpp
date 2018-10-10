@@ -88,10 +88,11 @@ void ManualControlState::react()
 
 	_reading = _rotaryEncoder->read();
 
-	if (key == KEY_UP || _reading == 1)
+	if (key == 'A' || _reading == 1)
 		_currentStep = _stepCount;
-	else if (key == KEY_DOWN || _reading == -1)
+	else if (key == 'D' || _reading == -1)
 		_currentStep = _stepCount * -1;
+
 
 	if(_operation == "MOVE_DIVIDER_MOTOR")
 	{
@@ -121,26 +122,35 @@ void ManualControlState::react()
 	}
 	else if (_operation = "MOVE_TABLE_MOTOR")
 	{
-		if (_currentStep < 0 && !_backwardTableEndstop->isClicked())
+		if (_moveInSteps)
 		{
-			_positionInSteps += _currentStep;
-			_tableMotor->move(_currentStep);
-			while (_tableMotor->distanceToGo() != 0)
-			{	
-				_tableMotor->setSpeed(-800);
-				_tableMotor->runSpeedToPosition();
+			if (_currentStep < 0 && !_backwardTableEndstop->isClicked())
+			{
+				_positionInSteps += _currentStep;
+				_tableMotor->move(_currentStep);
+			}
+
+			if (_currentStep > 0 && !_forwardTableEndstop->isClicked())
+			{
+				_positionInSteps += _currentStep;
+				_tableMotor->move(_currentStep);
 			}
 		}
-
-		if (_currentStep > 0 && !_forwardTableEndstop->isClicked())
+		else
 		{
-			_positionInSteps += _currentStep;
-			_tableMotor->move(_currentStep);
-			while (_tableMotor->distanceToGo() != 0)
-			{
+			double _proportionOfTableMotorCircles = 87 / 16.42;
+			double wayInSteps = _currentStep * 14.63116457257362 * _proportionOfTableMotorCircles;
+			_tableMotor->move(wayInSteps);
+		}
+
+		while (_tableMotor->distanceToGo() != 0)
+		{
+			if (_currentStep < 0)
+				_tableMotor->setSpeed(-800);
+			else
 				_tableMotor->setSpeed(800);
-				_tableMotor->runSpeedToPosition();
-			}
+
+			_tableMotor->runSpeedToPosition();
 		}
 	}
 
@@ -162,6 +172,7 @@ void ManualControlState::reset()
 
 	_lastKeyPressed = ' ';
 	_sNumber = "";
+	_moveInSteps = true;
 
 	_rotaryEncoder->reset();
 }

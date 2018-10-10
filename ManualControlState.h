@@ -39,7 +39,7 @@ private:
 
 	String _sNumber;
 
-	bool _moveInSteps = false;
+	bool _moveInSteps = true;
 
 public:
 	virtual void init();
