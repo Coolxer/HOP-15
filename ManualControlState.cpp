@@ -28,27 +28,33 @@ void ManualControlState::init()
 
 void ManualControlState::react()
 {
-	/*
 	char key = _simpleKeypad->getPressedKey();
 
 	if (key != KEY_NONE)
 		_buzzer->playOnPress();
 
-	if (key == KEY_RETURN)
+	if (key == KEY_ENTER)
 		_program->getStateManager()->changeState(1);
-	//else if (key == KEY_DISRUPT)
-	//	reportDisruption();
-	//else if (key == KEY_RESET)
-	//	resetFunc();
-	*/
 
-	char key = _simpleKeypad->getKeyValue();
+	else if (key == KEY_DISRUPT)
+	{
+		if (!_moveInSteps)
+		{
+			_moveInSteps = true;
+			_needRedraw = true;
+		}
 
-	if (key != ' ')
-		_buzzer->playOnPress();
+	}
+		
+	else if (key == KEY_RESET)
+	{
+		if (_moveInSteps)
+		{
+			_moveInSteps = false;
+			_needRedraw = true;
+		}
 
-	if (key != '#')
-		_program->getStateManager()->changeState(1);
+	}	
 
 	if (_disrupted)
 	{
@@ -66,33 +72,107 @@ void ManualControlState::react()
 	_dividerMotor->disableOutputs();
 	_tableMotor->disableOutputs();
 
-	if (key == '1' || key == '2' || key == '3' || key == '4' || key == '5'
-		|| key == '6' || key == '7' || key == '8' || key == '9')
+	if (key == KEY_1 || key == KEY_2 || key == KEY_3 || key == KEY_4 || key == KEY_5
+		|| key == KEY_6 || key == KEY_7 || key == KEY_8 || key == KEY_9)
 	{
-		while (key != '*' && key != '#')
+		_changingStepCount = true;
+		switch (key)
 		{
-			key = _simpleKeypad->getKeyValue();
-
-			if (key != 'A' && key != 'B' && key != 'C' && key != 'D' && key != ' ')
-				_sNumber += key;
+		case KEY_1:
+			_sNumber = "1";
+			break;
+		case KEY_2:
+			_sNumber = "2";
+			break;
+		case KEY_3:
+			_sNumber = "3";
+			break;
+		case KEY_4:
+			_sNumber = "4";
+			break;
+		case KEY_5:
+			_sNumber = "5";
+			break;
+		case KEY_6:
+			_sNumber = "6";
+			break;
+		case KEY_7:
+			_sNumber = "7";
+			break;
+		case KEY_8:
+			_sNumber = "8";
+			break;
+		case KEY_9:
+			_sNumber = "9";
+			break;
 		}
-		_stepCount = _sNumber.toInt();
+		
+		_needRedraw = true;
 
-		if (key == '*')
-			_moveInSteps = true;
-		else if (key == '#')
-			_moveInSteps = false;
+		while (key != KEY_ENTER)
+		{
+			key = _simpleKeypad->getPressedKey();
+
+			if (key != KEY_NONE)
+				_buzzer->playOnPress();
+
+			if (key != KEY_UP && key != KEY_DISRUPT && key != KEY_RESET && key != KEY_DOWN && key != KEY_NONE)
+			{
+				switch (key)
+				{
+				case KEY_0:
+					_sNumber += "0";
+					break;
+				case KEY_1:
+					_sNumber + "1";
+					break;
+				case KEY_2:
+					_sNumber += "2";
+					break;
+				case KEY_3:
+					_sNumber += "3";
+					break;
+				case KEY_4:
+					_sNumber += "4";
+					break;
+				case KEY_5:
+					_sNumber += "5";
+					break;
+				case KEY_6:
+					_sNumber += "6";
+					break;
+				case KEY_7:
+					_sNumber += "7";
+					break;
+				case KEY_8:
+					_sNumber += "8";
+					break;
+				case KEY_9:
+					_sNumber += "9";
+					break;
+				}
+				_needRedraw = true;
+			}
+
+			if (_needRedraw)
+			{
+				_lcd->manage(this);
+				_needRedraw = false;
+			}
+			
+		}
+		_changingStepCount = false;
+		_stepCount = _sNumber.toInt();
 
 		_sNumber = "";
 	}
 
 	_reading = _rotaryEncoder->read();
 
-	if (key == 'A' || _reading == 1)
+	if (key == KEY_UP|| _reading == 1)
 		_currentStep = _stepCount;
-	else if (key == 'D' || _reading == -1)
+	else if (key == KEY_DOWN || _reading == -1)
 		_currentStep = _stepCount * -1;
-
 
 	if(_operation == "MOVE_DIVIDER_MOTOR")
 	{
@@ -165,14 +245,13 @@ void ManualControlState::reset()
 {
 	_needRedraw = true;
 
-	//_reading = 0;
-	//_position = 0;
 	_stepCount = 1;
 	_currentStep = 0;
 
 	_lastKeyPressed = ' ';
 	_sNumber = "";
 	_moveInSteps = true;
+	_changingStepCount = false;
 
 	_rotaryEncoder->reset();
 }

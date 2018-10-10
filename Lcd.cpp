@@ -180,22 +180,41 @@ void Lcd::manage(ProgramState* programState)
 void Lcd::manage(ManualControlState* ManualControlState)
 {
 	int positionInSteps = ManualControlState->getPositionInSteps();
+	int angleOrmm = ManualControlState->getAngleOrmm();
+	unsigned int stepCount = ManualControlState->getStepCount();
 
-	char valueLine[20] = { 0 };
+	bool movingInSteps = ManualControlState->movingInSteps();
+	bool changingStepCount = ManualControlState->changingStepCount();
+
+	char positionInStepsLine[20] = { 0 };
+	char angleOrmmLine[10] = { 0 };
+	char stepCountLine[10] = { 0 };
+	
+	sprintf(positionInStepsLine, "Kroki: %d ", positionInSteps);
 
 	if (ManualControlState->getOperation() == "MOVE_DIVIDER_MOTOR")
 	{
-		writeNewLine(0, "ruch podzielnicy");
+		sprintf(stepCountLine, "Ruch podzielnicy:  %d", stepCount);
+		sprintf(angleOrmmLine, "Stopnie:  %d", angleOrmm);
 	}
 	else if (ManualControlState->getOperation() == "MOVE_TABLE_MOTOR")
 	{
-		writeNewLine(0, "     ruch stolu");	
+		sprintf(stepCountLine, "Ruch stolu:  %d", stepCount);
+		sprintf(angleOrmmLine, "mm:  %d", angleOrmm);
 	}
 
-	sprintf(valueLine, "Pozycja: %d", positionInSteps);
+	writeNewLine(0, stepCountLine);
+	writeNewLine(1, positionInStepsLine);
+	writeLine(1, angleOrmmLine);
 
-	writeNewLine(1, valueLine);
-	writeNewLine(2, "");
-	writeNewLine(3, "* by wrocic do menu");
+	if (movingInSteps)
+		writeNewLine(2, "--------       C    ");
+	else
+		writeNewLine(2, "    B       --------");
+
+	if (changingStepCount)
+		writeNewLine(3, "* by potwierdzic");
+	else
+		writeNewLine(3, "* by wrocic do menu");
 		
 }

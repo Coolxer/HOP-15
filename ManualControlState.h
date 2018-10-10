@@ -40,6 +40,7 @@ private:
 	String _sNumber;
 
 	bool _moveInSteps = true;
+	bool _changingStepCount = false;
 
 public:
 	virtual void init();
@@ -49,8 +50,12 @@ public:
 	void setOperation(String operation) { _operation = operation; };
 	String getOperation() { return _operation; };
 
-	unsigned int getStepCount() { return _stepCount; };
 	int getPositionInSteps() { return _positionInSteps; };
+	int getAngleOrmm() { return _angleOrmm; };
+	unsigned int getStepCount() { return _stepCount; };
+
+	bool movingInSteps() { return _moveInSteps; };
+	bool changingStepCount() { return _changingStepCount; };
 	
 };
 

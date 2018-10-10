@@ -144,13 +144,14 @@ void MenuState::enter()
 	if (_selectedIndex == 4)
 	{
 		ProgramState* programState = getProgram()->getProgramState();
+		programState->reset();
 
 		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
 		programState->setCutterAngle(&_cutterAngle);
 		programState->setDiameter(_itemBinds[3].item->getValue());
-		programState->setSpeed(_itemBinds[9].item->getValue());
-		programState->reset();
+		programState->setSpeed(_itemBinds[9].item->getValue());	
+		programState->set();
 
 		getProgram()->getStateManager()->changeState(2);
 	}
@@ -158,13 +159,14 @@ void MenuState::enter()
 	else if (_selectedIndex == 5)
 	{
 		ProgramState* programState = getProgram()->getProgramState();
+		programState->reset();
 
 		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
 		programState->setCutterAngle(&_cutterAngle);
 		programState->setDiameter(_itemBinds[3].item->getValue());
 		programState->setSpeed(_itemBinds[9].item->getValue());
-		programState->reset();
+		programState->set();
 		programState->testDividerMotor();
 
 		getProgram()->getStateManager()->changeState(2);
@@ -173,13 +175,14 @@ void MenuState::enter()
 	else if (_selectedIndex == 6)
 	{
 		ProgramState* programState = getProgram()->getProgramState();
+		programState->reset();
 
 		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
 		programState->setCutterAngle(&_cutterAngle);
 		programState->setDiameter(_itemBinds[3].item->getValue());
 		programState->setSpeed(_itemBinds[9].item->getValue());
-		programState->reset();
+		programState->set();
 		programState->testTableMotor();
 
 		getProgram()->getStateManager()->changeState(2);

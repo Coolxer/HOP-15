@@ -75,12 +75,18 @@ void ProgramState::react()
 	}
 
 	_cutterAngleElement->react();
+	
+	if (key == KEY_UP)
+		_cutterAngleElement->increase();
+	else if (key == KEY_DOWN)
+		_cutterAngleElement->decrease();
+
 	_cutterAngle = _cutterAngleElement->getValue();
 
 	if (_cutterAngle != _lastCutterAngle)
 	{
 		calcSteps();
-		needRedraw();
+		//_needRedraw = true;
 		_lastCutterAngle = _cutterAngle;
 	}
 
@@ -285,9 +291,6 @@ void ProgramState::reset()
 
 	_tableCountInMM = 50;
 
-	_lastCutterAngle = _cutterAngleElement->getValue();
-
-	calcSteps();
 }
 
 void ProgramState::togglePause()
@@ -338,4 +341,11 @@ void ProgramState::calcSteps()
 
 	_multiplier = _dividerCountInSteps / _tableCountInSteps;
 	_dividerSpeed = _tableSpeed * _multiplier;
+}
+
+void ProgramState::set()
+{
+	_cutterAngle = _cutterAngleElement->getValue();
+	_lastCutterAngle = _cutterAngle;
+	calcSteps();
 }

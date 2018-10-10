@@ -104,6 +104,8 @@ private:
 	double _multiplier;
 	double _dividerSpeed;
 
+	void calcSteps();
+
 public:
 	void setFeathers(byte feathers) { _feathersCount = feathers; };
 	void setCycles(byte cycles) { _cyclesCount = cycles; };
@@ -112,8 +114,7 @@ public:
 	void setDiameter(double diameter) { _diameter = diameter; };
 	void setSpeed(double speed) { _tableSpeed = speed; };
 
-	void calcSteps();
-
+	void set();
 	byte getCurrentFeather() { return _currentFeather; };
 	void setCurrentFeather(byte currentFeather) { _currentFeather = currentFeather; };
 	byte getFeathersCount() { return _feathersCount; };
