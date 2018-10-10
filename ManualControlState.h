@@ -28,10 +28,10 @@ private:
 	Endstop* _forwardTableEndstop;
 	Endstop* _backwardTableEndstop;
 
-	int _position = 0;
+	int _positionInSteps = 0;
 	short _reading;
 	unsigned int _stepCount = 1;
-	int _currentStep = 1;
+	int _currentStep = 0;
 
 	String _operation;
 	char _lastKeyPressed = ' ';
@@ -45,7 +45,10 @@ public:
 
 	void setOperation(String operation) { _operation = operation; };
 	String getOperation() { return _operation; };
-	int getPosition() { return _position; };
+
+	unsigned int getStepCount() { return _stepCount; };
+	int getPositionInSteps() { return _positionInSteps; };
+	
 };
 
 #endif

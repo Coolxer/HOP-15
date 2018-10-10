@@ -28,6 +28,7 @@ void ManualControlState::init()
 
 void ManualControlState::react()
 {
+	/*
 	char key = _simpleKeypad->getPressedKey();
 
 	if (key != KEY_NONE)
@@ -35,10 +36,19 @@ void ManualControlState::react()
 
 	if (key == KEY_RETURN)
 		_program->getStateManager()->changeState(1);
-	else if (key == KEY_DISRUPT)
-		reportDisruption();
-	else if (key == KEY_RESET)
-		resetFunc();
+	//else if (key == KEY_DISRUPT)
+	//	reportDisruption();
+	//else if (key == KEY_RESET)
+	//	resetFunc();
+	*/
+
+	char key = _simpleKeypad->getKeyValue();
+
+	if (key != ' ')
+		_buzzer->playOnPress();
+
+	if (key != '#')
+		_program->getStateManager()->changeState(1);
 
 	if (_disrupted)
 	{
@@ -56,19 +66,18 @@ void ManualControlState::react()
 	_dividerMotor->disableOutputs();
 	_tableMotor->disableOutputs();
 
-	if (key == KEY_1 || key == KEY_2 || key == KEY_3 || key == KEY_4 || key == KEY_5
-		|| key == KEY_6 || key == KEY_7 || key == KEY_8 || key == KEY_9)
+	if (key == '1' || key == '2' || key == '3' || key == '4' || key == '5'
+		|| key == '6' || key == '7' || key == '8' || key == '9')
 	{
-		char nkey = _simpleKeypad->getKeyValue();
-
-		while (nkey != '*')
+		while (key != '*' && key != '#')
 		{
-			if (nkey != 'A' && nkey != 'B' && nkey != 'C' && nkey != 'D' && nkey != '#' && nkey != ' ')
-				_sNumber += nkey;
+			key = _simpleKeypad->getKeyValue();
+
+			if (key != 'A' && key != 'B' && key != 'C' && key != 'D' && key != ' ')
+				_sNumber += key;
 		}
 		_stepCount = _sNumber.toInt();
 
-		nkey == ' ';
 		_sNumber = "";
 	}
 
@@ -81,7 +90,7 @@ void ManualControlState::react()
 
 	if(_operation == "MOVE_DIVIDER_MOTOR")
 	{
-		_position += _currentStep;
+		_positionInSteps += _currentStep;
 		_dividerMotor->move(_currentStep);
 		while (_dividerMotor->distanceToGo() != 0)
 		{
@@ -97,7 +106,7 @@ void ManualControlState::react()
 	{
 		if (_currentStep < 0 && !_backwardTableEndstop->isClicked())
 		{
-			_position += _currentStep;
+			_positionInSteps += _currentStep;
 			_tableMotor->move(_currentStep);
 			while (_tableMotor->distanceToGo() != 0)
 			{	
@@ -108,7 +117,7 @@ void ManualControlState::react()
 
 		if (_currentStep > 0 && !_forwardTableEndstop->isClicked())
 		{
-			_position += _currentStep;
+			_positionInSteps += _currentStep;
 			_tableMotor->move(_currentStep);
 			while (_tableMotor->distanceToGo() != 0)
 			{
@@ -132,7 +141,7 @@ void ManualControlState::reset()
 	//_reading = 0;
 	//_position = 0;
 	_stepCount = 1;
-	_currentStep = 1;
+	_currentStep = 0;
 
 	_lastKeyPressed = ' ';
 	_sNumber = "";

@@ -179,20 +179,20 @@ void Lcd::manage(ProgramState* programState)
 
 void Lcd::manage(ManualControlState* ManualControlState)
 {
-	int position = ManualControlState->getPosition();
+	int positionInSteps = ManualControlState->getPositionInSteps();
 
 	char valueLine[20] = { 0 };
 
 	if (ManualControlState->getOperation() == "MOVE_DIVIDER_MOTOR")
 	{
-		writeNewLine(0, "  ruch podzielnicy");
+		writeNewLine(0, "ruch podzielnicy");
 	}
 	else if (ManualControlState->getOperation() == "MOVE_TABLE_MOTOR")
 	{
 		writeNewLine(0, "     ruch stolu");	
 	}
 
-	sprintf(valueLine, "Pozycja: %d", position);
+	sprintf(valueLine, "Pozycja: %d", positionInSteps);
 
 	writeNewLine(1, valueLine);
 	writeNewLine(2, "");
