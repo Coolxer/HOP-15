@@ -15,6 +15,8 @@ class Endstop;
 class AccelStepper;
 class MultiStepper;
 
+class SetValueElement;
+
 enum ExecutionState 
 {
 	START,
@@ -42,6 +44,8 @@ private:
 	AccelStepper* _dividerMotor;
 	AccelStepper* _tableMotor;
 	MultiStepper* _multiStepper;
+
+	SetValueElement* _cutterAngleElement;
 
 	//Current state of execution of program
 	ExecutionState _currentState = START;
@@ -89,13 +93,11 @@ private:
 	double _proportionOfDividerMotorCircles;
 	double _proportionOfTableMotorCircles;
 
-	double _tableCountInMM = 50;//128;
+	double _tableCountInMM = 50;
 	double _dividerCountInMM;
 
 	double _tableCountInSteps;
 	double _dividerCountInSteps;
-
-	long _stepsOfMotors[2];
 
 	double _tableSpeed;
 	double _multiplier;
@@ -104,7 +106,8 @@ private:
 public:
 	void setFeathers(byte feathers) { _feathersCount = feathers; };
 	void setCycles(byte cycles) { _cyclesCount = cycles; };
-	void setCutterAngle(double angle) { _cutterAngle = angle; };
+	//void setCutterAngle(double angle) { _cutterAngle = angle; };
+	void setCutterAngle(SetValueElement* cutterAngleElement) { _cutterAngleElement = cutterAngleElement; };
 	void setDiameter(double diameter) { _diameter = diameter; };
 	void setSpeed(double speed) { _tableSpeed = speed; };
 
@@ -117,8 +120,8 @@ public:
 	byte getCurrentCycle() { return _currentCycle; };
 	void setCurrentCycle(byte currentCycle) { _currentCycle = currentCycle; };
 	byte getCyclesCount() { return _cyclesCount; };
-	
-	float getRotateAngle() { return _rotateAngle; };
+
+	double getCutterAngle() { return _cutterAngle; };
 
 	void togglePause();
 

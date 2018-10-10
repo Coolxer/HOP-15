@@ -74,6 +74,10 @@ void ProgramState::react()
 	}
 	}
 
+	_cutterAngleElement->react();
+	calcSteps();
+
+
 	if (_disrupted)
 	{
 		_lcd->begin();
@@ -108,20 +112,7 @@ void ProgramState::react()
 			if (_backwardTableEndstop->isClicked())
 				_tableMotorHomed = true;
 			else
-			{
-				/*
-				if (_tableMotor->distanceToGo() == 0)
-				{
-					_tableMotor->setCurrentPosition(0);
-					_tableMotor->moveTo(-8);
-				}
-	;
-				_tableMotor->runSpeedToPosition();
-				*/
-				
-				_tableMotor->runSpeed();
-			}
-				
+				_tableMotor->runSpeed();			
 		}
 
 		if (_tableMotorHomed)
@@ -156,23 +147,9 @@ void ProgramState::react()
 
 		if (!forwardEndstopClicked)
 		{
-			_stepsOfMotors[0] = long(_tableCountInSteps);
-			_stepsOfMotors[1] = long(_dividerCountInSteps);
-
-			//_multiStepper->moveTo(_stepsOfMotors);
-			//_tableMotor->moveTo(_tableCountInSteps);
-			//_dividerMotor->moveTo(_dividerCountInSteps);
-
-			//_tableMotor->setSpeed(_tableCountInSteps);
-			//_dividerMotor->setSpeed(_dividerCountInSteps);
-
 			_tableMotor->runSpeed();
 			_dividerMotor->runSpeed();
 				
-			//_multiStepper->run();
-
-			//_multiStepper->runSpeedToPosition();
-
 			//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
 			if (!_backwardTableEndstop->isClicked())
 				betweenEndstops = true;
@@ -207,30 +184,8 @@ void ProgramState::react()
 
 		if (!backwardEndstopClicked)
 		{
-			_stepsOfMotors[0] = long(_tableCountInSteps * -1);
-			_stepsOfMotors[1] = long(_dividerCountInSteps * -1);
-
-			//_tableMotor->moveTo(_tableCountInSteps);
-			//_dividerMotor->moveTo(_dividerCountInSteps);
-
-			//_tableMotor->runSpeedToPosition();
-			//_dividerMotor->runSpeedToPosition();
-
-			//if (_tableMotor->distanceToGo() == 0)
-			//	_tableMotor->setCurrentPosition(0);
-
-			//if (_dividerMotor->distanceToGo() == 0)
-			//	_dividerMotor->setCurrentPosition(0);
-
-			//_tableMotor->setSpeed(_tableCountInSteps * -1);
-			//_dividerMotor->setSpeed(_dividerCountInSteps * -1);
-
-			//_tableMotor->runSpeed();
-			//_dividerMotor->runSpeed();
-
 			_tableMotor->runSpeed();
 			_dividerMotor->runSpeed();
-
 
 			//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
 			if (!_forwardTableEndstop->isClicked())
@@ -358,6 +313,8 @@ bool ProgramState::isFinished()
 
 void ProgramState::calcSteps()
 {
+	_cutterAngle = _cutterAngleElement->getValue();
+
 	_dividerCountInMM = _tableCountInMM * tan((_cutterAngle * _PI) / 180.0);
 
 	double circuit = _PI * _diameter;

@@ -148,7 +148,8 @@ void MenuState::enter()
 
 		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
-		programState->setCutterAngle(_itemBinds[2].item->getValue());
+		//programState->setCutterAngle(_itemBinds[2].item->getValue());
+		programState->setCutterAngle(&_cutterAngle);
 		programState->setDiameter(_itemBinds[3].item->getValue());
 		programState->setSpeed(_itemBinds[9].item->getValue());
 		programState->calcSteps();
@@ -163,7 +164,7 @@ void MenuState::enter()
 
 		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
-		programState->setCutterAngle(_itemBinds[2].item->getValue());
+		programState->setCutterAngle(&_cutterAngle);
 		programState->setDiameter(_itemBinds[3].item->getValue());
 		programState->setSpeed(_itemBinds[9].item->getValue());
 		programState->calcSteps();
@@ -179,7 +180,7 @@ void MenuState::enter()
 
 		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
-		programState->setCutterAngle(_itemBinds[2].item->getValue());
+		programState->setCutterAngle(&_cutterAngle);
 		programState->setDiameter(_itemBinds[3].item->getValue());
 		programState->setSpeed(_itemBinds[9].item->getValue());
 		programState->calcSteps();

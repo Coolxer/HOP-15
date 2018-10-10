@@ -147,6 +147,11 @@ void Lcd::manage(ProgramState* programState)
 		byte feathers = programState->getFeathersCount();
 		byte cycle = programState->getCurrentCycle();
 		byte cycles = programState->getCyclesCount();
+		double cutterAngle = programState->getCutterAngle();
+
+		char cutterLine[6] = { 0 };
+		strcpy(cutterLine, "");
+		dtostrf(cutterAngle, 2, 1, &cutterLine[strlen(cutterLine)]);
 
 		char featherLine[20] = { 0 };
 		char cycleLine[20] = { 0 };
@@ -164,7 +169,9 @@ void Lcd::manage(ProgramState* programState)
 		}	
 		else
 		{
-			writeNewLine(0, "Przetwarzanie w toku");
+			//writeNewLine(0, "Przetwarzanie w toku");
+			writeNewLine(0, "Ostrzenie ");
+			writeLine(0, cutterLine);
 			writeNewLine(3, "*-Pauza #-Zatrzymaj");
 		}
 	}
