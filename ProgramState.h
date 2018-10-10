@@ -79,6 +79,7 @@ private:
 
 	//Angle of cutter in degrees
 	double _cutterAngle;
+	double _lastCutterAngle;
 
 	//Diameter of cutter
 	double _diameter;

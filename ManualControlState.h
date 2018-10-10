@@ -29,6 +29,7 @@ private:
 	Endstop* _backwardTableEndstop;
 
 	int _positionInSteps = 0;
+	int _angleOrmm = 0;
 	short _reading;
 	unsigned int _stepCount = 1;
 	int _currentStep = 0;
@@ -37,6 +38,8 @@ private:
 	char _lastKeyPressed = ' ';
 
 	String _sNumber;
+
+	bool _moveInSteps = false;
 
 public:
 	virtual void init();

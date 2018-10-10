@@ -78,6 +78,11 @@ void ManualControlState::react()
 		}
 		_stepCount = _sNumber.toInt();
 
+		if (key == '*')
+			_moveInSteps = true;
+		else if (key == '#')
+			_moveInSteps = false;
+
 		_sNumber = "";
 	}
 
@@ -90,8 +95,20 @@ void ManualControlState::react()
 
 	if(_operation == "MOVE_DIVIDER_MOTOR")
 	{
-		_positionInSteps += _currentStep;
-		_dividerMotor->move(_currentStep);
+		if (_moveInSteps)
+		{
+			_positionInSteps += _currentStep;
+			_dividerMotor->move(_currentStep);
+		}
+		else
+		{
+			_angleOrmm += _currentStep;
+			double _proportionOfDividerMotorCircles = 130.1 / 34.81;
+			int valueInSteps = _currentStep * _proportionOfDividerMotorCircles * 200 * 8 / 360;
+
+			_dividerMotor->move(valueInSteps);
+		}
+		
 		while (_dividerMotor->distanceToGo() != 0)
 		{
 			if (_currentStep > 0)

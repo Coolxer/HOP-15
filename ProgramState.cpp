@@ -36,8 +36,8 @@ void ProgramState::react()
 {
 	char key = _simpleKeypad->getPressedKey();
 
-	if (key != KEY_NONE)
-		_buzzer->playOnPress();
+	//if (key != KEY_NONE)
+	//	_buzzer->playOnPress();
 
 	switch (key)
 	{
@@ -75,8 +75,14 @@ void ProgramState::react()
 	}
 
 	_cutterAngleElement->react();
-	calcSteps();
+	_cutterAngle = _cutterAngleElement->getValue();
 
+	if (_cutterAngle != _lastCutterAngle)
+	{
+		calcSteps();
+		needRedraw();
+		_lastCutterAngle = _cutterAngle;
+	}
 
 	if (_disrupted)
 	{
@@ -133,9 +139,6 @@ void ProgramState::react()
 		betweenEndstops = false;
 		forwardEndstopClicked = false;
 
-		_tableMotor->setSpeed(_tableSpeed);
-		_dividerMotor->setSpeed(_dividerSpeed);
-
 		_currentState = MOVING_FORWARD;
 
 		break;
@@ -144,6 +147,9 @@ void ProgramState::react()
 	{
 		_tableMotor->disableOutputs();
 		_dividerMotor->disableOutputs();
+
+		_tableMotor->setSpeed(_tableSpeed);
+		_dividerMotor->setSpeed(_dividerSpeed);
 
 		if (!forwardEndstopClicked)
 		{
@@ -170,9 +176,6 @@ void ProgramState::react()
 		betweenEndstops = false;
 		backwardEndstopClicked = false;
 
-		_tableMotor->setSpeed(-_tableSpeed);
-		_dividerMotor->setSpeed(-_dividerSpeed);
-
 		_currentState = MOVING_BACKWARD;
 
 		break;
@@ -181,6 +184,9 @@ void ProgramState::react()
 	{
 		_tableMotor->disableOutputs();
 		_dividerMotor->disableOutputs();
+
+		_tableMotor->setSpeed(-_tableSpeed);
+		_dividerMotor->setSpeed(-_dividerSpeed);
 
 		if (!backwardEndstopClicked)
 		{
@@ -233,7 +239,6 @@ void ProgramState::react()
 		_tableMotor->disableOutputs();
 		_dividerMotor->disableOutputs();
 
-		//_dividerMotor->rotate(_rotateAngle * _proportionOfDividerMotorCircles * -1.0);
 		_dividerMotor->move(_rotateAngle * _proportionOfDividerMotorCircles * 200 * 8 / 360);
 
 		while (_dividerMotor->distanceToGo() != 0)
@@ -259,6 +264,7 @@ void ProgramState::react()
 
 		break;
 	}
+	
 	}
 }
 
@@ -278,6 +284,10 @@ void ProgramState::reset()
 	_testingHome = false;
 
 	_tableCountInMM = 50;
+
+	_lastCutterAngle = _cutterAngleElement->getValue();
+
+	calcSteps();
 }
 
 void ProgramState::togglePause()
@@ -313,8 +323,6 @@ bool ProgramState::isFinished()
 
 void ProgramState::calcSteps()
 {
-	_cutterAngle = _cutterAngleElement->getValue();
-
 	_dividerCountInMM = _tableCountInMM * tan((_cutterAngle * _PI) / 180.0);
 
 	double circuit = _PI * _diameter;
@@ -330,8 +338,4 @@ void ProgramState::calcSteps()
 
 	_multiplier = _dividerCountInSteps / _tableCountInSteps;
 	_dividerSpeed = _tableSpeed * _multiplier;
-
-	Serial.println(_multiplier);
-	Serial.println(_tableSpeed);
-	Serial.println(_dividerSpeed);
 }
