@@ -188,20 +188,20 @@ void Lcd::manage(ManualControlState* ManualControlState)
 	bool runningDuringProcess = ManualControlState->runningDuringProcess();
 
 	char positionInStepsLine[20] = { 0 };
-	char angleOrmmLine[10] = { 0 };
-	char stepCountLine[10] = { 0 };
+	char angleOrmmLine[20] = { 0 };
+	char stepCountLine[20] = { 0 };
 	
-	sprintf(positionInStepsLine, "Kroki: %d ", positionInSteps);
+	sprintf(positionInStepsLine, "Kroki:%d", positionInSteps);
 
 	if (ManualControlState->getOperation() == "MOVE_DIVIDER_MOTOR")
 	{
-		sprintf(stepCountLine, "Ruch podzielnicy:  %d", stepCount);
-		sprintf(angleOrmmLine, "Stopnie:  %d", angleOrmm);
+		sprintf(stepCountLine, "Ruch podzielnicy:%d", stepCount);
+		sprintf(angleOrmmLine, "  Stopnie:%d", angleOrmm);
 	}
 	else if (ManualControlState->getOperation() == "MOVE_TABLE_MOTOR")
 	{
-		sprintf(stepCountLine, "Ruch stolu:  %d", stepCount);
-		sprintf(angleOrmmLine, "mm:  %d", angleOrmm);
+		sprintf(stepCountLine, "Ruch stolu:%d", stepCount);
+		sprintf(angleOrmmLine, "  mm:%d", angleOrmm);
 	}
 
 	writeNewLine(0, stepCountLine);

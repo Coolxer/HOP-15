@@ -112,8 +112,8 @@ void ManualControlState::react()
 			_sNumber = "9";
 			break;
 		}
-		
-		_needRedraw = true;
+		_stepCount = _sNumber.toInt();
+		_lcd->manage(this);
 
 		while (key != KEY_ENTER)
 		{
@@ -157,18 +157,14 @@ void ManualControlState::react()
 					_sNumber += "9";
 					break;
 				}
-				_needRedraw = true;
-			}
-
-			if (_needRedraw)
-			{
+				_stepCount = _sNumber.toInt();
 				_lcd->manage(this);
-				_needRedraw = false;
 			}
-			
 		}
 		_changingStepCount = false;
 		_stepCount = _sNumber.toInt();
+
+		_lcd->manage(this);
 
 		_sNumber = "";
 	}
