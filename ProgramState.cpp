@@ -270,6 +270,19 @@ void ProgramState::react()
 
 		break;
 	}
+	case PAUSE:
+	{
+		if (key == KEY_UP)
+		{
+			_program->getManualControlState()->reset();
+			_program->getManualControlState()->setOperation("MOVE_DIVIDER_MOTOR");
+			_program->getManualControlState()->setRunningDuringProcess();
+
+			_program->getStateManager()->changeState(3);
+		}
+
+		break;
+	}
 	
 	}
 }

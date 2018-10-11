@@ -34,7 +34,13 @@ void ManualControlState::react()
 		_buzzer->playOnPress();
 
 	if (key == KEY_ENTER)
-		_program->getStateManager()->changeState(1);
+	{
+		if (!_runningDuringProcess)
+			_program->getStateManager()->changeState(1);
+		else
+			_program->getStateManager()->changeState(2);
+	}
+		
 
 	else if (key == KEY_DISRUPT)
 	{
@@ -250,8 +256,10 @@ void ManualControlState::reset()
 
 	_lastKeyPressed = ' ';
 	_sNumber = "";
+
 	_moveInSteps = true;
 	_changingStepCount = false;
+	_runningDuringProcess = false;
 
 	_rotaryEncoder->reset();
 }

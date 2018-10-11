@@ -165,7 +165,7 @@ void Lcd::manage(ProgramState* programState)
 		if (programState->isPaused())
 		{
 			writeNewLine(0, "       Pauza");
-			writeNewLine(3, "*-Wznow #-Zatrzymaj");
+			writeNewLine(3, "*Wznow #Stop A-Obroc");
 		}	
 		else
 		{
@@ -185,6 +185,7 @@ void Lcd::manage(ManualControlState* ManualControlState)
 
 	bool movingInSteps = ManualControlState->movingInSteps();
 	bool changingStepCount = ManualControlState->changingStepCount();
+	bool runningDuringProcess = ManualControlState->runningDuringProcess();
 
 	char positionInStepsLine[20] = { 0 };
 	char angleOrmmLine[10] = { 0 };
@@ -215,6 +216,12 @@ void Lcd::manage(ManualControlState* ManualControlState)
 	if (changingStepCount)
 		writeNewLine(3, "* by potwierdzic");
 	else
-		writeNewLine(3, "* by wrocic do menu");
+	{
+		if (!runningDuringProcess)
+			writeNewLine(3, "* by wrocic do menu");
+		else
+			writeNewLine(3, "* by ostrzyc ");
+	}
+		
 		
 }

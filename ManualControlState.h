@@ -42,6 +42,8 @@ private:
 	bool _moveInSteps = true;
 	bool _changingStepCount = false;
 
+	bool _runningDuringProcess = false;
+
 public:
 	virtual void init();
 	virtual void react();
@@ -56,6 +58,9 @@ public:
 
 	bool movingInSteps() { return _moveInSteps; };
 	bool changingStepCount() { return _changingStepCount; };
+	bool runningDuringProcess() { return _runningDuringProcess; };
+
+	void setRunningDuringProcess() { _runningDuringProcess = true; };
 	
 };
 
