@@ -8,6 +8,7 @@
 #include "MenuState.h"
 #include "ProgramState.h"
 #include "ManualControlState.h"
+#include "ProcessCreatorState.h"
 
 class Program
 {
@@ -18,7 +19,8 @@ private:
 	IntroductionState _introductionState;
 	MenuState _menuState;
 	ProgramState _programState;
-	ManualControlState _ManualControlState;
+	ManualControlState _manualControlState;
+	ProcessCreatorState _processCreatorState;
 
 public:
 	Program() {};
@@ -29,7 +31,7 @@ public:
 	DeviceManager* getDeviceManager() { return &_deviceManager; };
 	StateManager* getStateManager() { return &_stateManager; };
 	ProgramState* getProgramState() { return &_programState; };
-	ManualControlState* getManualControlState() { return &_ManualControlState; };
+	ManualControlState* getManualControlState() { return &_manualControlState; };
 };
 
 #endif

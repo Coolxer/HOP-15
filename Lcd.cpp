@@ -177,15 +177,15 @@ void Lcd::manage(ProgramState* programState)
 	}
 }
 
-void Lcd::manage(ManualControlState* ManualControlState)
+void Lcd::manage(ManualControlState* manualControlState)
 {
-	int positionInSteps = ManualControlState->getPositionInSteps();
-	int angleOrmm = ManualControlState->getAngleOrmm();
-	unsigned int stepCount = ManualControlState->getStepCount();
+	int positionInSteps = manualControlState->getPositionInSteps();
+	int angleOrmm = manualControlState->getAngleOrmm();
+	unsigned int stepCount = manualControlState->getStepCount();
 
-	bool movingInSteps = ManualControlState->movingInSteps();
-	bool changingStepCount = ManualControlState->changingStepCount();
-	bool runningDuringProcess = ManualControlState->runningDuringProcess();
+	bool movingInSteps = manualControlState->movingInSteps();
+	bool changingStepCount = manualControlState->changingStepCount();
+	bool runningDuringProcess = manualControlState->runningDuringProcess();
 
 	char positionInStepsLine[20] = { 0 };
 	char angleOrmmLine[20] = { 0 };
@@ -193,12 +193,12 @@ void Lcd::manage(ManualControlState* ManualControlState)
 	
 	sprintf(positionInStepsLine, "Kroki:%d", positionInSteps);
 
-	if (ManualControlState->getOperation() == "MOVE_DIVIDER_MOTOR")
+	if (manualControlState->getOperation() == "MOVE_DIVIDER_MOTOR")
 	{
 		sprintf(stepCountLine, "Ruch podzielnicy:%d", stepCount);
 		sprintf(angleOrmmLine, "  Stopnie:%d", angleOrmm);
 	}
-	else if (ManualControlState->getOperation() == "MOVE_TABLE_MOTOR")
+	else if (manualControlState->getOperation() == "MOVE_TABLE_MOTOR")
 	{
 		sprintf(stepCountLine, "Ruch stolu:%d", stepCount);
 		sprintf(angleOrmmLine, "  mm:%d", angleOrmm);

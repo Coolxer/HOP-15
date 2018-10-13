@@ -190,18 +190,18 @@ void MenuState::enter()
 	//If we rotating divider
 	else if (_selectedIndex == 7)
 	{
-		ManualControlState* ManualControlState = getProgram()->getManualControlState();
-		ManualControlState->reset();
-		ManualControlState->setOperation("MOVE_DIVIDER_MOTOR");
+		ManualControlState* manualControlState = getProgram()->getManualControlState();
+		manualControlState->reset();
+		manualControlState->setOperation("MOVE_DIVIDER_MOTOR");
 
 		getProgram()->getStateManager()->changeState(3);
 	}
 	//If we moving table
 	else if (_selectedIndex == 8)
 	{
-		ManualControlState* ManualControlState = getProgram()->getManualControlState();
-		ManualControlState->reset();
-		ManualControlState->setOperation("MOVE_TABLE_MOTOR");
+		ManualControlState* manualControlState = getProgram()->getManualControlState();
+		manualControlState->reset();
+		manualControlState->setOperation("MOVE_TABLE_MOTOR");
 
 		getProgram()->getStateManager()->changeState(3);
 	}

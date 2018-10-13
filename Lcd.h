@@ -50,7 +50,7 @@ public:
 	void manage(MenuState* menuState);
 	void manage(IntroductionState* introductionState);
 	void manage(ProgramState* programState);
-	void manage(ManualControlState* ManualControlState);
+	void manage(ManualControlState* manualControlState);
 };
 
 #endif
