@@ -12,6 +12,7 @@
 
 #include "ProgramState.h"
 #include "ManualControlState.h"
+#include "ProcessCreatorState.h"
 
 #include "SetValueElement.h"
 
@@ -71,6 +72,7 @@ void MenuState::init()
 	setElement(9, &_speed);
 	setElement(10, "Wylacz silniki");
 	setElement(11, "Ustaw do bazy");
+	setElement(12, "Kreator");
 }
 
 void MenuState::react()
@@ -222,6 +224,12 @@ void MenuState::enter()
 			programState->testHome();
 			getProgram()->getStateManager()->changeState(2);
 		}		
+	}
+	//If we running creator
+	else if (_selectedIndex == 12)
+	{
+		ProcessCreatorState* processCreatorState = getProgram()->getProcessCreatorState();
+		processCreatorState->reset();
 	}
 
 	_needRedraw = true;

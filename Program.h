@@ -32,6 +32,7 @@ public:
 	StateManager* getStateManager() { return &_stateManager; };
 	ProgramState* getProgramState() { return &_programState; };
 	ManualControlState* getManualControlState() { return &_manualControlState; };
+	ProcessCreatorState* getProcessCreatorState() { return &_processCreatorState; };
 };
 
 #endif
