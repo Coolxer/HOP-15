@@ -59,7 +59,6 @@ void ManualControlState::react()
 			_moveInSteps = false;
 			_needRedraw = true;
 		}
-
 	}	
 
 	if (_disrupted)
@@ -246,6 +245,9 @@ void ManualControlState::react()
 void ManualControlState::reset()
 {
 	_needRedraw = true;
+
+	_positionInSteps = 0;
+	_angleOrmm = 0;
 
 	_stepCount = 1;
 	_currentStep = 0;
