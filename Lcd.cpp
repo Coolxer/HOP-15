@@ -4,6 +4,7 @@
 #include "MenuState.h"
 #include "ProgramState.h"
 #include "ManualControlState.h"
+#include "ProcessCreatorState.h"
 
 Lcd::Lcd()
 {
@@ -221,7 +222,49 @@ void Lcd::manage(ManualControlState* manualControlState)
 			writeNewLine(3, "* by wrocic do menu");
 		else
 			writeNewLine(3, "* by ostrzyc ");
+	}	
+}
+
+void Lcd::manage(ProcessCreatorState* processControlState)
+{
+	byte currentLevel = processControlState->getCurrentLevel();
+
+	byte feathers = processControlState->getFeatherAmount();
+	float diameter = processControlState->getDiameter();
+	float cutterAngle = processControlState->getCutterAngle();
+
+	switch (currentLevel)
+	{
+	case 0:
+	{
+		char feathersLine[8] = { 0 };
+		char cyclesLine[8] = { 0 };
+		char diameterLine[8] = { 0 };
+		char cutterAngleLine[8] = { 0 };
+
+		sprintf(feathersLine, "Piora: %d", feathers);
+		//sprintf(cyclesLine, "Cykle: %d", );
+			 
+
+		writeNewLine(0, "     USTAWIENIA     ");
+		
+		writeNewLine(3, "   *Zmien #Start    ");
+		break;
 	}
-		
-		
+	case 1:
+	{
+		writeNewLine(0, "    LICZBA PIOR     ");
+		break;
+	}
+	case 2:
+	{
+		writeNewLine(0, "      SREDNICA      ");
+		break;
+	}
+	case 3:
+	{
+		writeNewLine(0, "     KAT OBROTU     ");
+		break;
+	}
+	}
 }

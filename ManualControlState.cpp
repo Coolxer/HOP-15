@@ -49,7 +49,6 @@ void ManualControlState::react()
 			_moveInSteps = true;
 			_needRedraw = true;
 		}
-
 	}
 		
 	else if (key == KEY_RESET)
@@ -59,7 +58,6 @@ void ManualControlState::react()
 			_moveInSteps = false;
 			_needRedraw = true;
 		}
-
 	}	
 
 	if (_disrupted)
