@@ -276,7 +276,10 @@ void ProgramState::react()
 	}
 	case PAUSE:
 	{
-		if (key == KEY_UP)
+		if (key != KEY_NONE)
+			_buzzer->playOnPress();
+
+		if (key == KEY_0)
 		{
 			_program->getManualControlState()->reset();
 			_program->getManualControlState()->setOperation("MOVE_DIVIDER_MOTOR");
