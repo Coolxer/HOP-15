@@ -160,7 +160,9 @@ void ProgramState::react()
 		if (!forwardEndstopClicked)
 		{
 			_tableMotor->runSpeed();
-			_dividerMotor->runSpeed();
+
+			if(!_testingTableMotor)
+				_dividerMotor->runSpeed();
 				
 			//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
 			if (!_backwardTableEndstop->isClicked())
@@ -197,7 +199,9 @@ void ProgramState::react()
 		if (!backwardEndstopClicked)
 		{
 			_tableMotor->runSpeed();
-			_dividerMotor->runSpeed();
+
+			if (!_testingTableMotor)
+				_dividerMotor->runSpeed();
 
 			//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
 			if (!_forwardTableEndstop->isClicked())
