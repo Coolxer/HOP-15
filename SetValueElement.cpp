@@ -81,6 +81,7 @@ void SetValueElement::react()
 
 void SetValueElement::increase()
 {
+	_manualInput = false;
 	_currentValue += _stepValue;
 
 	if (_currentValue > _maxValue)
@@ -91,6 +92,7 @@ void SetValueElement::increase()
 
 void SetValueElement::decrease()
 {
+	_manualInput = false;
 	_currentValue -= _stepValue;
 
 	if (_currentValue < _minValue)
