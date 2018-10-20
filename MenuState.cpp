@@ -138,7 +138,12 @@ void MenuState::down()
 void MenuState::enter()
 {
 	if (_itemBinds[_selectedIndex].index != -1)
+	{
+		if (_isFocused)
+			_itemBinds[_selectedIndex].item->validate();
+
 		_isFocused = !_isFocused;
+	}
 
 	//If we starting new program
 	if (_selectedIndex == 4)

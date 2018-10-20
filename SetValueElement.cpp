@@ -39,6 +39,43 @@ void SetValueElement::react()
 		_buzzer->playOnPress();
 		_state->back();
 	}
+
+	if (key == KEY_0)
+		_manualKeyValue = 0;
+	else if (key == KEY_1)
+		_manualKeyValue = 1;
+	else if (key == KEY_2)
+		_manualKeyValue = 2;
+	else if (key == KEY_3)
+		_manualKeyValue = 3;
+	else if (key == KEY_4)
+		_manualKeyValue = 4;
+	else if (key == KEY_5)
+		_manualKeyValue = 5;
+	else if (key == KEY_6)
+		_manualKeyValue = 6;
+	else if (key == KEY_7)
+		_manualKeyValue = 7;
+	else if (key == KEY_8)
+		_manualKeyValue = 8;
+	else if (key == KEY_9)
+		_manualKeyValue = 9;
+	else
+		_manualKeyValue = -1;
+
+	if (_manualKeyValue == 0 && _manualInput)
+		_currentValue *= 10;
+	else if (_manualKeyValue > 0)
+	{
+		if (!_manualInput)
+		{
+			_currentValue = 0;
+			_manualInput = true;
+		}
+
+		_currentValue *= 10;
+		_currentValue += _manualKeyValue;
+	}
 		
 }
 
@@ -60,4 +97,13 @@ void SetValueElement::decrease()
 		_currentValue = _minValue;
 
 	_state->needRedraw();
+}
+
+void SetValueElement::validate()
+{
+	if (_currentValue > _maxValue)
+		_currentValue = _maxValue;
+
+	if (_currentValue < _minValue)
+		_currentValue = _minValue;
 }
