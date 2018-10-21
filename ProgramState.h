@@ -104,6 +104,9 @@ private:
 	double _multiplier;
 	double _dividerSpeed;
 
+	//delay between motors movements in ms
+	int _delay = 500;
+
 	void calcSteps();
 
 public:

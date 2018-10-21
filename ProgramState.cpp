@@ -147,6 +147,8 @@ void ProgramState::react()
 
 		_currentState = MOVING_FORWARD;
 
+		delay(_delay);
+
 		break;
 	}
 	case MOVING_FORWARD:
@@ -185,6 +187,8 @@ void ProgramState::react()
 		backwardEndstopClicked = false;
 
 		_currentState = MOVING_BACKWARD;
+
+		delay(_delay);
 
 		break;
 	}
@@ -249,6 +253,8 @@ void ProgramState::react()
 		_tableMotor->disableOutputs();
 		_dividerMotor->disableOutputs();
 
+		delay(_delay);
+
 		_dividerMotor->move(-_rotateAngle * _proportionOfDividerMotorCircles * 200 * 8 / 360);
 
 		while (_dividerMotor->distanceToGo() != 0)
@@ -264,6 +270,8 @@ void ProgramState::react()
 		}
 
 		_currentState = MOVE_FORWARD;
+
+		delay(_delay);
 
 		break;
 	}
