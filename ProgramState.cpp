@@ -249,7 +249,7 @@ void ProgramState::react()
 		_tableMotor->disableOutputs();
 		_dividerMotor->disableOutputs();
 
-		_dividerMotor->move(_rotateAngle * _proportionOfDividerMotorCircles * 200 * 8 / 360);
+		_dividerMotor->move(-_rotateAngle * _proportionOfDividerMotorCircles * 200 * 8 / 360);
 
 		while (_dividerMotor->distanceToGo() != 0)
 		{
