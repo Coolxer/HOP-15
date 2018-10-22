@@ -71,6 +71,7 @@ void MenuState::init()
 	setElement(9, &_speed);
 	setElement(10, "Wylacz silniki");
 	setElement(11, "Ustaw do bazy");
+	setElement(12, "Kierunek");
 }
 
 void MenuState::react()
@@ -227,6 +228,16 @@ void MenuState::enter()
 			programState->testHome();
 			getProgram()->getStateManager()->changeState(2);
 		}		
+	}
+	//If we changing the direction of rotation
+	else if (_selectedIndex == 12)
+	{
+		ProgramState* programState = getProgram()->getProgramState();
+
+		if (programState->getDirection())
+			programState->setDirection(false);
+		else
+			programState->setDirection(true);
 	}
 
 	_needRedraw = true;

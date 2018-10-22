@@ -6,8 +6,8 @@ class RotaryEncoder
 {
 private:
 	//define pins A and B for rotary encoder
-	byte _pinA = 51;
-	byte _pinB = 53;
+	byte _pinA = 47;
+	byte _pinB = 49;
 
 	//bools variables store the current state of encoder( it allows to find in which direction the encoder is rotated reacts accordingly 
 	bool _encA = false;

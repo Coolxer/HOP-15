@@ -77,6 +77,8 @@ private:
 
 	bool _tableMotorHomed = false;
 
+	bool _turningRight = true;
+
 	//Angle of cutter in degrees
 	double _cutterAngle;
 	double _lastCutterAngle;
@@ -105,7 +107,7 @@ private:
 	double _dividerSpeed;
 
 	//delay between motors movements in ms
-	int _delay = 500;
+	int _delay = 100;
 
 	void calcSteps();
 
@@ -133,6 +135,9 @@ public:
 	bool isPaused();
 	bool isFinished();
 	bool isHomed() { return _tableMotorHomed; };
+
+	bool getDirection() { return _turningRight; };
+	void setDirection(bool x) { _turningRight = x; };
 
 	void testDividerMotor() { _testingDividerMotor = true; };
 	void testTableMotor() { _testingTableMotor = true; };

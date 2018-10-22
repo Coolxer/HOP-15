@@ -51,6 +51,7 @@ public:
 	void manage(IntroductionState* introductionState);
 	void manage(ProgramState* programState);
 	void manage(ManualControlState* ManualControlState);
+	void manage(bool direction);
 };
 
 #endif

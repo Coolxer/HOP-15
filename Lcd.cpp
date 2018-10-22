@@ -221,7 +221,11 @@ void Lcd::manage(ManualControlState* ManualControlState)
 			writeNewLine(3, "* by wrocic do menu");
 		else
 			writeNewLine(3, "* by ostrzyc ");
-	}
-		
-		
+	}	
+}
+
+void Lcd::manage(bool direction)
+{
+	//if(direction)
+
 }

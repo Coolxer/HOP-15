@@ -157,7 +157,11 @@ void ProgramState::react()
 		_dividerMotor->disableOutputs();
 
 		_tableMotor->setSpeed(_tableSpeed);
-		_dividerMotor->setSpeed(_dividerSpeed);
+
+		if(_turningRight)
+			_dividerMotor->setSpeed(_dividerSpeed);
+		else
+			_dividerMotor->setSpeed(-_dividerSpeed);
 
 		if (!forwardEndstopClicked)
 		{
@@ -198,7 +202,11 @@ void ProgramState::react()
 		_dividerMotor->disableOutputs();
 
 		_tableMotor->setSpeed(-_tableSpeed);
-		_dividerMotor->setSpeed(-_dividerSpeed);
+
+		if (_turningRight)
+			_dividerMotor->setSpeed(-_dividerSpeed);
+		else
+			_dividerMotor->setSpeed(_dividerSpeed);
 
 		if (!backwardEndstopClicked)
 		{
