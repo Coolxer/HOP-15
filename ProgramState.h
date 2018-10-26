@@ -64,6 +64,9 @@ private:
 	//360 divided by feather count
 	float _rotateAngle;
 
+	//How many steps should motor move to change feather
+	double _stepsForFeather;
+
 	//Check if motor is between endstops
 	bool betweenEndstops;
 	//Flag if forward endstop clicked

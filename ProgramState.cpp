@@ -111,6 +111,12 @@ void ProgramState::react()
 	case START:
 	{
 		_rotateAngle = 360.0 / (float)_feathersCount;
+
+		int stepsPerFullRotate = 200;
+		int multiplerOfStepsPerFullRotate = 8;
+
+		_stepsForFeather = (-_rotateAngle * _proportionOfDividerMotorCircles * stepsPerFullRotate * multiplerOfStepsPerFullRotate) / 360.0;
+
 		_currentState = STARTING;
 
 		_tableMotor->setSpeed(-_tableSpeed);
@@ -246,7 +252,7 @@ void ProgramState::react()
 
 		_dividerMotor->setCurrentPosition(0);
 
-		_dividerMotor->move(-_rotateAngle * _proportionOfDividerMotorCircles * 200 * 8 / 360);
+		_dividerMotor->move(_stepsForFeather);
 
 		while (_dividerMotor->distanceToGo() != 0)
 		{
