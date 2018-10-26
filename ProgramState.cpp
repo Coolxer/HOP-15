@@ -36,9 +36,6 @@ void ProgramState::react()
 {
 	char key = _simpleKeypad->getPressedKey();
 
-	//if (key != KEY_NONE)
-	//	_buzzer->playOnPress();
-
 	switch (key)
 	{
 	case KEY_ENTER:
@@ -65,8 +62,6 @@ void ProgramState::react()
 	case KEY_RETURN:
 	{
 		//If we stopped the program
-		//_dividerMotor->enableOutputs();
-		//_tableMotor->enableOutputs();
 		_program->getStateManager()->changeState(1);
 
 		break;
@@ -95,7 +90,6 @@ void ProgramState::react()
 	if (_cutterAngle != _lastCutterAngle)
 	{
 		calcSteps();
-		//_needRedraw = true;
 		_lastCutterAngle = _cutterAngle;
 	}
 
@@ -156,8 +150,7 @@ void ProgramState::react()
 		betweenEndstops = false;
 		forwardEndstopClicked = false;
 
-		_tableMotor->setSpeed(_tableSpeed);
-		_dividerMotor->setSpeed(_dividerSpeed);
+		
 
 		_currentState = MOVING_FORWARD;
 
@@ -167,19 +160,13 @@ void ProgramState::react()
 	}
 	case MOVING_FORWARD:
 	{
-		//_tableMotor->setSpeed(_tableSpeed);
-
-		//if(_turningRight)
-			//_dividerMotor->setSpeed(_dividerSpeed);
-		//else
-		//	_dividerMotor->setSpeed(-_dividerSpeed);
-
 		if (!forwardEndstopClicked)
 		{
-			_tableMotor->runSpeed();
+			_tableMotor->setSpeed(_tableSpeed);
+			_dividerMotor->setSpeed(_dividerSpeed);
 
-			//if(!_testingTableMotor)
-				_dividerMotor->runSpeed();
+			_tableMotor->runSpeed();
+			_dividerMotor->runSpeed();
 				
 			//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
 			if (!_backwardTableEndstop->isClicked())
@@ -201,9 +188,6 @@ void ProgramState::react()
 		betweenEndstops = false;
 		backwardEndstopClicked = false;
 
-		_tableMotor->setSpeed(-_tableSpeed);
-		_dividerMotor->setSpeed(-_dividerSpeed);
-
 		_currentState = MOVING_BACKWARD;
 
 		delay(_delay);
@@ -212,19 +196,13 @@ void ProgramState::react()
 	}
 	case MOVING_BACKWARD:
 	{
-		//_tableMotor->setSpeed(-_tableSpeed);
-
-		//if (_turningRight)
-			//_dividerMotor->setSpeed(-_dividerSpeed);
-		//else
-		//	_dividerMotor->setSpeed(_dividerSpeed);
-
 		if (!backwardEndstopClicked)
 		{
-			_tableMotor->runSpeed();
+			_tableMotor->setSpeed(-_tableSpeed);
+			_dividerMotor->setSpeed(-_dividerSpeed);
 
-			//if (!_testingTableMotor)
-				_dividerMotor->runSpeed();
+			_tableMotor->runSpeed();
+			_dividerMotor->runSpeed();
 
 			//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
 			if (!_forwardTableEndstop->isClicked())
@@ -266,9 +244,9 @@ void ProgramState::react()
 	}
 	case CHANGE_FEATHER:
 	{
-		_dividerMotor->setCurrentPosition(0);
+		delay(_delay);
 
-		delay(_delay); //czy odwrotnie
+		_dividerMotor->setCurrentPosition(0);
 
 		_dividerMotor->move(-_rotateAngle * _proportionOfDividerMotorCircles * 200 * 8 / 360);
 
