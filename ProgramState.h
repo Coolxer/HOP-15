@@ -86,7 +86,7 @@ private:
 	//Diameter of cutter
 	double _diameter;
 
-	double _smallGearOfDividerMotor = 34.81;
+	double _smallGearOfDividerMotor = 32.981; //34.81; 
 	double _bigGearOfDividerMotor = 130.1;
 
 	double _smallGearOfTableMotor = 16.42;
@@ -129,8 +129,6 @@ public:
 	byte getCyclesCount() { return _cyclesCount; };
 
 	double getCutterAngle() { return _cutterAngle; };
-
-	void togglePause();
 
 	bool isPaused();
 	bool isFinished();

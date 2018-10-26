@@ -49,7 +49,16 @@ void ProgramState::react()
 			_program->getStateManager()->changeState(1);
 		}
 		else
-			togglePause();
+		{
+			if (_currentState == PAUSE)
+				_currentState = _savedState;
+			else
+			{
+				_savedState = _currentState;
+				_currentState = PAUSE;
+			}
+			_needRedraw = true;	
+		}	
 
 		break;
 	}
@@ -112,13 +121,13 @@ void ProgramState::react()
 
 		_tableMotor->setSpeed(-_tableSpeed);
 
+		_tableMotor->disableOutputs();
+		_dividerMotor->disableOutputs();
+
 		break;
 	}
 	case STARTING:
 	{
-		_tableMotor->disableOutputs();
-		_dividerMotor->disableOutputs();
-
 		if (!_tableMotorHomed)
 		{
 			if (_backwardTableEndstop->isClicked())
@@ -136,6 +145,8 @@ void ProgramState::react()
 				_currentState = CHANGE_FEATHER;
 			else
 				_currentState = MOVE_FORWARD;
+
+			delay(_delay);
 		}
 
 		break;
@@ -145,6 +156,9 @@ void ProgramState::react()
 		betweenEndstops = false;
 		forwardEndstopClicked = false;
 
+		_tableMotor->setSpeed(_tableSpeed);
+		_dividerMotor->setSpeed(_dividerSpeed);
+
 		_currentState = MOVING_FORWARD;
 
 		delay(_delay);
@@ -153,21 +167,18 @@ void ProgramState::react()
 	}
 	case MOVING_FORWARD:
 	{
-		_tableMotor->disableOutputs();
-		_dividerMotor->disableOutputs();
+		//_tableMotor->setSpeed(_tableSpeed);
 
-		_tableMotor->setSpeed(_tableSpeed);
-
-		if(_turningRight)
-			_dividerMotor->setSpeed(_dividerSpeed);
-		else
-			_dividerMotor->setSpeed(-_dividerSpeed);
+		//if(_turningRight)
+			//_dividerMotor->setSpeed(_dividerSpeed);
+		//else
+		//	_dividerMotor->setSpeed(-_dividerSpeed);
 
 		if (!forwardEndstopClicked)
 		{
 			_tableMotor->runSpeed();
 
-			if(!_testingTableMotor)
+			//if(!_testingTableMotor)
 				_dividerMotor->runSpeed();
 				
 			//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
@@ -190,6 +201,9 @@ void ProgramState::react()
 		betweenEndstops = false;
 		backwardEndstopClicked = false;
 
+		_tableMotor->setSpeed(-_tableSpeed);
+		_dividerMotor->setSpeed(-_dividerSpeed);
+
 		_currentState = MOVING_BACKWARD;
 
 		delay(_delay);
@@ -198,21 +212,18 @@ void ProgramState::react()
 	}
 	case MOVING_BACKWARD:
 	{
-		_tableMotor->disableOutputs();
-		_dividerMotor->disableOutputs();
+		//_tableMotor->setSpeed(-_tableSpeed);
 
-		_tableMotor->setSpeed(-_tableSpeed);
-
-		if (_turningRight)
-			_dividerMotor->setSpeed(-_dividerSpeed);
-		else
-			_dividerMotor->setSpeed(_dividerSpeed);
+		//if (_turningRight)
+			//_dividerMotor->setSpeed(-_dividerSpeed);
+		//else
+		//	_dividerMotor->setSpeed(_dividerSpeed);
 
 		if (!backwardEndstopClicked)
 		{
 			_tableMotor->runSpeed();
 
-			if (!_testingTableMotor)
+			//if (!_testingTableMotor)
 				_dividerMotor->runSpeed();
 
 			//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
@@ -228,7 +239,6 @@ void ProgramState::react()
 			_currentFeather++;
 
 			//change state to CHANGE_FEATHER
-			_dividerMotor->setCurrentPosition(0);
 			_currentState = CHANGE_FEATHER;
 
 			//Check if new cycle should begin
@@ -245,8 +255,6 @@ void ProgramState::react()
 			if (_testingTableMotor)
 			{
 				//If we only wanted to test table back to menu
-				_dividerMotor->disableOutputs();
-				_tableMotor->disableOutputs();
 				_program->getStateManager()->changeState(1);
 			}
 
@@ -258,10 +266,9 @@ void ProgramState::react()
 	}
 	case CHANGE_FEATHER:
 	{
-		_tableMotor->disableOutputs();
-		_dividerMotor->disableOutputs();
+		_dividerMotor->setCurrentPosition(0);
 
-		delay(_delay);
+		delay(_delay); //czy odwrotnie
 
 		_dividerMotor->move(-_rotateAngle * _proportionOfDividerMotorCircles * 200 * 8 / 360);
 
@@ -327,23 +334,6 @@ void ProgramState::reset()
 
 	_tableCountInMM = 50;
 
-}
-
-void ProgramState::togglePause()
-{
-	_needRedraw = true;
-	if (_currentState != PAUSE)
-	{
-		//Save current state to get it back on unpause
-		_savedState = _currentState;
-		//Set current state to pause
-		_currentState = PAUSE;
-	}
-	else
-	{
-		//Back to state before pause
-		_currentState = _savedState;
-	}
 }
 
 bool ProgramState::isPaused()
