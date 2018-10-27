@@ -156,8 +156,12 @@ void ProgramState::react()
 		forwardEndstopClicked = false;
 
 		_tableMotor->setSpeed(_tableSpeed, _tableStepInterval);
-		_dividerMotor->setSpeed(_dividerSpeed, _dividerStepInterval);
 
+		if(_turningRight)
+			_dividerMotor->setSpeed(_dividerSpeed, _dividerStepInterval);
+		else 
+			_dividerMotor->setSpeed(-_dividerSpeed, _dividerStepInterval);
+		
 		_currentState = MOVING_FORWARD;
 
 		delay(_delay);
@@ -192,7 +196,11 @@ void ProgramState::react()
 		backwardEndstopClicked = false;
 
 		_tableMotor->setSpeed(-_tableSpeed, _tableStepInterval);
-		_dividerMotor->setSpeed(-_dividerSpeed, _dividerStepInterval);
+
+		if(_turningRight)
+			_dividerMotor->setSpeed(-_dividerSpeed, _dividerStepInterval);
+		else
+			_dividerMotor->setSpeed(_dividerSpeed, _dividerStepInterval);
 
 		_currentState = MOVING_BACKWARD;
 
