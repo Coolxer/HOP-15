@@ -142,6 +142,8 @@ void MenuState::enter()
 	{
 		if (_isFocused)
 			_itemBinds[_selectedIndex].item->validate();
+		else
+			_itemBinds[_selectedIndex].item->init();
 
 		_isFocused = !_isFocused;
 	}

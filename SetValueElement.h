@@ -37,6 +37,8 @@ public:
 
 	void increase();
 	void decrease();
+
+	void init();
 	void validate();
 
 	float getValue() { return _currentValue; };

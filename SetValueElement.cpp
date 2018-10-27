@@ -101,6 +101,12 @@ void SetValueElement::decrease()
 	_state->needRedraw();
 }
 
+void SetValueElement::init()
+{
+	_manualInput = false;
+	_manualKeyValue = -1;
+}
+
 void SetValueElement::validate()
 {
 	if (_currentValue > _maxValue)
