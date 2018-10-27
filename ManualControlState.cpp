@@ -1,6 +1,6 @@
 #include "ManualControlState.h"
 
-#include <AccelStepper.h>
+#include "./lib/AccelStepper.h"
 
 #include "Program.h"
 #include "DeviceManager.h"
@@ -185,8 +185,8 @@ void ManualControlState::react()
 		else
 		{
 			_angleOrmm += _currentStep;
-			double _proportionOfDividerMotorCircles = 130.1 / 34.81;
-			int valueInSteps = _currentStep * _proportionOfDividerMotorCircles * 200 * 8 / 360;
+			double _proportionOfDividerMotorCircles = 3.737431772479173; //130.1 / 34.81;
+			int valueInSteps = _currentStep * _proportionOfDividerMotorCircles * 4.444444444444444; //200 * 8 / 360;
 
 			_dividerMotor->move(valueInSteps);
 		}
@@ -194,9 +194,9 @@ void ManualControlState::react()
 		while (_dividerMotor->distanceToGo() != 0)
 		{
 			if (_currentStep > 0)
-				_dividerMotor->setSpeed(800);
+				_dividerMotor->setSpeed(800, interval);
 			else if (_currentStep < 0)
-				_dividerMotor->setSpeed(-800);
+				_dividerMotor->setSpeed(-800, interval);
 
 			_dividerMotor->runSpeedToPosition();
 		}
@@ -227,9 +227,9 @@ void ManualControlState::react()
 		while (_tableMotor->distanceToGo() != 0)
 		{
 			if (_currentStep < 0)
-				_tableMotor->setSpeed(-800);
+				_tableMotor->setSpeed(-800, interval);
 			else
-				_tableMotor->setSpeed(800);
+				_tableMotor->setSpeed(800, interval);
 
 			_tableMotor->runSpeedToPosition();
 		}

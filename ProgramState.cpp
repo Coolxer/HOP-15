@@ -1,6 +1,6 @@
 #include "ProgramState.h"
 
-#include <AccelStepper.h>
+#include "./lib/AccelStepper.h"
 
 #include "Program.h"
 #include "DeviceManager.h"
@@ -26,7 +26,6 @@ void ProgramState::init()
 
 	_dividerMotor = deviceManager->requestDividerMotor();
 	_tableMotor = deviceManager->requestTableMotor();
-	_multiStepper = deviceManager->requestMultiStepper();
 
 	_proportionOfDividerMotorCircles = _bigGearOfDividerMotor / _smallGearOfDividerMotor;
 	_proportionOfTableMotorCircles = _bigGearOfTableMotor / _smallGearOfTableMotor;
@@ -119,7 +118,7 @@ void ProgramState::react()
 
 		_currentState = STARTING;
 
-		_tableMotor->setSpeed(-_tableSpeed);
+		_tableMotor->setSpeed(-_tableSpeed, _tableStepInterval);
 
 		_tableMotor->disableOutputs();
 		_dividerMotor->disableOutputs();
@@ -156,8 +155,8 @@ void ProgramState::react()
 		betweenEndstops = false;
 		forwardEndstopClicked = false;
 
-		_tableMotor->setSpeed(_tableSpeed);
-		_dividerMotor->setSpeed(_dividerSpeed);
+		_tableMotor->setSpeed(_tableSpeed, _tableStepInterval);
+		_dividerMotor->setSpeed(_dividerSpeed, _dividerStepInterval);
 
 		_currentState = MOVING_FORWARD;
 
@@ -192,8 +191,8 @@ void ProgramState::react()
 		betweenEndstops = false;
 		backwardEndstopClicked = false;
 
-		_tableMotor->setSpeed(-_tableSpeed);
-		_dividerMotor->setSpeed(-_dividerSpeed);
+		_tableMotor->setSpeed(-_tableSpeed, _tableStepInterval);
+		_dividerMotor->setSpeed(-_dividerSpeed, _dividerStepInterval);
 
 		_currentState = MOVING_BACKWARD;
 
@@ -256,7 +255,7 @@ void ProgramState::react()
 
 		while (_dividerMotor->distanceToGo() != 0)
 		{
-			_dividerMotor->setSpeed(800);
+			_dividerMotor->setSpeed(800, _stepIntervalFor800);
 			_dividerMotor->runSpeedToPosition();
 		}
 		
@@ -309,13 +308,17 @@ void ProgramState::reset()
 	_currentCycle = 1;
 
 	_tableMotorHomed = false;
-
 	_testingDividerMotor = false;
 	_testingTableMotor = false;
 	_testingHome = false;
 
 	_tableCountInMM = 50;
 
+	//some calculations
+
+	_tableStepInterval = fabs(1000000.0 / _tableSpeed);
+
+	circuit = _PI * _diameter;
 }
 
 bool ProgramState::isPaused()
@@ -336,8 +339,6 @@ void ProgramState::calcSteps()
 {
 	_dividerCountInMM = _tableCountInMM * tan((_cutterAngle * _PI) / 180.0);
 
-	double circuit = _PI * _diameter;
-
 	double numberOfLaps = _dividerCountInMM / circuit;
 
 	double dividerDegress = numberOfLaps * 360;
@@ -349,6 +350,8 @@ void ProgramState::calcSteps()
 
 	_multiplier = _dividerCountInSteps / _tableCountInSteps;
 	_dividerSpeed = _tableSpeed * _multiplier;
+
+	_dividerStepInterval = fabs(1000000.0 / _dividerSpeed);
 }
 
 void ProgramState::set()

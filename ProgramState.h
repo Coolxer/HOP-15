@@ -13,7 +13,6 @@ class SevSegms;
 class Endstop;
 
 class AccelStepper;
-class MultiStepper;
 
 class SetValueElement;
 
@@ -43,7 +42,6 @@ private:
 
 	AccelStepper* _dividerMotor;
 	AccelStepper* _tableMotor;
-	MultiStepper* _multiStepper;
 
 	SetValueElement* _cutterAngleElement;
 
@@ -99,6 +97,8 @@ private:
 	double _proportionOfDividerMotorCircles;
 	double _proportionOfTableMotorCircles;
 
+	double circuit;
+
 	double _tableCountInMM = 50;
 	double _dividerCountInMM;
 
@@ -108,6 +108,11 @@ private:
 	double _tableSpeed;
 	double _multiplier;
 	double _dividerSpeed;
+
+	unsigned long _tableStepInterval;
+	unsigned long _dividerStepInterval;
+
+	unsigned long _stepIntervalFor800 = 1250; // abs(1000000.0 / 800.0)
 
 	//delay between motors movements in ms
 	int _delay = 100;

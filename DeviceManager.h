@@ -10,8 +10,7 @@
 #include "Endstop.h"
 #include "RotaryEncoder.h"
 
-#include <MultiStepper.h>
-#include <AccelStepper.h>
+#include "./lib/AccelStepper.h"
 
 class DeviceManager
 {
@@ -24,7 +23,6 @@ private:
 	Endstop _backwardTableEndstop = Endstop(10);
 	AccelStepper _dividerMotor = AccelStepper(1, 3, 6);
 	AccelStepper _tableMotor = AccelStepper(1, 4, 7);
-	MultiStepper _multiStepper = MultiStepper();
 	RotaryEncoder _rotaryEncoder = RotaryEncoder();
 
 public:
@@ -38,12 +36,6 @@ public:
 
 		_dividerMotor.setMaxSpeed(10000);
 		_tableMotor.setMaxSpeed(10000);
-
-		_dividerMotor.setSpeed(800);
-		_tableMotor.setSpeed(800);
-
-		_multiStepper.addStepper(_tableMotor);
-		_multiStepper.addStepper(_dividerMotor);
 	}
 
 	Lcd* requestLcd() { return &_lcd; };
@@ -54,7 +46,6 @@ public:
 	Endstop* requestBackwardTableEndstop() { return &_backwardTableEndstop; };
 	AccelStepper* requestDividerMotor() { return &_dividerMotor; };
 	AccelStepper* requestTableMotor() { return &_tableMotor; };
-	MultiStepper* requestMultiStepper() { return &_multiStepper; };
 	RotaryEncoder* requestRotaryEncoder() { return &_rotaryEncoder; };
 };
 

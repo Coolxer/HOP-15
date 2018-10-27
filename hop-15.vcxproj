@@ -88,15 +88,12 @@
     <ClInclude Include="Config.h" />
     <ClInclude Include="DeviceManager.h" />
     <ClInclude Include="Element.h" />
+    <ClInclude Include="lib\AccelStepper.h" />
     <ClInclude Include="ManualControlState.h" />
     <ClInclude Include="Endstop.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IntroductionState.h" />
     <ClInclude Include="Lcd.h" />
-    <ClInclude Include="lib\A4988.h" />
-    <ClInclude Include="lib\BasicStepperDriver.h" />
-    <ClInclude Include="lib\MultiDriver.h" />
-    <ClInclude Include="lib\SyncDriver.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="Output.h" />
     <ClInclude Include="Program.h" />
@@ -112,14 +109,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buzzer.cpp" />
+    <ClCompile Include="lib\AccelStepper.cpp" />
     <ClCompile Include="ManualControlState.cpp" />
     <ClCompile Include="Endstop.cpp" />
     <ClCompile Include="IntroductionState.cpp" />
     <ClCompile Include="Lcd.cpp" />
-    <ClCompile Include="lib\A4988.cpp" />
-    <ClCompile Include="lib\BasicStepperDriver.cpp" />
-    <ClCompile Include="lib\MultiDriver.cpp" />
-    <ClCompile Include="lib\SyncDriver.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="ProgramState.cpp" />

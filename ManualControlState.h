@@ -44,6 +44,8 @@ private:
 
 	bool _runningDuringProcess = false;
 
+	unsigned long interval = 1250;
+
 public:
 	virtual void init();
 	virtual void react();
