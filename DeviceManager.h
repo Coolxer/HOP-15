@@ -34,8 +34,8 @@ public:
 		_dividerMotor.enableOutputs(); 
 		_tableMotor.enableOutputs();
 
-		_dividerMotor.setMaxSpeed(10000);
-		_tableMotor.setMaxSpeed(10000);
+		_dividerMotor.setMaxSpeed(MAX_SPEED);
+		_tableMotor.setMaxSpeed(MAX_SPEED);
 	}
 
 	Lcd* requestLcd() { return &_lcd; };

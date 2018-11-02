@@ -185,8 +185,7 @@ void ManualControlState::react()
 		else
 		{
 			_angleOrmm += _currentStep;
-			double _proportionOfDividerMotorCircles = 3.737431772479173; //130.1 / 34.81;
-			int valueInSteps = _currentStep * _proportionOfDividerMotorCircles * 4.444444444444444; //200 * 8 / 360;
+			int valueInSteps = _currentStep * DIVIDER_GEARS_PROPORTION * 4.444444444444444; //200 * 8 / 360;
 
 			_dividerMotor->move(valueInSteps);
 		}
@@ -194,9 +193,9 @@ void ManualControlState::react()
 		while (_dividerMotor->distanceToGo() != 0)
 		{
 			if (_currentStep > 0)
-				_dividerMotor->setSpeed(800, interval);
+				_dividerMotor->setSpeed(DEFAULT_SPEED, DEFAULT_STEP_INTERVAL);
 			else if (_currentStep < 0)
-				_dividerMotor->setSpeed(-800, interval);
+				_dividerMotor->setSpeed(-DEFAULT_SPEED, DEFAULT_STEP_INTERVAL);
 
 			_dividerMotor->runSpeedToPosition();
 		}
@@ -227,9 +226,9 @@ void ManualControlState::react()
 		while (_tableMotor->distanceToGo() != 0)
 		{
 			if (_currentStep < 0)
-				_tableMotor->setSpeed(-800, interval);
+				_tableMotor->setSpeed(-DEFAULT_SPEED, DEFAULT_STEP_INTERVAL);
 			else
-				_tableMotor->setSpeed(800, interval);
+				_tableMotor->setSpeed(DEFAULT_SPEED, DEFAULT_STEP_INTERVAL);
 
 			_tableMotor->runSpeedToPosition();
 		}

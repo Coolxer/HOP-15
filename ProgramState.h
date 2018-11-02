@@ -57,8 +57,6 @@ private:
 	byte _cyclesCount;
 	byte _currentCycle = 1;
 
-	float const _PI = 3.1415;
-
 	//360 divided by feather count
 	float _rotateAngle;
 
@@ -87,16 +85,6 @@ private:
 	//Diameter of cutter
 	double _diameter;
 
-	double _smallGearOfDividerMotor = 32.83;//32.8;//33.1; //32.981; //34.81; 
-	double _bigGearOfDividerMotor = 130.1;
-
-	double _smallGearOfTableMotor = 16.42;
-	double _bigGearOfTableMotor = 87;
-
-	//Proportion of divider circle radiuses
-	double _proportionOfDividerMotorCircles;
-	double _proportionOfTableMotorCircles;
-
 	double circuit;
 
 	double _tableCountInMM = 50;
@@ -111,8 +99,6 @@ private:
 
 	unsigned long _tableStepInterval;
 	unsigned long _dividerStepInterval;
-
-	unsigned long _stepIntervalFor800 = 1250; // fabs(1000000.0 / 800.0)
 
 	//delay between motors movements in ms
 	int _delay = 100;

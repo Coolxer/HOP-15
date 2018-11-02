@@ -25,9 +25,6 @@ void ProgramState::init()
 
 	_dividerMotor = deviceManager->requestDividerMotor();
 	_tableMotor = deviceManager->requestTableMotor();
-
-	_proportionOfDividerMotorCircles = _bigGearOfDividerMotor / _smallGearOfDividerMotor;
-	_proportionOfTableMotorCircles = _bigGearOfTableMotor / _smallGearOfTableMotor;
 }
 
 void ProgramState::react()
@@ -113,7 +110,7 @@ void ProgramState::react()
 		int stepsPerFullRotate = 200;
 		int multiplerOfStepsPerFullRotate = 8;
 
-		_stepsForFeather = (-_rotateAngle * _proportionOfDividerMotorCircles * stepsPerFullRotate * multiplerOfStepsPerFullRotate) / 360.0;
+		_stepsForFeather = (-_rotateAngle * DIVIDER_GEARS_PROPORTION * stepsPerFullRotate * multiplerOfStepsPerFullRotate) / 360.0;
 
 		_currentState = STARTING;
 
@@ -262,7 +259,7 @@ void ProgramState::react()
 
 		while (_dividerMotor->distanceToGo() != 0)
 		{
-			_dividerMotor->setSpeed(800, _stepIntervalFor800);
+			_dividerMotor->setSpeed(DEFAULT_SPEED, DEFAULT_STEP_INTERVAL);
 			_dividerMotor->runSpeedToPosition();
 		}
 		
@@ -325,7 +322,7 @@ void ProgramState::reset()
 
 	_tableStepInterval = fabs(1000000.0 / _tableSpeed);
 
-	circuit = _PI * _diameter;
+	circuit = PI * _diameter;
 }
 
 bool ProgramState::isPaused()
@@ -344,7 +341,7 @@ bool ProgramState::isFinished()
 
 void ProgramState::calcSteps()
 {
-	_dividerCountInMM = _tableCountInMM * tan((_cutterAngle * _PI) / 180.0);
+	_dividerCountInMM = _tableCountInMM * tan((_cutterAngle * PI) / 180.0);
 
 	double numberOfLaps = _dividerCountInMM / circuit;
 
@@ -352,8 +349,8 @@ void ProgramState::calcSteps()
 
 	_dividerCountInSteps = (dividerDegress * 1600) / 360.0;
 
-	_dividerCountInSteps *= _proportionOfDividerMotorCircles;
-	_tableCountInSteps = _proportionOfTableMotorCircles * _tableCountInMM * 14.63116457257362;
+	_dividerCountInSteps *= DIVIDER_GEARS_PROPORTION;
+	_tableCountInSteps = TABLE_GEARS_PROPORTION * _tableCountInMM * 14.63116457257362;
 
 	_multiplier = _dividerCountInSteps / _tableCountInSteps;
 	_dividerSpeed = _tableSpeed * _multiplier;
