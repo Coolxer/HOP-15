@@ -107,10 +107,7 @@ void ProgramState::react()
 	{
 		_rotateAngle = 360.0 / (float)_feathersCount;
 
-		int stepsPerFullRotate = 200;
-		int multiplerOfStepsPerFullRotate = 8;
-
-		_stepsForFeather = (-_rotateAngle * DIVIDER_GEARS_PROPORTION * stepsPerFullRotate * multiplerOfStepsPerFullRotate) / 360.0;
+		_stepsForFeather = -_rotateAngle * DIVIDER_GEARS_PROPORTION * STEPS_FOR_ONE_DEGREE;
 
 		_currentState = STARTING;
 
@@ -350,7 +347,7 @@ void ProgramState::calcSteps()
 	_dividerCountInSteps = (dividerDegress * 1600) / 360.0;
 
 	_dividerCountInSteps *= DIVIDER_GEARS_PROPORTION;
-	_tableCountInSteps = TABLE_GEARS_PROPORTION * _tableCountInMM * 14.63116457257362;
+	_tableCountInSteps = TABLE_GEARS_PROPORTION * _tableCountInMM * NUMBER_OF_STEPS_PER_MM;
 
 	_multiplier = _dividerCountInSteps / _tableCountInSteps;
 	_dividerSpeed = _tableSpeed * _multiplier;

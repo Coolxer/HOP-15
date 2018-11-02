@@ -185,7 +185,7 @@ void ManualControlState::react()
 		else
 		{
 			_angleOrmm += _currentStep;
-			int valueInSteps = _currentStep * DIVIDER_GEARS_PROPORTION * 4.444444444444444; //200 * 8 / 360;
+			int valueInSteps = _currentStep * DIVIDER_GEARS_PROPORTION * STEPS_FOR_ONE_DEGREE;
 
 			_dividerMotor->move(valueInSteps);
 		}
@@ -218,8 +218,7 @@ void ManualControlState::react()
 		}
 		else
 		{
-			double _proportionOfTableMotorCircles = 87 / 16.42;
-			double wayInSteps = _currentStep * 14.63116457257362 * _proportionOfTableMotorCircles;
+			double wayInSteps = _currentStep * NUMBER_OF_STEPS_PER_MM * TABLE_GEARS_PROPORTION;
 			_tableMotor->move(wayInSteps);
 		}
 
