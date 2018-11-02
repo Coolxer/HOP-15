@@ -104,7 +104,6 @@
     <ClInclude Include="SimpleKeypad.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateManager.h" />
-    <ClInclude Include="StepperMotor.h" />
     <ClInclude Include="__vm\.HOP-15.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
@@ -122,7 +121,6 @@
     <ClCompile Include="SevSegms.cpp" />
     <ClCompile Include="SimpleKeypad.cpp" />
     <ClCompile Include="StateManager.cpp" />
-    <ClCompile Include="StepperMotor.cpp" />
   </ItemGroup>
   <PropertyGroup>
     <DebuggerFlavor>VisualMicroDebugger</DebuggerFlavor>

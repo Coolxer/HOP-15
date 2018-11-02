@@ -9,7 +9,6 @@
 #include "Buzzer.h"
 #include "SevSegms.h"
 #include "SimpleKeypad.h"
-#include "StepperMotor.h"
 #include "Endstop.h"
 
 void ProgramState::init()

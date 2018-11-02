@@ -87,7 +87,7 @@ private:
 	//Diameter of cutter
 	double _diameter;
 
-	double _smallGearOfDividerMotor = 32.981; //34.81; 
+	double _smallGearOfDividerMotor = 32.83;//32.8;//33.1; //32.981; //34.81; 
 	double _bigGearOfDividerMotor = 130.1;
 
 	double _smallGearOfTableMotor = 16.42;
@@ -112,7 +112,7 @@ private:
 	unsigned long _tableStepInterval;
 	unsigned long _dividerStepInterval;
 
-	unsigned long _stepIntervalFor800 = 1250; // abs(1000000.0 / 800.0)
+	unsigned long _stepIntervalFor800 = 1250; // fabs(1000000.0 / 800.0)
 
 	//delay between motors movements in ms
 	int _delay = 100;
