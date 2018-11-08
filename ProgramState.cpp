@@ -107,7 +107,7 @@ void ProgramState::react()
 	{
 		_rotateAngle = 360.0 / (float)_feathersCount;
 
-		_stepsForFeather = -_rotateAngle * DIVIDER_GEARS_PROPORTION * STEPS_FOR_ONE_DEGREE;
+		_stepsForFeather = -_rotateAngle * DIVIDER_GEARS_PROPORTION * STEPS_PER_DEGREE;
 
 		_currentState = STARTING;
 
@@ -157,8 +157,6 @@ void ProgramState::react()
 		
 		_currentState = MOVING_FORWARD;
 
-		delay(_delay);
-
 		break;
 	}
 	case MOVING_FORWARD:
@@ -179,6 +177,7 @@ void ProgramState::react()
 		else
 		{
 			_currentState = MOVE_BACKWARD;
+			delay(_delay);
 		}
 
 		break;
@@ -196,8 +195,6 @@ void ProgramState::react()
 			_dividerMotor->setSpeed(_dividerSpeed, _dividerStepInterval);
 
 		_currentState = MOVING_BACKWARD;
-
-		delay(_delay);
 
 		break;
 	}
@@ -222,6 +219,8 @@ void ProgramState::react()
 
 			//change state to CHANGE_FEATHER
 			_currentState = CHANGE_FEATHER;
+
+			delay(_delay);
 
 			//Check if new cycle should begin
 			if (_currentFeather > _feathersCount)
@@ -248,8 +247,6 @@ void ProgramState::react()
 	}
 	case CHANGE_FEATHER:
 	{
-		delay(_delay);
-
 		_dividerMotor->setCurrentPosition(0);
 
 		_dividerMotor->move(_stepsForFeather);
@@ -347,7 +344,7 @@ void ProgramState::calcSteps()
 	_dividerCountInSteps = (dividerDegress * 1600) / 360.0;
 
 	_dividerCountInSteps *= DIVIDER_GEARS_PROPORTION;
-	_tableCountInSteps = TABLE_GEARS_PROPORTION * _tableCountInMM * NUMBER_OF_STEPS_PER_MM;
+	_tableCountInSteps = TABLE_GEARS_PROPORTION * _tableCountInMM * STEPS_PER_MM;
 
 	_multiplier = _dividerCountInSteps / _tableCountInSteps;
 	_dividerSpeed = _tableSpeed * _multiplier;
