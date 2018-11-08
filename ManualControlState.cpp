@@ -170,7 +170,7 @@ void ManualControlState::react()
 
 	_reading = _rotaryEncoder->read();
 
-	if (key == KEY_UP|| _reading == 1)
+	if (key == KEY_UP || _reading == 1)
 		_currentStep = _stepCount;
 	else if (key == KEY_DOWN || _reading == -1)
 		_currentStep = _stepCount * -1;
