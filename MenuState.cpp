@@ -72,6 +72,7 @@ void MenuState::init()
 	setElement(10, "Wylacz silniki");
 	setElement(11, "Ustaw do bazy");
 	setElement(12, "Kierunek");
+	setElement(13, "Regulacja");
 }
 
 void MenuState::react()
@@ -243,6 +244,23 @@ void MenuState::enter()
 			programState->setDirection(false);
 		else
 			programState->setDirection(true);
+	}
+
+	else if (_selectedIndex == 13)
+	{
+		ProgramState* programState = getProgram()->getProgramState();
+		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
+		programState->setCycles(byte(_itemBinds[1].item->getValue()));
+		programState->setCutterAngle(&_cutterAngle);
+		programState->setDiameter(_itemBinds[3].item->getValue());
+		programState->setSpeed(_itemBinds[9].item->getValue());
+
+		programState->reset();
+
+		programState->set();
+		programState->setRegulation();
+
+		getProgram()->getStateManager()->changeState(2);
 	}
 
 	_needRedraw = true;

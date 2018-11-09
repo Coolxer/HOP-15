@@ -292,6 +292,26 @@ void ProgramState::react()
 
 		break;
 	}
+	case REGULATION:
+	{
+		for (int i = 0; i < _feathersCount * _cyclesCount; i++)
+		{
+			_dividerMotor->setCurrentPosition(0);
+
+			_dividerMotor->move(_stepsForFeather);
+
+			while (_dividerMotor->distanceToGo() != 0)
+			{
+				_dividerMotor->setSpeed(DEFAULT_SPEED, DEFAULT_STEP_INTERVAL);
+				_dividerMotor->runSpeedToPosition();
+			}
+
+			delay(500);
+		}
+
+		_program->getStateManager()->changeState(1);
+		break;
+	}
 	
 	}
 }

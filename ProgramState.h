@@ -26,7 +26,8 @@ enum ExecutionState
 	MOVING_BACKWARD,
 	CHANGE_FEATHER,
 	FINISH,
-	PAUSE
+	PAUSE,
+	REGULATION
 };
 
 class ProgramState : public State
@@ -138,6 +139,8 @@ public:
 	virtual void init();
 	virtual void react();
 	virtual void reset();
+
+	void setRegulation() { _currentState = REGULATION;  }
 };
 
 #endif
