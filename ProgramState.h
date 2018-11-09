@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include "State.h"
 
+#include <SevSeg.h>
+
 class Program;
 
 class Lcd;

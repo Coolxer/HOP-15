@@ -294,7 +294,16 @@ void ProgramState::react()
 	}
 	case REGULATION:
 	{
-		for (int i = 0; i < _feathersCount * _cyclesCount; i++)
+		_dividerMotor->disableOutputs();
+
+		_rotateAngle = 360.0 / (float)_feathersCount;
+
+		int piora = (int)_feathersCount;
+		int cykle = (int)_cyclesCount;
+
+		_stepsForFeather = -_rotateAngle * DIVIDER_GEARS_PROPORTION * STEPS_PER_DEGREE;
+
+		for (int i = 0; i < piora * cykle; i++)
 		{
 			_dividerMotor->setCurrentPosition(0);
 
@@ -306,7 +315,7 @@ void ProgramState::react()
 				_dividerMotor->runSpeedToPosition();
 			}
 
-			delay(500);
+			delay(1000);
 		}
 
 		_program->getStateManager()->changeState(1);

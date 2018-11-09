@@ -16,7 +16,7 @@ const double STEPS_PER_DEGREE = STEPS_PER_REVOLUTION * MICROPSTEPPING / 360.0;
 
 /***************************** DIVIDER MOTOR **************************************/
 const double DIVIDER_BIG_GEAR_DIAMETER = 130.1;
-const double DIVIDER_SMALL_GEAR_DIAMETER = 18.97;//18.95;//23;//22;//25;.83;//32.8;//33.1; //32.981; //34.81; 
+const double DIVIDER_SMALL_GEAR_DIAMETER = 18.949;//18.947;//18.945;//18.95;//18.96;//18.97;//18.95;//23;//22;//25;.83;//32.8;//33.1; //32.981; //34.81; 
 const double DIVIDER_GEARS_PROPORTION = DIVIDER_BIG_GEAR_DIAMETER / DIVIDER_SMALL_GEAR_DIAMETER;
 
 /***************************** TABLE MOTOR ****************************************/
