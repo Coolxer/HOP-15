@@ -247,25 +247,9 @@ void ProgramState::react()
 	}
 	case CHANGE_FEATHER:
 	{
-		_dividerMotor->setCurrentPosition(0);
-
-		_dividerMotor->move(_stepsForFeather);
-
-		while (_dividerMotor->distanceToGo() != 0)
-		{
-			_dividerMotor->setSpeed(DEFAULT_SPEED, DEFAULT_STEP_INTERVAL);
-			_dividerMotor->runSpeedToPosition();
-		}
-		
-		if (_testingDividerMotor)
-		{
-			//If we only wanted to test divider back to menu
-			_program->getStateManager()->changeState(1);
-		}
+		changeFeather();
 
 		_currentState = MOVE_FORWARD;
-
-		delay(_delay);
 
 		break;
 	}
@@ -273,6 +257,8 @@ void ProgramState::react()
 	{
 		//_tableMotor->enableOutputs();
 		//_dividerMotor->enableOutputs();
+		//changeFeather();
+		//_currentState = END;
 
 		break;
 	}
@@ -386,4 +372,25 @@ void ProgramState::set()
 	_cutterAngle = _cutterAngleElement->getValue();
 	_lastCutterAngle = _cutterAngle;
 	calcSteps();
+}
+
+void ProgramState::changeFeather()
+{
+	_dividerMotor->setCurrentPosition(0);
+
+	_dividerMotor->move(_stepsForFeather);
+
+	while (_dividerMotor->distanceToGo() != 0)
+	{
+		_dividerMotor->setSpeed(DEFAULT_SPEED, DEFAULT_STEP_INTERVAL);
+		_dividerMotor->runSpeedToPosition();
+	}
+
+	if (_testingDividerMotor)
+	{
+		//If we only wanted to test divider back to menu
+		_program->getStateManager()->changeState(1);
+	}
+
+	delay(_delay);
 }

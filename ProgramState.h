@@ -4,8 +4,6 @@
 #include <Arduino.h>
 #include "State.h"
 
-#include <SevSeg.h>
-
 class Program;
 
 class Lcd;
@@ -107,6 +105,8 @@ private:
 	int _delay = 100;
 
 	void calcSteps();
+
+	void changeFeather();
 
 public:
 	void setFeathers(byte feathers) { _feathersCount = feathers; };
