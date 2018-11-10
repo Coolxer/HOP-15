@@ -108,6 +108,19 @@ private:
 
 	void changeFeather();
 
+	//speed should be float type?
+	double testSpeed = 200;
+	long testInterval = 5000;
+
+	//speed //interval
+	//1000  //1000
+	//800   //1250
+	//1500  //666,6666666666667
+	//500  //2000
+	//2000  //500
+	//200  //5000
+
+
 public:
 	void setFeathers(byte feathers) { _feathersCount = feathers; };
 	void setCycles(byte cycles) { _cyclesCount = cycles; };
