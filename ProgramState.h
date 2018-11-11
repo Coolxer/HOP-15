@@ -109,8 +109,23 @@ private:
 	void changeFeather();
 
 	//speed should be float type?
-	double testSpeed = 200;
-	long testInterval = 5000;
+	double testSpeed = 2000;
+	long testInterval = 500;
+
+	//podzielnuca // stol
+	// 800 = 800 git
+
+	// 800 = 500 zle
+	// 500 = 800 zle
+	// 500 = 500 dobrze
+
+	//800  = 600 zle
+	//800 = 400 zle 
+
+	//1500 = 800 zle
+
+	//1500 = 1500 dobrze
+	//1500 = 1200 zle
 
 	//speed //interval
 	//1000  //1000
