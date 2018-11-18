@@ -239,8 +239,6 @@ void ProgramState::react()
 			//change state to CHANGE_FEATHER
 			_currentState = CHANGE_FEATHER;
 
-			delay(_delay);
-
 			//Check if new cycle should begin
 			if (_currentFeather > _feathersCount)
 			{
@@ -260,6 +258,8 @@ void ProgramState::react()
 
 			//Draw updated feathers and cycles
 			_needRedraw = true;
+
+			delay(_delay);
 		}
 
 		break;
@@ -274,11 +274,6 @@ void ProgramState::react()
 	}
 	case FINISH:
 	{
-		//_tableMotor->enableOutputs();
-		//_dividerMotor->enableOutputs();
-		//changeFeather();
-		//_currentState = END;
-
 		changeFeather();
 
 		_program->getStateManager()->changeState(1);
