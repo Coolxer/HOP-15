@@ -29,6 +29,7 @@ void ProgramState::init()
 
 void ProgramState::react()
 {
+	/*
 	char key = _simpleKeypad->getPressedKey();
 
 	switch (key)
@@ -94,6 +95,7 @@ void ProgramState::react()
 		_needRedraw = true;
 		_disrupted = false;
 	}
+	*/
 
 	if (_needRedraw)
 	{
@@ -113,9 +115,9 @@ void ProgramState::react()
 
 		_tableMotor->setSpeed(-_tableSpeed, _tableStepInterval);
 
-		_tableMotor->disableOutputs();
 		_dividerMotor->disableOutputs();
-
+		_tableMotor->disableOutputs();
+		
 		break;
 	}
 	case STARTING:
@@ -148,18 +150,13 @@ void ProgramState::react()
 		betweenEndstops = false;
 		forwardEndstopClicked = false;
 
-		_tableMotor->setSpeed(_tableSpeed, _tableStepInterval);
-
-		/*
-		if(_turningRight)
+		if (_turningRight)
 			_dividerMotor->setSpeed(_dividerSpeed, _dividerStepInterval);
-		else 
+		else
 			_dividerMotor->setSpeed(-_dividerSpeed, _dividerStepInterval);
-		*/
 
-
-		_dividerMotor->setSpeed(testSpeed, testInterval);
-		
+		_tableMotor->setSpeed(_tableSpeed, _tableStepInterval);
+	
 		_currentState = MOVING_FORWARD;
 
 		break;
@@ -168,8 +165,8 @@ void ProgramState::react()
 	{
 		if (!forwardEndstopClicked)
 		{
-			_tableMotor->runSpeed();
 			_dividerMotor->runSpeed();
+			_tableMotor->runSpeed();	
 				
 			//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
 			if (!_backwardTableEndstop->isClicked())
@@ -192,16 +189,12 @@ void ProgramState::react()
 		betweenEndstops = false;
 		backwardEndstopClicked = false;
 
-		_tableMotor->setSpeed(-_tableSpeed, _tableStepInterval);
-
-		/*
 		if(_turningRight)
 			_dividerMotor->setSpeed(-_dividerSpeed, _dividerStepInterval);
 		else
 			_dividerMotor->setSpeed(_dividerSpeed, _dividerStepInterval);
-		*/
 
-		_dividerMotor->setSpeed(-testSpeed, testInterval);
+		_tableMotor->setSpeed(-_tableSpeed, _tableStepInterval);
 
 		_currentState = MOVING_BACKWARD;
 
@@ -211,9 +204,9 @@ void ProgramState::react()
 	{
 		if (!backwardEndstopClicked)
 		{
-			_tableMotor->runSpeed();
 			_dividerMotor->runSpeed();
-
+			_tableMotor->runSpeed();
+			
 			//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
 			if (!_forwardTableEndstop->isClicked())
 				betweenEndstops = true;
@@ -273,6 +266,7 @@ void ProgramState::react()
 	}
 	case PAUSE:
 	{
+		/*
 		if (key != KEY_NONE)
 			_buzzer->playOnPress();
 
@@ -284,6 +278,7 @@ void ProgramState::react()
 
 			_program->getStateManager()->changeState(3);
 		}
+		*/
 
 		break;
 	}
@@ -361,38 +356,19 @@ void ProgramState::calcSteps()
 {
 	_dividerCountInMM = _tableCountInMM * tan((_cutterAngle * PI) / 180.0);
 
-	Serial.println("dividerCOuntinMM");
-	Serial.println(_dividerCountInMM);
-
 	double numberOfLaps = _dividerCountInMM / circuit;
 
 	double dividerDegress = numberOfLaps * 360;
 
-	//_dividerCountInSteps = (dividerDegress * 1600) / 360.0;
-	_dividerCountInSteps = dividerDegress * STEPS_PER_DEGREE * DIVIDER_GEARS_PROPORTION;
+	_dividerCountInSteps = (dividerDegress * 1600) / 360.0;
 
-	Serial.println("dividerCountInSteps");
-	Serial.println(_dividerCountInSteps);
-
-	//_dividerCountInSteps *= DIVIDER_GEARS_PROPORTION;
+	_dividerCountInSteps *= DIVIDER_GEARS_PROPORTION;
 	_tableCountInSteps = TABLE_GEARS_PROPORTION * _tableCountInMM * STEPS_PER_MM;
-
-	Serial.println("tableCountInsteos");
-	Serial.println(_tableCountInSteps);
 
 	_multiplier = _dividerCountInSteps / _tableCountInSteps;
 	_dividerSpeed = _tableSpeed * _multiplier;
 
-	Serial.println("multiplier");
-	Serial.println(_multiplier);
-
-	Serial.println("dividerSpeed");
-	Serial.println(_dividerSpeed);
-
 	_dividerStepInterval = fabs(1000000.0 / _dividerSpeed);
-
-	Serial.println("dividerStepInterval");
-	Serial.println(_dividerStepInterval);
 }
 
 void ProgramState::set()

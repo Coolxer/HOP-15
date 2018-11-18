@@ -104,37 +104,13 @@ private:
 	//delay between motors movements in ms
 	int _delay = 100;
 
+	unsigned long startTime = 0;
+	unsigned long time = 0;
+	unsigned long delta = 0;
+
 	void calcSteps();
 
 	void changeFeather();
-
-	//speed should be float type?
-	double testSpeed = 2000;
-	long testInterval = 500;
-
-	//podzielnuca // stol
-	// 800 = 800 git
-
-	// 800 = 500 zle
-	// 500 = 800 zle
-	// 500 = 500 dobrze
-
-	//800  = 600 zle
-	//800 = 400 zle 
-
-	//1500 = 800 zle
-
-	//1500 = 1500 dobrze
-	//1500 = 1200 zle
-
-	//speed //interval
-	//1000  //1000
-	//800   //1250
-	//1500  //666,6666666666667
-	//500  //2000
-	//2000  //500
-	//200  //5000
-
 
 public:
 	void setFeathers(byte feathers) { _feathersCount = feathers; };
