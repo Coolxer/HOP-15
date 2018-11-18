@@ -312,7 +312,10 @@ const char* MenuState::getNextValue()
 		float value = _itemBinds[index].item->getValue();
 		char valueStr[6] = { 0 };
 		strcpy(valueStr, "");
-		dtostrf(value, 2, 2, &valueStr[strlen(valueStr)]);
+		if(value - int(value) != 0)
+			dtostrf(value, 2, 2, &valueStr[strlen(valueStr)]);
+		else
+			dtostrf(value, 2, 0, &valueStr[strlen(valueStr)]);
 		return valueStr;
 	}
 
@@ -326,7 +329,10 @@ const char* MenuState::getCurrentValue()
 		float value = _itemBinds[_selectedIndex].item->getValue();
 		char valueStr[6] = { 0 };
 		strcpy(valueStr, "");
-		dtostrf(value, 2, 2, &valueStr[strlen(valueStr)]);
+		if (value - int(value) != 0)
+			dtostrf(value, 2, 2, &valueStr[strlen(valueStr)]);
+		else
+			dtostrf(value, 2, 0, &valueStr[strlen(valueStr)]);
 		return valueStr;
 	}
 
@@ -347,7 +353,10 @@ const char* MenuState::getPrevValue()
 		float value = _itemBinds[index].item->getValue();
 		char valueStr[6] = { 0 };
 		strcpy(valueStr, "");
-		dtostrf(value, 2, 2, &valueStr[strlen(valueStr)]);
+		if (value - int(value) != 0)
+			dtostrf(value, 2, 2, &valueStr[strlen(valueStr)]);
+		else
+			dtostrf(value, 2, 0, &valueStr[strlen(valueStr)]);
 		return valueStr;
 	}
 
