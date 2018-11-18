@@ -159,22 +159,39 @@ void ProgramState::react()
 	
 		_currentState = MOVING_FORWARD;
 
+		startTime = micros();
+
 		break;
 	}
 	case MOVING_FORWARD:
 	{
 		if (!forwardEndstopClicked)
 		{
-			_dividerMotor->runSpeed();
-			_tableMotor->runSpeed();	
-				
-			//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
-			if (!_backwardTableEndstop->isClicked())
-				betweenEndstops = true;
+			time = micros();
+			delta = time - startTime;
 
-			//If endstop click again it mean we met backward endstop
-			if (_forwardTableEndstop->isClicked() && betweenEndstops)
-				forwardEndstopClicked = true;
+			_dividerMotor->runSpeed();
+
+			if (!afterChange)
+			{
+				if (delta > 900)
+				{
+					afterChange = true;
+					_tableMotor->runSpeed();
+				}
+			}
+			else
+			{
+				_tableMotor->runSpeed();
+
+				//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
+				if (!_backwardTableEndstop->isClicked())
+					betweenEndstops = true;
+
+				//If endstop click again it mean we met backward endstop
+				if (_forwardTableEndstop->isClicked() && betweenEndstops)
+					forwardEndstopClicked = true;
+			}	
 		}
 		else
 		{
@@ -198,22 +215,39 @@ void ProgramState::react()
 
 		_currentState = MOVING_BACKWARD;
 
+		startTime = micros();
+
 		break;
 	}
 	case MOVING_BACKWARD:
 	{
 		if (!backwardEndstopClicked)
 		{
-			_dividerMotor->runSpeed();
-			_tableMotor->runSpeed();
-			
-			//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
-			if (!_forwardTableEndstop->isClicked())
-				betweenEndstops = true;
+			time = micros();
+			delta = time - startTime;
 
-			//If endstop click again it mean we met backward endstop
-			if (_backwardTableEndstop->isClicked() && betweenEndstops)
-				backwardEndstopClicked = true;
+			_dividerMotor->runSpeed();
+
+			if (afterChange)
+			{
+				if (delta > 900)
+				{
+					afterChange = false;
+					_tableMotor->runSpeed();
+				}
+			}
+			else
+			{
+				_tableMotor->runSpeed();
+
+				//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
+				if (!_forwardTableEndstop->isClicked())
+					betweenEndstops = true;
+
+				//If endstop click again it mean we met backward endstop
+				if (_backwardTableEndstop->isClicked() && betweenEndstops)
+					backwardEndstopClicked = true;
+			}		
 		}
 		else
 		{
@@ -261,6 +295,8 @@ void ProgramState::react()
 		//_dividerMotor->enableOutputs();
 		//changeFeather();
 		//_currentState = END;
+
+		_program->getStateManager()->changeState(1);
 
 		break;
 	}
@@ -336,6 +372,8 @@ void ProgramState::reset()
 	_tableStepInterval = fabs(1000000.0 / _tableSpeed);
 
 	circuit = PI * _diameter;
+
+	afterChange = false;
 }
 
 bool ProgramState::isPaused()
