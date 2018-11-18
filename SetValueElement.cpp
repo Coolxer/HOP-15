@@ -35,10 +35,9 @@ void SetValueElement::react()
 	else if (key == KEY_DOWN || value == -1)
 		decrease();
 	else if (key == KEY_ENTER)
-	{
-		_buzzer->playOnPress();
 		_state->back();
-	}
+
+	_buzzer->playOnPress();
 
 	if (key == KEY_0)
 		_manualKeyValue = 0;
