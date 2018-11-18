@@ -405,11 +405,11 @@ void ProgramState::changeFeather()
 {
 	_dividerMotor->setCurrentPosition(0);
 
-	_dividerMotor->move(_stepsForFeather);
+	_dividerMotor->move(-_stepsForFeather);
 
 	while (_dividerMotor->distanceToGo() != 0)
 	{
-		_dividerMotor->setSpeed(-DEFAULT_SPEED, DEFAULT_STEP_INTERVAL);
+		_dividerMotor->setSpeed(DEFAULT_SPEED, DEFAULT_STEP_INTERVAL);
 		_dividerMotor->runSpeedToPosition();
 	}
 

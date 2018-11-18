@@ -65,6 +65,7 @@ void Lcd::writeNewLine(byte lineNumber, char* text)
 
 void Lcd::manage(MenuState* menuState)
 {
+	/*
 	if (!menuState->isItemFocused())
 	{
 		//Line 1
@@ -130,6 +131,54 @@ void Lcd::manage(MenuState* menuState)
 		}
 		changeLeftOrientation(true);
 	}
+	*/
+
+	//Line 1
+	char* prevName = (char*)menuState->getPrev();
+
+	if (prevName != "")
+	{
+		writeNewLine(0, "  ");
+		writeLine(0, prevName);
+		changeLeftOrientation(false);
+		char* prevNameValue = (char*)menuState->getPrevValue();
+
+		if (prevNameValue != "")
+			writeLine(0, prevNameValue);
+	}
+	changeLeftOrientation(true);
+
+	//Line 2
+	char* currentName = (char*)menuState->getCurrent();
+	if (currentName != "")
+	{
+		writeNewLine(1, "* ");
+		writeLine(1, currentName);
+		changeLeftOrientation(false);
+
+		char* currentNameValue = (char*)menuState->getCurrentValue();
+
+		if (currentNameValue != "")
+			writeLine(1, currentNameValue);
+	}
+	changeLeftOrientation(true);
+
+	//Line 3
+	char* nextName = (char*)menuState->getNext();
+	if (nextName != "")
+	{
+		writeNewLine(2, "  ");
+		writeLine(2, nextName);
+		changeLeftOrientation(false);
+		char* nextNameValue = (char*)menuState->getNextValue();
+
+		if (nextNameValue != "")
+			writeLine(2, nextNameValue);
+	}
+	changeLeftOrientation(true);
+
+	//Line 4
+	writeNewLine(3, menuState->getTip());
 }
 
 void Lcd::manage(IntroductionState* introductionState)
