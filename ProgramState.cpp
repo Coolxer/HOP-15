@@ -359,6 +359,8 @@ void ProgramState::reset()
 	circuit = PI * _diameter;
 
 	afterChange = false;
+
+	calcSteps();
 }
 
 bool ProgramState::isPaused()
@@ -392,13 +394,6 @@ void ProgramState::calcSteps()
 	_dividerSpeed = _tableSpeed * _multiplier;
 
 	_dividerStepInterval = fabs(1000000.0 / _dividerSpeed);
-}
-
-void ProgramState::set()
-{
-	_cutterAngle = _cutterAngleElement->getValue();
-	_lastCutterAngle = _cutterAngle;
-	calcSteps();
 }
 
 void ProgramState::changeFeather()

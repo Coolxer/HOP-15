@@ -155,13 +155,12 @@ void MenuState::enter()
 		ProgramState* programState = getProgram()->getProgramState();
 		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
-		programState->setCutterAngle(&_cutterAngle);
+		programState->setCutterAngle(_itemBinds[2].item->getValue());
 		programState->setDiameter(_itemBinds[3].item->getValue());
 		programState->setSpeed(_itemBinds[9].item->getValue());
 
 		programState->reset();
 
-		programState->set();
 
 		getProgram()->getStateManager()->changeState(2);
 	}
@@ -171,13 +170,12 @@ void MenuState::enter()
 		ProgramState* programState = getProgram()->getProgramState();
 		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
-		programState->setCutterAngle(&_cutterAngle);
+		programState->setCutterAngle(_itemBinds[2].item->getValue());
 		programState->setDiameter(_itemBinds[3].item->getValue());
 		programState->setSpeed(_itemBinds[9].item->getValue());
 
 		programState->reset();
 
-		programState->set();
 		programState->testDividerMotor();
 
 		getProgram()->getStateManager()->changeState(2);
@@ -188,13 +186,12 @@ void MenuState::enter()
 		ProgramState* programState = getProgram()->getProgramState();
 		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
-		programState->setCutterAngle(&_cutterAngle);
+		programState->setCutterAngle(_itemBinds[2].item->getValue());
 		programState->setDiameter(_itemBinds[3].item->getValue());
 		programState->setSpeed(_itemBinds[9].item->getValue());
 
 		programState->reset();
 		
-		programState->set();
 		programState->testTableMotor();
 
 		getProgram()->getStateManager()->changeState(2);
@@ -251,13 +248,12 @@ void MenuState::enter()
 		ProgramState* programState = getProgram()->getProgramState();
 		programState->setFeathers(byte(_itemBinds[0].item->getValue()));
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
-		programState->setCutterAngle(&_cutterAngle);
+		programState->setCutterAngle(_itemBinds[2].item->getValue());
 		programState->setDiameter(_itemBinds[3].item->getValue());
 		programState->setSpeed(_itemBinds[9].item->getValue());
 
 		programState->reset();
 
-		programState->set();
 		programState->setRegulation();
 
 		getProgram()->getStateManager()->changeState(2);

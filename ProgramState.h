@@ -14,8 +14,6 @@ class Endstop;
 
 class AccelStepper;
 
-class SetValueElement;
-
 enum ExecutionState 
 {
 	START,
@@ -42,8 +40,6 @@ private:
 
 	AccelStepper* _dividerMotor;
 	AccelStepper* _tableMotor;
-
-	SetValueElement* _cutterAngleElement;
 
 	//Current state of execution of program
 	ExecutionState _currentState = START;
@@ -80,7 +76,6 @@ private:
 
 	//Angle of cutter in degrees
 	double _cutterAngle;
-	double _lastCutterAngle;
 
 	//Diameter of cutter
 	double _diameter;
@@ -119,11 +114,10 @@ public:
 	void setFeathers(byte feathers) { _feathersCount = feathers; };
 	void setCycles(byte cycles) { _cyclesCount = cycles; };
 	//void setCutterAngle(double angle) { _cutterAngle = angle; };
-	void setCutterAngle(SetValueElement* cutterAngleElement) { _cutterAngleElement = cutterAngleElement; };
+	void setCutterAngle(double cutterAngle) { _cutterAngle = cutterAngle; };
 	void setDiameter(double diameter) { _diameter = diameter; };
 	void setSpeed(double speed) { _tableSpeed = speed; };
 
-	void set();
 	byte getCurrentFeather() { return _currentFeather; };
 	void setCurrentFeather(byte currentFeather) { _currentFeather = currentFeather; };
 	byte getFeathersCount() { return _feathersCount; };
