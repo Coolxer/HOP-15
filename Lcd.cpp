@@ -65,52 +65,71 @@ void Lcd::writeNewLine(byte lineNumber, char* text)
 
 void Lcd::manage(MenuState* menuState)
 {
-	//Line 1
-	char* prevName = (char*)menuState->getPrev();
-
-	if (prevName != "")
+	if (!menuState->isItemFocused())
 	{
-		writeNewLine(0, "  ");
-		writeLine(0, prevName);
-		changeLeftOrientation(false);
-		char* prevNameValue = (char*)menuState->getPrevValue();
+		//Line 1
+		char* prevName = (char*)menuState->getPrev();
 
-		if (prevNameValue != "")
-			writeLine(0, prevNameValue);
+		if (prevName != "")
+		{
+			writeNewLine(0, "  ");
+			writeLine(0, prevName);
+			changeLeftOrientation(false);
+			char* prevNameValue = (char*)menuState->getPrevValue();
+
+			if (prevNameValue != "")
+				writeLine(0, prevNameValue);
+		}
+		changeLeftOrientation(true);
+
+		//Line 2
+		char* currentName = (char*)menuState->getCurrent();
+		if (currentName != "")
+		{
+			writeNewLine(1, "* ");
+			writeLine(1, currentName);
+			changeLeftOrientation(false);
+
+			char* currentNameValue = (char*)menuState->getCurrentValue();
+
+			if (currentNameValue != "")
+				writeLine(1, currentNameValue);
+		}
+		changeLeftOrientation(true);
+
+		//Line 3
+		char* nextName = (char*)menuState->getNext();
+		if (nextName != "")
+		{
+			writeNewLine(2, "  ");
+			writeLine(2, nextName);
+			changeLeftOrientation(false);
+			char* nextNameValue = (char*)menuState->getNextValue();
+
+			if (nextNameValue != "")
+				writeLine(2, nextNameValue);
+		}
+		changeLeftOrientation(true);
+
+		//Line 4
+		writeNewLine(3, menuState->getTip());
 	}
-	changeLeftOrientation(true);
-
-	//Line 2
-	char* currentName = (char*)menuState->getCurrent();
-	if (currentName != "")
+	else
 	{
-		writeNewLine(1, "* ");
-		writeLine(1, currentName);
-		changeLeftOrientation(false);
+		char* currentName = (char*)menuState->getCurrent();
+		if (currentName != "")
+		{
+			writeNewLine(1, "* ");
+			writeLine(1, currentName);
+			changeLeftOrientation(false);
 
-		char* currentNameValue = (char*)menuState->getCurrentValue();
+			char* currentNameValue = (char*)menuState->getCurrentValue();
 
-		if (currentNameValue != "")
-			writeLine(1, currentNameValue);
+			if (currentNameValue != "")
+				writeLine(1, currentNameValue);
+		}
+		changeLeftOrientation(true);
 	}
-	changeLeftOrientation(true);
-	
-	//Line 3
-	char* nextName = (char*)menuState->getNext();
-	if (nextName != "")
-	{
-		writeNewLine(2, "  ");
-		writeLine(2, nextName);
-		changeLeftOrientation(false);
-		char* nextNameValue = (char*)menuState->getNextValue();
-
-		if (nextNameValue != "")
-			writeLine(2, nextNameValue);
-	}
-	changeLeftOrientation(true);
-
-	//Line 4
-	writeNewLine(3, menuState->getTip());
 }
 
 void Lcd::manage(IntroductionState* introductionState)

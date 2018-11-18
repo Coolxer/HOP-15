@@ -95,13 +95,14 @@ void ProgramState::react()
 		_needRedraw = true;
 		_disrupted = false;
 	}
-	*/
 
 	if (_needRedraw)
 	{
 		_lcd->manage(this);
 		_needRedraw = false;
 	}
+
+	*/
 	
 	switch (_currentState)
 	{

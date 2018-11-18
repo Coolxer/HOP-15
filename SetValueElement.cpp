@@ -30,14 +30,15 @@ void SetValueElement::react()
 
 	short value = _rotaryEncoder->read();
 
+	if(key != KEY_NONE)
+		_buzzer->playOnPress();
+
 	if (key == KEY_UP || value == 1)
 		increase();
 	else if (key == KEY_DOWN || value == -1)
 		decrease();
 	else if (key == KEY_ENTER)
 		_state->back();
-
-	_buzzer->playOnPress();
 
 	if (key == KEY_0)
 		_manualKeyValue = 0;

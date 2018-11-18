@@ -70,6 +70,8 @@ public:
 	char* getTip();
 
 	float getValueAtIndex(byte index);
+
+	bool isItemFocused() { return _isFocused; }
 };
 
 #endif
