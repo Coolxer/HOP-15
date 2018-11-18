@@ -279,6 +279,8 @@ void ProgramState::react()
 		//changeFeather();
 		//_currentState = END;
 
+		changeFeather();
+
 		_program->getStateManager()->changeState(1);
 
 		break;
