@@ -112,38 +112,20 @@ void ProgramState::react()
 
 		_stepsForFeather = -_rotateAngle * DIVIDER_GEARS_PROPORTION * STEPS_PER_DEGREE;
 
-		_currentState = STARTING;
-
 		_tableMotor->setSpeed(-_tableSpeed, _tableStepInterval);
 
 		_dividerMotor->disableOutputs();
 		_tableMotor->disableOutputs();
+
+		if (_testingHome)
+			home();
+		else if (_testingDividerMotor)
+			_currentState = CHANGE_FEATHER;
+		else
+			_currentState = MOVE_FORWARD;
+
+		delay(_delay);
 		
-		break;
-	}
-	case STARTING:
-	{
-		if (!_tableMotorHomed)
-		{
-			if (_backwardTableEndstop->isClicked())
-				_tableMotorHomed = true;
-			else
-				_tableMotor->runSpeed();			
-		}
-
-		if (_tableMotorHomed)
-		{
-			if (_testingHome)
-				_program->getStateManager()->changeState(1);
-
-			else if (_testingDividerMotor)
-				_currentState = CHANGE_FEATHER;
-			else
-				_currentState = MOVE_FORWARD;
-
-			delay(_delay);
-		}
-
 		break;
 	}
 	case MOVE_FORWARD:
@@ -436,4 +418,17 @@ void ProgramState::changeFeather()
 	}
 
 	delay(_delay);
+}
+
+void ProgramState::home()
+{
+	while(!_tableMotorHomed)
+	{
+		if (_backwardTableEndstop->isClicked())
+			_tableMotorHomed = true;
+		else
+			_tableMotor->runSpeed();
+	}
+
+	_program->getStateManager()->changeState(1);
 }

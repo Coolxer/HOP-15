@@ -19,7 +19,6 @@ class SetValueElement;
 enum ExecutionState 
 {
 	START,
-	STARTING,
 	MOVE_FORWARD,
 	MOVING_FORWARD,
 	MOVE_BACKWARD,
@@ -113,6 +112,7 @@ private:
 
 	void calcSteps();
 
+	void home();
 	void changeFeather();
 
 public:
