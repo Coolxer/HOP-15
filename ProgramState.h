@@ -98,13 +98,6 @@ private:
 	//delay between motors movements in ms
 	int _delay = 100;
 
-	//the switch which is using to make a micros delay between steppers movements iterations
-	bool afterChange = false;
-
-	unsigned long startTime = 0;
-	unsigned long time = 0;
-	unsigned long delta = 0;
-
 	void calcSteps();
 
 	void home();

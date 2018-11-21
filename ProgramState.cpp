@@ -142,39 +142,22 @@ void ProgramState::react()
 	
 		_currentState = MOVING_FORWARD;
 
-		startTime = micros();
-
 		break;
 	}
 	case MOVING_FORWARD:
 	{
 		if (!forwardEndstopClicked)
 		{
-			time = micros();
-			delta = time - startTime;
-
 			_dividerMotor->runSpeed();
+			_tableMotor->runSpeed();
 
-			if (!afterChange)
-			{
-				if (delta > 900)
-				{
-					afterChange = true;
-					_tableMotor->runSpeed();
-				}
-			}
-			else
-			{
-				_tableMotor->runSpeed();
+			//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
+			if (!_backwardTableEndstop->isClicked())
+				betweenEndstops = true;
 
-				//If due to moving table motor forward endstop is not clicked it's mean we are betweem them
-				if (!_backwardTableEndstop->isClicked())
-					betweenEndstops = true;
-
-				//If endstop click again it mean we met backward endstop
-				if (_forwardTableEndstop->isClicked() && betweenEndstops)
-					forwardEndstopClicked = true;
-			}	
+			//If endstop click again it mean we met backward endstop
+			if (_forwardTableEndstop->isClicked() && betweenEndstops)
+				forwardEndstopClicked = true;
 		}
 		else
 		{
@@ -198,39 +181,22 @@ void ProgramState::react()
 
 		_currentState = MOVING_BACKWARD;
 
-		startTime = micros();
-
 		break;
 	}
 	case MOVING_BACKWARD:
 	{
 		if (!backwardEndstopClicked)
 		{
-			time = micros();
-			delta = time - startTime;
-
 			_dividerMotor->runSpeed();
+			_tableMotor->runSpeed();
 
-			if (afterChange)
-			{
-				if (delta > 900)
-				{
-					afterChange = false;
-					_tableMotor->runSpeed();
-				}
-			}
-			else
-			{
-				_tableMotor->runSpeed();
+			//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
+			if (!_forwardTableEndstop->isClicked())
+				betweenEndstops = true;
 
-				//If due to moving table motor backward endstop is not clicked it's mean we are betweem them
-				if (!_forwardTableEndstop->isClicked())
-					betweenEndstops = true;
-
-				//If endstop click again it mean we met backward endstop
-				if (_backwardTableEndstop->isClicked() && betweenEndstops)
-					backwardEndstopClicked = true;
-			}		
+			//If endstop click again it mean we met backward endstop
+			if (_backwardTableEndstop->isClicked() && betweenEndstops)
+				backwardEndstopClicked = true;	
 		}
 		else
 		{
@@ -352,8 +318,6 @@ void ProgramState::reset()
 	_tableStepInterval = fabs(1000000.0 / _tableSpeed);
 
 	circuit = PI * _diameter;
-
-	afterChange = false;
 
 	calcSteps();
 }
