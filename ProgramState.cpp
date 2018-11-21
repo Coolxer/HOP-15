@@ -30,65 +30,6 @@ void ProgramState::init()
 void ProgramState::react()
 {
 	/*
-	char key = _simpleKeypad->getPressedKey();
-
-	switch (key)
-	{
-	case KEY_ENTER:
-	{
-		if (_currentState == FINISH)
-		{
-			//If program finished back to menu
-			_program->getStateManager()->changeState(1);
-		}
-		else
-		{
-			if (_currentState == PAUSE)
-				_currentState = _savedState;
-			else
-			{
-				_savedState = _currentState;
-				_currentState = PAUSE;
-			}
-			_needRedraw = true;	
-		}	
-
-		break;
-	}
-	case KEY_RETURN:
-	{
-		//If we stopped the program
-		_program->getStateManager()->changeState(1);
-
-		break;
-	}
-	case KEY_DISRUPT:
-	{
-		reportDisruption();
-		break;
-	}
-	case KEY_RESET:
-	{
-		resetFunc();
-		break;
-	}
-	}
-
-	_cutterAngleElement->react();
-	
-	if (key == KEY_UP)
-		_cutterAngleElement->increase();
-	else if (key == KEY_DOWN)
-		_cutterAngleElement->decrease();
-
-	_cutterAngle = _cutterAngleElement->getValue();
-
-	if (_cutterAngle != _lastCutterAngle)
-	{
-		calcSteps();
-		_lastCutterAngle = _cutterAngle;
-	}
-
 	if (_disrupted)
 	{
 		_lcd->begin();
@@ -311,13 +252,7 @@ void ProgramState::reset()
 	_testingTableMotor = false;
 	_testingHome = false;
 
-	_tableCountInMM = 50;
-
 	//some calculations
-
-	_tableStepInterval = fabs(1000000.0 / _tableSpeed);
-
-	circuit = PI * _diameter;
 
 	calcSteps();
 }
@@ -338,21 +273,40 @@ bool ProgramState::isFinished()
 
 void ProgramState::calcSteps()
 {
-	_dividerCountInMM = _tableCountInMM * tan((_cutterAngle * PI) / 180.0);
+	//can tableCountInMM be 1mm 100mm or randomly ? or its just changing the results
 
-	double numberOfLaps = _dividerCountInMM / circuit;
+	//_tableStepInterval = fabs(1000000.0 / _tableSpeed);
+
+	double tableCountInMM = 50;
+
+	double circuit = PI * _diameter;
+
+	double dividerCountInMM = tableCountInMM * tan((_cutterAngle * PI) / 180.0);
+
+	double numberOfLaps = dividerCountInMM / circuit;
 
 	double dividerDegress = numberOfLaps * 360;
 
-	_dividerCountInSteps = (dividerDegress * 1600) / 360.0;
+	double dividerCountInSteps = (dividerDegress * 1600) / 360.0;
 
-	_dividerCountInSteps *= DIVIDER_GEARS_PROPORTION;
-	_tableCountInSteps = TABLE_GEARS_PROPORTION * _tableCountInMM * STEPS_PER_MM;
+	dividerCountInSteps *= DIVIDER_GEARS_PROPORTION;
+	double tableCountInSteps = TABLE_GEARS_PROPORTION * tableCountInMM * STEPS_PER_MM;
 
-	_multiplier = _dividerCountInSteps / _tableCountInSteps;
-	_dividerSpeed = _tableSpeed * _multiplier;
+	double multiplier = dividerCountInSteps / tableCountInSteps;
+
+	if (multiplier > 1)
+	{
+		_dividerSpeed = 1000; //max_speed
+		_tableSpeed = 1000 / multiplier;
+	}
+	else
+	{
+		_tableSpeed = 1000;  //max speed
+		_dividerSpeed = 1000 * multiplier;
+	}
 
 	_dividerStepInterval = fabs(1000000.0 / _dividerSpeed);
+	_tableStepInterval = fabs(1000000.0 / _tableSpeed);
 }
 
 void ProgramState::changeFeather()

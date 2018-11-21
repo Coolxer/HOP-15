@@ -80,16 +80,7 @@ private:
 	//Diameter of cutter
 	double _diameter;
 
-	double circuit;
-
-	double _tableCountInMM = 50;
-	double _dividerCountInMM;
-
-	double _tableCountInSteps;
-	double _dividerCountInSteps;
-
 	double _tableSpeed;
-	double _multiplier;
 	double _dividerSpeed;
 
 	unsigned long _tableStepInterval;
@@ -109,7 +100,6 @@ public:
 	//void setCutterAngle(double angle) { _cutterAngle = angle; };
 	void setCutterAngle(double cutterAngle) { _cutterAngle = cutterAngle; };
 	void setDiameter(double diameter) { _diameter = diameter; };
-	void setSpeed(double speed) { _tableSpeed = speed; };
 
 	byte getCurrentFeather() { return _currentFeather; };
 	void setCurrentFeather(byte currentFeather) { _currentFeather = currentFeather; };

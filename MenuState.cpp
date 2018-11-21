@@ -68,11 +68,10 @@ void MenuState::init()
 	setElement(6, "Test stolu");
 	setElement(7, "Obroc podziel.");
 	setElement(8, "Przesun stol");
-	setElement(9, &_speed);
-	setElement(10, "Wylacz silniki");
-	setElement(11, "Ustaw do bazy");
-	setElement(12, "Kierunek");
-	setElement(13, "Regulacja");
+	setElement(9, "Wylacz silniki");
+	setElement(10, "Ustaw do bazy");
+	setElement(11, "Kierunek");
+	setElement(12, "Regulacja");
 }
 
 void MenuState::react()
@@ -157,7 +156,6 @@ void MenuState::enter()
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
 		programState->setCutterAngle(_itemBinds[2].item->getValue());
 		programState->setDiameter(_itemBinds[3].item->getValue());
-		programState->setSpeed(_itemBinds[9].item->getValue());
 
 		programState->reset();
 
@@ -172,7 +170,6 @@ void MenuState::enter()
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
 		programState->setCutterAngle(_itemBinds[2].item->getValue());
 		programState->setDiameter(_itemBinds[3].item->getValue());
-		programState->setSpeed(_itemBinds[9].item->getValue());
 
 		programState->reset();
 
@@ -188,7 +185,6 @@ void MenuState::enter()
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
 		programState->setCutterAngle(_itemBinds[2].item->getValue());
 		programState->setDiameter(_itemBinds[3].item->getValue());
-		programState->setSpeed(_itemBinds[9].item->getValue());
 
 		programState->reset();
 		
@@ -250,7 +246,6 @@ void MenuState::enter()
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
 		programState->setCutterAngle(_itemBinds[2].item->getValue());
 		programState->setDiameter(_itemBinds[3].item->getValue());
-		programState->setSpeed(_itemBinds[9].item->getValue());
 
 		programState->reset();
 
