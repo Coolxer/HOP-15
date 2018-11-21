@@ -294,15 +294,17 @@ void ProgramState::calcSteps()
 
 	double multiplier = dividerCountInSteps / tableCountInSteps;
 
+	double maxik = 1000;
+
 	if (multiplier > 1)
 	{
-		_dividerSpeed = 1000; //max_speed
-		_tableSpeed = 1000 / multiplier;
+		_dividerSpeed = maxik; //max_speed
+		_tableSpeed = maxik / multiplier;
 	}
 	else
 	{
-		_tableSpeed = 1000;  //max speed
-		_dividerSpeed = 1000 * multiplier;
+		_tableSpeed = maxik;  //max speed
+		_dividerSpeed = maxik * multiplier;
 	}
 
 	_dividerStepInterval = fabs(1000000.0 / _dividerSpeed);
