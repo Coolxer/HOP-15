@@ -282,7 +282,7 @@ void ProgramState::calcSteps()
 
 	double maxik = 1000;
 
-	//jesli stol ma wieksza predkosc to nie dajemy na 1000 tylko np 800?
+	//jesli stol ma wieksza predkosc to nie dajemy na 1000 tylko np na 800?
 
 	if (multiplier > 1)
 	{
