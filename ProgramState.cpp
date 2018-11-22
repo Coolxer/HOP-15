@@ -296,6 +296,8 @@ void ProgramState::calcSteps()
 
 	double maxik = 1000;
 
+	//jesli stol ma wieksza predkosc to nie dajemy na 1000 tylko np 800?
+
 	if (multiplier > 1)
 	{
 		_dividerSpeed = maxik; //max_speed
@@ -303,8 +305,9 @@ void ProgramState::calcSteps()
 	}
 	else
 	{
-		_tableSpeed = maxik;  //max speed
-		_dividerSpeed = maxik * multiplier;
+		_tableSpeed = 800;
+		//_tableSpeed = maxik;  //max speed
+		_dividerSpeed = 800 * multiplier;
 	}
 
 	_dividerStepInterval = fabs(1000000.0 / _dividerSpeed);
