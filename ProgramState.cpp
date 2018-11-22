@@ -29,26 +29,11 @@ void ProgramState::init()
 
 void ProgramState::react()
 {
-	/*
-	if (_disrupted)
-	{
-		_lcd->begin();
-		_needRedraw = true;
-		_disrupted = false;
-	}
-
-	if (_needRedraw)
-	{
-		_lcd->manage(this);
-		_needRedraw = false;
-	}
-
-	*/
-	
 	switch (_currentState)
 	{
 	case START:
 	{
+		_lcd->manage(this);
 		_rotateAngle = 360.0 / (float)_feathersCount;
 
 		_stepsForFeather = -_rotateAngle * DIVIDER_GEARS_PROPORTION * STEPS_PER_DEGREE;
@@ -164,7 +149,7 @@ void ProgramState::react()
 			}
 
 			//Draw updated feathers and cycles
-			_needRedraw = true;
+			_lcd->manage(this);
 
 			delay(_delay);
 		}
