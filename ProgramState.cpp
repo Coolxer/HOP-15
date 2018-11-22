@@ -282,12 +282,6 @@ void ProgramState::calcSteps()
 
 	double maxik = 1000;
 
-	Serial.println("*****************************");
-	Serial.println("table_count");
-	Serial.println(tableCountInSteps);
-	Serial.println("divider_count");
-	Serial.println(dividerCountInSteps);
-
 	//jesli stol ma wieksza predkosc to nie dajemy na 1000 tylko np na 800?
 
 	if (multiplier > 1)
@@ -305,15 +299,14 @@ void ProgramState::calcSteps()
 	_dividerStepInterval = round(fabs(1000000.0 / _dividerSpeed));
 	_tableStepInterval = round(fabs(1000000.0 / _tableSpeed));
 
-	Serial.println("---------------");
-	Serial.println("table_after");
-	Serial.println(_tableSpeed);
-	Serial.println("_divider after");
-	Serial.println(_dividerSpeed);
+	/*
+	unsigned long startTime = millis();
+	unsigned long time = startTime;
 
-	Serial.println("-----------");
-	Serial.println("table_interval"); Serial.println(_tableStepInterval);
-	Serial.println("divider interval"); Serial.println(_dividerStepInterval);
+	while (time - startTime < 1000)
+		time = millis();
+		*/
+	Serial.println(multiplier);
 }
 
 void ProgramState::changeFeather()
