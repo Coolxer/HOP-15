@@ -308,8 +308,8 @@ void ProgramState::calcSteps()
 		_dividerSpeed = 800 * multiplier;
 	}
 
-	_dividerStepInterval = fabs(1000000.0 / _dividerSpeed);
-	_tableStepInterval = fabs(1000000.0 / _tableSpeed);
+	_dividerStepInterval = round(fabs(1000000.0 / _dividerSpeed));
+	_tableStepInterval = round(fabs(1000000.0 / _tableSpeed));
 }
 
 void ProgramState::changeFeather()
