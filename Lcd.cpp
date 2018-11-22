@@ -207,7 +207,7 @@ void Lcd::manage(ProgramState* programState)
 
 		char cutterLine[6] = { 0 };
 		strcpy(cutterLine, "");
-		dtostrf(cutterAngle, 2, 1, &cutterLine[strlen(cutterLine)]);
+		dtostrf(cutterAngle, 2, 2, &cutterLine[strlen(cutterLine)]);
 
 		char featherLine[20] = { 0 };
 		char cycleLine[20] = { 0 };
