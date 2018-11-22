@@ -36,7 +36,7 @@ void ProgramState::react()
 		_lcd->manage(this);
 		_rotateAngle = 360.0 / (float)_feathersCount;
 
-		_stepsForFeather = -_rotateAngle * DIVIDER_GEARS_PROPORTION * STEPS_PER_DEGREE;
+		_stepsForFeather = round(-_rotateAngle * DIVIDER_GEARS_PROPORTION * STEPS_PER_DEGREE);
 
 		_tableMotor->setSpeed(-_tableSpeed, _tableStepInterval);
 
