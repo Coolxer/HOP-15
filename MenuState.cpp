@@ -211,13 +211,13 @@ void MenuState::enter()
 		getProgram()->getStateManager()->changeState(3);
 	}
 	//If we disabling motors
-	else if (_selectedIndex == 10)
+	else if (_selectedIndex == 9)
 	{
 		_dividerMotor->enableOutputs();
 		_tableMotor->enableOutputs();
 	}
 	//If homing table motor
-	else if (_selectedIndex == 11)
+	else if (_selectedIndex == 10)
 	{
 		ProgramState* programState = getProgram()->getProgramState();
 		programState->reset();
@@ -229,7 +229,7 @@ void MenuState::enter()
 		}		
 	}
 	//If we changing the direction of rotation
-	else if (_selectedIndex == 12)
+	else if (_selectedIndex == 11)
 	{
 		ProgramState* programState = getProgram()->getProgramState();
 
@@ -239,7 +239,7 @@ void MenuState::enter()
 			programState->setDirection(true);
 	}
 
-	else if (_selectedIndex == 13)
+	else if (_selectedIndex == 12)
 	{
 		ProgramState* programState = getProgram()->getProgramState();
 		programState->setFeathers(byte(_itemBinds[0].item->getValue()));

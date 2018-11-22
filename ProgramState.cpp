@@ -47,6 +47,8 @@ void ProgramState::react()
 			home();
 		else if (_testingDividerMotor)
 			_currentState = CHANGE_FEATHER;
+		else if (_regulation)
+			_currentState = REGULATION;
 		else
 			_currentState = MOVE_FORWARD;
 
@@ -203,28 +205,13 @@ void ProgramState::react()
 	}
 	case REGULATION:
 	{
-		_dividerMotor->disableOutputs();
-
-		_rotateAngle = 360.0 / (float)_feathersCount;
-
 		int piora = (int)_feathersCount;
 		int cykle = (int)_cyclesCount;
 
-		_stepsForFeather = -_rotateAngle * DIVIDER_GEARS_PROPORTION * STEPS_PER_DEGREE;
-
 		for (int i = 0; i < piora * cykle; i++)
 		{
-			_dividerMotor->setCurrentPosition(0);
-
-			_dividerMotor->move(_stepsForFeather);
-
-			while (_dividerMotor->distanceToGo() != 0)
-			{
-				_dividerMotor->setSpeed(DEFAULT_SPEED, DEFAULT_STEP_INTERVAL);
-				_dividerMotor->runSpeedToPosition();
-			}
-
-			delay(1000);
+			changeFeather();
+			delay(500);
 		}
 
 		_program->getStateManager()->changeState(1);
@@ -247,6 +234,7 @@ void ProgramState::reset()
 	_testingDividerMotor = false;
 	_testingTableMotor = false;
 	_testingHome = false;
+	_regulation = false;
 
 	ended = false;
 

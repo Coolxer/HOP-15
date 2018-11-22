@@ -69,6 +69,7 @@ private:
 	bool _testingDividerMotor = false;
 	bool _testingTableMotor = false;
 	bool _testingHome = false;
+	bool _regulation = false;
 
 	bool _tableMotorHomed = false;
 
@@ -131,7 +132,7 @@ public:
 	virtual void react();
 	virtual void reset();
 
-	void setRegulation() { _currentState = REGULATION;  }
+	void setRegulation() { _regulation = true; };
 };
 
 #endif
