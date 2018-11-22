@@ -41,7 +41,6 @@ void ManualControlState::react()
 			_program->getStateManager()->changeState(2);
 	}
 		
-
 	else if (key == KEY_DISRUPT)
 	{
 		if (!_moveInSteps)
@@ -49,7 +48,6 @@ void ManualControlState::react()
 			_moveInSteps = true;
 			_needRedraw = true;
 		}
-
 	}
 		
 	else if (key == KEY_RESET)
