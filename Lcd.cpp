@@ -65,74 +65,6 @@ void Lcd::writeNewLine(byte lineNumber, char* text)
 
 void Lcd::manage(MenuState* menuState)
 {
-	/*
-	if (!menuState->isItemFocused())
-	{
-		//Line 1
-		char* prevName = (char*)menuState->getPrev();
-
-		if (prevName != "")
-		{
-			writeNewLine(0, "  ");
-			writeLine(0, prevName);
-			changeLeftOrientation(false);
-			char* prevNameValue = (char*)menuState->getPrevValue();
-
-			if (prevNameValue != "")
-				writeLine(0, prevNameValue);
-		}
-		changeLeftOrientation(true);
-
-		//Line 2
-		char* currentName = (char*)menuState->getCurrent();
-		if (currentName != "")
-		{
-			writeNewLine(1, "* ");
-			writeLine(1, currentName);
-			changeLeftOrientation(false);
-
-			char* currentNameValue = (char*)menuState->getCurrentValue();
-
-			if (currentNameValue != "")
-				writeLine(1, currentNameValue);
-		}
-		changeLeftOrientation(true);
-
-		//Line 3
-		char* nextName = (char*)menuState->getNext();
-		if (nextName != "")
-		{
-			writeNewLine(2, "  ");
-			writeLine(2, nextName);
-			changeLeftOrientation(false);
-			char* nextNameValue = (char*)menuState->getNextValue();
-
-			if (nextNameValue != "")
-				writeLine(2, nextNameValue);
-		}
-		changeLeftOrientation(true);
-
-		//Line 4
-		writeNewLine(3, menuState->getTip());
-	}
-	else
-	{
-		char* currentName = (char*)menuState->getCurrent();
-		if (currentName != "")
-		{
-			writeNewLine(1, "* ");
-			writeLine(1, currentName);
-			changeLeftOrientation(false);
-
-			char* currentNameValue = (char*)menuState->getCurrentValue();
-
-			if (currentNameValue != "")
-				writeLine(1, currentNameValue);
-		}
-		changeLeftOrientation(true);
-	}
-	*/
-
 	//Line 1
 	char* prevName = (char*)menuState->getPrev();
 
@@ -192,10 +124,19 @@ void Lcd::manage(IntroductionState* introductionState)
 void Lcd::manage(ProgramState* programState)
 {
 	if (programState->isFinished())
-	{
-		clearScreen();
-		writeNewLine(0, "Zakonczono");
-		writeNewLine(3, "* by wrocic do menu");
+	{	
+		if(!programState->isEnded())
+		{ 
+			clearScreen();
+			writeNewLine(0, "     Powrot do");
+			writeNewLine(2, "  pierwszego piora");
+		}
+		else
+		{
+			clearScreen();
+			writeNewLine(0, "     Zakonczono     ");
+			writeNewLine(3, "* by wrocic do menu");
+		}	
 	}
 	else
 	{
@@ -207,7 +148,11 @@ void Lcd::manage(ProgramState* programState)
 
 		char cutterLine[6] = { 0 };
 		strcpy(cutterLine, "");
-		dtostrf(cutterAngle, 2, 2, &cutterLine[strlen(cutterLine)]);
+
+		if (cutterAngle - int(cutterAngle) != 0)
+			dtostrf(cutterAngle, 2, 2, &cutterLine[strlen(cutterLine)]);
+		else
+			dtostrf(cutterAngle, 2, 0, &cutterLine[strlen(cutterLine)]);
 
 		char featherLine[20] = { 0 };
 		char cycleLine[20] = { 0 };
@@ -282,6 +227,6 @@ void Lcd::manage(ManualControlState* ManualControlState)
 
 void Lcd::manage(bool direction)
 {
-	//if(direction)
+	
 
 }

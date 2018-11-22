@@ -166,9 +166,20 @@ void ProgramState::react()
 	}
 	case FINISH:
 	{
-		changeFeather();
+		if (!ended)
+		{
+			changeFeather();
+			ended = true;
+			_lcd->manage(this);
+		}
+			
+		char key = _simpleKeypad->getPressedKey();
 
-		_program->getStateManager()->changeState(1);
+		if (key == KEY_ENTER)
+		{
+			_buzzer->playOnPress();
+			_program->getStateManager()->changeState(1);
+		}
 
 		break;
 	}
@@ -236,6 +247,8 @@ void ProgramState::reset()
 	_testingDividerMotor = false;
 	_testingTableMotor = false;
 	_testingHome = false;
+
+	ended = false;
 
 	//some calculations
 

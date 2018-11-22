@@ -74,6 +74,10 @@ private:
 
 	bool _turningRight = true;
 
+	//after finish we need to get back to the first feather, this bool is setted to
+											//true after this operation
+	bool ended = false;
+
 	//Angle of cutter in degrees
 	double _cutterAngle;
 
@@ -114,6 +118,7 @@ public:
 	bool isPaused();
 	bool isFinished();
 	bool isHomed() { return _tableMotorHomed; };
+	bool isEnded() { return ended; };
 
 	bool getDirection() { return _turningRight; };
 	void setDirection(bool x) { _turningRight = x; };
