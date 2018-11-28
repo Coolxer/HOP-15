@@ -280,20 +280,17 @@ void ProgramState::calcSteps()
 
 	double multiplier = dividerCountInSteps / tableCountInSteps;
 
-	double maxik = 1000;
-
 	//jesli stol ma wieksza predkosc to nie dajemy na 1000 tylko np na 800?
 
 	if (multiplier > 1)
 	{
-		_dividerSpeed = maxik; //max_speed
-		_tableSpeed = maxik / multiplier;
+		_dividerSpeed = _dividerMaxSpeed * multiplier * _maxSpeedPercentage; //max_speed
+		_tableSpeed = _dividerSpeed / multiplier;
 	}
 	else
 	{
-		_tableSpeed = 800;
-		//_tableSpeed = maxik;  //max speed
-		_dividerSpeed = 800 * multiplier;
+		_tableSpeed = _tableMaxSpeed * multiplier * _maxSpeedPercentage;
+		_dividerSpeed = _tableSpeed * multiplier;
 	}
 
 	_dividerStepInterval = round(fabs(1000000.0 / _dividerSpeed));
