@@ -284,12 +284,12 @@ void ProgramState::calcSteps()
 
 	if (multiplier > 1)
 	{
-		_dividerSpeed = _dividerMaxSpeed * multiplier * _maxSpeedPercentage; //max_speed
+		_dividerSpeed = _dividerMaxSpeed * (_maxSpeedPercentage / 100.0); //max_speed
 		_tableSpeed = _dividerSpeed / multiplier;
 	}
 	else
 	{
-		_tableSpeed = _tableMaxSpeed * multiplier * _maxSpeedPercentage;
+		_tableSpeed = _tableMaxSpeed * (_maxSpeedPercentage / 100.0);
 		_dividerSpeed = _tableSpeed * multiplier;
 	}
 
