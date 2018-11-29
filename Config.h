@@ -21,7 +21,7 @@ const double DIVIDER_SMALL_GEAR_DIAMETER = 19.046;//19.047;//19.2;//19.0462;//19
 const double DIVIDER_GEARS_PROPORTION = DIVIDER_BIG_GEAR_DIAMETER / DIVIDER_SMALL_GEAR_DIAMETER;
 
 /***************************** TABLE MOTOR ****************************************/
-const double TABLE_BIG_GEAR_DIAMETER = 87;
-const double TABLE_SMALL_GEAR_DIAMETER = 14.15;//14.18;//14.2;//14;//14.5;//15;//16;//16.2;//16.42;
+const double TABLE_BIG_GEAR_DIAMETER = 99;//87;
+const double TABLE_SMALL_GEAR_DIAMETER = 15.5;//16;//16.5(real size)//13.8;//14;//14.1;//14.13;//14.15;//14.18;//14.2;//14;//14.5;//15;//16;//16.2;//16.42;
 const double TABLE_GEARS_PROPORTION = TABLE_BIG_GEAR_DIAMETER / TABLE_SMALL_GEAR_DIAMETER;
  
