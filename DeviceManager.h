@@ -36,6 +36,7 @@ public:
 
 		_dividerMotor.setMaxSpeed(MAX_SPEED);
 		_tableMotor.setMaxSpeed(MAX_SPEED);
+
 	}
 
 	Lcd* requestLcd() { return &_lcd; };
