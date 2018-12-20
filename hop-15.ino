@@ -5,7 +5,6 @@ Program program;
 
 void setup()
 {
-	Serial.begin(9600);
 	program.init();
 }
 
