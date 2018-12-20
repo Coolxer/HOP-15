@@ -38,21 +38,21 @@ void ProgramState::react()
 
 		_stepsForFeather = round(-_rotateAngle * DIVIDER_GEARS_PROPORTION * STEPS_PER_DEGREE);
 
-		_tableMotor->setSpeed(-_tableSpeed, _tableStepInterval);
 
 		_dividerMotor->disableOutputs();
 		_tableMotor->disableOutputs();
 
 		if (_testingHome)
+		{
+			_tableMotor->setSpeed(-_tableSpeed, _tableStepInterval);
 			home();
+		}
 		else if (_testingDividerMotor)
 			_currentState = CHANGE_FEATHER;
 		else if (_regulation)
 			_currentState = REGULATION;
 		else
 			_currentState = MOVE_FORWARD;
-
-		delay(_delay);
 		
 		break;
 	}
