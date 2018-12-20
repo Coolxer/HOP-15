@@ -303,7 +303,7 @@ void ProgramState::calcSteps()
 	while (time - startTime < 1000)
 		time = millis();
 		*/
-	Serial.println(multiplier);
+	//Serial.println(multiplier);
 }
 
 void ProgramState::changeFeather()
