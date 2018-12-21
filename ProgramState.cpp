@@ -66,7 +66,11 @@ void ProgramState::react()
 		else
 			_dividerMotor->setSpeed(-_dividerSpeed, _dividerStepInterval);
 
+		delayMicroseconds(1);
+
 		_tableMotor->setSpeed(_tableSpeed, _tableStepInterval);
+
+		delayMicroseconds(1);
 	
 		_currentState = MOVING_FORWARD;
 
@@ -105,7 +109,11 @@ void ProgramState::react()
 		else
 			_dividerMotor->setSpeed(_dividerSpeed, _dividerStepInterval);
 
+		delayMicroseconds(1);
+
 		_tableMotor->setSpeed(-_tableSpeed, _tableStepInterval);
+
+		delayMicroseconds(1);
 
 		_currentState = MOVING_BACKWARD;
 
