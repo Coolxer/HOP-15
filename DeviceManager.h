@@ -37,8 +37,8 @@ public:
 		_dividerMotor.setMaxSpeed(MAX_SPEED);
 		_tableMotor.setMaxSpeed(MAX_SPEED);
 
-		_dividerMotor.setMinPulseWidth(4);//500 //20 //2 //2 //4 //4 //8 //12 //16 //25 //20 //22 //30
-		_tableMotor.setMinPulseWidth(2); //500 //20 //2 //1 //4 //2 //8 //12 //16 //25 //20 //22 //30
+		_dividerMotor.setMinPulseWidth(8);//500 //20 //2 //2 //4 //4 //8 //12 //16 //25 //20 //22 //30
+		_tableMotor.setMinPulseWidth(8); //500 //20 //2 //1 //4 //2 //8 //12 //16 //25 //20 //22 //30
 
 	}
 
