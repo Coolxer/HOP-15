@@ -85,13 +85,6 @@ private:
 	//Diameter of cutter
 	double _diameter;
 
-	//max speed
-	double _dividerMaxSpeed = 1000.0;
-	double _tableMaxSpeed = 800.0;
-
-	//setting in the menu
-	double _maxSpeedPercentage;
-
 	double _tableSpeed;
 	double _dividerSpeed;
 
@@ -112,7 +105,7 @@ public:
 	//void setCutterAngle(double angle) { _cutterAngle = angle; };
 	void setCutterAngle(double cutterAngle) { _cutterAngle = cutterAngle; };
 	void setDiameter(double diameter) { _diameter = diameter; };
-	void setSpeedPercentage(int speed) { _maxSpeedPercentage = speed; };
+	void setSpeed(int speed) { _tableSpeed = speed; };
 
 	byte getCurrentFeather() { return _currentFeather; };
 	void setCurrentFeather(byte currentFeather) { _currentFeather = currentFeather; };

@@ -290,28 +290,10 @@ void ProgramState::calcSteps()
 
 	//jesli stol ma wieksza predkosc to nie dajemy na 1000 tylko np na 800?
 
-	if (multiplier > 1)
-	{
-		_dividerSpeed = _dividerMaxSpeed * (_maxSpeedPercentage / 100.0); //max_speed
-		_tableSpeed = _dividerSpeed / multiplier;
-	}
-	else
-	{
-		_tableSpeed = _tableMaxSpeed * (_maxSpeedPercentage / 100.0);
-		_dividerSpeed = _tableSpeed * multiplier;
-	}
+	_dividerSpeed = _tableSpeed * multiplier;
 
 	_dividerStepInterval = round(fabs(1000000.0 / _dividerSpeed));
 	_tableStepInterval = round(fabs(1000000.0 / _tableSpeed));
-
-	/*
-	unsigned long startTime = millis();
-	unsigned long time = startTime;
-
-	while (time - startTime < 1000)
-		time = millis();
-		*/
-	//Serial.println(multiplier);
 }
 
 void ProgramState::changeFeather()

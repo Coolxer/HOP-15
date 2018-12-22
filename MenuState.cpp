@@ -50,7 +50,7 @@ void MenuState::init()
 	_cutterAngle = SetValueElement("Kat obrotu", this, 0, 60.0, 30.0, 0.01);
 	_diameter = SetValueElement("Srednica", this, 5.0, 100.0, 16.0, 0.01);
 
-	_speed = SetValueElement("Predkosc[%]", this, 1, 500, 100, 1);
+	_speed = SetValueElement("Predkosc", this, 100, 3000, 600, 100);
 
 	DeviceManager* deviceManager = _program->getDeviceManager();
 
@@ -159,7 +159,7 @@ void MenuState::enter()
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
 		programState->setCutterAngle(_itemBinds[2].item->getValue());
 		programState->setDiameter(_itemBinds[3].item->getValue());
-		programState->setSpeedPercentage(_itemBinds[13].item->getValue());
+		programState->setSpeed(_itemBinds[13].item->getValue());
 
 		programState->reset();
 
@@ -174,7 +174,7 @@ void MenuState::enter()
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
 		programState->setCutterAngle(_itemBinds[2].item->getValue());
 		programState->setDiameter(_itemBinds[3].item->getValue());
-		programState->setSpeedPercentage(_itemBinds[13].item->getValue());
+		programState->setSpeed(_itemBinds[13].item->getValue());
 
 		programState->reset();
 
@@ -190,7 +190,7 @@ void MenuState::enter()
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
 		programState->setCutterAngle(_itemBinds[2].item->getValue());
 		programState->setDiameter(_itemBinds[3].item->getValue());
-		programState->setSpeedPercentage(_itemBinds[13].item->getValue());
+		programState->setSpeed(_itemBinds[13].item->getValue());
 
 		programState->reset();
 		
@@ -252,7 +252,7 @@ void MenuState::enter()
 		programState->setCycles(byte(_itemBinds[1].item->getValue()));
 		programState->setCutterAngle(_itemBinds[2].item->getValue());
 		programState->setDiameter(_itemBinds[3].item->getValue());
-		programState->setSpeedPercentage(_itemBinds[13].item->getValue());
+		programState->setSpeed(_itemBinds[13].item->getValue());
 
 		programState->reset();
 
